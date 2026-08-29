@@ -301,14 +301,381 @@
   </div>
 
   <!-- Bottom Navigation Buttons -->
-  <div class="kiosk-container w-100 mt-3" style="max-width: 900px;">
-    <div class="d-flex justify-content-between align-items-center gap-3">
-      <button type="button" id="prevStepBtn" class="btn btn-outline-secondary touch-btn-lg px-4" onclick="prevStep()"><i class="bi bi-arrow-left fs-4"></i> <span><%= strings.back %></span></button>
-      <button type="button" id="skipStepBtn" class="btn btn-outline-warning touch-btn-lg px-4 text-dark" onclick="skipStep()"><span><%= strings.skip %></span></button>
-      <button type="button" id="nextStepBtn" class="btn btn-primary touch-btn-lg px-5 shadow" onclick="nextStep()"><span><%= strings.next %></span> <i class="bi bi-arrow-right fs-4"></i></button>
-      <button type="button" id="submitIntakeBtn" class="btn btn-success touch-btn-lg px-5 shadow d-none" onclick="submitIntakeForm()"><i class="bi bi-check-circle-fill fs-4"></i> <span><%= strings.submit %></span></button>
-    </div>
+<div class="kiosk-container w-100 mt-4" style="max-width: 900px;">
+
+  <div class="kiosk-navigation">
+
+
+<!-- Previous Button -->
+<button
+  type="button"
+  id="prevStepBtn"
+  class="btn kiosk-nav-btn kiosk-btn-back"
+  onclick="prevStep()">
+
+  <i class="bi bi-arrow-left"></i>
+
+  <span><%= strings.back %></span>
+
+</button>
+
+
+<!-- Right Side Actions -->
+<div class="kiosk-navigation-actions">
+
+  <!-- Skip -->
+  <button
+    type="button"
+    id="skipStepBtn"
+    class="btn kiosk-nav-btn kiosk-btn-skip"
+    onclick="skipStep()">
+
+    <span><%= strings.skip %></span>
+
+    <i class="bi bi-skip-forward"></i>
+
+  </button>
+
+
+  <!-- Next -->
+  <button
+    type="button"
+    id="nextStepBtn"
+    class="btn kiosk-nav-btn kiosk-btn-next"
+    onclick="nextStep()">
+
+    <span><%= strings.next %></span>
+
+    <i class="bi bi-arrow-right"></i>
+
+  </button>
+
+
+  <!-- Submit -->
+  <button
+    type="button"
+    id="submitIntakeBtn"
+    class="btn kiosk-nav-btn kiosk-btn-submit d-none"
+    onclick="submitIntakeForm()">
+
+    <i class="bi bi-check-circle-fill"></i>
+
+    <span><%= strings.submit %></span>
+
+  </button>
+
+</div>
+
+
   </div>
+
+</div>
+
+<style>
+
+/* =====================================
+   KIOSK NAVIGATION CONTAINER
+===================================== */
+
+.kiosk-navigation {
+
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 18px 0;
+
+  border-top: 1px solid #e9ecef;
+
+}
+
+
+/* =====================================
+   RIGHT SIDE BUTTON GROUP
+===================================== */
+
+.kiosk-navigation-actions {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 12px;
+
+}
+
+
+/* =====================================
+   BASE KIOSK BUTTON
+===================================== */
+
+.kiosk-nav-btn {
+
+  min-height: 58px;
+
+  padding: 12px 26px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  border-radius: 14px;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition: all 0.2s ease;
+
+  touch-action: manipulation;
+
+}
+
+
+.kiosk-nav-btn i {
+
+  font-size: 21px;
+
+}
+
+
+/* =====================================
+   BACK BUTTON
+===================================== */
+
+.kiosk-btn-back {
+
+  background: #ffffff;
+
+  color: #495057;
+
+  border: 2px solid #dee2e6;
+
+}
+
+
+.kiosk-btn-back:hover {
+
+  background: #f8f9fa;
+
+  color: #212529;
+
+  border-color: #adb5bd;
+
+  transform: translateX(-3px);
+
+}
+
+
+/* =====================================
+   SKIP BUTTON
+===================================== */
+
+.kiosk-btn-skip {
+
+  background: #fff8db;
+
+  color: #795c00;
+
+  border: 2px solid #ffc107;
+
+}
+
+
+.kiosk-btn-skip:hover {
+
+  background: #fff3cd;
+
+  color: #664d03;
+
+}
+
+
+/* =====================================
+   NEXT BUTTON
+===================================== */
+
+.kiosk-btn-next {
+
+  min-width: 145px;
+
+  background: #0d6efd;
+
+  color: white;
+
+  border: 2px solid #0d6efd;
+
+  box-shadow: 0 8px 20px rgba(13, 110, 253, 0.22);
+
+}
+
+
+.kiosk-btn-next:hover {
+
+  background: #0b5ed7;
+
+  border-color: #0b5ed7;
+
+  color: white;
+
+  transform: translateX(3px);
+
+  box-shadow: 0 12px 26px rgba(13, 110, 253, 0.30);
+
+}
+
+
+/* =====================================
+   SUBMIT BUTTON
+===================================== */
+
+.kiosk-btn-submit {
+
+  min-width: 170px;
+
+  background: #198754;
+
+  color: white;
+
+  border: 2px solid #198754;
+
+  box-shadow: 0 8px 20px rgba(25, 135, 84, 0.22);
+
+}
+
+
+.kiosk-btn-submit:hover {
+
+  background: #157347;
+
+  border-color: #157347;
+
+  color: white;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 26px rgba(25, 135, 84, 0.30);
+
+}
+
+
+/* =====================================
+   TOUCH FEEDBACK
+===================================== */
+
+.kiosk-nav-btn:active {
+
+  transform: scale(0.97);
+
+}
+
+
+/* =====================================
+   ACCESSIBILITY
+===================================== */
+
+.kiosk-nav-btn:focus-visible {
+
+  outline: none;
+
+  box-shadow:
+    0 0 0 4px rgba(13, 110, 253, 0.20);
+
+}
+
+
+/* =====================================
+   TABLET & MOBILE
+===================================== */
+
+@media (max-width: 768px) {
+
+  .kiosk-navigation {
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+  }
+
+
+  .kiosk-btn-back {
+
+    width: 100%;
+
+  }
+
+
+  .kiosk-navigation-actions {
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+  }
+
+
+  .kiosk-navigation-actions .kiosk-btn-submit {
+
+    grid-column: span 2;
+
+  }
+
+}
+
+
+/* =====================================
+   SMALL MOBILE
+===================================== */
+
+@media (max-width: 480px) {
+
+  .kiosk-navigation-actions {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .kiosk-navigation-actions .kiosk-btn-submit {
+
+    grid-column: span 1;
+
+  }
+
+
+  .kiosk-nav-btn {
+
+    width: 100%;
+
+    min-height: 62px;
+
+    font-size: 17px;
+
+  }
+
+}
+
+</style>
+
 </div>
 <%- include('../partials/emergencyAlertModal') %>
 <script>

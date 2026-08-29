@@ -1,102 +1,1151 @@
-﻿<div>
-  <!-- Official Tricolor Ribbon -->
-  <div class="gov-tricolor-bar" style="height: 4px;"></div>
+﻿<!-- =========================================================
+     MEDIKIOSK — PREMIUM HOSPITAL SAAS TOPBAR
+========================================================= -->
 
-  <!-- Main SaaS Topbar -->
-  <header class="topbar bg-white px-4 py-2 d-flex justify-content-between align-items-center shadow-sm border-bottom">
-    
-    <!-- Left: Facility & Breadcrumb -->
-    <div class="d-flex align-items-center gap-3">
-      <button class="btn btn-light btn-sm d-md-none rounded-circle border" type="button" onclick="toggleSidebar()">
-        <i class="bi bi-list fs-5"></i>
-      </button>
-      <div class="d-flex align-items-center gap-2">
-        <span class="fw-bold text-dark fs-6"><i class="bi bi-hospital text-primary me-1"></i> <%= typeof title !== 'undefined' ? title.split('—')[0] : 'MediKiosk AYUSH' %></span>
-        <span class="badge bg-light text-secondary border small d-none d-lg-inline-block">
-          <i class="bi bi-geo-alt-fill text-danger me-1"></i> National Institute of Ayurveda & AYUSH Research
-        </span>
-      </div>
-    </div>
+<!-- Government / AYUSH Inspired Tricolor -->
 
-    <!-- Center: Global Search Bar -->
-    <div class="d-none d-md-flex align-items-center" style="max-width: 300px; width: 100%;">
-      <form action="/pharmacy/lookup" method="GET" class="w-100">
-        <div class="input-group input-group-sm">
-          <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
-          <input type="text" name="search" class="form-control bg-light border-start-0" placeholder="Search Token / UHID / Mobile...">
+<div class="gov-tricolor-bar"></div>
+
+<header class="medikiosk-topbar">
+
+<!-- ================= LEFT SECTION ================= -->
+<div class="topbar-left">
+
+    <!-- Mobile Sidebar Toggle -->
+    <button
+        class="sidebar-toggle d-md-none"
+        type="button"
+        onclick="toggleSidebar()"
+        aria-label="Toggle Sidebar">
+
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Brand -->
+    <a href="/" class="brand-area text-decoration-none">
+
+        <div class="brand-icon">
+            <i class="bi bi-hospital"></i>
         </div>
-      </form>
-    </div>
 
-    <!-- Right: SaaS Role Switcher & Live Status -->
-    <div class="d-flex align-items-center gap-2">
-      <!-- Live Cloud Indicators -->
-      <span class="badge bg-success-subtle text-success border border-success px-2 py-1 small d-none d-xl-inline-block" style="font-size: 0.72rem;">
-        <i class="bi bi-broadcast me-1"></i> ABDM Cloud: Synced
-      </span>
-      <span class="badge bg-purple-subtle text-purple border border-purple px-2 py-1 small d-none d-xl-inline-block" style="font-size: 0.72rem;">
-        <i class="bi bi-lightning-charge-fill me-1"></i> MedLLM AI Active
-      </span>
+        <div class="brand-content">
 
-      <!-- SaaS Role Quick Switcher Dropdown -->
-      <div class="dropdown">
-        <button class="btn btn-outline-primary btn-sm rounded-pill dropdown-toggle fw-semibold px-3" type="button" data-bs-toggle="dropdown">
-          <i class="bi bi-arrow-left-right me-1"></i> Switch Portal
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4 p-2 small">
-          <li><h6 class="dropdown-header text-uppercase text-muted" style="font-size: 0.7rem;">Active Hospital Portals:</h6></li>
-          <li>
-            <a class="dropdown-item rounded-3 d-flex align-items-center gap-2 py-2" href="/doctor/queue">
-              <i class="bi bi-stethoscope text-primary fs-5"></i>
-              <div><strong>Doctor Consultation</strong><div class="text-muted" style="font-size: 0.7rem;">OPD Queue & AI Copilot</div></div>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item rounded-3 d-flex align-items-center gap-2 py-2" href="/staff/dashboard">
-              <i class="bi bi-person-lines-fill text-info fs-5"></i>
-              <div><strong>Reception & Triage Desk</strong><div class="text-muted" style="font-size: 0.7rem;">Fast Check-in & OCR Verification</div></div>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item rounded-3 d-flex align-items-center gap-2 py-2" href="/pharmacy">
-              <i class="bi bi-capsule text-success fs-5"></i>
-              <div><strong>Medicine Shop & Pharmacy</strong><div class="text-muted" style="font-size: 0.7rem;">AI Drug Shield & POS Billing</div></div>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item rounded-3 d-flex align-items-center gap-2 py-2" href="/admin/dashboard">
-              <i class="bi bi-speedometer2 text-danger fs-5"></i>
-              <div><strong>Superadmin Command Center</strong><div class="text-muted" style="font-size: 0.7rem;">Executive Analytics & Master Settings</div></div>
-            </a>
-          </li>
-          <li><hr class="dropdown-divider"></li>
-          <li>
-            <a class="dropdown-item rounded-3 d-flex align-items-center gap-2 py-2 text-warning-emphasis" href="/kiosk" target="_blank">
-              <i class="bi bi-display fs-5 text-warning"></i>
-              <div><strong>Citizen Touchscreen Kiosk</strong><div class="text-muted" style="font-size: 0.7rem;">Patient Self-Service Mode</div></div>
-            </a>
-          </li>
-        </ul>
-      </div>
+            <div class="brand-title">
+                <%= typeof title !== 'undefined'
+                    ? title.split('—')[0]
+                    : 'MediKiosk AYUSH' %>
+            </div>
 
-      <!-- Kiosk Launch Button -->
-      <a href="/kiosk" target="_blank" class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-sm">
-        <i class="bi bi-display me-1"></i> Patient Kiosk
-      </a>
-    </div>
-  </header>
+            <div class="brand-subtitle d-none d-lg-flex">
+                <i class="bi bi-geo-alt-fill"></i>
+                National Institute of Ayurveda & AYUSH Research
+            </div>
+
+        </div>
+
+    </a>
+
 </div>
 
+
+<!-- ================= CENTER SEARCH ================= -->
+
+<div class="topbar-search d-none d-lg-flex">
+
+    <form action="/pharmacy/lookup" method="GET">
+
+        <div class="search-box">
+
+            <i class="bi bi-search search-icon"></i>
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search Token, UHID or Mobile..."
+                autocomplete="off">
+
+            <kbd class="search-shortcut">⌕</kbd>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- ================= RIGHT SECTION ================= -->
+
+<div class="topbar-right">
+
+    <!-- System Status -->
+
+    <div class="system-status d-none d-xxl-flex">
+
+        <div class="status-item cloud-status">
+
+            <span class="status-dot"></span>
+
+            <div>
+                <strong>Cloud</strong>
+                <small>Synced</small>
+            </div>
+
+        </div>
+
+
+        <div class="status-divider"></div>
+
+
+        <div class="status-item ai-status">
+
+            <i class="bi bi-stars"></i>
+
+            <div>
+                <strong>MedLLM</strong>
+                <small>AI Active</small>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Portal Switcher -->
+
+    <div class="dropdown portal-dropdown">
+
+        <button
+            class="portal-switch-btn"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <i class="bi bi-grid-3x3-gap-fill"></i>
+
+            <span class="d-none d-xl-inline">
+                Switch Portal
+            </span>
+
+            <i class="bi bi-chevron-down small"></i>
+
+        </button>
+
+
+        <ul class="dropdown-menu dropdown-menu-end portal-menu">
+
+            <!-- Header -->
+
+            <li class="portal-menu-header">
+
+                <span>Hospital Workspace</span>
+
+                <small>Select a portal</small>
+
+            </li>
+
+
+            <!-- Doctor -->
+
+            <li>
+
+                <a
+                    class="portal-item"
+                    href="/doctor/queue">
+
+                    <div class="portal-icon doctor">
+
+                        <i class="bi bi-stethoscope"></i>
+
+                    </div>
+
+                    <div class="portal-info">
+
+                        <strong>Doctor Consultation</strong>
+
+                        <small>
+                            OPD Queue & AI Copilot
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right portal-arrow"></i>
+
+                </a>
+
+            </li>
+
+
+            <!-- Reception -->
+
+            <li>
+
+                <a
+                    class="portal-item"
+                    href="/staff/dashboard">
+
+                    <div class="portal-icon staff">
+
+                        <i class="bi bi-person-lines-fill"></i>
+
+                    </div>
+
+                    <div class="portal-info">
+
+                        <strong>Reception & Triage</strong>
+
+                        <small>
+                            Check-in & OCR Verification
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right portal-arrow"></i>
+
+                </a>
+
+            </li>
+
+
+            <!-- Pharmacy -->
+
+            <li>
+
+                <a
+                    class="portal-item"
+                    href="/pharmacy">
+
+                    <div class="portal-icon pharmacy">
+
+                        <i class="bi bi-capsule"></i>
+
+                    </div>
+
+                    <div class="portal-info">
+
+                        <strong>Pharmacy</strong>
+
+                        <small>
+                            Medicine & Billing
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right portal-arrow"></i>
+
+                </a>
+
+            </li>
+
+
+            <!-- Admin -->
+
+            <li>
+
+                <a
+                    class="portal-item"
+                    href="/admin/dashboard">
+
+                    <div class="portal-icon admin">
+
+                        <i class="bi bi-shield-lock-fill"></i>
+
+                    </div>
+
+                    <div class="portal-info">
+
+                        <strong>Command Center</strong>
+
+                        <small>
+                            Analytics & Settings
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right portal-arrow"></i>
+
+                </a>
+
+            </li>
+
+
+            <li>
+
+                <hr class="portal-divider">
+
+            </li>
+
+
+            <!-- Patient Kiosk -->
+
+            <li>
+
+                <a
+                    class="portal-item kiosk-item"
+                    href="/kiosk"
+                    target="_blank">
+
+                    <div class="portal-icon kiosk">
+
+                        <i class="bi bi-display"></i>
+
+                    </div>
+
+                    <div class="portal-info">
+
+                        <strong>Patient Kiosk</strong>
+
+                        <small>
+                            Citizen Self-Service
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-box-arrow-up-right portal-arrow"></i>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- Patient Kiosk Button -->
+
+    <a
+        href="/kiosk"
+        target="_blank"
+        class="kiosk-launch-btn">
+
+        <i class="bi bi-display"></i>
+
+        <span class="d-none d-sm-inline">
+            Patient Kiosk
+        </span>
+
+    </a>
+
+</div>
+
+</header>
+
+<!-- =========================================================
+     STYLES
+========================================================= -->
+
+<style>
+
+/* ===============================
+   TRICOLOR BAR
+================================ */
+
+.gov-tricolor-bar {
+
+    height: 4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff9933 0%,
+            #ff9933 33.33%,
+            #ffffff 33.33%,
+            #ffffff 66.66%,
+            #138808 66.66%,
+            #138808 100%
+        );
+
+}
+
+
+/* ===============================
+   MAIN TOPBAR
+================================ */
+
+.medikiosk-topbar {
+
+    min-height: 72px;
+
+    padding: 0 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 24px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e9ecef;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1030;
+
+    box-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.04);
+
+}
+
+
+/* ===============================
+   LEFT
+================================ */
+
+.topbar-left {
+
+    display: flex;
+
+    align-items: center;
+
+    min-width: 260px;
+
+}
+
+
+.brand-area {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: inherit;
+
+}
+
+
+.brand-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d6efd,
+            #0a58ca
+        );
+
+    font-size: 20px;
+
+    box-shadow:
+        0 6px 16px
+        rgba(13, 110, 253, 0.22);
+
+}
+
+
+.brand-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.brand-title {
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    color: #1f2937;
+
+    line-height: 1.2;
+
+}
+
+
+.brand-subtitle {
+
+    margin-top: 3px;
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: 11px;
+
+    color: #6b7280;
+
+}
+
+
+.brand-subtitle i {
+
+    color: #dc3545;
+
+}
+
+
+/* ===============================
+   MOBILE SIDEBAR BUTTON
+================================ */
+
+.sidebar-toggle {
+
+    width: 40px;
+
+    height: 40px;
+
+    margin-right: 10px;
+
+    border-radius: 10px;
+
+    border: 1px solid #dee2e6;
+
+    background: white;
+
+    font-size: 20px;
+
+}
+
+
+/* ===============================
+   SEARCH
+================================ */
+
+.topbar-search {
+
+    flex: 1;
+
+    max-width: 460px;
+
+}
+
+
+.topbar-search form {
+
+    width: 100%;
+
+}
+
+
+.search-box {
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 12px;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    transition: all 0.2s ease;
+
+}
+
+
+.search-box:focus-within {
+
+    background: white;
+
+    border-color: #0d6efd;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(13, 110, 253, 0.08);
+
+}
+
+
+.search-icon {
+
+    color: #6b7280;
+
+}
+
+
+.search-box input {
+
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    font-size: 13px;
+
+    color: #374151;
+
+}
+
+
+.search-box input::placeholder {
+
+    color: #9ca3af;
+
+}
+
+
+.search-shortcut {
+
+    padding: 2px 6px;
+
+    border-radius: 5px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    font-size: 10px;
+
+    color: #9ca3af;
+
+}
+
+
+/* ===============================
+   RIGHT
+================================ */
+
+.topbar-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+/* ===============================
+   SYSTEM STATUS
+================================ */
+
+.system-status {
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 6px 10px;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e9ecef;
+
+}
+
+
+.status-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+}
+
+
+.status-item strong {
+
+    display: block;
+
+    font-size: 11px;
+
+    line-height: 1.1;
+
+}
+
+
+.status-item small {
+
+    display: block;
+
+    font-size: 10px;
+
+    color: #6b7280;
+
+}
+
+
+.status-dot {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #198754;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(25, 135, 84, 0.12);
+
+}
+
+
+.ai-status i {
+
+    font-size: 18px;
+
+    color: #6f42c1;
+
+}
+
+
+.status-divider {
+
+    width: 1px;
+
+    height: 30px;
+
+    margin: 0 12px;
+
+    background: #dee2e6;
+
+}
+
+
+/* ===============================
+   PORTAL SWITCH BUTTON
+================================ */
+
+.portal-switch-btn {
+
+    height: 40px;
+
+    padding: 0 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    border-radius: 10px;
+
+    border: 1px solid #dbeafe;
+
+    background: white;
+
+    color: #0d6efd;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+
+}
+
+
+.portal-switch-btn:hover {
+
+    background: #eff6ff;
+
+    border-color: #0d6efd;
+
+}
+
+
+/* ===============================
+   PORTAL MENU
+================================ */
+
+.portal-menu {
+
+    width: 330px;
+
+    padding: 10px;
+
+    margin-top: 10px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, 0.14);
+
+}
+
+
+.portal-menu-header {
+
+    padding: 10px 12px 14px;
+
+}
+
+
+.portal-menu-header span {
+
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: #1f2937;
+
+}
+
+
+.portal-menu-header small {
+
+    font-size: 11px;
+
+    color: #9ca3af;
+
+}
+
+
+.portal-item {
+
+    padding: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    border-radius: 12px;
+
+    color: #374151;
+
+    text-decoration: none;
+
+    transition: all 0.18s ease;
+
+}
+
+
+.portal-item:hover {
+
+    background: #f8fafc;
+
+    transform: translateX(2px);
+
+}
+
+
+.portal-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    font-size: 18px;
+
+}
+
+
+.portal-icon.doctor {
+
+    background: #e7f1ff;
+
+    color: #0d6efd;
+
+}
+
+
+.portal-icon.staff {
+
+    background: #e0f7fa;
+
+    color: #0dcaf0;
+
+}
+
+
+.portal-icon.pharmacy {
+
+    background: #e8f7ee;
+
+    color: #198754;
+
+}
+
+
+.portal-icon.admin {
+
+    background: #fdeaea;
+
+    color: #dc3545;
+
+}
+
+
+.portal-icon.kiosk {
+
+    background: #fff3cd;
+
+    color: #d39e00;
+
+}
+
+
+.portal-info {
+
+    flex: 1;
+
+}
+
+
+.portal-info strong {
+
+    display: block;
+
+    font-size: 13px;
+
+}
+
+
+.portal-info small {
+
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 11px;
+
+    color: #6b7280;
+
+}
+
+
+.portal-arrow {
+
+    color: #adb5bd;
+
+    font-size: 13px;
+
+}
+
+
+.portal-divider {
+
+    margin: 8px 5px;
+
+    border-color: #e9ecef;
+
+}
+
+
+/* ===============================
+   KIOSK BUTTON
+================================ */
+
+.kiosk-launch-btn {
+
+    height: 40px;
+
+    padding: 0 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d6efd,
+            #0a58ca
+        );
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: all 0.2s ease;
+
+    box-shadow:
+        0 6px 15px
+        rgba(13, 110, 253, 0.22);
+
+}
+
+
+.kiosk-launch-btn:hover {
+
+    color: white;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 22px
+        rgba(13, 110, 253, 0.3);
+
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 992px) {
+
+    .medikiosk-topbar {
+
+        padding: 0 16px;
+
+        min-height: 64px;
+
+    }
+
+    .topbar-left {
+
+        min-width: auto;
+
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .brand-icon {
+
+        width: 38px;
+
+        height: 38px;
+
+        font-size: 18px;
+
+    }
+
+
+    .brand-title {
+
+        font-size: 14px;
+
+    }
+
+
+    .portal-menu {
+
+        width: min(330px, calc(100vw - 20px));
+
+    }
+
+
+    .portal-switch-btn {
+
+        width: 40px;
+
+        justify-content: center;
+
+        padding: 0;
+
+    }
+
+
+    .kiosk-launch-btn {
+
+        width: 40px;
+
+        justify-content: center;
+
+        padding: 0;
+
+    }
+
+}
+
+</style>
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
 <script>
-function setFontSize(size) {
-  document.body.classList.remove('font-large', 'font-xlarge');
-  if (size === 'large') document.body.classList.add('font-large');
-  if (size === 'xlarge') document.body.classList.add('font-xlarge');
-}
-function toggleContrast() {
-  document.body.classList.toggle('high-contrast');
-}
+
 function toggleSidebar() {
-  document.getElementById('sidebarMenu').classList.toggle('show');
+
+    const sidebar =
+        document.getElementById("sidebarMenu");
+
+    if (sidebar) {
+
+        sidebar.classList.toggle("show");
+
+    }
+
 }
+
+
+function setFontSize(size) {
+
+    document.body.classList.remove(
+        "font-large",
+        "font-xlarge"
+    );
+
+    if (size === "large") {
+
+        document.body.classList.add(
+            "font-large"
+        );
+
+    }
+
+    if (size === "xlarge") {
+
+        document.body.classList.add(
+            "font-xlarge"
+        );
+
+    }
+
+}
+
+
+function toggleContrast() {
+
+    document.body.classList.toggle(
+        "high-contrast"
+    );
+
+}
+
 </script>

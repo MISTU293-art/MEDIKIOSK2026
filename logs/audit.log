@@ -202,3 +202,11 @@
 [2026-08-29T09:49:56.495Z] [AUDIT] Action: USER_CREATED_BY_ADMIN | User: admin@hospital.org {"createdEmail":"mistu14112006@gmail.com","role":"admin"}
 [2026-08-29T09:55:51.676Z] [AUDIT] Action: LOGIN_FAILED | User: mistu14112006@gmail.com {"reason":"User not found or inactive"}
 [2026-08-29T09:55:54.013Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-08-29T09:56:55.135Z] [AUDIT] Action: USER_CREATED_BY_ADMIN | User: admin@hospital.org {"createdEmail":"mistu14112006@gmail.com","role":"admin"}
+[2026-08-29T09:57:06.108Z] [AUDIT] Action: USER_LOGIN | User: mistu14112006@gmail.com {"role":"admin","ip":"::1"}
+[2026-08-29T10:03:13.850Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-08-29T10:12:36.348Z] [AUDIT] Action: AYUSHMAN_PATIENT_RECOGNIZED | User: UHID-880124-12 {"patientId":"6a928b3e8b80fa0e60c76e94","tokenNumber":"AYUSH-111","identifier":"9830112233"}
+[2026-08-29T10:17:39.755Z] [AUDIT] Action: INTAKE_SUBMITTED | User: UHID-AYUSH-659562-401 {"patientId":"6a92b1c366525c2d728b887d","kioskId":"KIOSK-01","priority":"Normal","redFlagTriggered":false}
+[2026-08-29T10:17:50.405Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-08-29T10:24:26.749Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-08-29T10:24:27.462Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}

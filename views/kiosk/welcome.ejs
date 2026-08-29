@@ -1,70 +1,152 @@
 ﻿<%- include('../partials/header') %>
-<div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-4" style="background: radial-gradient(circle at 50% 20%, #fffbf0 0%, #f8fafc 80%);">
-  
-  <div class="card shadow-lg border-0 rounded-4 overflow-hidden bg-white" style="max-width: 880px; width: 100%;">
-    <div class="gov-tricolor-bar" style="height: 6px;"></div>
+<div
+  class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-4"
+  style="
+    background: radial-gradient(circle at 50% 20%, #fffbf0 0%, #f8fafc 80%);
+  "
+>
+  <div
+    class="card shadow-lg border-0 rounded-4 overflow-hidden bg-white"
+    style="max-width: 880px; width: 100%"
+  >
+    <div class="gov-tricolor-bar" style="height: 6px"></div>
 
     <div class="p-4 p-md-5">
       <!-- Ministry & SIH National Header -->
-      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-        <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.78rem;">
-          <i class="bi bi-flower1 me-1 text-success fs-6"></i> SMART INDIA HACKATHON &bull; MINISTRY OF AYUSH
+      <div
+        class="d-flex flex-wrap justify-content-between align-items-center mb-3"
+      >
+        <span
+          class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-sm"
+          style="font-size: 0.78rem"
+        >
+          <i class="bi bi-flower1 me-1 text-success fs-6"></i> MINISTRY OF AYUSH
         </span>
-        <span class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill small">
-          <i class="bi bi-shield-check me-1"></i> Ayushman Bharat (ABDM) Compatible
+        <span
+          class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill small"
+        >
+          <i class="bi bi-shield-check me-1"></i> Ayushman Bharat (ABDM)
+          Compatible
         </span>
       </div>
 
       <div class="text-center mb-4">
-        <div class="d-inline-flex p-3 rounded-circle mb-2" style="background: #e0f2fe;">
-          <i class="bi bi-hospital fs-1 text-primary"></i>
+        <div
+          class="d-inline-flex p-3 rounded-circle mb-2"
+          style="background: #e0f2fe"
+        >
+          <div
+            class="d-inline-flex align-items-center justify-content-center rounded-4 shadow-lg p-3 mb-3 border border-3 border-primary"
+            style="width: 220px; height: 220px; background-color: #e9f2ff"
+          >
+            <img
+              src="/uploads/logo.png"
+              alt="MediKiosk AYUSH Logo"
+              class="img-fluid"
+              style="width: 200px; height: 200px; object-fit: contain"
+            />
+          </div>
         </div>
         <h1 class="display-6 fw-bold text-dark m-0">MediKiosk AYUSH</h1>
         <p class="text-muted fs-6 m-0 mt-1">
-          Government Healthcare Digital Clinical History & Smart OPD Intake System
+          Government Healthcare Digital Clinical History & Smart OPD Intake
+          System
         </p>
         <div class="d-flex justify-content-center gap-2 mt-2">
-          <span class="badge bg-light text-secondary border small"><i class="bi bi-geo-alt-fill text-danger me-1"></i> Pan-India AYUSH Network</span>
-          <span class="badge bg-light text-secondary border small"><i class="bi bi-universal-access text-primary me-1"></i> Audio & Touch Enabled</span>
+          <span class="badge bg-light text-secondary border small"
+            ><i class="bi bi-geo-alt-fill text-danger me-1"></i> Pan-India AYUSH
+            Network</span
+          >
+          <span class="badge bg-light text-secondary border small"
+            ><i class="bi bi-universal-access text-primary me-1"></i> Audio &
+            Touch Enabled</span
+          >
         </div>
       </div>
 
       <!-- Navigation Tabs: Fast Ayushman Check-in vs New Intake Wizard -->
-      <ul class="nav nav-pills nav-fill mb-4 p-1 bg-light rounded-pill border" id="intakeTabs" role="tablist">
+      <ul
+        class="nav nav-pills nav-fill mb-4 p-1 bg-light rounded-pill border"
+        id="intakeTabs"
+        role="tablist"
+      >
         <li class="nav-item" role="presentation">
-          <button class="nav-link active rounded-pill fw-bold py-2 fs-6" id="ayushman-tab" data-bs-toggle="pill" data-bs-target="#ayushman-pane" type="button" role="tab">
-            <i class="bi bi-person-vcard-fill me-1 text-warning"></i> Ayushman / ABHA Fast Check-In
+          <button
+            class="nav-link active rounded-pill fw-bold py-2 fs-6"
+            id="ayushman-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#ayushman-pane"
+            type="button"
+            role="tab"
+          >
+            <i class="bi bi-person-vcard-fill me-1 text-warning"></i> Ayushman /
+            ABHA Fast Check-In
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link rounded-pill fw-bold py-2 fs-6" id="new-tab" data-bs-toggle="pill" data-bs-target="#new-pane" type="button" role="tab">
-            <i class="bi bi-person-plus-fill me-1 text-primary"></i> New Patient Health Intake
+          <button
+            class="nav-link rounded-pill fw-bold py-2 fs-6"
+            id="new-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#new-pane"
+            type="button"
+            role="tab"
+          >
+            <i class="bi bi-person-plus-fill me-1 text-primary"></i> New Patient
+            Health Intake
           </button>
         </li>
       </ul>
 
       <div class="tab-content" id="intakeTabsContent">
-        
         <!-- PANE 1: Ayushman Card / Mobile Fast Check-In -->
-        <div class="tab-pane fade show active" id="ayushman-pane" role="tabpanel">
-          <div class="p-4 rounded-4 border mb-3" style="background: linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%); border-color: #fde68a !important;">
+        <div
+          class="tab-pane fade show active"
+          id="ayushman-pane"
+          role="tabpanel"
+        >
+          <div
+            class="p-4 rounded-4 border mb-3"
+            style="
+              background: linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%);
+              border-color: #fde68a !important;
+            "
+          >
             <div class="d-flex align-items-center gap-2 mb-2">
-              <span class="badge bg-warning text-dark fw-bold px-2 py-1"><i class="bi bi-qr-code-scan me-1"></i> FAST RECOGNITION</span>
-              <h5 class="fw-bold m-0 text-dark">Already Registered or Have Ayushman Card / Aadhaar / ABHA?</h5>
+              <span class="badge bg-warning text-dark fw-bold px-2 py-1"
+                ><i class="bi bi-qr-code-scan me-1"></i> FAST RECOGNITION</span
+              >
+              <h5 class="fw-bold m-0 text-dark">
+                Already Registered or Have Ayushman Card / Aadhaar / ABHA?
+              </h5>
             </div>
             <p class="text-muted small mb-3">
-              Enter your 14-digit ABHA Number, Ayushman Card, Aadhaar, or Registered Mobile Phone to instantly get today's OPD Queue Token and assigned doctor.
+              Enter your 14-digit ABHA Number, Ayushman Card, Aadhaar, or
+              Registered Mobile Phone to instantly get today's OPD Queue Token
+              and assigned doctor.
             </p>
 
             <form id="ayushmanLookupForm" class="row g-2">
               <div class="col-md-8">
                 <div class="input-group input-group-lg">
-                  <span class="input-group-text bg-white border-warning"><i class="bi bi-credit-card-2-front-fill text-warning"></i></span>
-                  <input type="text" id="ayushmanInput" class="form-control border-warning" placeholder="e.g. 9830112233 or 91-2345-6789-0123" required>
+                  <span class="input-group-text bg-white border-warning"
+                    ><i class="bi bi-credit-card-2-front-fill text-warning"></i
+                  ></span>
+                  <input
+                    type="text"
+                    id="ayushmanInput"
+                    class="form-control border-warning"
+                    placeholder="e.g. 9830112233 or 91-2345-6789-0123"
+                    required
+                  />
                 </div>
               </div>
               <div class="col-md-4">
-                <button type="submit" id="lookupBtn" class="btn btn-warning touch-btn-lg w-100 fw-bold fs-6 shadow-sm border">
+                <button
+                  type="submit"
+                  id="lookupBtn"
+                  class="btn btn-warning touch-btn-sm w-100 fw-bold fs-6 shadow-sm border"
+                >
                   <i class="bi bi-check-circle-fill me-1"></i> Fetch My Token
                 </button>
               </div>
@@ -74,13 +156,26 @@
 
             <!-- Quick Auto-Fill Demo Credentials -->
             <div class="mt-3 pt-3 border-top border-warning-subtle">
-              <div class="text-muted small fw-bold mb-2"><i class="bi bi-hand-index-thumb-fill text-primary me-1"></i> Tap to Demo Existing Registered Patients:</div>
+              <div class="text-muted small fw-bold mb-2">
+                <i class="bi bi-hand-index-thumb-fill text-primary me-1"></i>
+                Tap to Demo Existing Registered Patients:
+              </div>
               <div class="d-flex flex-wrap gap-2">
-                <button type="button" class="btn btn-sm btn-white bg-white border shadow-sm rounded-pill px-3 fw-semibold text-dark" onclick="fillAyushman('9830112233')">
-                  <i class="bi bi-person-check-fill text-success me-1"></i> Rajesh Chatterjee (Mobile: 9830112233)
+                <button
+                  type="button"
+                  class="btn btn-sm btn-white bg-white border shadow-sm rounded-pill px-3 fw-semibold text-dark"
+                  onclick="fillAyushman('9830112233')"
+                >
+                  <i class="bi bi-person-check-fill text-success me-1"></i>
+                  Rajesh Chatterjee (Mobile: 9830112233)
                 </button>
-                <button type="button" class="btn btn-sm btn-white bg-white border shadow-sm rounded-pill px-3 fw-semibold text-dark" onclick="fillAyushman('9876543210')">
-                  <i class="bi bi-person-check-fill text-success me-1"></i> Sunita Devi (Mobile: 9876543210)
+                <button
+                  type="button"
+                  class="btn btn-sm btn-white bg-white border shadow-sm rounded-pill px-3 fw-semibold text-dark"
+                  onclick="fillAyushman('9876543210')"
+                >
+                  <i class="bi bi-person-check-fill text-success me-1"></i>
+                  Sunita Devi (Mobile: 9876543210)
                 </button>
               </div>
             </div>
@@ -90,77 +185,154 @@
         <!-- PANE 2: New Patient Health Intake (Language Selection) -->
         <div class="tab-pane fade" id="new-pane" role="tabpanel">
           <div class="p-4 bg-light rounded-4 border mb-3 text-start">
-            <label class="fw-bold text-dark small text-uppercase mb-2 d-block text-center">
-              <i class="bi bi-translate me-1 text-primary"></i> Select Preferred Language / भाषा चुनें / ভাষা নির্বাচন করুন:
+            <label
+              class="fw-bold text-dark small text-uppercase mb-2 d-block text-center"
+            >
+              <i class="bi bi-translate me-1 text-primary"></i> Select Preferred
+              Language / भाषा चुनें / ভাষা নির্বাচন করুন:
             </label>
             <div class="row g-3 text-center">
               <div class="col-md-4">
-                <a href="/kiosk/intake?lang=en" class="btn btn-outline-primary touch-btn-lg w-100 p-3 shadow-sm border-2 flex-column align-items-start h-100 bg-white">
-                  <div class="d-flex justify-content-between w-100 mb-1"><span class="fs-3">🇬🇧</span><i class="bi bi-arrow-right-circle text-primary"></i></div>
+                <a
+                  href="/kiosk/intake?lang=en"
+                  class="btn btn-outline-primary touch-btn-lg w-100 p-3 shadow-sm border-2 flex-column align-items-start h-100 bg-white"
+                >
+                  <div class="d-flex justify-content-between w-100 mb-1">
+                    <span class="fs-3">🇬🇧</span
+                    ><i class="bi bi-arrow-right-circle text-primary"></i>
+                  </div>
                   <span class="fs-5 fw-bold text-dark">English</span>
-                  <span class="text-muted small mt-1">Start intake in English</span>
+                  <span class="text-muted small mt-1"
+                    >Start intake in English</span
+                  >
                 </a>
               </div>
               <div class="col-md-4">
-                <a href="/kiosk/intake?lang=hi" class="btn btn-outline-warning touch-btn-lg w-100 p-3 shadow-sm border-2 flex-column align-items-start h-100 bg-white">
-                  <div class="d-flex justify-content-between w-100 mb-1"><span class="fs-3">🇮🇳</span><i class="bi bi-arrow-right-circle text-warning"></i></div>
-                  <span class="fs-5 fw-bold text-dark font-devanagari">हिन्दी</span>
-                  <span class="text-muted small mt-1">हिंदी में केस-टेकिंग शुरू करें</span>
+                <a
+                  href="/kiosk/intake?lang=hi"
+                  class="btn btn-outline-warning touch-btn-lg w-100 p-3 shadow-sm border-2 flex-column align-items-start h-100 bg-white"
+                >
+                  <div class="d-flex justify-content-between w-100 mb-1">
+                    <span class="fs-3">🇮🇳</span
+                    ><i class="bi bi-arrow-right-circle text-warning"></i>
+                  </div>
+                  <span class="fs-5 fw-bold text-dark font-devanagari"
+                    >हिन्दी</span
+                  >
+                  <span class="text-muted small mt-1"
+                    >हिंदी में केस-टेकिंग शुरू करें</span
+                  >
                 </a>
               </div>
               <div class="col-md-4">
-                <a href="/kiosk/intake?lang=bn" class="btn btn-outline-info touch-btn-lg w-100 p-3 shadow-sm border-2 flex-column align-items-start h-100 bg-white">
-                  <div class="d-flex justify-content-between w-100 mb-1"><span class="fs-3">🇮🇳</span><i class="bi bi-arrow-right-circle text-info"></i></div>
+                <a
+                  href="/kiosk/intake?lang=bn"
+                  class="btn btn-outline-info touch-btn-lg w-100 p-3 shadow-sm border-2 flex-column align-items-start h-100 bg-white"
+                >
+                  <div class="d-flex justify-content-between w-100 mb-1">
+                    <span class="fs-3">🇮🇳</span
+                    ><i class="bi bi-arrow-right-circle text-info"></i>
+                  </div>
                   <span class="fs-5 fw-bold text-dark font-bengali">বাংলা</span>
-                  <span class="text-muted small mt-1">বাংলা ভাষায় শুরু করুন</span>
+                  <span class="text-muted small mt-1"
+                    >বাংলা ভাষায় শুরু করুন</span
+                  >
                 </a>
               </div>
             </div>
           </div>
         </div>
-
       </div>
 
       <div class="row g-2 mt-2">
         <div class="col-6">
-          <a href="/auth/login" class="btn btn-outline-secondary btn-sm w-100 rounded-pill py-2">
+          <a
+            href="/auth/login"
+            class="btn btn-outline-secondary btn-sm w-100 rounded-pill py-2"
+          >
             <i class="bi bi-person-badge me-1"></i> Doctor / Staff Login
           </a>
         </div>
         <div class="col-6">
-          <a href="/pharmacy" class="btn btn-outline-success btn-sm w-100 rounded-pill py-2">
+          <a
+            href="/pharmacy"
+            class="btn btn-outline-success btn-sm w-100 rounded-pill py-2"
+          >
             <i class="bi bi-capsule me-1"></i> Medicine Shop / Pharmacy
           </a>
         </div>
       </div>
     </div>
 
-    <div class="card-footer bg-light py-2 text-center text-muted small border-0">
-      <i class="bi bi-shield-check text-success me-1"></i> National AYUSH Mission &bull; Smart India Hackathon Prototype
+    <div
+      class="card-footer bg-light py-2 text-center text-muted small border-0"
+    >
+      <i class="bi bi-shield-check text-success me-1"></i> National AYUSH
+      Mission
     </div>
   </div>
 </div>
 
 <!-- Modal: Recognized Ayushman Card & Token Generated -->
-<div class="modal fade" id="ayushmanRecognizedModal" tabindex="-1" aria-hidden="true">
+<div
+  class="modal fade"
+  id="ayushmanRecognizedModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
-      <div style="height: 6px; background: linear-gradient(90deg, #FF9933 0%, #f59e0b 50%, #10b981 100%);"></div>
-      
+      <div
+        style="
+          height: 6px;
+          background: linear-gradient(
+            90deg,
+            #ff9933 0%,
+            #f59e0b 50%,
+            #10b981 100%
+          );
+        "
+      ></div>
+
       <div class="modal-header bg-white border-0 pb-0">
         <div class="d-flex align-items-center gap-2">
-          <span class="badge bg-warning text-dark fw-bold"><i class="bi bi-check2-circle me-1"></i>RECOGNIZED PATIENT</span>
-          <span class="badge bg-success-subtle text-success border border-success">Ayushman Verified</span>
+          <span class="badge bg-warning text-dark fw-bold"
+            ><i class="bi bi-check2-circle me-1"></i>RECOGNIZED PATIENT</span
+          >
+          <span
+            class="badge bg-success-subtle text-success border border-success"
+            >Ayushman Verified</span
+          >
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
       </div>
 
       <div class="modal-body p-4">
         <!-- Ayushman Golden Card Display -->
-        <div class="p-3 rounded-4 shadow-sm mb-3 position-relative overflow-hidden text-white" style="background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%); border: 2px solid #fef3c7;">
+        <div
+          class="p-3 rounded-4 shadow-sm mb-3 position-relative overflow-hidden text-white"
+          style="
+            background: linear-gradient(
+              135deg,
+              #b45309 0%,
+              #d97706 50%,
+              #f59e0b 100%
+            );
+            border: 2px solid #fef3c7;
+          "
+        >
           <div class="d-flex justify-content-between align-items-start mb-2">
             <div>
-              <div class="fw-bold small text-warning-subtle" style="font-size: 0.7rem; letter-spacing: 0.5px;">AYUSHMAN BHARAT &bull; ABHA CARD</div>
+              <div
+                class="fw-bold small text-warning-subtle"
+                style="font-size: 0.7rem; letter-spacing: 0.5px"
+              >
+                AYUSHMAN BHARAT &bull; ABHA CARD
+              </div>
               <div class="fs-5 fw-bold" id="recognizedName">Patient Name</div>
             </div>
             <i class="bi bi-shield-fill-check fs-2 text-warning"></i>
@@ -168,37 +340,74 @@
 
           <div class="row g-2 small text-white-50 my-2">
             <div class="col-6">
-              <span>Age/Gender:</span> <strong class="text-white" id="recognizedAgeGender">58 / MALE</strong>
+              <span>Age/Gender:</span>
+              <strong class="text-white" id="recognizedAgeGender"
+                >58 / MALE</strong
+              >
             </div>
             <div class="col-6">
-              <span>UHID:</span> <code class="text-white bg-dark bg-opacity-25 px-1 rounded" id="recognizedUhid">UHID-001</code>
+              <span>UHID:</span>
+              <code
+                class="text-white bg-dark bg-opacity-25 px-1 rounded"
+                id="recognizedUhid"
+                >UHID-001</code
+              >
             </div>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-warning-subtle border-opacity-50">
-            <span class="badge bg-dark bg-opacity-50 text-white" id="recognizedDept">Ayurveda</span>
-            <div class="font-monospace small text-warning" style="letter-spacing: 2px;">|||| | ||||| ||</div>
+          <div
+            class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-warning-subtle border-opacity-50"
+          >
+            <span
+              class="badge bg-dark bg-opacity-50 text-white"
+              id="recognizedDept"
+              >Ayurveda</span
+            >
+            <div
+              class="font-monospace small text-warning"
+              style="letter-spacing: 2px"
+            >
+              |||| | ||||| ||
+            </div>
           </div>
         </div>
 
         <!-- Today's Token Banner with Assigned Doctor & Room -->
         <div class="p-3 bg-light rounded-3 border text-center mb-3">
-          <div class="text-muted small fw-bold text-uppercase">Today's Live OPD Queue Token:</div>
-          <div class="display-5 fw-bold text-primary" id="recognizedToken">AYUSH-108</div>
+          <div class="text-muted small fw-bold text-uppercase">
+            Today's Live OPD Queue Token:
+          </div>
+          <div class="display-5 fw-bold text-primary" id="recognizedToken">
+            AYUSH-108
+          </div>
           <div class="text-dark small mt-2">
-            <i class="bi bi-person-badge-fill text-primary me-1"></i> Assigned Doctor: <strong id="recognizedDoctorName">Dr. Rajesh Kumar Sharma</strong>
+            <i class="bi bi-person-badge-fill text-primary me-1"></i> Assigned
+            Doctor:
+            <strong id="recognizedDoctorName">Dr. Rajesh Kumar Sharma</strong>
           </div>
           <div class="text-muted small mt-1">
-            <i class="bi bi-geo-alt-fill text-danger me-1"></i> Proceed to <strong id="recognizedRoom" class="text-success">Room 104, AYUSH Wing A</strong>
+            <i class="bi bi-geo-alt-fill text-danger me-1"></i> Proceed to
+            <strong id="recognizedRoom" class="text-success"
+              >Room 104, AYUSH Wing A</strong
+            >
           </div>
         </div>
 
         <div class="d-grid gap-2">
-          <a href="#" id="viewCardLink" class="btn btn-primary touch-btn-lg py-2 fw-bold shadow rounded-pill">
+          <a
+            href="#"
+            id="viewCardLink"
+            class="btn btn-primary touch-btn-lg py-2 fw-bold shadow rounded-pill"
+          >
             <i class="bi bi-printer-fill me-1"></i> View & Print OPD Health Card
           </a>
-          <a href="#" id="updateIntakeLink" class="btn btn-outline-warning btn-sm rounded-pill text-dark fw-semibold py-2">
-            <i class="bi bi-pencil-square me-1"></i> Update Symptoms / New Case Intake
+          <a
+            href="#"
+            id="updateIntakeLink"
+            class="btn btn-outline-warning btn-sm rounded-pill text-dark fw-semibold py-2"
+          >
+            <i class="bi bi-pencil-square me-1"></i> Update Symptoms / New Case
+            Intake
           </a>
         </div>
       </div>
@@ -207,58 +416,78 @@
 </div>
 
 <script>
-function fillAyushman(val) {
-  document.getElementById('ayushmanInput').value = val;
-  document.getElementById('ayushmanLookupForm').dispatchEvent(new Event('submit'));
-}
-
-document.getElementById('ayushmanLookupForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const alertBox = document.getElementById('lookupAlert');
-  const btn = document.getElementById('lookupBtn');
-  const input = document.getElementById('ayushmanInput').value.trim();
-
-  alertBox.className = 'alert mt-3 d-none small';
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Verifying...';
-
-  try {
-    const res = await fetch('/kiosk/ayushman-lookup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ identifier: input })
-    });
-    const data = await res.json();
-    btn.disabled = false;
-    btn.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Fetch My Token';
-
-    if (data.success && data.alreadyRegistered) {
-      document.getElementById('recognizedName').innerText = data.patient.fullName;
-      document.getElementById('recognizedAgeGender').innerText = `${data.patient.age} Yrs / ${data.patient.gender ? data.patient.gender.toUpperCase() : 'N/A'}`;
-      document.getElementById('recognizedUhid').innerText = data.patient.uhid;
-      document.getElementById('recognizedDept').innerText = data.patient.department;
-      document.getElementById('recognizedToken').innerText = data.tokenNumber;
-      document.getElementById('recognizedRoom').innerText = data.roomNumber || 'Room 104, AYUSH Wing A';
-      document.getElementById('recognizedDoctorName').innerText = (data.assignedDoctorName || 'Senior Consultant').split(',')[0];
-      
-      document.getElementById('viewCardLink').href = data.cardUrl;
-      document.getElementById('updateIntakeLink').href = `/kiosk/intake?lang=en&mobile=${encodeURIComponent(data.patient.phone)}&abha=${encodeURIComponent(data.patient.uhid)}`;
-
-      const modal = new bootstrap.Modal(document.getElementById('ayushmanRecognizedModal'));
-      modal.show();
-    } else {
-      alertBox.className = 'alert alert-info mt-3 d-block small';
-      alertBox.innerHTML = '<i class="bi bi-info-circle me-1"></i> No prior record found. Redirecting to Ayushman Registration...';
-      setTimeout(() => {
-        window.location.href = `/kiosk/intake?lang=en&mobile=${encodeURIComponent(input)}`;
-      }, 1200);
-    }
-  } catch (err) {
-    btn.disabled = false;
-    btn.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Fetch My Token';
-    alertBox.className = 'alert alert-danger mt-3 d-block small';
-    alertBox.innerText = 'Network error verifying Ayushman card. Please try again.';
+  function fillAyushman(val) {
+    document.getElementById("ayushmanInput").value = val;
+    document
+      .getElementById("ayushmanLookupForm")
+      .dispatchEvent(new Event("submit"));
   }
-});
+
+  document
+    .getElementById("ayushmanLookupForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const alertBox = document.getElementById("lookupAlert");
+      const btn = document.getElementById("lookupBtn");
+      const input = document.getElementById("ayushmanInput").value.trim();
+
+      alertBox.className = "alert mt-3 d-none small";
+      btn.disabled = true;
+      btn.innerHTML =
+        '<span class="spinner-border spinner-border-sm me-1"></span> Verifying...';
+
+      try {
+        const res = await fetch("/kiosk/ayushman-lookup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ identifier: input }),
+        });
+        const data = await res.json();
+        btn.disabled = false;
+        btn.innerHTML =
+          '<i class="bi bi-check-circle-fill me-1"></i> Fetch My Token';
+
+        if (data.success && data.alreadyRegistered) {
+          document.getElementById("recognizedName").innerText =
+            data.patient.fullName;
+          document.getElementById("recognizedAgeGender").innerText =
+            `${data.patient.age} Yrs / ${data.patient.gender ? data.patient.gender.toUpperCase() : "N/A"}`;
+          document.getElementById("recognizedUhid").innerText =
+            data.patient.uhid;
+          document.getElementById("recognizedDept").innerText =
+            data.patient.department;
+          document.getElementById("recognizedToken").innerText =
+            data.tokenNumber;
+          document.getElementById("recognizedRoom").innerText =
+            data.roomNumber || "Room 104, AYUSH Wing A";
+          document.getElementById("recognizedDoctorName").innerText = (
+            data.assignedDoctorName || "Senior Consultant"
+          ).split(",")[0];
+
+          document.getElementById("viewCardLink").href = data.cardUrl;
+          document.getElementById("updateIntakeLink").href =
+            `/kiosk/intake?lang=en&mobile=${encodeURIComponent(data.patient.phone)}&abha=${encodeURIComponent(data.patient.uhid)}`;
+
+          const modal = new bootstrap.Modal(
+            document.getElementById("ayushmanRecognizedModal"),
+          );
+          modal.show();
+        } else {
+          alertBox.className = "alert alert-info mt-3 d-block small";
+          alertBox.innerHTML =
+            '<i class="bi bi-info-circle me-1"></i> No prior record found. Redirecting to Ayushman Registration...';
+          setTimeout(() => {
+            window.location.href = `/kiosk/intake?lang=en&mobile=${encodeURIComponent(input)}`;
+          }, 1200);
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML =
+          '<i class="bi bi-check-circle-fill me-1"></i> Fetch My Token';
+        alertBox.className = "alert alert-danger mt-3 d-block small";
+        alertBox.innerText =
+          "Network error verifying Ayushman card. Please try again.";
+      }
+    });
 </script>
 <%- include('../partials/footer') %>
