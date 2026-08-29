@@ -198,3 +198,5 @@
 [2026-08-29T07:46:14.626Z] [AUDIT] Action: USER_LOGIN | User: mistu14112006@gmail.com {"role":"doctor","ip":"::1"}
 [2026-08-29T07:46:43.173Z] [AUDIT] Action: DOCTOR_CONSULTATION_SAVED | User: mistu14112006@gmail.com {"patientId":"6a928c870d6a253818769930","noteId":"6a928e62e8f71716152d94a4"}
 [2026-08-29T07:47:05.758Z] [AUDIT] Action: PHARMACY_DISPENSED | User: mistu14112006@gmail.com {"uhid":"UHID-AYUSH-127715-996","bill":"240"}
+[2026-08-29T09:48:30.663Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-08-29T09:49:56.495Z] [AUDIT] Action: USER_CREATED_BY_ADMIN | User: admin@hospital.org {"createdEmail":"mistu14112006@gmail.com","role":"admin"}
