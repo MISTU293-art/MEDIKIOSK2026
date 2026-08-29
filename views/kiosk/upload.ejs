@@ -1,0 +1,117 @@
+﻿<%- include('../partials/header') %>
+<div class="kiosk-body bg-light min-vh-100 d-flex flex-column justify-content-between p-3 p-md-4">
+  <!-- Top Government Bar -->
+  <div class="kiosk-top-bar d-flex justify-content-between align-items-center bg-white p-3 rounded-4 shadow-sm border mb-4">
+    <div class="d-flex align-items-center gap-3">
+      <div class="bg-primary text-white p-2 rounded-3">
+        <i class="bi bi-camera-fill fs-3 text-warning"></i>
+      </div>
+      <div>
+        <h4 class="fw-bold m-0 text-dark">ImageKit Medical Document Scanner</h4>
+        <p class="text-muted m-0 small">Ministry of AYUSH &bull; Cloud OCR & Report Digitization</p>
+      </div>
+    </div>
+    <a href="/kiosk/intake?lang=<%= typeof lang !== 'undefined' ? lang : 'en' %>" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold">
+      <i class="bi bi-arrow-left me-1"></i> Back to Intake
+    </a>
+  </div>
+
+  <!-- Main Upload Screen -->
+  <div class="container my-auto" style="max-width: 760px;">
+    <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5 bg-white text-center">
+      <div class="d-inline-flex p-3 rounded-circle bg-primary-subtle text-primary mb-3 mx-auto">
+        <i class="bi bi-cloud-arrow-up-fill fs-1"></i>
+      </div>
+      
+      <h3 class="fw-bold text-dark mb-1">Upload Prior Prescriptions or Lab Reports</h3>
+      <p class="text-muted small mb-4">Files are encrypted and optimized via ImageKit.io Medical Cloud CDN with AI OCR Entity Extraction.</p>
+
+      <form id="kioskUploadForm" enctype="multipart/form-data">
+        <input type="hidden" name="sessionToken" value="<%= typeof sessionToken !== 'undefined' ? sessionToken : 'KS-DEMO-001' %>">
+        
+        <div class="row g-3 mb-4 text-start">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold small text-uppercase">Document Type *</label>
+            <select name="docType" class="form-select form-select-lg" required>
+              <option value="Prescription">Prior Doctor Prescription</option>
+              <option value="Lab Report">Diagnostic Lab Test Report</option>
+              <option value="Discharge Summary">Hospital Discharge Summary</option>
+              <option value="Imaging Scan">Radiological Scan (X-Ray / MRI)</option>
+              <option value="Ayurveda Case Sheet">AYUSH Clinical Note</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold small text-uppercase">Choose File or Take Photo *</label>
+            <input type="file" name="document" id="docFileInput" class="form-control form-control-lg" accept="image/*,application/pdf" capture="environment" required>
+          </div>
+        </div>
+
+        <div id="uploadFeedbackAlert" class="alert d-none rounded-3 small"></div>
+
+        <div id="previewContainer" class="d-none mb-4 p-3 rounded-3 bg-light border text-center">
+          <h6 class="fw-bold text-dark small mb-2"><i class="bi bi-image me-1"></i> ImageKit Cloud Upload Preview:</h6>
+          <img id="imagePreview" src="" alt="Report Preview" class="img-fluid rounded shadow-sm" style="max-height: 220px;">
+          <div class="mt-2 text-success fw-bold small" id="ocrStatusText"></div>
+        </div>
+
+        <button type="submit" id="uploadSubmitBtn" class="btn btn-primary btn-lg w-100 py-3 rounded-pill fw-bold shadow">
+          <i class="bi bi-cloud-arrow-up-fill me-2"></i> Upload to ImageKit & Run OCR
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="text-center py-2 text-muted small">
+    Protected under Ayushman Bharat Digital Mission (ABDM) &bull; 256-bit AES Encryption
+  </div>
+</div>
+
+<script>
+document.getElementById('kioskUploadForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('uploadSubmitBtn');
+  const alertBox = document.getElementById('uploadFeedbackAlert');
+  const previewBox = document.getElementById('previewContainer');
+  const previewImg = document.getElementById('imagePreview');
+  const ocrText = document.getElementById('ocrStatusText');
+
+  btn.disabled = true;
+  btn.innerText = 'Uploading to ImageKit & Extracting OCR...';
+  alertBox.className = 'alert alert-info d-block small';
+  alertBox.innerText = 'Encrypting and uploading file to ImageKit.io Medical Cloud CDN...';
+
+  const formData = new FormData(document.getElementById('kioskUploadForm'));
+  try {
+    const res = await fetch('/api/documents/upload', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      alertBox.className = 'alert alert-success d-block small';
+      alertBox.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> <strong>Upload Success!</strong> Document securely attached to your health record.';
+      
+      if (data.fileUrl) {
+        previewBox.classList.remove('d-none');
+        previewImg.src = data.fileUrl;
+        ocrText.innerText = 'OCR Status: ' + (data.ocrStatus || 'Verified') + ' | CDN: ' + (data.cdnProvider || 'ImageKit.io');
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '<i class="bi bi-check2 me-1"></i> Upload Another Document';
+    } else {
+      alertBox.className = 'alert alert-danger d-block small';
+      alertBox.innerText = 'Upload error: ' + data.error;
+      btn.disabled = false;
+      btn.innerText = 'Upload to ImageKit & Run OCR';
+    }
+  } catch (err) {
+    alertBox.className = 'alert alert-danger d-block small';
+    alertBox.innerText = 'Network error: ' + err.message;
+    btn.disabled = false;
+    btn.innerText = 'Upload to ImageKit & Run OCR';
+  }
+});
+</script>
+<%- include('../partials/footer') %>

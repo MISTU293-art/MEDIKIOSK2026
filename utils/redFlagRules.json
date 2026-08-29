@@ -1,0 +1,139 @@
+{
+  "version": "2.1.0",
+  "lastReviewed": "2026-08-15",
+  "reviewedBy": "Dr. A. Sharma (Chief Medical Officer, Emergency & Trauma)",
+  "disclaimer": "Non-triage safety net: Absence of a flag does NOT rule out a medical emergency. Staff must always exercise independent clinical judgment.",
+  "rules": [
+    {
+      "id": "RF-001",
+      "category": "Cardiovascular",
+      "name": "Possible Acute Coronary Syndrome",
+      "description": "Severe chest pain combined with shortness of breath, diaphoresis, or pain radiating to left arm/jaw.",
+      "severity": "CRITICAL",
+      "keywords": [
+        "chest pain",
+        "angina",
+        "crushing chest",
+        "left arm pain",
+        "jaw pain",
+        "pressure in chest",
+        "छाती में दर्द",
+        "বুকে ব্যথা"
+      ],
+      "secondaryRequiredKeywords": [
+        "shortness of breath",
+        "sweating",
+        "breathing difficulty",
+        "dizziness",
+        "सांस लेने में तकलीफ",
+        "শ্বাসকষ্ট"
+      ],
+      "patientAlertMessage": "URGENT: Please inform the hospital reception or emergency desk immediately for urgent chest evaluation.",
+      "escalationLevel": "Immediate Triage Override",
+      "targetSlaMinutes": 5
+    },
+    {
+      "id": "RF-002",
+      "category": "Neurological",
+      "name": "Possible Acute Stroke (FAST Criteria)",
+      "description": "Sudden onset of facial weakness, arm/leg weakness, slurred speech, or acute loss of vision.",
+      "severity": "CRITICAL",
+      "keywords": [
+        "slurred speech",
+        "facial droop",
+        "one side weakness",
+        "arm weakness",
+        "sudden paralysis",
+        "speech difficulty",
+        "लकवा",
+        "পক্ষাঘাত",
+        "কথা জড়িয়ে যাওয়া"
+      ],
+      "secondaryRequiredKeywords": [],
+      "patientAlertMessage": "URGENT: Neurological symptom detected. Please notify hospital staff immediately for fast-track evaluation.",
+      "escalationLevel": "Immediate Triage Override",
+      "targetSlaMinutes": 5
+    },
+    {
+      "id": "RF-003",
+      "category": "Respiratory",
+      "name": "Acute Severe Respiratory Distress",
+      "description": "Severe breathlessness, inability to speak full sentences, stridor, or cyanosis.",
+      "severity": "CRITICAL",
+      "keywords": [
+        "gasping",
+        "cannot breathe",
+        "severe breathlessness",
+        "blue lips",
+        "choking",
+        "stridor",
+        "दम घुटना",
+        "দম বন্ধ"
+      ],
+      "secondaryRequiredKeywords": [],
+      "patientAlertMessage": "URGENT: Severe breathing difficulty detected. Please alert triage staff immediately for oxygen support.",
+      "escalationLevel": "Immediate Oxygen & Triage",
+      "targetSlaMinutes": 3
+    },
+    {
+      "id": "RF-004",
+      "category": "Trauma & Bleeding",
+      "name": "Active Uncontrolled Hemorrhage",
+      "description": "Severe continuous bleeding, hematemesis (vomiting blood), or hemoptysis (coughing blood).",
+      "severity": "CRITICAL",
+      "keywords": [
+        "vomiting blood",
+        "coughing blood",
+        "heavy bleeding",
+        "uncontrolled bleeding",
+        "blood in vomit",
+        "खून की उल्टी",
+        "রক্ত বমি",
+        "প্রচুর রক্তপাত"
+      ],
+      "secondaryRequiredKeywords": [],
+      "patientAlertMessage": "URGENT: Severe bleeding detected. Please proceed to the emergency treatment room immediately.",
+      "escalationLevel": "Immediate Trauma Care",
+      "targetSlaMinutes": 3
+    },
+    {
+      "id": "RF-005",
+      "category": "Pediatric",
+      "name": "Infant High Fever / Lethargy (<3 months)",
+      "description": "Infant under 3 months with temperature >= 38C (100.4F), extreme lethargy, or convulsions.",
+      "severity": "HIGH",
+      "keywords": [
+        "infant fever",
+        "baby high fever",
+        "convulsions",
+        "fits",
+        "unresponsive baby",
+        "बच्चे को तेज बुखार",
+        "শিশুর তীব্র জ্বর"
+      ],
+      "secondaryRequiredKeywords": [],
+      "patientAlertMessage": "URGENT: High infant fever detected. Please notify pediatric OPD/emergency staff without delay.",
+      "escalationLevel": "Fast-Track Pediatric Triage",
+      "targetSlaMinutes": 10
+    },
+    {
+      "id": "RF-006",
+      "category": "Allergy",
+      "name": "Suspected Anaphylaxis",
+      "description": "Throat tightness, facial swelling, hives, and wheezing following food, insect sting, or drug exposure.",
+      "severity": "CRITICAL",
+      "keywords": [
+        "throat swelling",
+        "swollen tongue",
+        "anaphylaxis",
+        "allergic shock",
+        "गले में सूजन",
+        "গলা ফুলে যাওয়া"
+      ],
+      "secondaryRequiredKeywords": [],
+      "patientAlertMessage": "URGENT: Potential severe allergic reaction detected. Please alert the nursing station immediately.",
+      "escalationLevel": "Immediate Epinephrine / Triage",
+      "targetSlaMinutes": 5
+    }
+  ]
+}

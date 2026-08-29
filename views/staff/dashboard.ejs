@@ -1,0 +1,230 @@
+<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold m-0 text-dark"><i class="bi bi-person-lines-fill text-primary me-2"></i>Reception & Triage Queue</h2>
+          <p class="text-muted m-0">Live OPD Queue, Fast Patient Registration & Emergency Safety Monitoring</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary shadow-sm rounded-pill px-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#registerPatientModal">
+            <i class="bi bi-person-plus-fill me-1"></i> Fast Check-In Patient
+          </button>
+          <a href="/staff/ocr-verify" class="btn btn-outline-primary rounded-pill px-3 position-relative fw-semibold">
+            <i class="bi bi-file-earmark-medical me-1"></i> OCR Review
+            <% if (unverifiedDocsCount > 0) { %>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"><%= unverifiedDocsCount %></span>
+            <% } %>
+          </a>
+        </div>
+      </div>
+
+      <% if (activeAudits && activeAudits.length > 0) { %>
+        <div class="emergency-banner mb-4 shadow-sm">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h5 class="fw-bold text-danger m-0"><i class="bi bi-exclamation-octagon-fill me-2"></i>Emergency Red-Flag Alerts</h5>
+            <span class="badge bg-danger"><%= activeAudits.length %> Pending Action</span>
+          </div>
+          <div class="table-responsive bg-white rounded-3 border">
+            <table class="table table-hover align-middle m-0 small">
+              <thead class="table-danger text-danger">
+                <tr>
+                  <th>Patient</th>
+                  <th>UHID</th>
+                  <th>Triggered Rule</th>
+                  <th>Keywords</th>
+                  <th>Triggered Time</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% activeAudits.forEach(audit => { %>
+                  <tr>
+                    <td class="fw-bold"><%= audit.patientName %></td>
+                    <td><span class="badge bg-secondary"><%= audit.uhid %></span></td>
+                    <td class="text-danger fw-bold"><%= audit.ruleName %> (<%= audit.ruleId %>)</td>
+                    <td><%= audit.triggeredKeywords ? audit.triggeredKeywords.join(', ') : 'Symptom Flag' %></td>
+                    <td><%= new Date(audit.triggeredAt).toLocaleTimeString() %></td>
+                    <td>
+                      <% if (audit.acknowledgedBy) { %>
+                        <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Ack by <%= audit.acknowledgedBy.split(' ')[0] %></span>
+                      <% } else { %>
+                        <button class="btn btn-danger btn-sm py-0 fw-bold rounded-pill" onclick="acknowledgeRedFlag('<%= audit._id %>')">Acknowledge</button>
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% } %>
+
+      <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+          <div>
+            <h5 class="fw-bold m-0"><i class="bi bi-list-ol me-2 text-primary"></i>Live Patient Queue (<%= patients.length %> Registered)</h5>
+            <span class="text-muted small">Updated in real-time</span>
+          </div>
+          <!-- Live Search Box -->
+          <div class="input-group" style="max-width: 320px;">
+            <span class="input-group-text bg-light"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="staffQueueSearch" class="form-control form-control-sm" placeholder="Search patient, token, phone..." oninput="filterTable('staffQueueTable', 'staffQueueSearch')">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-gov table-hover align-middle" id="staffQueueTable">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Patient Name</th>
+                <th>Age / Gender</th>
+                <th>Phone</th>
+                <th>Department</th>
+                <th>Priority Indicator</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (patients.length === 0) { %>
+                <tr><td colspan="8" class="text-center py-4 text-muted">No patients registered in queue today.</td></tr>
+              <% } else { %>
+                <% patients.forEach(p => { %>
+                  <tr>
+                    <td><span class="badge bg-primary fs-6"><%= p.tokenNumber %></span></td>
+                    <td>
+                      <strong><%= p.fullName %></strong>
+                      <div class="text-muted small">UHID: <%= p.uhid %></div>
+                    </td>
+                    <td><%= p.age %> yrs / <%= p.gender %></td>
+                    <td><%= p.phone %></td>
+                    <td><span class="badge bg-light text-dark border"><%= p.department %></span></td>
+                    <td>
+                      <% if (p.priority === 'Emergency Red-Flag') { %>
+                        <span class="badge badge-red-flag"><i class="bi bi-exclamation-triangle-fill me-1"></i> Red-Flag (System)</span>
+                      <% } else if (p.priority === 'Urgent') { %>
+                        <span class="badge badge-urgent">Urgent (<%= p.prioritySource === 'staff_assigned' ? 'Staff' : 'System' %>)</span>
+                      <% } else { %>
+                        <span class="badge badge-normal">Normal</span>
+                      <% } %>
+                    </td>
+                    <td>
+                      <% if (p.status === 'completed') { %>
+                        <span class="badge bg-success">Completed</span>
+                      <% } else if (p.status === 'in_consultation') { %>
+                        <span class="badge bg-warning text-dark">In Consultation</span>
+                      <% } else { %>
+                        <span class="badge bg-info text-dark">Waiting</span>
+                      <% } %>
+                    </td>
+                    <td>
+                      <div class="d-flex gap-1">
+                        <a href="/doctor/patient/<%= p._id %>" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-eye me-1"></i> Case</a>
+                        <a href="/kiosk/card/<%= p._id %>" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill" title="Print OPD Card"><i class="bi bi-printer"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div id="staffQueuePagination"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="modal fade" id="registerPatientModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold"><i class="bi bi-person-plus-fill me-2"></i>Fast Patient Registration</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <form action="/staff/register-patient" method="POST">
+        <div class="modal-body p-4">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Patient Full Name *</label>
+            <input type="text" name="fullName" class="form-control" placeholder="e.g. Ramesh Chandra" required>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label fw-semibold">Age *</label>
+              <input type="number" name="age" class="form-control" placeholder="Years" min="1" max="120" required>
+            </div>
+            <div class="col-6">
+              <label class="form-label fw-semibold">Gender *</label>
+              <select name="gender" class="form-select" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Phone Number *</label>
+            <input type="tel" name="phone" class="form-control" placeholder="Mobile Number" required>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label fw-semibold text-primary"><i class="bi bi-person-bounding-box me-1"></i> Aadhaar Number (12 Digits)</label>
+              <input type="text" name="aadhaarNumber" class="form-control" placeholder="XXXX-XXXX-1234">
+            </div>
+            <div class="col-6">
+              <label class="form-label fw-semibold text-warning-emphasis"><i class="bi bi-credit-card-2-front-fill me-1"></i> Ayushman / ABHA ID</label>
+              <input type="text" name="abhaId" class="form-control border-warning" placeholder="91-2345-6789-0123">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-dark"><i class="bi bi-shield-fill-check text-success me-1"></i> Ayushman Scheme Coverage</label>
+            <select name="ayushmanSchemeType" class="form-select">
+              <option value="PM-JAY Golden Card (₹5 Lakh Cover)" selected>PM-JAY Golden Card Holder (₹5 Lakh Cover)</option>
+              <option value="State Health Scheme (Swasthya Sathi / MJPJAY)">State Government Health Scheme</option>
+              <option value="ABHA Digital Health Record">ABHA Digital Health Account</option>
+            </select>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label fw-semibold">AYUSH Department</label>
+              <select name="department" class="form-select">
+                <option value="Ayurveda (Kayachikitsa & Panchakarma)">Ayurveda & Panchakarma</option>
+                <option value="Homoeopathy Medicine">Homoeopathy Medicine</option>
+                <option value="Yoga & Naturopathy">Yoga & Naturopathy</option>
+                <option value="Unani & Tibb System">Unani & Tibb</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label class="form-label fw-semibold">Priority Level</label>
+              <select name="priority" class="form-select">
+                <option value="Normal">Normal</option>
+                <option value="Urgent">Urgent</option>
+                <option value="Emergency Red-Flag">Emergency Red-Flag</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary fw-bold rounded-pill px-4">Register & Generate Token</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
+<script src="/js/pagination.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initTablePagination('staffQueueTable', 'staffQueuePagination', 6);
+});
+</script>
+<%- include('../partials/footer') %>

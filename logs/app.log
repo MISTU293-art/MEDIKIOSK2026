@@ -1,0 +1,766 @@
+[2026-08-28T18:23:20.990Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:23:21.100Z] [INFO] Seeding database with realistic hospital staff, doctors, kiosks, and demo patient records...
+[2026-08-28T18:23:21.813Z] [INFO] Created 4 demo accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org (Password: admin123 / doctor123 / staff123)
+[2026-08-28T18:23:21.848Z] [INFO] Database seeding completed successfully.
+[2026-08-28T18:23:21.852Z] [INFO] ==================================================
+[2026-08-28T18:23:21.853Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:23:21.854Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:23:21.856Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:23:21.857Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:23:21.858Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:23:21.858Z] [INFO] ==================================================
+[2026-08-28T18:23:41.715Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:23:41.795Z] [INFO] Database already contains records. Skipping initial seeding.
+[2026-08-28T18:23:41.800Z] [INFO] ==================================================
+[2026-08-28T18:23:41.802Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:23:41.803Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:23:41.804Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:23:41.806Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:23:41.807Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:23:41.808Z] [INFO] ==================================================
+[2026-08-28T18:28:56.662Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:28:56.717Z] [INFO] Database already contains records. Skipping initial seeding.
+[2026-08-28T18:28:57.181Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:28:57.255Z] [INFO] Database already contains records. Skipping initial seeding.
+[2026-08-28T18:28:57.262Z] [INFO] ==================================================
+[2026-08-28T18:28:57.270Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:28:57.277Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:28:57.283Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:28:57.301Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:28:57.313Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:28:57.336Z] [INFO] ==================================================
+[2026-08-28T18:29:35.365Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:29:35.424Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:29:35.839Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:29:35.855Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:29:35.861Z] [INFO] ==================================================
+[2026-08-28T18:29:35.871Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:29:35.882Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:29:35.895Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:29:35.911Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:29:35.917Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:29:35.919Z] [INFO] ==================================================
+[2026-08-28T18:29:41.977Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:29:42.026Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:29:42.389Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:29:42.396Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:30:05.690Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:30:05.733Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:30:06.117Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:30:06.124Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:30:06.127Z] [INFO] ==================================================
+[2026-08-28T18:30:06.128Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:30:06.129Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:30:06.129Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:30:06.131Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:30:06.132Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:30:06.133Z] [INFO] ==================================================
+[2026-08-28T18:30:16.296Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:30:16.332Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:30:16.583Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:30:16.586Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:30:16.593Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:30:16.606Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:30:16.969Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:30:16.980Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:30:16.985Z] [INFO] ==================================================
+[2026-08-28T18:30:16.985Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:30:16.986Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:30:16.986Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:30:16.987Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:30:16.987Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:30:16.987Z] [INFO] ==================================================
+[2026-08-28T18:30:30.566Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:30:40.704Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:30:40.743Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:30:41.116Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:30:41.128Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:30:41.318Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:30:41.343Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:30:41.351Z] [INFO] Processing OCR for document: test_rx.jpg (image/jpeg)
+[2026-08-28T18:30:41.352Z] [INFO] Starting offline sync reconciliation for Kiosk KIOSK-01. Total items: 1
+[2026-08-28T18:30:41.373Z] [INFO] Sync reconciliation complete for Kiosk KIOSK-01. Synced: 1, Failed: 0
+[2026-08-28T18:30:41.790Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:30:41.801Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:30:41.805Z] [INFO] ==================================================
+[2026-08-28T18:30:41.806Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:30:41.807Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:30:41.808Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:30:41.809Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:30:41.809Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:30:41.809Z] [INFO] ==================================================
+[2026-08-28T18:30:53.909Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:30:53.955Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:30:54.279Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:30:54.286Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:32:26.689Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:32:26.767Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:32:27.317Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:32:27.338Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:32:27.346Z] [INFO] ==================================================
+[2026-08-28T18:32:27.348Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:32:27.349Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:32:27.350Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:32:27.351Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:32:27.352Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:32:27.353Z] [INFO] ==================================================
+[2026-08-28T18:37:08.926Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:37:08.981Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:37:09.275Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:37:09.281Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:39:59.999Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:40:00.045Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:40:00.315Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:40:00.324Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:40:00.328Z] [INFO] ==================================================
+[2026-08-28T18:40:00.329Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:40:00.329Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:40:00.330Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:40:00.331Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:40:00.331Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:40:00.332Z] [INFO] ==================================================
+[2026-08-28T18:40:55.568Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:40:55.615Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:40:55.928Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:40:55.943Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:40:56.221Z] [INFO] Processing OCR for document: test_rx.jpg (image/jpeg)
+[2026-08-28T18:40:56.222Z] [INFO] Starting offline sync reconciliation for Kiosk KIOSK-01. Total items: 1
+[2026-08-28T18:40:56.227Z] [INFO] Session OFFLINE-SESSION-001 already reconciled. Skipping duplicate.
+[2026-08-28T18:40:56.232Z] [INFO] Sync reconciliation complete for Kiosk KIOSK-01. Synced: 1, Failed: 0
+[2026-08-28T18:41:01.083Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:41:01.138Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:41:01.435Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:41:01.449Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:41:15.353Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:41:15.401Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:41:15.713Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:41:15.721Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:41:15.726Z] [INFO] ==================================================
+[2026-08-28T18:41:15.727Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:41:15.727Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:41:15.728Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:41:15.729Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:41:15.730Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:41:15.730Z] [INFO] ==================================================
+[2026-08-28T18:42:57.678Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:42:57.760Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:42:58.108Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:42:58.117Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:43:27.433Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:43:27.544Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:43:27.921Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:43:27.936Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:44:10.017Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:44:10.074Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:44:10.506Z] [INFO] Created 4 verified user accounts: admin@hospital.org, doctor@hospital.org, cardio@hospital.org, staff@hospital.org
+[2026-08-28T18:44:10.512Z] [INFO] Database seeding & user credentials verification complete.
+[2026-08-28T18:44:24.895Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:44:24.953Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:44:25.520Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-28T18:44:25.535Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-28T18:45:12.788Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:45:12.828Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:45:13.254Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-28T18:45:13.261Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-28T18:45:36.964Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:45:37.016Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:45:37.470Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-28T18:45:37.474Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-28T18:45:37.477Z] [INFO] ==================================================
+[2026-08-28T18:45:37.478Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:45:37.480Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:45:37.484Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:45:37.486Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:45:37.488Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:45:37.490Z] [INFO] ==================================================
+[2026-08-28T18:45:41.036Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:45:41.081Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:45:41.459Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-28T18:45:41.463Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-28T18:45:50.569Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-28T18:45:50.619Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-28T18:45:50.990Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-28T18:45:50.997Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-28T18:45:51.004Z] [INFO] ==================================================
+[2026-08-28T18:45:51.005Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-28T18:45:51.006Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-28T18:45:51.008Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-28T18:45:51.009Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-28T18:45:51.010Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-28T18:45:51.010Z] [INFO] ==================================================
+[2026-08-29T05:51:40.061Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:51:40.117Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:51:40.595Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:51:40.603Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:51:42.535Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:51:42.595Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:51:42.998Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:51:43.004Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:51:43.008Z] [INFO] ==================================================
+[2026-08-29T05:51:43.009Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T05:51:43.009Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T05:51:43.011Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T05:51:43.012Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T05:51:43.014Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T05:51:43.015Z] [INFO] ==================================================
+[2026-08-29T05:51:51.335Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:51:51.378Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:51:51.935Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:51:51.939Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:51:51.942Z] [INFO] ==================================================
+[2026-08-29T05:51:51.942Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T05:51:51.943Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T05:51:51.944Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T05:51:51.944Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T05:51:51.945Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T05:51:51.945Z] [INFO] ==================================================
+[2026-08-29T05:53:46.424Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:53:46.500Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:53:47.099Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:53:47.112Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:54:12.675Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:54:12.730Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:54:13.243Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:54:13.249Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:54:13.255Z] [INFO] ==================================================
+[2026-08-29T05:54:13.256Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T05:54:13.257Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T05:54:13.257Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T05:54:13.258Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T05:54:13.259Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T05:54:13.260Z] [INFO] ==================================================
+[2026-08-29T05:55:07.115Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:55:07.224Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:55:07.725Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:55:07.736Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:55:23.500Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:55:23.571Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:55:24.068Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:55:24.084Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:55:24.092Z] [INFO] ==================================================
+[2026-08-29T05:55:24.093Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T05:55:24.095Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T05:55:24.095Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T05:55:24.096Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T05:55:24.097Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T05:55:24.098Z] [INFO] ==================================================
+[2026-08-29T05:56:44.834Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:56:44.916Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:56:45.387Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:56:45.401Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:56:56.012Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:56:56.139Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:56:56.777Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:56:56.789Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:57:18.772Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:57:18.864Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:57:19.388Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:57:19.398Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:57:19.408Z] [INFO] ==================================================
+[2026-08-29T05:57:19.409Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T05:57:19.410Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T05:57:19.410Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T05:57:19.411Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T05:57:19.413Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T05:57:19.415Z] [INFO] ==================================================
+[2026-08-29T05:59:34.895Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:59:35.006Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:59:35.544Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:59:35.559Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:59:58.153Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T05:59:58.250Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T05:59:58.871Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T05:59:58.882Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T05:59:58.890Z] [INFO] ==================================================
+[2026-08-29T05:59:58.896Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T05:59:58.903Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T05:59:58.925Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T05:59:58.940Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T05:59:58.947Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T05:59:58.958Z] [INFO] ==================================================
+[2026-08-29T06:00:03.083Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:00:03.176Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:00:03.674Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:00:03.685Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:00:15.748Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:00:15.826Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:00:16.386Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:00:16.397Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:00:16.403Z] [INFO] ==================================================
+[2026-08-29T06:00:16.406Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T06:00:16.409Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T06:00:16.410Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T06:00:16.412Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T06:00:16.414Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T06:00:16.417Z] [INFO] ==================================================
+[2026-08-29T06:07:54.539Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:07:54.607Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:07:55.208Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:07:55.213Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:15:27.426Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:15:27.488Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:15:27.930Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:15:27.938Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:16:14.506Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:16:14.597Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:16:15.039Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:16:15.052Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:20:55.713Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:20:55.809Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:20:56.267Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:20:56.276Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:20:56.283Z] [INFO] ==================================================
+[2026-08-29T06:20:56.285Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T06:20:56.287Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T06:20:56.288Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T06:20:56.288Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T06:20:56.289Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T06:20:56.290Z] [INFO] ==================================================
+[2026-08-29T06:22:05.709Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:22:05.785Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:22:06.231Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:22:06.237Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:22:16.565Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:22:16.621Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:22:17.209Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:22:17.226Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:24:24.478Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:24:24.582Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:24:25.134Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:24:25.145Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:24:25.153Z] [INFO] ==================================================
+[2026-08-29T06:24:25.160Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T06:24:25.175Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T06:24:25.191Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T06:24:25.204Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T06:24:25.215Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T06:24:25.221Z] [INFO] ==================================================
+[2026-08-29T06:24:26.919Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:24:26.984Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:24:27.391Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:24:27.397Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:24:39.471Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:24:39.561Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:24:39.984Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:24:39.990Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:24:39.998Z] [INFO] ==================================================
+[2026-08-29T06:24:39.998Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T06:24:39.999Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T06:24:39.999Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T06:24:40.000Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T06:24:40.001Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T06:24:40.002Z] [INFO] ==================================================
+[2026-08-29T06:30:33.848Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:30:33.932Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:30:34.462Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:30:34.480Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:30:56.053Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:30:56.088Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:30:56.669Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:30:56.676Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:32:47.851Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:32:47.928Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:32:48.408Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:32:48.413Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:32:55.847Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:32:55.895Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:32:56.283Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:32:56.289Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:32:56.296Z] [INFO] ==================================================
+[2026-08-29T06:32:56.297Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T06:32:56.297Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T06:32:56.298Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T06:32:56.299Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T06:32:56.300Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T06:32:56.301Z] [INFO] ==================================================
+[2026-08-29T06:36:41.197Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:36:41.241Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:36:41.586Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:36:41.590Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:44:47.859Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:44:47.891Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:44:48.231Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:44:48.236Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:44:48.239Z] [INFO] ==================================================
+[2026-08-29T06:44:48.240Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T06:44:48.240Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T06:44:48.241Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T06:44:48.242Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T06:44:48.243Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T06:44:48.244Z] [INFO] ==================================================
+[2026-08-29T06:51:34.108Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T06:51:34.140Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T06:51:34.465Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T06:51:34.470Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T06:51:34.473Z] [INFO] ==================================================
+[2026-08-29T06:51:34.473Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T06:51:34.474Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T06:51:34.475Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T06:51:34.476Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T06:51:34.476Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T06:51:34.477Z] [INFO] ==================================================
+[2026-08-29T07:03:36.745Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:03:36.800Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:03:37.302Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:03:37.311Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:03:37.316Z] [INFO] ==================================================
+[2026-08-29T07:03:37.322Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:03:37.323Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:03:37.326Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:03:37.337Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:03:37.342Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:03:37.344Z] [INFO] ==================================================
+[2026-08-29T07:05:38.932Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:05:38.956Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:05:39.334Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:05:39.338Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:05:39.341Z] [INFO] ==================================================
+[2026-08-29T07:05:39.341Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:05:39.342Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:05:39.342Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:05:39.343Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:05:39.343Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:05:39.343Z] [INFO] ==================================================
+[2026-08-29T07:06:31.565Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:06:31.614Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:06:32.106Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:06:32.112Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:06:43.510Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:06:43.541Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:06:43.899Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:06:43.904Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:06:43.907Z] [INFO] ==================================================
+[2026-08-29T07:06:43.907Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:06:43.908Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:06:43.908Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:06:43.909Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:06:43.909Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:06:43.910Z] [INFO] ==================================================
+[2026-08-29T07:09:34.494Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:09:34.563Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:09:35.015Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:09:35.024Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:09:51.520Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:09:51.577Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:09:51.939Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:09:51.946Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:09:51.951Z] [INFO] ==================================================
+[2026-08-29T07:09:51.952Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:09:51.953Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:09:51.953Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:09:51.954Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:09:51.955Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:09:51.956Z] [INFO] ==================================================
+[2026-08-29T07:10:02.620Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:10:02.670Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:10:02.993Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:10:02.997Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:10:27.527Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:10:27.576Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:10:28.019Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:10:28.024Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:10:46.767Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:10:46.799Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:10:47.149Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:10:47.153Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:10:47.155Z] [INFO] ==================================================
+[2026-08-29T07:10:47.155Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:10:47.156Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:10:47.156Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:10:47.157Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:10:47.157Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:10:47.158Z] [INFO] ==================================================
+[2026-08-29T07:11:19.487Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:11:19.550Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:11:20.215Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:11:20.222Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:11:20.226Z] [INFO] ==================================================
+[2026-08-29T07:11:20.228Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:11:20.229Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:11:20.231Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:11:20.232Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:11:20.234Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:11:20.240Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:11:20.242Z] [INFO] ==================================================
+[2026-08-29T07:11:28.891Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:11:28.921Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:11:29.260Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:11:29.266Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:11:52.714Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:11:52.783Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:11:53.158Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:11:53.168Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:11:53.175Z] [INFO] ==================================================
+[2026-08-29T07:11:53.177Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:11:53.178Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:11:53.178Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:11:53.179Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:11:53.180Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:11:53.182Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:11:53.183Z] [INFO] ==================================================
+[2026-08-29T07:12:48.393Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:12:48.433Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:12:48.811Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:12:48.818Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:12:48.823Z] [INFO] ==================================================
+[2026-08-29T07:12:48.825Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:12:48.830Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:12:48.842Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:12:48.844Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:12:48.849Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:12:48.854Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:12:48.870Z] [INFO] ==================================================
+[2026-08-29T07:12:59.408Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:12:59.489Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:12:59.979Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:12:59.988Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:12:59.994Z] [WARN] Port 3000 is occupied by another process. Automatically switching to fallback port 3001...
+[2026-08-29T07:12:59.997Z] [INFO] ==================================================
+[2026-08-29T07:12:59.998Z] [INFO] MediKiosk Hospital Intake Server running on port 3001
+[2026-08-29T07:12:59.999Z] [INFO] Kiosk URL:   http://localhost:3001/kiosk
+[2026-08-29T07:13:00.000Z] [INFO] Staff Portal: http://localhost:3001/staff/dashboard
+[2026-08-29T07:13:00.001Z] [INFO] Doctor Queue: http://localhost:3001/doctor/queue
+[2026-08-29T07:13:00.001Z] [INFO] Admin Portal: http://localhost:3001/admin/dashboard
+[2026-08-29T07:13:00.002Z] [INFO] Pharmacy:     http://localhost:3001/pharmacy
+[2026-08-29T07:13:00.002Z] [INFO] ==================================================
+[2026-08-29T07:13:00.003Z] [INFO] ==================================================
+[2026-08-29T07:13:00.004Z] [INFO] MediKiosk Hospital Intake Server running on port 3001
+[2026-08-29T07:13:00.005Z] [INFO] Kiosk URL:   http://localhost:3001/kiosk
+[2026-08-29T07:13:00.006Z] [INFO] Staff Portal: http://localhost:3001/staff/dashboard
+[2026-08-29T07:13:00.008Z] [INFO] Doctor Queue: http://localhost:3001/doctor/queue
+[2026-08-29T07:13:00.008Z] [INFO] Admin Portal: http://localhost:3001/admin/dashboard
+[2026-08-29T07:13:00.009Z] [INFO] Pharmacy:     http://localhost:3001/pharmacy
+[2026-08-29T07:13:00.010Z] [INFO] ==================================================
+[2026-08-29T07:13:57.406Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:13:57.444Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:13:57.817Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:13:57.821Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:13:57.825Z] [INFO] ==================================================
+[2026-08-29T07:13:57.825Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:13:57.825Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:13:57.826Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:13:57.826Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:13:57.826Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:13:57.827Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:13:57.827Z] [INFO] ==================================================
+[2026-08-29T07:14:30.332Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:14:30.367Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:14:30.723Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:14:30.727Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:14:30.730Z] [INFO] ==================================================
+[2026-08-29T07:14:30.730Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:14:30.731Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:14:30.731Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:14:30.731Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:14:30.732Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:14:30.733Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:14:30.733Z] [INFO] ==================================================
+[2026-08-29T07:17:30.928Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:17:30.969Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:17:31.324Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:17:31.332Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:17:31.339Z] [INFO] ==================================================
+[2026-08-29T07:17:31.340Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:17:31.341Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:17:31.342Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:17:31.343Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:17:31.344Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:17:31.345Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:17:31.346Z] [INFO] ==================================================
+[2026-08-29T07:17:46.275Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:17:46.322Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:17:46.697Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:17:46.700Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:17:46.702Z] [WARN] Port 3000 is occupied by another process. Automatically switching to fallback port 3001...
+[2026-08-29T07:17:46.704Z] [INFO] ==================================================
+[2026-08-29T07:17:46.704Z] [INFO] MediKiosk Hospital Intake Server running on port 3001
+[2026-08-29T07:17:46.705Z] [INFO] Kiosk URL:   http://localhost:3001/kiosk
+[2026-08-29T07:17:46.706Z] [INFO] Staff Portal: http://localhost:3001/staff/dashboard
+[2026-08-29T07:17:46.706Z] [INFO] Doctor Queue: http://localhost:3001/doctor/queue
+[2026-08-29T07:17:46.707Z] [INFO] Admin Portal: http://localhost:3001/admin/dashboard
+[2026-08-29T07:17:46.709Z] [INFO] Pharmacy:     http://localhost:3001/pharmacy
+[2026-08-29T07:17:46.712Z] [INFO] ==================================================
+[2026-08-29T07:17:46.713Z] [INFO] ==================================================
+[2026-08-29T07:17:46.714Z] [INFO] MediKiosk Hospital Intake Server running on port 3001
+[2026-08-29T07:17:46.714Z] [INFO] Kiosk URL:   http://localhost:3001/kiosk
+[2026-08-29T07:17:46.715Z] [INFO] Staff Portal: http://localhost:3001/staff/dashboard
+[2026-08-29T07:17:46.715Z] [INFO] Doctor Queue: http://localhost:3001/doctor/queue
+[2026-08-29T07:17:46.716Z] [INFO] Admin Portal: http://localhost:3001/admin/dashboard
+[2026-08-29T07:17:46.716Z] [INFO] Pharmacy:     http://localhost:3001/pharmacy
+[2026-08-29T07:17:46.716Z] [INFO] ==================================================
+[2026-08-29T07:28:39.464Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:28:39.497Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:28:39.884Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:28:39.889Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:28:39.892Z] [INFO] ==================================================
+[2026-08-29T07:28:39.892Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:28:39.893Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:28:39.893Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:28:39.893Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:28:39.894Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:28:39.894Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:28:39.894Z] [INFO] ==================================================
+[2026-08-29T07:29:40.069Z] [INFO] MongoDB Connected successfully to: mongodb://127.0.0.1:27017/medikiosk
+[2026-08-29T07:29:40.149Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:29:40.800Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:29:40.806Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:29:40.812Z] [INFO] ==================================================
+[2026-08-29T07:29:40.813Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:29:40.813Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:29:40.814Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:29:40.814Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:29:40.815Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:29:40.815Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:29:40.816Z] [INFO] ==================================================
+[2026-08-29T07:33:16.873Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:33:17.845Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:33:18.791Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:33:18.970Z] [INFO] ==================================================
+[2026-08-29T07:33:18.975Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:33:18.990Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:33:18.993Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:33:18.998Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:33:19.012Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:33:19.026Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:33:19.030Z] [INFO] ==================================================
+[2026-08-29T07:34:13.158Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:34:14.158Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:34:14.940Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:34:15.019Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:34:15.024Z] [INFO] ==================================================
+[2026-08-29T07:34:15.025Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:34:15.026Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:34:15.027Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:34:15.028Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:34:15.029Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:34:15.030Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:34:15.031Z] [INFO] ==================================================
+[2026-08-29T07:34:24.995Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:34:26.011Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:34:27.229Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:34:27.322Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:34:27.348Z] [INFO] ==================================================
+[2026-08-29T07:34:27.355Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:34:27.358Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:34:27.361Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:34:27.365Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:34:27.379Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:34:27.387Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:34:27.401Z] [INFO] ==================================================
+[2026-08-29T07:35:03.547Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:35:04.626Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:35:05.543Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:35:05.628Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:35:05.632Z] [INFO] ==================================================
+[2026-08-29T07:35:05.634Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:35:05.635Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:35:05.636Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:35:05.637Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:35:05.637Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:35:05.638Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:35:05.640Z] [INFO] ==================================================
+[2026-08-29T07:36:05.961Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:36:06.994Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:36:08.273Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:36:08.370Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:36:08.392Z] [INFO] ==================================================
+[2026-08-29T07:36:08.396Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:36:08.409Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:36:08.417Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:36:08.436Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:36:08.456Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:36:08.465Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:36:08.484Z] [INFO] ==================================================
+[2026-08-29T07:36:23.866Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:36:24.424Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:36:25.346Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:36:25.430Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:36:25.436Z] [INFO] ==================================================
+[2026-08-29T07:36:25.437Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:36:25.438Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:36:25.439Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:36:25.440Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:36:25.442Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:36:25.443Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:36:25.445Z] [INFO] ==================================================
+[2026-08-29T07:37:11.560Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:37:12.519Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:37:13.556Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:37:13.632Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:37:13.635Z] [INFO] ==================================================
+[2026-08-29T07:37:13.636Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:37:13.636Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:37:13.637Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:37:13.637Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:37:13.638Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:37:13.638Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:37:13.638Z] [INFO] ==================================================
+[2026-08-29T07:40:17.865Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:40:18.892Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:40:20.000Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:40:20.102Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:40:20.114Z] [INFO] ==================================================
+[2026-08-29T07:40:20.115Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:40:20.119Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:40:20.121Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:40:20.122Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:40:20.124Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:40:20.125Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:40:20.126Z] [INFO] ==================================================
+[2026-08-29T07:40:43.476Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:40:44.015Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:40:44.846Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:40:44.935Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:40:44.940Z] [WARN] Port 3000 is occupied by another process. Automatically switching to fallback port 3001...
+[2026-08-29T07:40:44.942Z] [INFO] ==================================================
+[2026-08-29T07:40:44.943Z] [INFO] MediKiosk Hospital Intake Server running on port 3001
+[2026-08-29T07:40:44.944Z] [INFO] Kiosk URL:   http://localhost:3001/kiosk
+[2026-08-29T07:40:44.944Z] [INFO] Staff Portal: http://localhost:3001/staff/dashboard
+[2026-08-29T07:40:44.945Z] [INFO] Doctor Queue: http://localhost:3001/doctor/queue
+[2026-08-29T07:40:44.946Z] [INFO] Admin Portal: http://localhost:3001/admin/dashboard
+[2026-08-29T07:40:44.947Z] [INFO] Pharmacy:     http://localhost:3001/pharmacy
+[2026-08-29T07:40:44.948Z] [INFO] ==================================================
+[2026-08-29T07:40:44.950Z] [INFO] ==================================================
+[2026-08-29T07:40:44.952Z] [INFO] MediKiosk Hospital Intake Server running on port 3001
+[2026-08-29T07:40:44.953Z] [INFO] Kiosk URL:   http://localhost:3001/kiosk
+[2026-08-29T07:40:44.953Z] [INFO] Staff Portal: http://localhost:3001/staff/dashboard
+[2026-08-29T07:40:44.954Z] [INFO] Doctor Queue: http://localhost:3001/doctor/queue
+[2026-08-29T07:40:44.954Z] [INFO] Admin Portal: http://localhost:3001/admin/dashboard
+[2026-08-29T07:40:44.955Z] [INFO] Pharmacy:     http://localhost:3001/pharmacy
+[2026-08-29T07:40:44.955Z] [INFO] ==================================================
+[2026-08-29T07:41:07.503Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:41:08.467Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:41:09.544Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:41:09.635Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:41:09.648Z] [INFO] ==================================================
+[2026-08-29T07:41:09.649Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:41:09.650Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:41:09.653Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:41:09.655Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:41:09.656Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:41:09.657Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:41:09.660Z] [INFO] ==================================================
+[2026-08-29T07:42:29.485Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:42:30.039Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:42:31.061Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:42:31.134Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:42:31.142Z] [INFO] ==================================================
+[2026-08-29T07:42:31.144Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:42:31.146Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:42:31.146Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:42:31.151Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:42:31.155Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:42:31.156Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:42:31.161Z] [INFO] ==================================================
+[2026-08-29T07:44:02.801Z] [INFO] MongoDB Connected successfully to: mongodb+srv://mistu3490_db_user:xumLe03uMHx6uzzB@cluster0.71htlre.mongodb.net/medikiosk
+[2026-08-29T07:44:03.330Z] [INFO] Resetting users with clean single-hashed passwords...
+[2026-08-29T07:44:04.276Z] [INFO] Created 5 verified user accounts (Admin, Doctors, Staff, Pharmacist).
+[2026-08-29T07:44:04.352Z] [INFO] Database seeding & sample consultation/pharmacy records verified.
+[2026-08-29T07:44:04.356Z] [INFO] ==================================================
+[2026-08-29T07:44:04.357Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-08-29T07:44:04.357Z] [INFO] Kiosk URL:   http://localhost:3000/kiosk
+[2026-08-29T07:44:04.358Z] [INFO] Staff Portal: http://localhost:3000/staff/dashboard
+[2026-08-29T07:44:04.358Z] [INFO] Doctor Queue: http://localhost:3000/doctor/queue
+[2026-08-29T07:44:04.359Z] [INFO] Admin Portal: http://localhost:3000/admin/dashboard
+[2026-08-29T07:44:04.359Z] [INFO] Pharmacy:     http://localhost:3000/pharmacy
+[2026-08-29T07:44:04.360Z] [INFO] ==================================================

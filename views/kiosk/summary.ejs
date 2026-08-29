@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+<div class="container-fluid min-vh-100 d-flex flex-column justify-content-between p-4">
+  <div class="text-center my-auto">
+    <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5 mx-auto" style="max-width: 680px;">
+      <div class="bg-success-subtle text-success d-inline-flex p-3 rounded-circle mb-3 mx-auto"><i class="bi bi-check-circle-fill" style="font-size: 3.5rem;"></i></div>
+      <h2 class="fw-bold text-dark mb-1">Intake Completed Successfully!</h2>
+      <p class="text-muted mb-4">Your symptoms and medical history have been securely structured for the doctor.</p>
+      <div class="p-4 bg-light border-2 border-primary rounded-4 border mb-4">
+        <span class="text-muted fw-semibold small text-uppercase">Your OPD Consultation Token</span>
+        <div class="display-2 fw-bold text-primary my-2"><%= patient.tokenNumber %></div>
+        <div class="d-flex justify-content-center gap-3 text-muted small">
+          <span><strong>UHID:</strong> <%= patient.uhid %></span>
+          <span>&bull;</span>
+          <span><strong>Patient:</strong> <%= patient.fullName %></span>
+        </div>
+      </div>
+      <div class="text-start bg-white p-3 rounded-3 border mb-4">
+        <div class="fw-bold text-dark mb-1"><i class="bi bi-geo-alt-fill text-danger me-1"></i> Where to proceed:</div>
+        <p class="small text-muted mb-0">Please proceed to <strong>OPD Room 104 (General Medicine & Triage Desk)</strong>. Watch the queue monitor for token: <strong><%= patient.tokenNumber %></strong>.</p>
+      </div>
+      <div class="d-flex flex-wrap gap-2 justify-content-center">
+        <button class="btn btn-primary touch-btn-lg px-4" onclick="window.print()"><i class="bi bi-printer me-2"></i> Print Token Slip</button>
+        <a href="/kiosk" class="btn btn-outline-secondary touch-btn-lg px-4"><i class="bi bi-house me-2"></i> Done / New Patient</a>
+      </div>
+    </div>
+  </div>
+  <div class="text-center text-muted small py-2">MediKiosk &bull; AI-Assisted Clinical History Management</div>
+</div>
+<%- include('../partials/footer') %>

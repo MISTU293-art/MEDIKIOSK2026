@@ -1,0 +1,105 @@
+﻿<%- include('../partials/header') %>
+<div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-4" style="background: radial-gradient(circle at 50% 20%, #fffbf0 0%, #f8fafc 80%);">
+  <div class="card shadow-lg border-0 rounded-4 overflow-hidden bg-white" style="max-width: 500px; width: 100%;">
+    <div class="gov-tricolor-bar" style="height: 6px;"></div>
+
+    <div class="p-4 p-md-5">
+      <div class="text-center mb-4">
+        <div class="d-inline-flex p-3 rounded-circle mb-2" style="background: #e0f2fe;">
+          <i class="bi bi-flower1 fs-1 text-primary"></i>
+        </div>
+        <h3 class="fw-bold text-dark m-0">Institutional Access</h3>
+        <p class="text-muted small m-0 mt-1">Ministry of AYUSH &bull; Smart India Hackathon Prototype</p>
+      </div>
+
+      <% if (typeof logged_out !== 'undefined' && logged_out) { %>
+        <div class="alert alert-success alert-dismissible fade show small rounded-3 mb-3" role="alert">
+          <i class="bi bi-check-circle-fill me-1"></i> You have logged out securely. Your session has ended.
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% } %>
+
+      <% if (typeof expired !== 'undefined' && expired) { %>
+        <div class="alert alert-warning small rounded-3 mb-3">
+          <i class="bi bi-clock-history me-1"></i> Session expired. Please log in again.
+        </div>
+      <% } %>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger small rounded-3 mb-3">
+          <i class="bi bi-exclamation-triangle-fill me-1"></i> <%= error %>
+        </div>
+      <% } %>
+
+      <form action="/auth/login" method="POST" id="loginForm">
+        <input type="hidden" name="redirect" value="<%= typeof redirect !== 'undefined' ? redirect : '' %>">
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold small text-uppercase">Institutional Email *</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border"><i class="bi bi-envelope text-primary"></i></span>
+            <input type="email" name="email" id="loginEmail" class="form-control" placeholder="doctor@hospital.org" required autofocus>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold small text-uppercase">Password *</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border"><i class="bi bi-lock text-primary"></i></span>
+            <input type="password" name="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-pill shadow-sm">
+          <i class="bi bi-box-arrow-in-right me-1"></i> Authorize & Enter Portal
+        </button>
+      </form>
+
+      <!-- Instant One-Click Demo Access Cards -->
+      <div class="mt-4 pt-3 border-top">
+        <div class="text-muted small fw-bold mb-2 text-center text-uppercase" style="font-size: 0.75rem;">
+          <i class="bi bi-person-badge-fill me-1 text-primary"></i> Instant 1-Click Demo Login:
+        </div>
+        <div class="d-grid gap-2">
+          <div class="row g-2">
+            <div class="col-6">
+              <button type="button" class="btn btn-outline-primary btn-sm w-100 rounded-pill py-2 text-start px-3" onclick="autoLogin('doctor@hospital.org', 'doctor123')">
+                <i class="bi bi-stethoscope me-1"></i> <strong>Doctor</strong>
+              </button>
+            </div>
+            <div class="col-6">
+              <button type="button" class="btn btn-outline-info btn-sm w-100 rounded-pill py-2 text-start px-3 text-dark" onclick="autoLogin('staff@hospital.org', 'staff123')">
+                <i class="bi bi-person-workspace me-1"></i> <strong>Staff Triage</strong>
+              </button>
+            </div>
+            <div class="col-6">
+              <button type="button" class="btn btn-outline-success btn-sm w-100 rounded-pill py-2 text-start px-3" onclick="autoLogin('pharmacy@hospital.org', 'pharmacy123')">
+                <i class="bi bi-capsule me-1"></i> <strong>Pharmacy</strong>
+              </button>
+            </div>
+            <div class="col-6">
+              <button type="button" class="btn btn-outline-danger btn-sm w-100 rounded-pill py-2 text-start px-3" onclick="autoLogin('admin@hospital.org', 'admin123')">
+                <i class="bi bi-shield-lock me-1"></i> <strong>Superadmin</strong>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-3">
+        <a href="/kiosk" class="text-decoration-none small text-muted">
+          <i class="bi bi-arrow-left me-1"></i> Return to Patient Kiosk
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function autoLogin(email, pwd) {
+  document.getElementById('loginEmail').value = email;
+  document.getElementById('loginPassword').value = pwd;
+  document.getElementById('loginForm').submit();
+}
+</script>
+<%- include('../partials/footer') %>

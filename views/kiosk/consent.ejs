@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+<div class="container-fluid min-vh-100 d-flex flex-column justify-content-between p-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <a href="/kiosk" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-arrow-left me-1"></i> <%= strings.back %></a>
+    <span class="badge bg-primary fs-6 px-3 py-2 rounded-pill"><i class="bi bi-shield-lock-fill me-1"></i> Patient Consent & Privacy</span>
+  </div>
+  <div class="kiosk-container my-auto" style="max-width: 800px;">
+    <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5">
+      <div class="text-center mb-4">
+        <div class="bg-primary-subtle text-primary d-inline-flex p-3 rounded-circle mb-3"><i class="bi bi-file-earmark-check fs-1"></i></div>
+        <h2 class="fw-bold text-dark"><% if (lang === 'hi') { %>मरीज डिजिटल सहमति पत्र<% } else if (lang === 'bn') { %>রোগীর ডিজিটাল সম্মতি পত্র<% } else { %>Patient Digital Consent & Terms<% } %></h2>
+        <p class="text-muted"><% if (lang === 'hi') { %>कृपया आगे बढ़ने से पहले नियमों को ध्यान से पढ़ें और सहमति दें।<% } else if (lang === 'bn') { %>অনুগ্রহ করে এগিয়ে যাওয়ার আগে শর্তাবলী পড়ুন এবং সম্মতি প্রদান করুন।<% } else { %>Please review the clinical intake consent conditions before proceeding.<% } %></p>
+      </div>
+      <div class="alert alert-info border-info d-flex align-items-start gap-3 p-3 rounded-3 mb-4">
+        <i class="bi bi-info-circle-fill fs-4 text-info flex-shrink-0 mt-1"></i>
+        <div class="small"><strong>AI Safety Notice:</strong> MediKiosk organizes and summarizes reported complaints. The system <strong>does not diagnose or prescribe</strong>. Final decisions are made by your doctor.</div>
+      </div>
+      <div class="d-flex flex-column gap-3 mb-4">
+        <div class="p-3 border rounded-3 bg-light">
+          <div class="form-check fs-5">
+            <input class="form-check-input" type="checkbox" id="consentMedical" checked required>
+            <label class="form-check-label fw-bold text-dark" for="consentMedical">1. Consent to share symptoms and medical history with the clinical team.</label>
+          </div>
+        </div>
+        <div class="p-3 border rounded-3 bg-light">
+          <div class="form-check fs-5">
+            <input class="form-check-input" type="checkbox" id="consentVoice" checked>
+            <label class="form-check-label fw-bold text-dark" for="consentVoice">2. Separate consent for push-to-talk voice recording & transcription (Optional).</label>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary touch-btn-lg w-100 shadow" onclick="proceedToIntake()"><span><%= strings.startIntake %></span><i class="bi bi-arrow-right fs-4"></i></button>
+    </div>
+  </div>
+  <div class="text-center text-muted small py-2">MediKiosk &bull; Patient Data Protection Compliant</div>
+</div>
+<script>
+function proceedToIntake() {
+  const med = document.getElementById('consentMedical').checked;
+  const voice = document.getElementById('consentVoice').checked;
+  if (!med) return alert('Medical data sharing consent is required.');
+  window.location.href = '/kiosk/intake?lang=<%= lang %>&kioskId=<%= kioskId %>&sessionToken=<%= sessionToken %>&voiceConsent=' + voice;
+}
+</script>
+<%- include('../partials/footer') %>

@@ -1,0 +1,125 @@
+<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+        <div>
+          <h2 class="fw-bold m-0"><i class="bi bi-file-earmark-medical text-primary me-2"></i>Side-by-Side OCR Verification Tool</h2>
+          <p class="text-muted m-0">Human-in-the-Loop Document Verification before insertion into clinical timeline</p>
+        </div>
+        <% if (pendingDocs && pendingDocs.length > 0) { %>
+          <div class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown">
+              Switch Document (<%= pendingDocs.length %> Pending)
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <% pendingDocs.forEach(d => { %>
+                <li><a class="dropdown-item" href="/staff/ocr-verify/<%= d._id %>"><%= d.originalName %> (<%= d.docType %>)</a></li>
+              <% }) %>
+            </ul>
+          </div>
+        <% } %>
+      </div>
+
+      <% if (!document) { %>
+        <div class="card shadow-sm p-5 text-center my-4 bg-white rounded-4 border-0">
+          <i class="bi bi-check2-all text-success mb-3" style="font-size: 3rem;"></i>
+          <h4 class="fw-bold">No Pending OCR Documents to Verify</h4>
+          <p class="text-muted">All uploaded patient prescriptions and reports have been human-verified.</p>
+          <a href="/staff/dashboard" class="btn btn-primary rounded-pill px-4 mx-auto">Return to Reception Queue</a>
+        </div>
+      <% } else { %>
+        <div class="alert alert-warning border-warning d-flex align-items-center gap-2 mb-3 py-2 rounded-3">
+          <i class="bi bi-shield-lock-fill fs-5 text-warning"></i>
+          <div class="small">
+            <strong>PRD v2 Safety Rule:</strong> OCR extractions are treated strictly as <em>DRAFT</em> until confirmed side-by-side by staff. Verify drug names and dosages against the source image.
+          </div>
+        </div>
+
+        <div class="ocr-viewer-container">
+          <div class="ocr-doc-panel shadow-sm">
+            <img src="<%= document.fileUrl %>" alt="Prescription Image" id="docImage">
+          </div>
+
+          <div class="ocr-form-panel shadow-sm">
+            <form id="ocrVerifyForm">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold m-0 text-primary"><i class="bi bi-pencil-square me-1"></i>Extracted Structured Draft</h5>
+                <span class="badge bg-warning text-dark text-uppercase"><%= document.ocrStatus %></span>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label fw-bold small">Doctor / Clinic Name:</label>
+                <input type="text" name="doctorName" class="form-control form-control-sm" value="<%= document.verifiedData ? (document.verifiedData.doctorName || '') : '' %>">
+              </div>
+
+              <div class="row g-2 mb-2">
+                <div class="col-6">
+                  <label class="form-label fw-bold small">Hospital / Clinic Facility:</label>
+                  <input type="text" name="clinicHospitalName" class="form-control form-control-sm" value="<%= document.verifiedData ? (document.verifiedData.clinicHospitalName || '') : '' %>">
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold small">Date on Record:</label>
+                  <input type="text" name="dateOnRecord" class="form-control form-control-sm" value="<%= document.verifiedData ? (document.verifiedData.dateOnRecord || '') : '' %>">
+                </div>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label fw-bold small">Extracted Diagnosis / Condition:</label>
+                <input type="text" name="extractedDiagnosis" class="form-control form-control-sm" value="<%= document.verifiedData ? (document.verifiedData.extractedDiagnosis || '') : '' %>">
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label fw-bold small">Extracted Medications List:</label>
+                <textarea name="medicationsList" class="form-control form-control-sm" rows="4"><% if (document.verifiedData && Array.isArray(document.verifiedData.medicationsList)) { %><% document.verifiedData.medicationsList.forEach(m => { %><%= m %>&#10;<% }) %><% } %></textarea>
+              </div>
+
+              <div class="row g-2 mb-2">
+                <div class="col-4">
+                  <label class="form-label fw-bold small">BP (mmHg):</label>
+                  <input type="text" name="bpValue" class="form-control form-control-sm" value="<%= document.verifiedData && document.verifiedData.labValues ? (document.verifiedData.labValues.BP || '') : '' %>">
+                </div>
+                <div class="col-4">
+                  <label class="form-label fw-bold small">Pulse (bpm):</label>
+                  <input type="text" name="pulseValue" class="form-control form-control-sm" value="<%= document.verifiedData && document.verifiedData.labValues ? (document.verifiedData.labValues.Pulse || '') : '' %>">
+                </div>
+                <div class="col-4">
+                  <label class="form-label fw-bold small">SPO2 (%):</label>
+                  <input type="text" name="spo2Value" class="form-control form-control-sm" value="<%= document.verifiedData && document.verifiedData.labValues ? (document.verifiedData.labValues.SPO2 || '') : '' %>">
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold small">Clinical Advice / Notes:</label>
+                <input type="text" name="clinicalNotes" class="form-control form-control-sm" value="<%= document.verifiedData ? (document.verifiedData.clinicalNotes || '') : '' %>">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold small text-muted">Staff Verification Remarks:</label>
+                <input type="text" name="staffNotes" class="form-control form-control-sm" placeholder="e.g. Verified by Staff Priya - dosages cross-checked">
+              </div>
+
+              <div class="d-flex gap-2">
+                <button type="button" class="btn btn-success fw-bold flex-grow-1 rounded-pill" onclick="verifyDocument('<%= document._id %>', 'verify')">
+                  <i class="bi bi-check-circle-fill me-1"></i> Approve & Save to Timeline
+                </button>
+                <button type="button" class="btn btn-outline-danger fw-bold rounded-pill" onclick="verifyDocument('<%= document._id %>', 'reject')">
+                  <i class="bi bi-x-circle me-1"></i> Reject
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      <% } %>
+    </main>
+  </div>
+</div>
+<script src="/js/ocrReview.js"></script>
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebarMenu').classList.toggle('show');
+}
+</script>
+<%- include('../partials/footer') %>

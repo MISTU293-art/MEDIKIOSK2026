@@ -1,0 +1,23 @@
+﻿<%- include('header') %>
+<div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-5">
+  <div class="card shadow-lg border-0 rounded-4 overflow-hidden text-center bg-white p-5" style="max-width: 600px; width: 100%;">
+    <div class="gov-tricolor-bar" style="height: 5px;"></div>
+    <div class="mt-4">
+      <div class="d-inline-flex p-3 rounded-circle bg-danger-subtle text-danger mb-3">
+        <i class="bi bi-shield-exclamation fs-1"></i>
+      </div>
+      <h3 class="fw-bold text-dark mb-2"><%= typeof title !== 'undefined' ? title : 'Notice' %></h3>
+      <p class="text-muted small mb-4"><%= typeof message !== 'undefined' ? message : 'The requested resource could not be found or processed.' %></p>
+      
+      <div class="d-grid gap-2">
+        <a href="/kiosk" class="btn btn-primary rounded-pill fw-bold py-2 shadow-sm">
+          <i class="bi bi-house-door-fill me-1"></i> Return to Patient Kiosk
+        </a>
+        <a href="/auth/login" class="btn btn-outline-secondary rounded-pill py-2">
+          <i class="bi bi-person-badge me-1"></i> Doctor / Staff Login
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('footer') %>

@@ -1,0 +1,108 @@
+<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold m-0"><i class="bi bi-display text-primary me-2"></i>Kiosk Device Fleet & Hardware Health</h2>
+          <p class="text-muted m-0">Live Network Ping, Power UPS Battery Status & Offline Queue Reconciliation</p>
+        </div>
+        <button class="btn btn-primary shadow-sm rounded-pill px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#addKioskModal">
+          <i class="bi bi-plus-circle-fill me-1"></i> Register New Kiosk
+        </button>
+      </div>
+
+      <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+        <div class="table-responsive">
+          <table class="table table-gov table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Kiosk Terminal</th>
+                <th>Location & Department</th>
+                <th>IP Address</th>
+                <th>Network Heartbeat</th>
+                <th>UPS Power Backup</th>
+                <th>Last Online Ping</th>
+                <th>Offline Sync Queue</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% kiosks.forEach(k => { %>
+                <tr>
+                  <td><span class="badge bg-dark fs-6"><%= k.kioskId %></span></td>
+                  <td><strong><%= k.name %></strong><div class="text-muted small"><%= k.location %> (<%= k.department %>)</div></td>
+                  <td><code><%= k.ipAddress || '192.168.1.100' %></code></td>
+                  <td>
+                    <span class="badge bg-<%= k.status === 'online' ? 'success' : 'danger' %> py-1 px-2">
+                      <i class="bi bi-<%= k.status === 'online' ? 'wifi' : 'wifi-off' %> me-1"></i> <%= k.status.toUpperCase() %>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge bg-<%= k.upsConnected ? 'success' : 'warning text-dark' %> py-1 px-2">
+                      <i class="bi bi-battery-charging me-1"></i> <%= k.upsConnected ? 'UPS Protected' : 'Mains Only' %>
+                    </span>
+                  </td>
+                  <td><%= new Date(k.lastPingAt).toLocaleTimeString() %></td>
+                  <td>
+                    <span class="badge bg-<%= k.pendingOfflineSubmissions > 0 ? 'warning text-dark' : 'secondary' %> py-1 px-2">
+                      <%= k.pendingOfflineSubmissions || 0 %> Pending
+                    </span>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="modal fade" id="addKioskModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold"><i class="bi bi-display me-2"></i>Register New Kiosk Terminal</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <form action="/admin/kiosks/create" method="POST">
+        <div class="modal-body p-4">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Kiosk Identifier (e.g. KIOSK-04) *</label>
+            <input type="text" name="kioskId" class="form-control" placeholder="KIOSK-04" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Terminal Name *</label>
+            <input type="text" name="name" class="form-control" placeholder="Pediatric OPD Kiosk 4" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Physical Location *</label>
+            <input type="text" name="location" class="form-control" placeholder="First Floor, Pediatric Waiting Wing" required>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label fw-semibold">Department</label>
+              <select name="department" class="form-select">
+                <option value="General Medicine">General Medicine</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="AYUSH & Integrative Medicine">AYUSH</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label class="form-label fw-semibold">IP Address (Static/DHCP)</label>
+              <input type="text" name="ipAddress" class="form-control" placeholder="192.168.1.104">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary fw-bold rounded-pill px-4">Register Kiosk</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

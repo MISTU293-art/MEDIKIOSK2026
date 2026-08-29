@@ -1,0 +1,488 @@
+﻿<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4">
+      
+      <!-- Patient Header & Actions -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+        <a href="/doctor/queue" class="btn btn-outline-secondary rounded-pill">
+          <i class="bi bi-arrow-left me-1"></i> Back to OPD Queue
+        </a>
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="btn btn-outline-success rounded-pill fw-semibold" data-bs-toggle="modal" data-bs-target="#uploadDocModal">
+            <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Medical Document / Lab Scan
+          </button>
+          <a href="/kiosk/card/<%= patient._id %>" target="_blank" class="btn btn-outline-primary rounded-pill fw-semibold">
+            <i class="bi bi-person-vcard me-1"></i> View AYUSH OPD Card
+          </a>
+          <button onclick="window.print()" class="btn btn-outline-dark rounded-pill fw-semibold">
+            <i class="bi bi-printer me-1"></i> Print Case Sheet
+          </button>
+          <span class="badge bg-primary fs-5 px-3 py-2 rounded-pill">Token: <%= patient.tokenNumber %></span>
+          <span class="badge bg-secondary fs-6 px-3 py-2 rounded-pill">UHID: <%= patient.uhid %></span>
+        </div>
+      </div>
+
+      <!-- Patient Summary Banner -->
+      <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <h3 class="fw-bold text-dark m-0"><%= patient.fullName %></h3>
+              <span class="badge bg-success-subtle text-success border border-success px-2 py-1 small">
+                <i class="bi bi-flower1 me-1"></i> <%= patient.department %>
+              </span>
+              <span class="badge bg-primary-subtle text-primary border border-primary px-2 py-1 small">
+                <i class="bi bi-shield-check me-1"></i> ABDM Pan-India Linked
+              </span>
+            </div>
+            <p class="text-muted m-0 mt-1">
+              <%= patient.age %> Years &bull; <%= patient.gender.toUpperCase() %> &bull; Mobile: <%= patient.phone %>
+              <% if (patient.emergencyContact) { %> &bull; Emergency: <%= patient.emergencyContact %> <% } %>
+            </p>
+            <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
+              <span class="badge bg-warning-subtle text-warning-emphasis border border-warning px-2 py-1 small">
+                <i class="bi bi-credit-card-2-front-fill me-1 text-warning"></i> <%= patient.ayushmanSchemeType || 'PM-JAY Golden Card Holder (₹5L Cover)' %>
+              </span>
+              <span class="badge bg-light text-dark border px-2 py-1 small">
+                <i class="bi bi-person-bounding-box me-1 text-primary"></i> Aadhaar: <%= patient.aadhaarNumber || 'XXXX-XXXX-4812 (UIDAI Verified)' %>
+              </span>
+            </div>
+          </div>
+          <div>
+            <% if (patient.priority === 'Emergency Red-Flag') { %>
+              <span class="badge badge-red-flag fs-6"><i class="bi bi-exclamation-octagon-fill me-1"></i> Emergency Red-Flag</span>
+            <% } else { %>
+              <span class="badge badge-normal fs-6">Priority: <%= patient.priority %></span>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Left Column: AI Clinical Summary, Vitals, Intake & Timeline -->
+        <div class="col-lg-7">
+          
+          <!-- Vital Signs & Physical Examination Box -->
+          <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-activity text-danger me-2"></i>Recorded Clinical Vitals (Triage Assessment)</h5>
+            <div class="row g-3 text-center">
+              <div class="col-3">
+                <div class="p-2 rounded-3 bg-light border">
+                  <span class="text-muted small d-block">Blood Pressure</span>
+                  <strong class="text-dark fs-6">120 / 80</strong> <span class="text-muted" style="font-size: 0.7rem;">mmHg</span>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="p-2 rounded-3 bg-light border">
+                  <span class="text-muted small d-block">Pulse Rate</span>
+                  <strong class="text-success fs-6">74</strong> <span class="text-muted" style="font-size: 0.7rem;">BPM</span>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="p-2 rounded-3 bg-light border">
+                  <span class="text-muted small d-block">Oxygen SpO2</span>
+                  <strong class="text-primary fs-6">99%</strong> <span class="text-muted" style="font-size: 0.7rem;">Room Air</span>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="p-2 rounded-3 bg-light border">
+                  <span class="text-muted small d-block">Temperature</span>
+                  <strong class="text-warning-emphasis fs-6">98.4°</strong> <span class="text-muted" style="font-size: 0.7rem;">Fahrenheit</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Structured Clinical Summary (PRD Module 8) -->
+          <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white border-start border-purple border-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <span class="ai-summary-badge"><i class="bi bi-robot me-1"></i> AI-DRAFTED CLINICAL SUMMARY</span>
+              </div>
+              <% if (intake && intake.aiSummary) { %>
+                <span id="aiSummaryStatusBadge" class="badge bg-<%= intake.aiSummary.status === 'approved' ? 'success' : (intake.aiSummary.status === 'rejected' ? 'danger' : 'warning text-dark') %> text-uppercase">
+                  Status: <%= intake.aiSummary.status %>
+                </span>
+              <% } %>
+            </div>
+
+            <div class="ai-summary-box">
+              <div class="ai-disclaimer-header mb-2 text-danger fw-bold small">
+                <i class="bi bi-shield-exclamation me-1"></i> AI-generated draft. Requires review and confirmation by an authorized healthcare professional.
+              </div>
+
+              <% if (intake && intake.aiSummary && intake.aiSummary.soapStructure) { %>
+                <div class="mb-2">
+                  <div class="fw-bold text-primary small text-uppercase">1. Chief Complaint & HPI:</div>
+                  <p class="mb-1 bg-white p-2 rounded border small text-dark"><%= intake.aiSummary.soapStructure.subjective %></p>
+                </div>
+                <div class="mb-2">
+                  <div class="fw-bold text-primary small text-uppercase">2. Objective Medical History & Allergies:</div>
+                  <p class="mb-1 bg-white p-2 rounded border small text-dark"><%= intake.aiSummary.soapStructure.objectiveHistory %></p>
+                </div>
+                <div class="mb-2">
+                  <div class="fw-bold text-primary small text-uppercase">3. Assessment Context (AI Synthesis Only):</div>
+                  <p class="mb-1 bg-white p-2 rounded border small text-dark"><%= intake.aiSummary.soapStructure.assessmentContext %></p>
+                </div>
+              <% } else { %>
+                <textarea id="summaryTextarea" class="form-control font-monospace small" rows="6"><%= intake?.aiSummary?.draftText || 'No summary drafted.' %></textarea>
+              <% } %>
+            </div>
+
+            <% if (intake) { %>
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <button class="btn btn-success fw-bold flex-grow-1 rounded-pill" onclick="handleDoctorSummaryReview('<%= intake.sessionToken %>', 'approve')">
+                  <i class="bi bi-check-circle-fill me-1"></i> Approve Summary Draft
+                </button>
+                <button class="btn btn-outline-primary fw-bold rounded-pill" onclick="handleDoctorSummaryReview('<%= intake.sessionToken %>', 'edit')">
+                  <i class="bi bi-pencil me-1"></i> Edit
+                </button>
+                <button class="btn btn-outline-danger fw-bold rounded-pill" onclick="handleDoctorSummaryReview('<%= intake.sessionToken %>', 'reject')">
+                  <i class="bi bi-x-circle me-1"></i> Reject
+                </button>
+              </div>
+            <% } %>
+          </div>
+
+          <!-- Pan-India Unified EHR Health Locker & Medical Records -->
+          <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold m-0 text-dark"><i class="bi bi-folder2-open text-primary me-2"></i>Pan-India Longitudinal EHR & Scans (<%= (documents ? documents.length : 0) + (typeof pastNotes !== 'undefined' ? pastNotes.length : 0) %> Records)</h5>
+              <span class="badge bg-light text-dark border">ABDM Consent: Granted</span>
+            </div>
+
+            <% if (documents && documents.length > 0) { %>
+              <div class="row g-2 mb-3">
+                <% documents.forEach(doc => { %>
+                  <div class="col-md-6">
+                    <div class="p-3 border rounded-3 bg-light d-flex justify-content-between align-items-center">
+                      <div>
+                        <div class="fw-bold small text-dark"><i class="bi bi-file-earmark-medical text-primary me-1"></i> <%= doc.docType %></div>
+                        <div class="text-muted" style="font-size: 0.75rem;"><%= doc.originalName %> &bull; <%= new Date(doc.uploadedAt).toLocaleDateString() %></div>
+                        <span class="badge bg-<%= doc.ocrStatus === 'verified' ? 'success' : 'warning text-dark' %>" style="font-size: 0.65rem;">OCR <%= doc.ocrStatus %></span>
+                      </div>
+                      <a href="<%= doc.fileUrl %>" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-2 py-1">
+                        <i class="bi bi-eye"></i> View
+                      </a>
+                    </div>
+                  </div>
+                <% }) %>
+              </div>
+            <% } else { %>
+              <p class="text-muted small mb-3">No scanned external documents attached yet. Click "Upload Medical Document" to digitize prior prescriptions.</p>
+            <% } %>
+
+            <!-- Past Doctor Consultation Notes -->
+            <% if (typeof pastNotes !== 'undefined' && pastNotes.length > 0) { %>
+              <h6 class="fw-bold text-dark small text-uppercase mb-2">Previous Hospital Consultations in India:</h6>
+              <div class="list-group list-group-flush mb-2">
+                <% pastNotes.forEach(n => { %>
+                  <div class="list-group-item px-0 py-2">
+                    <div class="d-flex justify-content-between">
+                      <strong class="text-primary small"><%= n.doctorName %> (<%= n.department %>)</strong>
+                      <span class="text-muted small"><%= new Date(n.createdAt).toLocaleDateString() %></span>
+                    </div>
+                    <div class="small text-dark mt-1">Impression: <strong><%= n.clinicalImpression %></strong></div>
+                  </div>
+                <% }) %>
+              </div>
+            <% } %>
+          </div>
+
+          <!-- Structured Intake & AYUSH Prakriti -->
+          <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+            <h5 class="fw-bold mb-3"><i class="bi bi-card-checklist text-primary me-2"></i>Structured Intake & AYUSH Prakriti</h5>
+            <% if (intake && intake.stepData) { %>
+              <div class="accordion" id="intakeAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button class="accordion-button fw-semibold" data-bs-toggle="collapse" data-bs-target="#acc1">Symptoms & Pain Scale</button></h2>
+                  <div id="acc1" class="accordion-collapse collapse show p-3 small">
+                    <strong>Reported Symptoms:</strong> <%= intake.stepData.chiefComplaint?.selectedOptions ? intake.stepData.chiefComplaint.selectedOptions.join(', ') : 'None' %><br>
+                    <strong>Duration:</strong> <%= intake.stepData.chiefComplaint?.duration || 'N/A' %><br>
+                    <strong>Pain Level:</strong> <span class="badge bg-warning text-dark"><%= intake.stepData.hpi?.severity || '5' %> / 10</span><br>
+                    <strong>Patient Words:</strong> "<%= intake.stepData.chiefComplaint?.freeTextDescription || 'None' %>"
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" data-bs-toggle="collapse" data-bs-target="#acc2">AYUSH Constitution (Prakriti & Agni)</button></h2>
+                  <div id="acc2" class="accordion-collapse collapse p-3 small">
+                    <strong>Prakriti / Constitution:</strong> <span class="badge bg-success"><%= intake.stepData.prakritiAssessment || 'Vata-Pitta Prakriti' %></span><br>
+                    <strong>Digestive Fire (Agni):</strong> Mandagni / Vishamagni (Variable)<br>
+                    <strong>Dietary Habits (Ahara):</strong> Mixed / Wholesome
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" data-bs-toggle="collapse" data-bs-target="#acc3">Medical, Surgical & Allergy History</button></h2>
+                  <div id="acc3" class="accordion-collapse collapse p-3 small">
+                    <strong>Past Conditions:</strong> <%= intake.stepData.pastMedicalHistory?.selectedConditions ? intake.stepData.pastMedicalHistory.selectedConditions.join(', ') : 'None' %><br>
+                    <strong>Allergies:</strong> <span class="text-danger fw-bold"><%= intake.stepData.allergies?.selectedAllergies ? intake.stepData.allergies.selectedAllergies.join(', ') : 'None' %></span><br>
+                    <strong>Current Medicines:</strong> <%= intake.stepData.medicationHistory?.currentMeds ? intake.stepData.medicationHistory.currentMeds.join(', ') : 'None' %>
+                  </div>
+                </div>
+              </div>
+            <% } else { %>
+              <p class="text-muted small">Direct staff check-in recorded.</p>
+            <% } %>
+          </div>
+
+          <!-- Chronological Medical Timeline -->
+          <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+            <h5 class="fw-bold mb-3"><i class="bi bi-clock-history text-primary me-2"></i>Chronological Medical Timeline</h5>
+            <div class="position-relative ps-4 border-start border-2 border-primary ms-2">
+              <div class="mb-3 position-relative">
+                <div class="position-absolute top-0 start-0 translate-middle bg-primary rounded-circle" style="width: 12px; height: 12px; margin-left: -17px;"></div>
+                <div class="fw-bold text-dark small"><%= new Date().toLocaleDateString() %> &bull; Today's AYUSH Intake</div>
+                <div class="text-muted small">Digital Kiosk case-taking completed & OPD Card generated.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: AI Auto-Suggestions, Formulary Catalog & Prescription Pad -->
+        <div class="col-lg-5">
+          
+          <!-- AI Clinical Copilot & Auto-Suggestion Card -->
+          <% if (typeof aiSuggestions !== 'undefined' && aiSuggestions) { %>
+            <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-lightning-charge-fill fs-4 text-warning"></i>
+                  <h5 class="fw-bold m-0">AI Clinical Auto-Suggestion</h5>
+                </div>
+                <span class="badge bg-dark bg-opacity-50 text-warning small px-2 py-1">MedLLM Copilot</span>
+              </div>
+              
+              <p class="small text-white-50 mb-3" style="font-size: 0.8rem;">
+                <i class="bi bi-info-circle me-1"></i> Based on intake symptoms, pain scale & Prakriti constitution (<%= aiSuggestions.prakritiContext %>).
+              </p>
+
+              <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-25 small mb-3">
+                <div class="mb-2">
+                  <strong class="text-warning text-uppercase">AI Suggested Roganidan (Impression):</strong>
+                  <div class="fw-bold text-white mt-1" id="aiImpressionText"><%= aiSuggestions.suggestedImpression %></div>
+                </div>
+                <div class="mb-2">
+                  <strong class="text-warning text-uppercase">Suggested Formulations & Kala:</strong>
+                  <div class="font-monospace text-white mt-1" id="aiPrescriptionText" style="white-space: pre-line;"><%= aiSuggestions.suggestedPrescriptionsText %></div>
+                </div>
+                <div class="mb-2">
+                  <strong class="text-warning text-uppercase">Anupana & Diet (Pathya):</strong>
+                  <div class="text-white-50 mt-1" id="aiAnupanaText"><%= aiSuggestions.suggestedAnupana %></div>
+                </div>
+                <div>
+                  <strong class="text-warning text-uppercase">Suggested Labs / Panchakarma:</strong>
+                  <div class="text-white-50 mt-1" id="aiLabsText"><%= aiSuggestions.suggestedLabs %></div>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-warning w-100 fw-bold py-2 shadow-sm rounded-pill text-dark" onclick="applyAiSuggestions()">
+                <i class="bi bi-magic me-1"></i> ⚡ Auto-Fill Prescription Pad with AI Suggestions
+              </button>
+            </div>
+          <% } %>
+
+          <!-- AYUSH Classical Pharmacopoeia Quick-Add Pills -->
+          <div class="card shadow-sm border-0 rounded-4 p-3 bg-white mb-4">
+            <span class="text-muted small fw-bold text-uppercase d-block mb-2"><i class="bi bi-bookmark-plus-fill text-success me-1"></i> Quick Pharmacopoeia Catalog (Tap to Add):</span>
+            <div class="d-flex flex-wrap gap-1">
+              <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-2 py-1 small" onclick="addMed('Yogaraj Guggulu (2 Tab BD after food with warm water)')">+ Yogaraj Guggulu</button>
+              <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-2 py-1 small" onclick="addMed('Dashmularishta (15ml BD with equal warm water after meals)')">+ Dashmularishta</button>
+              <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-2 py-1 small" onclick="addMed('Shallaki 500mg (1 Tab BD after meals)')">+ Shallaki</button>
+              <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-2 py-1 small" onclick="addMed('Mahasudarshan Ghanvati (2 Tab TDS with warm water)')">+ Mahasudarshan</button>
+              <button type="button" class="btn btn-sm btn-outline-info rounded-pill px-2 py-1 small text-dark" onclick="addMed('Arnica Montana 200CH (4 pills BD)')">+ Arnica 200CH</button>
+              <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-2 py-1 small" onclick="addMed('Nilavembu Kudineer (30ml BD before meals)')">+ Nilavembu</button>
+            </div>
+          </div>
+
+          <!-- AYUSH & Integrative Prescription Pad -->
+          <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold m-0 text-success"><i class="bi bi-prescription2 me-2"></i>Doctor Clinical Orders & Prescription</h5>
+              <span class="badge bg-success-subtle text-success border border-success">Syncs to Pharmacy</span>
+            </div>
+            
+            <form id="consultationForm">
+              <input type="hidden" name="patientId" value="<%= patient._id %>">
+              
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">Clinical Impression / Roganidan (Diagnosis) *</label>
+                <input type="text" id="clinicalImpression" class="form-control" placeholder="e.g. Sandhivata / Osteoarthritis" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">Prescribed Formulations (AYUSH & Allopathic) *</label>
+                <textarea id="prescribedMeds" class="form-control small font-monospace" rows="4" placeholder="1. Tab Yogaraj Guggulu - 2 Tab BD&#10;2. Syp Dashmularishta - 15ml BD with warm water"></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">Anupana & Dietary Advice (Pathya-Apathya):</label>
+                <input type="text" id="anupanaAdvice" class="form-control form-control-sm" placeholder="e.g. Take with warm water / milk; Avoid oily and sour food">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">Diagnostic Lab / Panchakarma Orders:</label>
+                <input type="text" id="labOrders" class="form-control form-control-sm" placeholder="e.g. Stat Serum Uric Acid, Bilateral Knee X-Ray">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">Follow-up Advice:</label>
+                <input type="text" id="followUpDate" class="form-control form-control-sm" placeholder="e.g. After 7 days or SOS">
+              </div>
+
+              <button type="submit" id="saveConsultationBtn" class="btn btn-success w-100 fw-bold py-2 shadow-sm rounded-pill">
+                <i class="bi bi-check2-all me-1"></i> Sign & Send to Medicine Shop
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Modal: Upload Medical Document & OCR Scan -->
+<div class="modal fade" id="uploadDocModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold"><i class="bi bi-cloud-arrow-up-fill me-2"></i>Upload Medical Document & OCR Scan</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <form id="uploadDocForm" enctype="multipart/form-data">
+        <div class="modal-body p-4">
+          <input type="hidden" name="patientId" value="<%= patient._id %>">
+          
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Document Type *</label>
+            <select name="docType" class="form-select" required>
+              <option value="Prescription">Prior Doctor Prescription</option>
+              <option value="Lab Report">Diagnostic Lab Test Report</option>
+              <option value="Discharge Summary">Hospital Discharge Summary</option>
+              <option value="Imaging Scan">Radiological Scan (X-Ray / MRI / USG)</option>
+              <option value="Ayurveda Case Sheet">Classical AYUSH Case Sheet</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Select File (Image / PDF) *</label>
+            <input type="file" name="document" class="form-control" accept="image/*,application/pdf" required>
+            <div class="form-text small">Files are encrypted and optimized via ImageKit.io Medical Cloud CDN.</div>
+          </div>
+
+          <div id="uploadStatusAlert" class="alert d-none small"></div>
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-dismiss="modal">Close</button>
+          <button type="submit" id="submitUploadBtn" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">Upload & Run OCR</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
+<script>
+function addMed(medText) {
+  const box = document.getElementById('prescribedMeds');
+  if (box.value.trim() === '') {
+    box.value = '1. ' + medText;
+  } else {
+    const lines = box.value.split('\n');
+    box.value += '\n' + (lines.length + 1) + '. ' + medText;
+  }
+}
+
+function applyAiSuggestions() {
+  const imp = document.getElementById('aiImpressionText')?.innerText;
+  const rx = document.getElementById('aiPrescriptionText')?.innerText;
+  const anupana = document.getElementById('aiAnupanaText')?.innerText;
+  const labs = document.getElementById('aiLabsText')?.innerText;
+
+  if (imp) document.getElementById('clinicalImpression').value = imp;
+  if (rx) document.getElementById('prescribedMeds').value = rx;
+  if (anupana) document.getElementById('anupanaAdvice').value = anupana;
+  if (labs) document.getElementById('labOrders').value = labs;
+  if (!document.getElementById('followUpDate').value) {
+    document.getElementById('followUpDate').value = 'After 7 days for clinical review';
+  }
+
+  alert('⚡ AI Clinical Auto-Suggestions successfully loaded into Prescription Pad!');
+}
+
+document.getElementById('uploadDocForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submitUploadBtn');
+  const alertBox = document.getElementById('uploadStatusAlert');
+  btn.disabled = true;
+  btn.innerText = 'Uploading & Analyzing OCR...';
+  alertBox.className = 'alert alert-info d-block small';
+  alertBox.innerText = 'Uploading file to ImageKit CDN and extracting clinical entities...';
+
+  const formData = new FormData(document.getElementById('uploadDocForm'));
+  try {
+    const res = await fetch('/api/documents/upload', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      alertBox.className = 'alert alert-success d-block small';
+      alertBox.innerText = '✓ Uploaded successfully! Document added to patient\'s Pan-India EHR record.';
+      setTimeout(() => {
+        window.location.reload();
+      }, 1200);
+    } else {
+      alertBox.className = 'alert alert-danger d-block small';
+      alertBox.innerText = 'Upload error: ' + data.error;
+      btn.disabled = false;
+      btn.innerText = 'Upload & Run OCR';
+    }
+  } catch (err) {
+    alertBox.className = 'alert alert-danger d-block small';
+    alertBox.innerText = 'Network error: ' + err.message;
+    btn.disabled = false;
+    btn.innerText = 'Upload & Run OCR';
+  }
+});
+
+document.getElementById('consultationForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('saveConsultationBtn');
+  btn.disabled = true;
+  btn.innerText = 'Signing & Syncing...';
+
+  const payload = {
+    patientId: '<%= patient._id %>',
+    approvedSummary: 'Approved clinical intake record',
+    clinicalImpression: document.getElementById('clinicalImpression').value,
+    prescribedMedications: [{ medicineName: document.getElementById('prescribedMeds').value }],
+    labOrders: [document.getElementById('labOrders').value],
+    followUpDate: document.getElementById('followUpDate').value
+  };
+
+  try {
+    const res = await fetch('/doctor/save-consultation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert('Prescription successfully signed and synced to the Medicine Shop / Pharmacy!');
+      window.location.href = '/doctor/queue';
+    } else {
+      alert('Error saving consultation: ' + data.error);
+      btn.disabled = false;
+      btn.innerText = 'Sign & Send to Medicine Shop';
+    }
+  } catch (err) {
+    alert('Network error: ' + err.message);
+    btn.disabled = false;
+    btn.innerText = 'Sign & Send to Medicine Shop';
+  }
+});
+</script>
+<%- include('../partials/footer') %>

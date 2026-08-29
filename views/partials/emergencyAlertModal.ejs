@@ -1,0 +1,28 @@
+<div class="modal fade" id="emergencyAlertModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-danger border-3 shadow-lg">
+      <div class="modal-header bg-danger text-white">
+        <h4 class="modal-title fw-bold">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i> URGENT CLINICAL SAFETY NOTICE
+        </h4>
+      </div>
+      <div class="modal-body text-center p-4">
+        <div class="text-danger mb-3">
+          <i class="bi bi-shield-exclamation" style="font-size: 4rem;"></i>
+        </div>
+        <h3 class="fw-bold text-danger mb-2" id="emergencyRuleName">Critical Symptom Flag Triggered</h3>
+        <p class="fs-5 fw-semibold text-dark mb-4" id="emergencyAlertText">
+          Please inform the nearest hospital staff or reception desk immediately.
+        </p>
+        <div class="alert alert-warning text-start small mb-3">
+          <strong>Safety Boundary Notice:</strong> This rule-based alert was generated automatically from symptom combination checks. Absence of a flag does NOT rule out a medical emergency. Staff must always exercise independent clinical judgment.
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center bg-light">
+        <button type="button" class="btn btn-danger btn-lg px-5 fw-bold" data-bs-dismiss="modal" onclick="window.location.href='/kiosk/summary?sessionToken=' + window.kioskSessionToken + '&emergency=true'">
+          <i class="bi bi-check-circle me-2"></i> I Have Informed Staff / Proceed
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

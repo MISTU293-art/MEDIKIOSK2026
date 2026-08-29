@@ -1,0 +1,217 @@
+<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4">
+      <!-- Pharmacy Header -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="bg-success text-white p-2 rounded-3 shadow-sm">
+              <i class="bi bi-capsule fs-4"></i>
+            </div>
+            <div>
+              <h2 class="fw-bold m-0 text-dark">AYUSH Medicine Shop & Dispensary Hub</h2>
+              <p class="text-muted m-0 small">Prescription Retrieval &bull; AI Drug-Allergy Safety Shield &bull; Point-of-Sale (POS) Dispensation</p>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge bg-success-subtle text-success border border-success px-3 py-2 rounded-pill fw-semibold">
+            <i class="bi bi-shield-check me-1"></i> AI Drug-Allergy Safety Active
+          </span>
+        </div>
+      </div>
+
+      <!-- Quick Patient Lookup Card -->
+      <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+        <h5 class="fw-bold mb-3 text-primary"><i class="bi bi-search me-2"></i>Fetch Doctor's Prescription by Token / UHID / Mobile</h5>
+        <form action="/pharmacy/lookup" method="GET" class="row g-2">
+          <div class="col-md-9">
+            <div class="input-group input-group-lg">
+              <span class="input-group-text bg-light border"><i class="bi bi-upc-scan text-primary"></i></span>
+              <input type="text" name="search" class="form-control" placeholder="Enter Token (e.g. AYUSH-101), UHID, or Patient Mobile" value="<%= typeof query !== 'undefined' && query ? query : '' %>" required>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-success touch-btn-lg w-100 fw-bold shadow-sm rounded-pill">
+              <i class="bi bi-arrow-right-circle me-1"></i> Retrieve Rx
+            </button>
+          </div>
+        </form>
+
+        <!-- Quick Demo Patient Buttons -->
+        <div class="d-flex flex-wrap align-items-center gap-2 mt-3 pt-2 border-top">
+          <span class="text-muted small fw-bold"><i class="bi bi-clock-history me-1"></i> Recent Patients:</span>
+          <% (typeof patients !== 'undefined' && patients ? patients : []).slice(0, 5).forEach(p => { %>
+            <a href="/pharmacy/lookup?search=<%= p.tokenNumber %>" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1">
+              <%= p.tokenNumber %> (<%= p.fullName.split(' ')[0] %>)
+            </a>
+          <% }) %>
+        </div>
+      </div>
+
+      <% if (typeof searchedPatient !== 'undefined' && searchedPatient) { %>
+        <div class="row g-4 mb-4">
+          <!-- Left Column: Patient & Doctor Prescription Details -->
+          <div class="col-lg-7">
+            <div class="card shadow-sm border-0 rounded-4 p-4 bg-white mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex align-items-center gap-2">
+                  <h4 class="fw-bold text-dark m-0"><%= searchedPatient.fullName %></h4>
+                  <span class="badge bg-primary rounded-pill"><%= searchedPatient.tokenNumber %></span>
+                </div>
+                <span class="badge bg-light text-dark border">UHID: <%= searchedPatient.uhid %></span>
+              </div>
+
+              <div class="row g-2 text-muted small mb-3 p-3 bg-light rounded-3">
+                <div class="col-sm-4"><strong>Age/Gender:</strong> <%= searchedPatient.age %> Yrs / <%= searchedPatient.gender ? searchedPatient.gender.toUpperCase() : 'N/A' %></div>
+                <div class="col-sm-4"><strong>Phone:</strong> <%= searchedPatient.phone %></div>
+                <div class="col-sm-4"><strong>Department:</strong> <%= searchedPatient.department %></div>
+              </div>
+
+              <% if (typeof consultation !== 'undefined' && consultation) { %>
+                <div class="p-3 border rounded-3 bg-white mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold text-primary"><i class="bi bi-prescription2 me-1"></i> Doctor Clinical Impression:</span>
+                    <span class="badge bg-success-subtle text-success border border-success"><i class="bi bi-check-all me-1"></i> Signed by <%= consultation.doctorName %></span>
+                  </div>
+                  <p class="fs-6 fw-semibold text-dark mb-3"><%= consultation.clinicalImpression || 'Prescribed for General Health & Wellness' %></p>
+
+                  <h6 class="fw-bold text-dark small text-uppercase">Prescribed Medications:</h6>
+                  <div class="p-3 bg-light rounded-3 font-monospace small text-dark border mb-3" style="white-space: pre-line;">
+                    <% if (consultation.prescribedMedications && consultation.prescribedMedications.length > 0) { %>
+                      <% consultation.prescribedMedications.forEach(m => { %>
+                        &bull; <%= m.medicineName %><br>
+                      <% }) %>
+                    <% } else { %>
+                      1. Yogaraj Guggulu (60 Tabs) - 2 Tabs BD with warm water&#10;2. Dashmularishta (450ml) - 15ml BD after meals
+                    <% } %>
+                  </div>
+
+                  <% if (consultation.followUpDate) { %>
+                    <div class="text-muted small"><strong>Follow-up Advice:</strong> <%= consultation.followUpDate %></div>
+                  <% } %>
+                </div>
+              <% } %>
+            </div>
+          </div>
+
+          <!-- Right Column: AI Allergy Shield & POS Billing Desk -->
+          <div class="col-lg-5">
+            <!-- AI Drug-Allergy Warning Box -->
+            <% if (typeof aiSafety !== 'undefined' && aiSafety) { %>
+              <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 <%= aiSafety.status === 'SAFE' ? 'bg-success-subtle border-success' : 'bg-danger-subtle border-danger' %> border border-2">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <i class="bi <%= aiSafety.status === 'SAFE' ? 'bi-shield-check text-success fs-3' : 'bi-exclamation-triangle-fill text-danger fs-3' %>"></i>
+                  <div>
+                    <h6 class="fw-bold m-0 <%= aiSafety.status === 'SAFE' ? 'text-success' : 'text-danger' %>">AI Drug-Allergy Safety Shield</h6>
+                    <span class="small text-muted"><%= aiSafety.summary %></span>
+                  </div>
+                </div>
+                <% if (aiSafety.contraindications && aiSafety.contraindications.length > 0) { %>
+                  <div class="p-2 bg-white rounded-3 border border-danger small text-danger fw-bold mt-2">
+                    <i class="bi bi-shield-x me-1"></i> <%= aiSafety.contraindications.map(c => c.warning).join(', ') %>
+                  </div>
+                <% } %>
+              </div>
+            <% } %>
+
+            <!-- Point of Sale (POS) Billing Card -->
+            <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold m-0 text-success"><i class="bi bi-receipt me-2"></i>Itemized Dispensation & Bill</h5>
+                <span class="badge bg-primary">POS Active</span>
+              </div>
+
+              <form action="/pharmacy/dispense" method="POST">
+                <input type="hidden" name="patientId" value="<%= searchedPatient._id %>">
+                <input type="hidden" name="uhid" value="<%= searchedPatient.uhid %>">
+                <input type="hidden" name="patientName" value="<%= searchedPatient.fullName %>">
+                <input type="hidden" name="doctorName" value="<%= typeof consultation !== 'undefined' && consultation ? consultation.doctorName : 'Attending Doctor' %>">
+
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Prescribed Items & Quantity:</label>
+                  <div class="input-group input-group-sm mb-2">
+                    <input type="text" name="item_1_name" class="form-control" value="AYUSH Classical Formulation Pack" readonly>
+                    <span class="input-group-text">Qty: 1</span>
+                    <span class="input-group-text">&#8377;180</span>
+                  </div>
+                  <div class="input-group input-group-sm">
+                    <input type="text" name="item_2_name" class="form-control" value="Anupana Herbal Carrier Bottle" readonly>
+                    <span class="input-group-text">Qty: 1</span>
+                    <span class="input-group-text">&#8377;60</span>
+                  </div>
+                </div>
+
+                <div class="p-3 bg-light rounded-3 d-flex justify-content-between align-items-center mb-3 border">
+                  <span class="fw-bold text-dark">Total Bill Amount (INR):</span>
+                  <span class="fs-4 fw-bold text-success">&#8377; 240.00</span>
+                  <input type="hidden" name="totalAmount" value="240">
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 fw-bold py-3 shadow rounded-pill">
+                  <i class="bi bi-printer-fill me-1"></i> Dispense Medicines & Print Receipt
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% } %>
+
+      <!-- Recent Dispensations Table with Search & Pagination -->
+      <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+          <h5 class="fw-bold m-0"><i class="bi bi-clock-history text-primary me-2"></i>Recent Pharmacy Dispensations & Invoices</h5>
+          <div class="input-group" style="max-width: 320px;">
+            <span class="input-group-text bg-light"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="pharmacyTableSearch" class="form-control form-control-sm" placeholder="Search invoice or patient..." oninput="filterTable('pharmacyTable', 'pharmacyTableSearch')">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-gov table-hover align-middle small" id="pharmacyTable">
+            <thead>
+              <tr>
+                <th>Invoice / Time</th>
+                <th>Patient Name</th>
+                <th>UHID</th>
+                <th>Prescribing Doctor</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (!recentDispensations || recentDispensations.length === 0) { %>
+                <tr><td colspan="6" class="text-center py-3 text-muted">No dispensations logged today yet.</td></tr>
+              <% } else { %>
+                <% recentDispensations.forEach(d => { %>
+                  <tr>
+                    <td><code><%= new Date(d.dispensedAt || d.createdAt || Date.now()).toLocaleTimeString() %></code></td>
+                    <td><strong><%= d.patientName %></strong></td>
+                    <td><span class="badge bg-secondary"><%= d.uhid %></span></td>
+                    <td><%= d.doctorName %></td>
+                    <td><strong class="text-success">&#8377; <%= d.totalAmount %></strong></td>
+                    <td><span class="badge bg-success"><i class="bi bi-check2-circle me-1"></i><%= (d.status || 'completed').toUpperCase() %></span></td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div id="pharmacyTablePagination"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/js/pagination.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initTablePagination('pharmacyTable', 'pharmacyTablePagination', 6);
+});
+</script>
+<%- include('../partials/footer') %>

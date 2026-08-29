@@ -1,0 +1,81 @@
+﻿<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold m-0"><i class="bi bi-shield-check text-success me-2"></i>ABDM Compliance & Red-Flag Audit Registry</h2>
+          <p class="text-muted m-0">Statutory Emergency Escalation Records & Patient Safety Trail</p>
+        </div>
+        <span class="badge bg-success-subtle text-success border border-success px-3 py-2 rounded-pill fw-semibold">
+          <i class="bi bi-shield-lock me-1"></i> ABDM Regulatory Guard Active
+        </span>
+      </div>
+
+      <!-- Compliance Table Card -->
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden bg-white mb-4">
+        <div class="p-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2 bg-light">
+          <div class="input-group" style="max-width: 320px;">
+            <span class="input-group-text bg-white border"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="complianceSearchInput" class="form-control bg-white" placeholder="Search audits...">
+          </div>
+          <% const auditList = (typeof audits !== 'undefined' && audits) || (typeof redFlagAudits !== 'undefined' && redFlagAudits) || []; %>
+          <span class="badge bg-danger-subtle text-danger border border-danger px-3 py-2 rounded-pill small">
+            Critical Audits: <%= auditList.length %>
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0" id="complianceTable">
+            <thead class="table-light text-uppercase small" style="font-size: 0.75rem;">
+              <tr>
+                <th class="ps-4">Timestamp</th>
+                <th>Patient UHID</th>
+                <th>Triggered Rule</th>
+                <th>Emergency Symptoms</th>
+                <th>Nurse Acknowledged</th>
+                <th class="text-end pe-4">Clinical Action Taken</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (auditList.length === 0) { %>
+                <tr><td colspan="6" class="text-center py-4 text-muted">No emergency red-flag incidents recorded. System running smoothly.</td></tr>
+              <% } else { %>
+                <% auditList.forEach(a => { %>
+                  <tr>
+                    <td class="ps-4 small text-muted"><%= new Date(a.triggeredAt || a.createdAt).toLocaleString() %></td>
+                    <td><code><%= a.patientUhid || 'UHID-AYUSH' %></code></td>
+                    <td><span class="badge bg-danger text-white"><%= a.ruleName || 'CRITICAL_TRIAGE' %></span></td>
+                    <td class="small text-dark fw-semibold"><%= a.symptoms ? (Array.isArray(a.symptoms) ? a.symptoms.join(', ') : a.symptoms) : 'Acute Distress' %></td>
+                    <td>
+                      <% if (a.acknowledgedBy) { %>
+                        <span class="badge bg-success-subtle text-success border border-success"><i class="bi bi-check-circle me-1"></i> <%= a.acknowledgedBy %></span>
+                      <% } else { %>
+                        <span class="badge bg-warning text-dark"><i class="bi bi-clock me-1"></i> Pending</span>
+                      <% } %>
+                    </td>
+                    <td class="text-end pe-4 small text-muted"><%= a.actionTaken || 'Attended by Triage Team' %></td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-3 border-top d-flex justify-content-between align-items-center bg-light" id="complianceTablePagination"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/js/pagination.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.initTablePagination) {
+    initTablePagination('complianceTable', 'complianceTablePagination', 'complianceSearchInput', 10);
+  }
+});
+</script>
+<%- include('../partials/footer') %>

@@ -1,0 +1,4 @@
+[2026-08-28T18:30:41.341Z] [EMERGENCY_RED_FLAG] RULE_MATCHED: RF-001 for Patient: TEST-UHID-99 {"ruleName":"Possible Acute Coronary Syndrome","severity":"CRITICAL","kioskId":"KIOSK-01"}
+[2026-08-28T18:40:56.216Z] [EMERGENCY_RED_FLAG] RULE_MATCHED: RF-001 for Patient: TEST-UHID-99 {"ruleName":"Possible Acute Coronary Syndrome","severity":"CRITICAL","kioskId":"KIOSK-01"}
+[2026-08-29T06:00:41.818Z] [EMERGENCY_RED_FLAG] RULE_MATCHED: RF-001 for Patient: 6a927589271d6e4afeda8304 {"ruleName":"Possible Acute Coronary Syndrome","severity":"CRITICAL","kioskId":"KIOSK-01"}
+[2026-08-29T06:04:46.967Z] [EMERGENCY_RED_FLAG] RULE_MATCHED: RF-002 for Patient: 6a92767e271d6e4afeda8330 {"ruleName":"Possible Acute Stroke (FAST Criteria)","severity":"CRITICAL","kioskId":"KIOSK-01"}

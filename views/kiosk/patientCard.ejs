@@ -1,0 +1,142 @@
+﻿<%- include('../partials/header') %>
+<div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-4">
+  <div class="card shadow-lg border-0 rounded-4 overflow-hidden bg-white" style="max-width: 680px; width: 100%;">
+    <!-- National Tricolor Bar -->
+    <div class="gov-tricolor-bar" style="height: 6px;"></div>
+
+    <div class="p-4 p-md-5">
+      <!-- Ayushman Bharat & Ministry Header -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <div class="bg-primary text-white p-2 rounded-3">
+            <i class="bi bi-flower1 fs-3 text-warning"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold m-0 text-dark">Ministry of AYUSH</h5>
+            <span class="badge bg-warning text-dark small" style="font-size: 0.65rem; font-weight: 800;">
+              AYUSHMAN BHARAT DIGITAL OPD SLIP
+            </span>
+          </div>
+        </div>
+        <div class="text-end">
+          <span class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill small">
+            <i class="bi bi-shield-check me-1"></i> Valid Today &bull; <%= new Date().toLocaleDateString() %>
+          </span>
+        </div>
+      </div>
+
+      <!-- Ayushman Golden Ribbon Card -->
+      <div class="p-4 rounded-4 shadow-sm mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, #b45309 0%, #d97706 40%, #f59e0b 100%); border: 2px solid #fef3c7;">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <div class="small fw-bold text-warning-subtle text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">
+              <i class="bi bi-credit-card-2-front-fill me-1"></i> <%= patient.ayushmanSchemeType || 'PM-JAY Golden Card Holder (₹5 Lakh Cover)' %>
+            </div>
+            <h2 class="fw-bold m-0 mt-1"><%= patient.fullName %></h2>
+          </div>
+          <div class="text-end">
+            <span class="badge bg-dark bg-opacity-50 text-white fs-6 px-3 py-2 rounded-pill">
+              Token: <%= patient.tokenNumber %>
+            </span>
+          </div>
+        </div>
+
+        <div class="row g-2 mt-2 pt-2 border-top border-warning-subtle border-opacity-50 small">
+          <div class="col-sm-6">
+            <span class="text-white-50">Age / Gender:</span> <strong class="text-white"><%= patient.age %> Years &bull; <%= patient.gender.toUpperCase() %></strong>
+          </div>
+          <div class="col-sm-6">
+            <span class="text-white-50">Mobile:</span> <strong class="text-white"><%= patient.phone %></strong>
+          </div>
+          <div class="col-sm-6">
+            <span class="text-white-50">Aadhaar (UIDAI):</span> <code class="text-white bg-dark bg-opacity-25 px-1 rounded"><%= patient.aadhaarNumber || 'XXXX-XXXX-4812 (Verified)' %></code>
+          </div>
+          <div class="col-sm-6">
+            <span class="text-white-50">ABHA / UHID:</span> <code class="text-white bg-dark bg-opacity-25 px-1 rounded"><%= patient.uhid %></code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Queue & Assigned Doctor / Room Direction -->
+      <div class="p-3 bg-light rounded-4 border mb-4">
+        <div class="row g-3 align-items-center">
+          <div class="col-sm-6 border-end">
+            <span class="text-muted small d-block text-uppercase fw-semibold">Consulting Department</span>
+            <strong class="text-primary fs-6"><%= patient.department %></strong>
+            <div class="small text-dark mt-1">
+              <i class="bi bi-person-badge-fill text-primary me-1"></i>
+              <strong><%= patient.assignedDoctorName || 'Dr. Rajesh Kumar Sharma, BAMS, MD' %></strong>
+            </div>
+            <div class="text-muted" style="font-size: 0.75rem;"><%= patient.assignedDoctorQualification || 'Senior Consultant' %></div>
+          </div>
+          <div class="col-sm-6 text-center text-sm-start ps-sm-3">
+            <span class="text-muted small d-block text-uppercase fw-semibold">Assigned Room / Wing</span>
+            <strong class="text-success fs-5"><i class="bi bi-geo-alt-fill text-danger me-1"></i> <%= patient.roomNumber || 'Room 104, AYUSH Wing A' %></strong>
+            <div class="badge bg-primary-subtle text-primary border mt-1">Slot: Live OPD Queue</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Health Compass & What To Do Next -->
+      <div class="p-3 rounded-4 mb-4 text-white" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-robot fs-4 text-warning"></i>
+            <strong class="text-white">AI Health Compass &bull; What To Do Next:</strong>
+          </div>
+          <span class="badge bg-dark bg-opacity-50 text-warning small">Live Guidance</span>
+        </div>
+        <ul class="list-unstyled mb-0 small text-white-50">
+          <li class="mb-1 text-white"><i class="bi bi-geo-alt-fill text-danger me-1"></i> <strong>Step 1:</strong> Proceed directly to <strong><%= patient.roomNumber || 'Room 104, AYUSH Wing A' %></strong> to meet <strong><%= patient.assignedDoctorName ? patient.assignedDoctorName.split(',')[0] : 'your doctor' %></strong>.</li>
+          <li class="mb-1 text-white"><i class="bi bi-clock-history text-warning me-1"></i> <strong>Step 2:</strong> Estimated Wait Time: <strong>~5 to 8 minutes</strong> (Live Queue Active).</li>
+          <li class="text-white"><i class="bi bi-heart-pulse-fill text-danger me-1"></i> <strong>Step 3:</strong> Drink warm water if available. In case of sudden chest tightness, alert the nearest staff immediately.</li>
+        </ul>
+      </div>
+
+      <!-- Priority & Triage Indicator -->
+      <div class="d-flex justify-content-between align-items-center p-3 rounded-3 border mb-4 bg-white">
+        <div>
+          <span class="text-muted small d-block">Triage Priority Assessment</span>
+          <% if (patient.priority === 'Emergency Red-Flag') { %>
+            <span class="badge badge-red-flag"><i class="bi bi-exclamation-octagon-fill me-1"></i> Emergency Red-Flag (Immediate Attention)</span>
+          <% } else if (patient.priority === 'Urgent') { %>
+            <span class="badge badge-urgent"><i class="bi bi-clock-fill me-1"></i> Urgent Clinical Priority</span>
+          <% } else { %>
+            <span class="badge badge-normal"><i class="bi bi-check-circle-fill text-success me-1"></i> Standard OPD Queue</span>
+          <% } %>
+        </div>
+        <div class="text-end">
+          <span class="text-muted small d-block">Digital ABDM Barcode</span>
+          <div class="font-monospace text-dark" style="letter-spacing: 3px; font-weight: 900; font-size: 1.1rem;">
+            |||| || | |||| ||||
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons (Print & Continue) -->
+      <div class="d-grid gap-2 d-print-none">
+        <button onclick="window.print()" class="btn btn-primary touch-btn-lg fw-bold shadow rounded-pill">
+          <i class="bi bi-printer-fill fs-5 me-1"></i> Print Ayushman OPD Token Slip
+        </button>
+        <div class="row g-2 mt-1">
+          <div class="col-6">
+            <a href="/kiosk" class="btn btn-outline-secondary btn-sm w-100 rounded-pill py-2">
+              <i class="bi bi-house-door-fill me-1"></i> Kiosk Home
+            </a>
+          </div>
+          <div class="col-6">
+            <a href="/pharmacy" class="btn btn-outline-success btn-sm w-100 rounded-pill py-2">
+              <i class="bi bi-capsule me-1"></i> Medicine Shop
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Footer -->
+    <div class="card-footer bg-light py-2 text-center text-muted small border-0">
+      <i class="bi bi-shield-check text-success me-1"></i> Smart India Hackathon &bull; Ayushman Bharat Digital Mission (ABDM) Prototype
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

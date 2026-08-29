@@ -1,0 +1,92 @@
+<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold m-0"><i class="bi bi-stethoscope text-primary me-2"></i>Doctor Consultation Queue</h2>
+          <p class="text-muted m-0">Department: <strong><%= user.department || 'Ayurveda & Integrative Medicine' %></strong> &bull; Clinician: <strong><%= user.name %></strong></p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge bg-primary fs-6 px-3 py-2 rounded-pill"><%= patients.length %> Patients in Queue</span>
+        </div>
+      </div>
+
+      <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+          <h5 class="fw-bold m-0 text-primary"><i class="bi bi-person-lines-fill me-2"></i>Active Patient Queue</h5>
+          <div class="input-group" style="max-width: 320px;">
+            <span class="input-group-text bg-light"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="doctorQueueSearch" class="form-control form-control-sm" placeholder="Filter patient or token..." oninput="filterTable('doctorQueueTable', 'doctorQueueSearch')">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-gov table-hover align-middle" id="doctorQueueTable">
+            <thead>
+              <tr>
+                <th>Priority</th>
+                <th>Token</th>
+                <th>Patient Name</th>
+                <th>Age / Gender</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Consultation Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (patients.length === 0) { %>
+                <tr><td colspan="7" class="text-center py-4 text-muted">No patients currently queued in this department.</td></tr>
+              <% } else { %>
+                <% patients.forEach(p => { %>
+                  <tr class="<%= p.priority === 'Emergency Red-Flag' ? 'table-danger' : '' %>">
+                    <td>
+                      <% if (p.priority === 'Emergency Red-Flag') { %>
+                        <span class="badge badge-red-flag"><i class="bi bi-exclamation-triangle-fill me-1"></i> Red-Flag</span>
+                      <% } else if (p.priority === 'Urgent') { %>
+                        <span class="badge badge-urgent">Urgent</span>
+                      <% } else { %>
+                        <span class="badge badge-normal">Normal</span>
+                      <% } %>
+                    </td>
+                    <td><span class="badge bg-primary fs-6"><%= p.tokenNumber %></span></td>
+                    <td>
+                      <strong><%= p.fullName %></strong>
+                      <div class="text-muted small">UHID: <%= p.uhid %> &bull; Lang: <%= p.preferredLanguage.toUpperCase() %></div>
+                    </td>
+                    <td><%= p.age %> yrs / <%= p.gender %></td>
+                    <td><%= p.phone %></td>
+                    <td>
+                      <% if (p.status === 'completed') { %>
+                        <span class="badge bg-success">Completed</span>
+                      <% } else { %>
+                        <span class="badge bg-warning text-dark">Ready for Review</span>
+                      <% } %>
+                    </td>
+                    <td>
+                      <a href="/doctor/patient/<%= p._id %>" class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                        <i class="bi bi-file-earmark-medical me-1"></i> Open Case File
+                      </a>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div id="doctorQueuePagination"></div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/js/pagination.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initTablePagination('doctorQueueTable', 'doctorQueuePagination', 6);
+});
+</script>
+<%- include('../partials/footer') %>

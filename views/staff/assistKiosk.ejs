@@ -1,0 +1,21 @@
+<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4 text-center">
+      <div class="card shadow-sm p-5 max-w-600 mx-auto bg-white rounded-4 border-0" style="max-width: 600px;">
+        <i class="bi bi-person-workspace text-primary mb-3" style="font-size: 3.5rem;"></i>
+        <h3 class="fw-bold">Staff-Assisted Kiosk Intake</h3>
+        <p class="text-muted">Launch an assisted session to help elderly or low-literacy patients complete intake on a desktop or tablet.</p>
+        <a href="/kiosk" target="_blank" class="btn btn-primary btn-lg px-4 rounded-pill fw-bold shadow"><i class="bi bi-play-circle me-2"></i>Launch Intake Wizard</a>
+      </div>
+    </main>
+  </div>
+</div>
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebarMenu').classList.toggle('show');
+}
+</script>
+<%- include('../partials/footer') %>

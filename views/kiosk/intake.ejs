@@ -1,0 +1,323 @@
+<%- include('../partials/header') %>
+<div class="container-fluid min-vh-100 d-flex flex-column justify-content-between p-3 p-md-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3 bg-white p-3 rounded-4 shadow-sm border">
+    <div class="d-flex align-items-center gap-2">
+      <a href="/kiosk" class="btn btn-outline-secondary rounded-pill btn-sm"><i class="bi bi-x-circle me-1"></i> Exit</a>
+      <span class="badge bg-primary-subtle text-primary border fs-6 px-3 py-1 rounded-pill">Token Session: <%= sessionToken %></span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <button type="button" id="repeatAudioBtn" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-volume-up-fill me-1"></i> <%= strings.repeatAudio %></button>
+      <% if (voiceConsent) { %>
+        <button type="button" id="pushToTalkBtn" class="voice-button btn-sm py-2 px-3 fs-6"><i class="bi bi-mic-fill"></i> <%= strings.holdToSpeak %></button>
+      <% } %>
+    </div>
+  </div>
+
+  <div id="voiceTranscriptNotice" class="alert alert-primary text-center py-2 px-4 rounded-pill shadow-sm mx-auto mb-3" style="display: none; max-width: 600px;"></div>
+
+  <div class="kiosk-container w-100 mb-3" style="max-width: 900px;">
+    <div class="progress" style="height: 14px; border-radius: 10px;">
+      <div id="kioskProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 12%;">Step 1 of 8 (12%)</div>
+    </div>
+  </div>
+
+  <div class="kiosk-container my-auto w-100" style="max-width: 900px;">
+    <!-- STEP 1: Demographics -->
+    <div id="step_1" class="step-card active card shadow-sm border-0 rounded-4 p-4 p-md-5">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="bg-primary text-white p-3 rounded-circle fs-3"><i class="bi bi-person-bounding-box"></i></div>
+        <div>
+          <h3 class="fw-bold m-0 step-title"><%= questionBank.steps[0].title[lang] || questionBank.steps[0].title.en %></h3>
+          <p class="text-muted m-0 step-desc"><%= questionBank.steps[0].description[lang] || questionBank.steps[0].description.en %></p>
+        </div>
+      </div>
+      <hr class="my-3">
+      <div class="row g-3">
+        <div class="col-md-12">
+          <label class="form-label fw-bold"><%= questionBank.steps[0].fields[0].label[lang] || 'Full Name' %> *</label>
+          <input type="text" id="input_fullName" class="form-control form-control-lg" placeholder="e.g. Rajesh Kumar" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold"><%= questionBank.steps[0].fields[1].label[lang] || 'Age' %> *</label>
+          <input type="number" id="input_age" class="form-control form-control-lg" placeholder="Years" min="1" max="120" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold"><%= questionBank.steps[0].fields[2].label[lang] || 'Gender' %> *</label>
+          <div class="d-flex gap-2">
+            <input type="radio" class="btn-check" name="gender" id="gender_m" value="male" checked>
+            <label class="btn btn-outline-primary flex-fill py-2" for="gender_m">Male / पुरुष / পুরুষ</label>
+            <input type="radio" class="btn-check" name="gender" id="gender_f" value="female">
+            <label class="btn btn-outline-primary flex-fill py-2" for="gender_f">Female / महिला / মহিলা</label>
+            <input type="radio" class="btn-check" name="gender" id="gender_o" value="other">
+            <label class="btn btn-outline-primary py-2" for="gender_o">Other</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold"><%= questionBank.steps[0].fields[3].label[lang] || 'Mobile Phone' %> *</label>
+          <input type="tel" id="input_phone" class="form-control form-control-lg" placeholder="10-digit mobile number" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold"><%= questionBank.steps[0].fields[4].label[lang] || 'Emergency Contact' %></label>
+          <input type="tel" id="input_emergencyContact" class="form-control form-control-lg" placeholder="Contact number of family member">
+        </div>
+
+        <!-- Aadhaar & Ayushman Bharat Details -->
+        <div class="col-md-6">
+          <label class="form-label fw-bold text-primary"><i class="bi bi-person-bounding-box me-1"></i> Aadhaar Number (UIDAI - 12 digits)</label>
+          <input type="text" id="input_aadhaarNumber" class="form-control form-control-lg" placeholder="XXXX-XXXX-1234" maxlength="14" value="<%= typeof prefillAadhaar !== 'undefined' ? prefillAadhaar : '' %>">
+          <div class="form-text small text-muted">Masked for privacy compliance</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-bold text-warning-emphasis"><i class="bi bi-credit-card-2-front-fill me-1"></i> Ayushman / ABHA ID (14 digits)</label>
+          <input type="text" id="input_abhaId" class="form-control form-control-lg border-warning" placeholder="91-2345-6789-0123" value="<%= typeof prefillAbha !== 'undefined' ? prefillAbha : '' %>">
+        </div>
+
+        <div class="col-md-12">
+          <label class="form-label fw-bold text-dark"><i class="bi bi-shield-fill-check text-success me-1"></i> Ayushman Scheme Category / Coverage</label>
+          <select id="input_ayushmanSchemeType" class="form-select form-select-lg">
+            <option value="PM-JAY Golden Card (₹5 Lakh Cover)" selected>PM-JAY Golden Card Holder (₹5 Lakh Cover)</option>
+            <option value="State Health Scheme (Swasthya Sathi / MJPJAY)">State Government Health Scheme</option>
+            <option value="ABHA Digital Health Record">ABHA Digital Health Account (Personal)</option>
+            <option value="General OPD Intake">General OPD Citizen Check-in</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Chief Complaint -->
+    <div id="step_2" class="step-card d-none card shadow-sm border-0 rounded-4 p-4 p-md-5">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="bg-primary text-white p-3 rounded-circle fs-3"><i class="bi bi-activity"></i></div>
+        <div>
+          <h3 class="fw-bold m-0 step-title"><%= questionBank.steps[1].title[lang] || questionBank.steps[1].title.en %></h3>
+          <p class="text-muted m-0 step-desc"><%= questionBank.steps[1].description[lang] || questionBank.steps[1].description.en %></p>
+        </div>
+      </div>
+      <hr class="my-3">
+      <div class="mb-4">
+        <label class="form-label fw-bold mb-2">Select Primary Symptoms (Tap all that apply):</label>
+        <div class="row g-3">
+          <% questionBank.steps[1].categories.forEach(cat => { %>
+            <div class="col-md-6">
+              <div class="p-3 border rounded-3 bg-light h-100">
+                <div class="fw-bold text-primary mb-2"><i class="bi <%= cat.icon %> me-1"></i> <%= cat.title[lang] || cat.title.en %></div>
+                <div class="d-flex flex-column gap-2">
+                  <% cat.options.forEach(opt => { %>
+                    <div class="touch-option-card py-2 px-3" onclick="toggleOption(this, 'chiefComplaint', '<%= opt.label.en %>')">
+                      <i class="bi bi-check2-circle fs-4 text-primary"></i>
+                      <span><%= opt.label[lang] || opt.label.en %></span>
+                      <% if (opt.flagWarning) { %><span class="badge bg-danger ms-auto small">Urgent</span><% } %>
+                    </div>
+                  <% }) %>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-bold">How long have you had these symptoms?</label>
+        <div class="row g-2">
+          <% questionBank.steps[1].durationOptions.forEach(dur => { %>
+            <div class="col-6 col-md-3">
+              <div class="touch-option-card text-center justify-content-center py-2" onclick="selectSingleOption(this, 'chiefComplaint', 'duration', '<%= dur.value %>')">
+                <span><%= dur.label[lang] || dur.label.en %></span>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label class="form-label fw-bold">Describe in your own words (or use Hold to Speak):</label>
+        <textarea id="chiefComplaintFreeText" class="form-control" rows="2" placeholder="Tell us more about how you feel..."></textarea>
+      </div>
+    </div>
+
+    <!-- STEP 3: HPI & Pain Scale -->
+    <div id="step_3" class="step-card d-none card shadow-sm border-0 rounded-4 p-4 p-md-5">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="bg-primary text-white p-3 rounded-circle fs-3"><i class="bi bi-clock-history"></i></div>
+        <div>
+          <h3 class="fw-bold m-0 step-title"><%= questionBank.steps[2].title[lang] || questionBank.steps[2].title.en %></h3>
+          <p class="text-muted m-0 step-desc"><%= questionBank.steps[2].description[lang] || questionBank.steps[2].description.en %></p>
+        </div>
+      </div>
+      <hr class="my-3">
+      <div class="mb-4">
+        <label class="form-label fw-bold mb-2"><%= questionBank.steps[2].questions[0].title[lang] || questionBank.steps[2].questions[0].title.en %></label>
+        <div class="row g-3">
+          <% questionBank.steps[2].questions[0].options.forEach(opt => { %>
+            <div class="col-md-6">
+              <div class="touch-option-card py-3" onclick="selectSingleOption(this, 'hpi', 'onset', '<%= opt.value %>')">
+                <i class="bi bi-arrow-right-circle fs-4 text-primary"></i>
+                <span><%= opt.label[lang] || opt.label.en %></span>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-bold mb-2"><%= questionBank.steps[2].questions[1].title[lang] || questionBank.steps[2].questions[1].title.en %></label>
+        <div class="row g-3">
+          <% questionBank.steps[2].questions[1].options.forEach(opt => { %>
+            <div class="col-md-4">
+              <div class="touch-option-card text-center justify-content-center py-3" onclick="selectSingleOption(this, 'hpi', 'progression', '<%= opt.value %>')">
+                <span><%= opt.label[lang] || opt.label.en %></span>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+      <div class="p-4 bg-light rounded-4 border">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <label class="form-label fw-bold fs-5 mb-0">Pain / Discomfort Severity Level:</label>
+          <span id="painScoreBadge" class="badge bg-danger fs-5 px-3 py-2 rounded-pill">5 / 10</span>
+        </div>
+        <input type="range" class="form-range" min="1" max="10" value="5" id="painSlider" oninput="updatePainSlider(this.value)" style="height: 12px;">
+        <div class="d-flex justify-content-between text-muted fw-semibold small mt-2">
+          <span>😊 1 (Mild)</span><span>😐 5 (Moderate)</span><span>😫 8 (Severe)</span><span>🚨 10 (Unbearable)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: PMH -->
+    <div id="step_4" class="step-card d-none card shadow-sm border-0 rounded-4 p-4 p-md-5">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="bg-primary text-white p-3 rounded-circle fs-3"><i class="bi bi-file-medical"></i></div>
+        <div>
+          <h3 class="fw-bold m-0 step-title"><%= questionBank.steps[3].title[lang] || questionBank.steps[3].title.en %></h3>
+          <p class="text-muted m-0 step-desc"><%= questionBank.steps[3].description[lang] || questionBank.steps[3].description.en %></p>
+        </div>
+      </div>
+      <hr class="my-3">
+      <div class="row g-3">
+        <% questionBank.steps[3].conditions.forEach(cond => { %>
+          <div class="col-md-6">
+            <div class="touch-option-card py-3" onclick="toggleOption(this, 'pastMedicalHistory', '<%= cond.label.en %>')">
+              <i class="bi bi-check-square fs-4 text-primary"></i>
+              <span><%= cond.label[lang] || cond.label.en %></span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- STEP 5: Allergies -->
+    <div id="step_5" class="step-card d-none card shadow-sm border-0 rounded-4 p-4 p-md-5">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="bg-danger text-white p-3 rounded-circle fs-3"><i class="bi bi-shield-exclamation"></i></div>
+        <div>
+          <h3 class="fw-bold m-0 step-title text-danger"><%= questionBank.steps[4].title[lang] || questionBank.steps[4].title.en %></h3>
+          <p class="text-muted m-0 step-desc"><%= questionBank.steps[4].description[lang] || questionBank.steps[4].description.en %></p>
+        </div>
+      </div>
+      <hr class="my-3">
+      <div class="alert alert-warning small mb-3"><i class="bi bi-info-circle me-1"></i> Essential Safety Information: Knowing drug allergies prevents dangerous prescription reactions.</div>
+      <div class="row g-3">
+        <% questionBank.steps[4].options.forEach(opt => { %>
+          <div class="col-md-6">
+            <div class="touch-option-card py-3" onclick="toggleOption(this, 'allergies', '<%= opt.label.en %>')">
+              <i class="bi bi-exclamation-circle fs-4 text-danger"></i>
+              <span><%= opt.label[lang] || opt.label.en %></span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- STEP 6: Medications -->
+    <div id="step_6" class="step-card d-none card shadow-sm border-0 rounded-4 p-4 p-md-5">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="bg-primary text-white p-3 rounded-circle fs-3"><i class="bi bi-capsule"></i></div>
+        <div>
+          <h3 class="fw-bold m-0 step-title"><%= questionBank.steps[5].title[lang] || questionBank.steps[5].title.en %></h3>
+          <p class="text-muted m-0 step-desc"><%= questionBank.steps[5].description[lang] || questionBank.steps[5].description.en %></p>
+        </div>
+      </div>
+      <hr class="my-3">
+      <div class="row g-3">
+        <% questionBank.steps[5].categories.forEach(cat => { %>
+          <div class="col-md-6">
+            <div class="touch-option-card py-3" onclick="toggleOption(this, 'medicationHistory', '<%= cat.label.en %>')">
+              <i class="bi bi-capsule-pill fs-4 text-primary"></i>
+              <span><%= cat.label[lang] || cat.label.en %></span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- STEP 7: Family History -->
+    <div id="step_7" class="step-card d-none card shadow-sm border-0 rounded-4 p-4 p-md-5">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="bg-primary text-white p-3 rounded-circle fs-3"><i class="bi bi-people-fill"></i></div>
+        <div>
+          <h3 class="fw-bold m-0 step-title"><%= questionBank.steps[6].title[lang] || questionBank.steps[6].title.en %></h3>
+          <p class="text-muted m-0 step-desc"><%= questionBank.steps[6].description[lang] || questionBank.steps[6].description.en %></p>
+        </div>
+      </div>
+      <hr class="my-3">
+      <div class="row g-3">
+        <% questionBank.steps[6].options.forEach(opt => { %>
+          <div class="col-md-6">
+            <div class="touch-option-card py-3" onclick="toggleOption(this, 'familyHistory', '<%= opt.label.en %>')">
+              <i class="bi bi-diagram-3 fs-4 text-primary"></i>
+              <span><%= opt.label[lang] || opt.label.en %></span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- STEP 8: Lifestyle -->
+    <div id="step_8" class="step-card d-none card shadow-sm border-0 rounded-4 p-4 p-md-5">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="bg-primary text-white p-3 rounded-circle fs-3"><i class="bi bi-heart-pulse"></i></div>
+        <div>
+          <h3 class="fw-bold m-0 step-title"><%= questionBank.steps[7].title[lang] || questionBank.steps[7].title.en %></h3>
+          <p class="text-muted m-0 step-desc"><%= questionBank.steps[7].description[lang] || questionBank.steps[7].description.en %></p>
+        </div>
+      </div>
+      <hr class="my-3">
+      <div class="row g-3 mb-4">
+        <% questionBank.steps[7].options.forEach(opt => { %>
+          <div class="col-md-6">
+            <div class="touch-option-card py-3" onclick="toggleOption(this, 'personalHistory', '<%= opt.label.en %>')">
+              <i class="bi bi-check-circle fs-4 text-primary"></i>
+              <span><%= opt.label[lang] || opt.label.en %></span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <div class="p-3 bg-light rounded-3 border d-flex justify-content-between align-items-center">
+        <div>
+          <div class="fw-bold"><i class="bi bi-paperclip me-1"></i> Have prior paper prescriptions or lab reports?</div>
+          <div class="text-muted small">You can upload photos of your old records before meeting the doctor.</div>
+        </div>
+        <a href="/kiosk/upload?sessionToken=<%= sessionToken %>&lang=<%= lang %>&kioskId=<%= typeof kioskId !== 'undefined' ? kioskId : (typeof kiosk !== 'undefined' && kiosk ? kiosk.kioskId : 'KIOSK-01') %>" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold"><i class="bi bi-camera me-1"></i> Add Documents</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Buttons -->
+  <div class="kiosk-container w-100 mt-3" style="max-width: 900px;">
+    <div class="d-flex justify-content-between align-items-center gap-3">
+      <button type="button" id="prevStepBtn" class="btn btn-outline-secondary touch-btn-lg px-4" onclick="prevStep()"><i class="bi bi-arrow-left fs-4"></i> <span><%= strings.back %></span></button>
+      <button type="button" id="skipStepBtn" class="btn btn-outline-warning touch-btn-lg px-4 text-dark" onclick="skipStep()"><span><%= strings.skip %></span></button>
+      <button type="button" id="nextStepBtn" class="btn btn-primary touch-btn-lg px-5 shadow" onclick="nextStep()"><span><%= strings.next %></span> <i class="bi bi-arrow-right fs-4"></i></button>
+      <button type="button" id="submitIntakeBtn" class="btn btn-success touch-btn-lg px-5 shadow d-none" onclick="submitIntakeForm()"><i class="bi bi-check-circle-fill fs-4"></i> <span><%= strings.submit %></span></button>
+    </div>
+  </div>
+</div>
+<%- include('../partials/emergencyAlertModal') %>
+<script>
+window.kioskLang = '<%= lang %>';
+window.kioskSessionToken = '<%= sessionToken %>';
+window.kioskId = '<%= typeof kioskId !== 'undefined' ? kioskId : (typeof kiosk !== 'undefined' && kiosk ? kiosk.kioskId : 'KIOSK-01') %>';
+window.voiceConsent = <%= voiceConsent %>;
+window.kioskStrings = <%- JSON.stringify(strings) %>;
+</script>
+<script src="/js/voiceAssistant.js"></script>
+<script src="/js/kioskApp.js"></script>
+<%- include('../partials/footer') %>

@@ -1,0 +1,55 @@
+<%- include('../partials/header') %>
+<div class="container-fluid min-vh-100 d-flex flex-column justify-content-between p-4" style="background: radial-gradient(circle at 50% 20%, #fffbf0 0%, #f8fafc 80%);">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex align-items-center gap-3">
+      <div class="bg-primary text-white p-3 rounded-4 shadow-sm"><i class="bi bi-flower1 fs-2 text-warning"></i></div>
+      <div>
+        <h2 class="fw-bold m-0 text-primary">MediKiosk AYUSH</h2>
+        <span class="badge bg-light text-dark border">
+          <i class="bi bi-geo-alt me-1"></i> <%= typeof kiosk !== 'undefined' && kiosk ? kiosk.name : 'Main OPD Kiosk 1' %> &bull; <%= typeof kiosk !== 'undefined' && kiosk ? kiosk.location : 'Ground Floor Wing A' %>
+        </span>
+      </div>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="/pharmacy" class="btn btn-outline-success rounded-pill px-3 fw-semibold"><i class="bi bi-capsule me-1"></i> Pharmacy</a>
+      <a href="/auth/login" class="btn btn-outline-secondary rounded-pill px-3 fw-semibold"><i class="bi bi-person-badge me-1"></i> Doctor Login</a>
+    </div>
+  </div>
+
+  <div class="kiosk-container text-center py-4 my-auto">
+    <div class="badge bg-warning text-dark border px-3 py-2 rounded-pill fs-6 mb-3">
+      <i class="bi bi-shield-check me-1"></i> Smart India Hackathon &bull; Ministry of AYUSH Prototype
+    </div>
+    <h1 class="display-4 fw-bold text-dark mb-2">Welcome &bull; स्वागत है &bull; স্বাগতম</h1>
+    <p class="fs-4 text-muted mb-5">Please select your preferred language to begin / भाषा चुनें / ভাষা নির্বাচন করুন</p>
+
+    <div class="row g-4 justify-content-center" style="max-width: 850px; margin: 0 auto;">
+      <div class="col-md-4">
+        <a href="/kiosk/intake?lang=en" class="btn btn-outline-primary w-100 touch-btn-lg p-4 shadow-sm border-2 text-start flex-column align-items-start h-100 bg-white">
+          <div class="d-flex justify-content-between w-100 mb-2"><span class="fs-2">🇬🇧</span><i class="bi bi-arrow-right-circle fs-3 text-primary"></i></div>
+          <span class="fs-3 fw-bold text-dark">English</span>
+          <span class="text-muted small mt-1">Start intake in English</span>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/kiosk/intake?lang=hi" class="btn btn-outline-warning w-100 touch-btn-lg p-4 shadow-sm border-2 text-start flex-column align-items-start h-100 bg-white">
+          <div class="d-flex justify-content-between w-100 mb-2"><span class="fs-2">🇮🇳</span><i class="bi bi-arrow-right-circle fs-3 text-primary"></i></div>
+          <span class="fs-3 fw-bold text-dark font-devanagari">हिन्दी</span>
+          <span class="text-muted small mt-1">हिंदी में शुरू करें</span>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/kiosk/intake?lang=bn" class="btn btn-outline-info w-100 touch-btn-lg p-4 shadow-sm border-2 text-start flex-column align-items-start h-100 bg-white">
+          <div class="d-flex justify-content-between w-100 mb-2"><span class="fs-2">🇮🇳</span><i class="bi bi-arrow-right-circle fs-3 text-primary"></i></div>
+          <span class="fs-3 fw-bold text-dark font-bengali">বাংলা</span>
+          <span class="text-muted small mt-1">বাংলা ভাষায় শুরু করুন</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center text-muted small py-3">
+    <i class="bi bi-universal-access fs-5 me-1 text-primary"></i> Push-to-Talk Voice Input & Audio Assistance available on all intake screens.
+  </div>
+</div>
+<%- include('../partials/footer') %>

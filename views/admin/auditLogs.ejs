@@ -1,0 +1,73 @@
+﻿<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold m-0"><i class="bi bi-journal-text text-primary me-2"></i>Institutional Security Audit Trail</h2>
+          <p class="text-muted m-0">Immutable Record of System Access, Clinical Overrides & Pharmacotherapy Events</p>
+        </div>
+        <span class="badge bg-secondary px-3 py-2 rounded-pill fw-semibold">
+          <i class="bi bi-lock-fill me-1"></i> Tamper-Evident Trail
+        </span>
+      </div>
+
+      <!-- Audit Logs Table Card -->
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden bg-white mb-4">
+        <div class="p-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2 bg-light">
+          <div class="input-group" style="max-width: 320px;">
+            <span class="input-group-text bg-white border"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="auditSearchInput" class="form-control bg-white" placeholder="Search audit logs...">
+          </div>
+          <% const logList = (typeof logs !== 'undefined' && logs) || (typeof audits !== 'undefined' && audits) || []; %>
+          <span class="badge bg-primary-subtle text-primary border px-3 py-2 rounded-pill small">
+            Total Log Entries: <%= logList.length %>
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0" id="auditTable">
+            <thead class="table-light text-uppercase small" style="font-size: 0.75rem;">
+              <tr>
+                <th class="ps-4">Timestamp</th>
+                <th>Security Action</th>
+                <th>Actor / User</th>
+                <th>Target Resource</th>
+                <th class="text-end pe-4">Event Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (logList.length === 0) { %>
+                <tr><td colspan="5" class="text-center py-4 text-muted">No security audit logs recorded yet.</td></tr>
+              <% } else { %>
+                <% logList.forEach(l => { %>
+                  <tr>
+                    <td class="ps-4 small text-muted"><%= new Date(l.triggeredAt || l.createdAt || Date.now()).toLocaleString() %></td>
+                    <td><span class="badge bg-dark text-white"><%= l.ruleName || l.action || 'SYSTEM_EVENT' %></span></td>
+                    <td><code><%= l.acknowledgedBy || l.user || 'system' %></code></td>
+                    <td class="small"><%= l.patientUhid || l.resource || 'Hospital Infrastructure' %></td>
+                    <td class="text-end pe-4 small text-muted"><%= l.actionTaken || 'Authenticated & Logged' %></td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-3 border-top d-flex justify-content-between align-items-center bg-light" id="auditTablePagination"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/js/pagination.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.initTablePagination) {
+    initTablePagination('auditTable', 'auditTablePagination', 'auditSearchInput', 10);
+  }
+});
+</script>
+<%- include('../partials/footer') %>

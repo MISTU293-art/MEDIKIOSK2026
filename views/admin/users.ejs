@@ -1,0 +1,159 @@
+﻿<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold m-0"><i class="bi bi-people-fill text-primary me-2"></i>Institutional User & Staff Directory</h2>
+          <p class="text-muted m-0">Role-Based Access Control (RBAC) &bull; Doctor & Staff Management</p>
+        </div>
+        <button class="btn btn-primary rounded-pill fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#createUserModal">
+          <i class="bi bi-person-plus-fill me-1"></i> Add Hospital Staff / Doctor
+        </button>
+      </div>
+
+      <!-- Users Table Card -->
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden bg-white mb-4">
+        <div class="p-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2 bg-light">
+          <div class="input-group" style="max-width: 320px;">
+            <span class="input-group-text bg-white border"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="userSearchInput" class="form-control bg-white" placeholder="Filter users by name or role...">
+          </div>
+          <span class="badge bg-primary-subtle text-primary border px-3 py-2 rounded-pill small">
+            Total Staff Accounts: <%= typeof users !== 'undefined' ? users.length : 0 %>
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0" id="usersTable">
+            <thead class="table-light text-uppercase small" style="font-size: 0.75rem;">
+              <tr>
+                <th class="ps-4">Staff Member</th>
+                <th>Institutional Email</th>
+                <th>Access Role</th>
+                <th>Assigned Department</th>
+                <th>Status</th>
+                <th class="text-end pe-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (typeof users === 'undefined' || users.length === 0) { %>
+                <tr><td colspan="6" class="text-center py-4 text-muted">No staff accounts registered.</td></tr>
+              <% } else { %>
+                <% users.forEach(u => { %>
+                  <tr>
+                    <td class="ps-4">
+                      <div class="d-flex align-items-center gap-2">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; font-size: 0.85rem;">
+                          <%= u.name ? u.name.charAt(0).toUpperCase() : 'U' %>
+                        </div>
+                        <div>
+                          <strong class="text-dark"><%= u.name %></strong>
+                        </div>
+                      </div>
+                    </td>
+                    <td><code><%= u.email %></code></td>
+                    <td>
+                      <span class="badge bg-<%= u.role === 'admin' ? 'danger' : (u.role === 'doctor' ? 'primary' : 'info text-dark') %> rounded-pill text-uppercase">
+                        <%= u.role %>
+                      </span>
+                    </td>
+                    <td><span class="small text-muted"><%= u.department || 'All Departments' %></span></td>
+                    <td>
+                      <span class="badge bg-<%= u.active ? 'success' : 'secondary' %>-subtle text-<%= u.active ? 'success' : 'secondary' %> border border-<%= u.active ? 'success' : 'secondary' %> rounded-pill">
+                        <%= u.active ? 'Active' : 'Disabled' %>
+                      </span>
+                    </td>
+                    <td class="text-end pe-4">
+                      <form action="/admin/users/toggle-status" method="POST" class="d-inline">
+                        <input type="hidden" name="userId" value="<%= u._id %>">
+                        <button type="submit" class="btn btn-sm btn-outline-<%= u.active ? 'danger' : 'success' %> rounded-pill px-3">
+                          <%= u.active ? 'Deactivate' : 'Activate' %>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-3 border-top d-flex justify-content-between align-items-center bg-light" id="usersTablePagination"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Modal: Add New Staff Member -->
+<div class="modal fade" id="createUserModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold"><i class="bi bi-person-plus-fill me-2"></i>Register New Staff / Doctor</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <form action="/admin/users/create" method="POST">
+        <div class="modal-body p-4">
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Full Name *</label>
+            <input type="text" name="name" class="form-control" placeholder="Dr. Vikram Sen" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Institutional Email *</label>
+            <input type="email" name="email" class="form-control" placeholder="doctor.sen@hospital.org" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Temporary Password *</label>
+            <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label fw-semibold small">Role *</label>
+              <select name="role" class="form-select" required>
+                <option value="doctor">Doctor</option>
+                <option value="staff">Staff / Reception</option>
+                <option value="pharmacist">Pharmacist</option>
+                <option value="admin">Superadmin</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label class="form-label fw-semibold small">Department</label>
+              <select name="department" class="form-select">
+                <% 
+                  const deptOptions = typeof departments !== 'undefined' ? departments : [
+                    'Ayurveda (Kayachikitsa & Panchakarma)',
+                    'Homoeopathy Medicine',
+                    'Unani & Tibb System',
+                    'Siddha Medicine',
+                    'Yoga & Naturopathy',
+                    'Integrative Medicine & General OPD'
+                  ];
+                %>
+                <% deptOptions.forEach(dept => { %>
+                  <option value="<%= dept %>"><%= dept %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">Save & Issue Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/js/pagination.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.initTablePagination) {
+    initTablePagination('usersTable', 'usersTablePagination', 'userSearchInput', 10);
+  }
+});
+</script>
+<%- include('../partials/footer') %>

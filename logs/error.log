@@ -1,0 +1,565 @@
+[2026-08-28T18:24:00.659Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/index" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:13:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-28T18:24:00.973Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/index" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:13:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-28T18:24:13.734Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/index" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:13:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-28T18:24:16.112Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/index" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:13:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-28T18:24:17.897Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/index" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:13:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-28T18:25:01.788Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/index" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:13:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-28T18:25:04.137Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/index" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:13:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-28T18:31:24.529Z] [ERROR] Unhandled express error: SyntaxError: Invalid or unexpected token in C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\staff\ocrVerification.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+[2026-08-28T18:31:37.330Z] [ERROR] Unhandled express error: SyntaxError: Invalid or unexpected token in C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\staff\ocrVerification.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+[2026-08-28T18:32:35.707Z] [ERROR] Unhandled express error: SyntaxError: Invalid or unexpected token in C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\staff\ocrVerification.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+[2026-08-28T18:32:42.352Z] [ERROR] Unhandled express error: SyntaxError: Invalid or unexpected token in C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\staff\ocrVerification.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+[2026-08-28T18:33:01.854Z] [ERROR] Unhandled express error: SyntaxError: Invalid or unexpected token in C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\staff\ocrVerification.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+[2026-08-28T18:33:59.559Z] [ERROR] Unhandled express error: SyntaxError: Invalid or unexpected token in C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\staff\ocrVerification.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+[2026-08-28T18:35:42.894Z] [ERROR] Unhandled express error: SyntaxError: Invalid or unexpected token in C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\staff\ocrVerification.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+[2026-08-28T18:36:41.820Z] [ERROR] Unhandled express error: SyntaxError: Invalid or unexpected token in C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\staff\ocrVerification.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+[2026-08-28T18:36:52.128Z] [ERROR] Unhandled express error: SyntaxError: Invalid or unexpected token in C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\staff\ocrVerification.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+[2026-08-29T05:51:45.625Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/welcome" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:9:7)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:280:10)
+[2026-08-29T05:51:46.459Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/welcome" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:9:7)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:280:10)
+[2026-08-29T05:51:52.509Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/welcome" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:9:7)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:280:10)
+[2026-08-29T05:51:54.204Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/welcome" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:9:7)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:280:10)
+[2026-08-29T05:51:56.380Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/welcome" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:9:7)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:280:10)
+[2026-08-29T05:52:03.163Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/welcome" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:9:7)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:280:10)
+[2026-08-29T05:52:34.304Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/welcome" in views directory "C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views"
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getWelcome (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:9:7)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\index.js:280:10)
+[2026-08-29T05:53:08.040Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\kiosk\index.ejs:8
+    6|       <div>
+    7|         <h2 class="fw-bold m-0 text-primary">MediKiosk</h2>
+ >> 8|         <span class="badge bg-light text-dark border"><i class="bi bi-geo-alt me-1"></i> <%= kiosk.name %> &bull; <%= kiosk.location %></span>
+    9|       </div>
+    10|     </div>
+    11|     <a href="/auth/login" class="btn btn-outline-secondary rounded-pill px-3 fw-semibold"><i class="bi bi-person-badge me-1"></i> Staff / Doctor Login</a>
+
+kiosk is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\kiosk\\index.ejs":13:26)
+    at index (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getIntakeWizard (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:17:7)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+[2026-08-29T05:53:28.392Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\kiosk\index.ejs:8
+    6|       <div>
+    7|         <h2 class="fw-bold m-0 text-primary">MediKiosk</h2>
+ >> 8|         <span class="badge bg-light text-dark border"><i class="bi bi-geo-alt me-1"></i> <%= kiosk.name %> &bull; <%= kiosk.location %></span>
+    9|       </div>
+    10|     </div>
+    11|     <a href="/auth/login" class="btn btn-outline-secondary rounded-pill px-3 fw-semibold"><i class="bi bi-person-badge me-1"></i> Staff / Doctor Login</a>
+
+kiosk is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\kiosk\\index.ejs":13:26)
+    at index (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getIntakeWizard (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:17:7)
+    at Layer.handle [as handle_request] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\router\layer.js:95:5)
+[2026-08-29T05:54:47.446Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\kiosk\intake.ejs:9
+    7|     </div>
+    8|     <div class="d-flex align-items-center gap-2">
+ >> 9|       <button type="button" id="repeatAudioBtn" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-volume-up-fill me-1"></i> <%= strings.repeatAudio %></button>
+    10|       <% if (voiceConsent) { %>
+    11|         <button type="button" id="pushToTalkBtn" class="voice-button btn-sm py-2 px-3 fs-6"><i class="bi bi-mic-fill"></i> <%= strings.holdToSpeak %></button>
+    12|       <% } %>
+
+strings is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\kiosk\\intake.ejs":16:26)
+    at intake (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getIntakeWizard (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:21:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T05:54:59.053Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\kiosk\intake.ejs:9
+    7|     </div>
+    8|     <div class="d-flex align-items-center gap-2">
+ >> 9|       <button type="button" id="repeatAudioBtn" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-volume-up-fill me-1"></i> <%= strings.repeatAudio %></button>
+    10|       <% if (voiceConsent) { %>
+    11|         <button type="button" id="pushToTalkBtn" class="voice-button btn-sm py-2 px-3 fs-6"><i class="bi bi-mic-fill"></i> <%= strings.holdToSpeak %></button>
+    12|       <% } %>
+
+strings is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\kiosk\\intake.ejs":16:26)
+    at intake (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getIntakeWizard (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:21:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T05:55:11.824Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\kiosk\intake.ejs:9
+    7|     </div>
+    8|     <div class="d-flex align-items-center gap-2">
+ >> 9|       <button type="button" id="repeatAudioBtn" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-volume-up-fill me-1"></i> <%= strings.repeatAudio %></button>
+    10|       <% if (voiceConsent) { %>
+    11|         <button type="button" id="pushToTalkBtn" class="voice-button btn-sm py-2 px-3 fs-6"><i class="bi bi-mic-fill"></i> <%= strings.holdToSpeak %></button>
+    12|       <% } %>
+
+strings is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\kiosk\\intake.ejs":16:26)
+    at intake (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getIntakeWizard (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:21:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T05:55:11.846Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\kiosk\intake.ejs:9
+    7|     </div>
+    8|     <div class="d-flex align-items-center gap-2">
+ >> 9|       <button type="button" id="repeatAudioBtn" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-volume-up-fill me-1"></i> <%= strings.repeatAudio %></button>
+    10|       <% if (voiceConsent) { %>
+    11|         <button type="button" id="pushToTalkBtn" class="voice-button btn-sm py-2 px-3 fs-6"><i class="bi bi-mic-fill"></i> <%= strings.holdToSpeak %></button>
+    12|       <% } %>
+
+strings is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\kiosk\\intake.ejs":16:26)
+    at intake (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getIntakeWizard (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:21:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T05:55:11.861Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\kiosk\intake.ejs:9
+    7|     </div>
+    8|     <div class="d-flex align-items-center gap-2">
+ >> 9|       <button type="button" id="repeatAudioBtn" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-volume-up-fill me-1"></i> <%= strings.repeatAudio %></button>
+    10|       <% if (voiceConsent) { %>
+    11|         <button type="button" id="pushToTalkBtn" class="voice-button btn-sm py-2 px-3 fs-6"><i class="bi bi-mic-fill"></i> <%= strings.holdToSpeak %></button>
+    12|       <% } %>
+
+strings is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\kiosk\\intake.ejs":16:26)
+    at intake (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getIntakeWizard (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:21:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T05:55:31.142Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\kiosk\intake.ejs:276
+    274|           <div class="text-muted small">You can upload photos of your old records before meeting the doctor.</div>
+    275|         </div>
+ >> 276|         <a href="/kiosk/upload?sessionToken=<%= sessionToken %>&lang=<%= lang %>&kioskId=<%= kioskId %>" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold"><i class="bi bi-camera me-1"></i> Add Documents</a>
+    277|       </div>
+    278|     </div>
+    279|   </div>
+
+kioskId is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\kiosk\\intake.ejs":225:26)
+    at intake (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getIntakeWizard (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T05:55:31.195Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\kiosk\intake.ejs:276
+    274|           <div class="text-muted small">You can upload photos of your old records before meeting the doctor.</div>
+    275|         </div>
+ >> 276|         <a href="/kiosk/upload?sessionToken=<%= sessionToken %>&lang=<%= lang %>&kioskId=<%= kioskId %>" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold"><i class="bi bi-camera me-1"></i> Add Documents</a>
+    277|       </div>
+    278|     </div>
+    279|   </div>
+
+kioskId is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\kiosk\\intake.ejs":225:26)
+    at intake (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getIntakeWizard (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T05:55:31.235Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\kiosk\intake.ejs:276
+    274|           <div class="text-muted small">You can upload photos of your old records before meeting the doctor.</div>
+    275|         </div>
+ >> 276|         <a href="/kiosk/upload?sessionToken=<%= sessionToken %>&lang=<%= lang %>&kioskId=<%= kioskId %>" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold"><i class="bi bi-camera me-1"></i> Add Documents</a>
+    277|       </div>
+    278|     </div>
+    279|   </div>
+
+kioskId is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\kiosk\\intake.ejs":225:26)
+    at intake (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getIntakeWizard (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\kioskController.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T05:58:28.580Z] [ERROR] Intake submission error: Patient validation failed: prioritySource: `system` is not a valid enum value for path `prioritySource`.
+[2026-08-29T05:59:31.324Z] [ERROR] Intake submission error: Patient validation failed: prioritySource: `system` is not a valid enum value for path `prioritySource`.
+[2026-08-29T06:21:07.655Z] [ERROR] Intake submission error: E11000 duplicate key error collection: medikiosk.intakesessions index: sessionToken_1 dup key: { sessionToken: "KS-E2E-TEST" }
+[2026-08-29T06:21:07.665Z] [ERROR] Error loading patient card: Cast to ObjectId failed for value "null" (type string) at path "_id" for model "Patient"
+[2026-08-29T06:21:08.398Z] [ERROR] Patient detail error: Cast to ObjectId failed for value "null" (type string) at path "_id" for model "Patient"
+[2026-08-29T06:21:08.429Z] [ERROR] Error saving consultation note: ConsultationNote validation failed: patientId: Path `patientId` is required.
+[2026-08-29T06:21:08.483Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\pharmacy\index.ejs:34
+    32|             <div class="input-group input-group-lg">
+    33|               <span class="input-group-text bg-light border"><i class="bi bi-upc-scan text-primary"></i></span>
+ >> 34|               <input type="text" name="search" class="form-control" placeholder="Enter Token (e.g. AYUSH-101), UHID, or Patient Mobile" value="<%= query || '' %>" required>
+    35|             </div>
+    36|           </div>
+    37|           <div class="col-md-3">
+
+query is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\pharmacy\\index.ejs":19:26)
+    at index (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getPharmacyPortal (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\pharmacyController.js:13:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T06:21:08.541Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\pharmacy\index.ejs:196
+    194|                     <td><%= d.doctorName %></td>
+    195|                     <td><strong class="text-success">₹ <%= d.totalAmount %></strong></td>
+ >> 196|                     <td><span class="badge bg-success"><i class="bi bi-check2-circle me-1"></i><%= d.status.toUpperCase() %></span></td>
+    197|                   </tr>
+    198|                 <% }) %>
+    199|               <% } %>
+
+Cannot read properties of undefined (reading 'toUpperCase')
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\pharmacy\\index.ejs":164:35)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\pharmacy\\index.ejs":146:28)
+    at index (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+[2026-08-29T06:21:08.568Z] [ERROR] Dispensation error: DispensationRecord validation failed: patientId: Path `patientId` is required.
+[2026-08-29T07:05:44.806Z] [ERROR] Intake submission error: E11000 duplicate key error collection: medikiosk.patients index: uhid_1 dup key: { uhid: "91-9988-7766-5544" }
+[2026-08-29T07:05:44.814Z] [ERROR] Error loading patient card: Cast to ObjectId failed for value "null" (type string) at path "_id" for model "Patient"
+[2026-08-29T07:05:45.548Z] [ERROR] Staff patient registration error: E11000 duplicate key error collection: medikiosk.patients index: uhid_1 dup key: { uhid: "91-1122-3344-5566" }
+[2026-08-29T07:05:45.613Z] [ERROR] Patient detail error: Cast to ObjectId failed for value "null" (type string) at path "_id" for model "Patient"
+[2026-08-29T07:05:45.649Z] [ERROR] Error saving consultation note: ConsultationNote validation failed: patientId: Path `patientId` is required.
+[2026-08-29T07:05:45.744Z] [ERROR] Dispensation error: DispensationRecord validation failed: patientId: Path `patientId` is required.
+[2026-08-29T07:17:38.870Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\admin\auditLogs.ejs:29
+    27|             </thead>
+    28|             <tbody>
+ >> 29|               <% if (logs.length === 0) { %>
+    30|                 <tr><td colspan="6" class="text-center py-4 text-muted">No security audit logs recorded yet.</td></tr>
+    31|               <% } else { %>
+    32|                 <% logs.forEach(l => { %>
+
+logs is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\admin\\auditLogs.ejs":19:8)
+    at auditLogs (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getAuditLogs (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\adminController.js:192:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T07:17:38.930Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\admin\users.ejs:112
+    110|               <label class="form-label fw-semibold">Department</label>
+    111|               <select name="department" class="form-select">
+ >> 112|                 <% departments.forEach(dept => { %>
+    113|                   <option value="<%= dept %>"><%= dept %></option>
+    114|                 <% }) %>
+    115|               </select>
+
+departments is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\admin\\users.ejs":68:8)
+    at users (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getUsers (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\adminController.js:121:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T07:17:38.967Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\admin\compliance.ejs:69
+    67|             </thead>
+    68|             <tbody>
+ >> 69|               <% if (audits.length === 0) { %>
+    70|                 <tr><td colspan="7" class="text-center text-muted py-3">No emergency red-flag incidents recorded.</td></tr>
+    71|               <% } else { %>
+    72|                 <% audits.forEach(a => { %>
+
+audits is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\admin\\compliance.ejs":19:8)
+    at compliance (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getCompliance (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\adminController.js:234:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T07:22:31.503Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\views\admin\users.ejs:112
+    110|               <label class="form-label fw-semibold">Department</label>
+    111|               <select name="department" class="form-select">
+ >> 112|                 <% departments.forEach(dept => { %>
+    113|                   <option value="<%= dept %>"><%= dept %></option>
+    114|                 <% }) %>
+    115|               </select>
+
+departments is not defined
+    at eval ("C:\\Users\\Mistu\\.gemini\\antigravity\\scratch\\medikiosk\\views\\admin\\users.ejs":68:8)
+    at users (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\node_modules\express\lib\response.js:1049:7)
+    at exports.getUsers (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\adminController.js:121:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-08-29T07:33:18.962Z] [ERROR] Error during database seeding: ConsultationNote validation failed: doctorName: Path `doctorName` is required., doctorId: Path `doctorId` is required.

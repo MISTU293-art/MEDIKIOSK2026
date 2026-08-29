@@ -1,0 +1,713 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "languagesSupported": [
+      "en",
+      "hi",
+      "bn"
+    ]
+  },
+  "steps": [
+    {
+      "id": "step1_demographics",
+      "number": 1,
+      "title": {
+        "en": "Patient Demographics",
+        "hi": "मरीज़ की बुनियादी जानकारी",
+        "bn": "রোগীর প্রাথমিক তথ্য"
+      },
+      "description": {
+        "en": "Please verify your personal details and contact information.",
+        "hi": "कृपया अपना व्यक्तिगत विवरण और संपर्क जानकारी सत्यापित करें।",
+        "bn": "অনুগ্রহ করে আপনার ব্যক্তিগত বিবরণ এবং যোগাযোগের তথ্য যাচাই করুন।"
+      },
+      "fields": [
+        {
+          "name": "fullName",
+          "type": "text",
+          "required": true,
+          "label": {
+            "en": "Full Name",
+            "hi": "पूरा नाम",
+            "bn": "পুরো নাম"
+          }
+        },
+        {
+          "name": "age",
+          "type": "number",
+          "required": true,
+          "label": {
+            "en": "Age (Years)",
+            "hi": "उम्र (वर्ष)",
+            "bn": "বয়স (বছর)"
+          }
+        },
+        {
+          "name": "gender",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "male",
+              "label": {
+                "en": "Male",
+                "hi": "पुरुष",
+                "bn": "পুরুষ"
+              }
+            },
+            {
+              "value": "female",
+              "label": {
+                "en": "Female",
+                "hi": "महिला",
+                "bn": "মহিলা"
+              }
+            },
+            {
+              "value": "other",
+              "label": {
+                "en": "Other",
+                "hi": "अन्य",
+                "bn": "অন্যান্য"
+              }
+            }
+          ],
+          "label": {
+            "en": "Gender",
+            "hi": "लिंग",
+            "bn": "লিঙ্গ"
+          }
+        },
+        {
+          "name": "phone",
+          "type": "tel",
+          "required": true,
+          "label": {
+            "en": "Mobile Phone Number",
+            "hi": "मोबाइल नंबर",
+            "bn": "মোবাইল নম্বর"
+          }
+        },
+        {
+          "name": "emergencyContact",
+          "type": "tel",
+          "required": false,
+          "label": {
+            "en": "Emergency Contact Phone",
+            "hi": "आपातकालीन संपर्क नंबर",
+            "bn": "জরুরি যোগাযোগের নম্বর"
+          }
+        },
+        {
+          "name": "abhaId",
+          "type": "text",
+          "required": false,
+          "label": {
+            "en": "ABHA / Health ID (Optional)",
+            "hi": "आभा / स्वास्थ्य आईडी (वैकल्पिक)",
+            "bn": "আভা / হেলথ আইডি (ঐচ্ছিক)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "step2_chief_complaint",
+      "number": 2,
+      "title": {
+        "en": "Chief Complaint",
+        "hi": "मुख्य समस्या / लक्षण",
+        "bn": "প্রধান সমস্যা / উপসর্গ"
+      },
+      "description": {
+        "en": "What is the primary reason for your hospital visit today?",
+        "hi": "आज अस्पताल आने का आपका मुख्य कारण क्या है?",
+        "bn": "আজ হাসপাতালে আসার মূল কারণ কী?"
+      },
+      "categories": [
+        {
+          "id": "chest_cardio",
+          "icon": "bi-heart-pulse-fill",
+          "title": {
+            "en": "Chest / Heart / Breathing",
+            "hi": "छाती / दिल / सांस",
+            "bn": "বুক / হৃদরোগ / শ্বাসকষ্ট"
+          },
+          "options": [
+            {
+              "id": "chest_pain",
+              "label": {
+                "en": "Chest Pain / Pressure",
+                "hi": "छाती में दर्द या दबाव",
+                "bn": "বুকে ব্যথা বা চাপ"
+              },
+              "flagWarning": "RF-001"
+            },
+            {
+              "id": "shortness_breath",
+              "label": {
+                "en": "Shortness of Breath",
+                "hi": "सांस लेने में कठिनाई",
+                "bn": "শ্বাসকষ্ট বা হাঁপ ধরা"
+              }
+            },
+            {
+              "id": "palpitations",
+              "label": {
+                "en": "Heart Racing / Palpitations",
+                "hi": "धड़कन तेज होना",
+                "bn": "বুক ধড়ফড় করা"
+              }
+            }
+          ]
+        },
+        {
+          "id": "fever_infection",
+          "icon": "bi-thermometer-high",
+          "title": {
+            "en": "Fever / Infection / Chills",
+            "hi": "बुखार / संक्रमण / कंपकंपी",
+            "bn": "জ্বর / সংক্রমণ / কাঁপুনি"
+          },
+          "options": [
+            {
+              "id": "high_fever",
+              "label": {
+                "en": "High Fever (>101°F)",
+                "hi": "तेज बुखार (101°F से अधिक)",
+                "bn": "তীব্র জ্বর (১০১°F এর বেশি)"
+              }
+            },
+            {
+              "id": "cough_cold",
+              "label": {
+                "en": "Persistent Cough / Cold",
+                "hi": "लगातार खांसी और जुकाम",
+                "bn": "টানা কাশি ও সর্দি"
+              }
+            },
+            {
+              "id": "chills_sweating",
+              "label": {
+                "en": "Chills / Night Sweats",
+                "hi": "कंपकंपी या रात में पसीना",
+                "bn": "ঠান্ডা লাগা বা রাতে ঘাম"
+              }
+            }
+          ]
+        },
+        {
+          "id": "gi_digestive",
+          "icon": "bi-shield-plus",
+          "title": {
+            "en": "Stomach / Digestion",
+            "hi": "पेट / पाचन समस्या",
+            "bn": "পেট / হজমের সমস্যা"
+          },
+          "options": [
+            {
+              "id": "stomach_pain",
+              "label": {
+                "en": "Abdominal / Stomach Pain",
+                "hi": "पेट में दर्द या ऐंठन",
+                "bn": "পেটে তীব্র ব্যথা"
+              }
+            },
+            {
+              "id": "vomiting_nausea",
+              "label": {
+                "en": "Vomiting / Nausea",
+                "hi": "उल्टी या जी मिचलाना",
+                "bn": "বমি বা বমি বমি ভাব"
+              }
+            },
+            {
+              "id": "diarrhea",
+              "label": {
+                "en": "Loose Stools / Diarrhea",
+                "hi": "दस्त / पेचिश",
+                "bn": "পাতলা পায়খানা / ডায়রিয়া"
+              }
+            }
+          ]
+        },
+        {
+          "id": "neuro_head",
+          "icon": "bi-headset",
+          "title": {
+            "en": "Headache / Neurological",
+            "hi": "सिरदर्द / तंत्रिका संबंधी",
+            "bn": "মাথাব্যথা / স্নায়বিক"
+          },
+          "options": [
+            {
+              "id": "severe_headache",
+              "label": {
+                "en": "Severe Headache / Migraine",
+                "hi": "गंभीर सिरदर्द या माइग्रेन",
+                "bn": "তীব্র মাথাব্যথা বা মাইগ্রেন"
+              }
+            },
+            {
+              "id": "dizziness_vertigo",
+              "label": {
+                "en": "Dizziness / Vertigo / Fainting",
+                "hi": "चक्कर आना या बेहोशी",
+                "bn": "মাথা ঘোরা বা অজ্ঞান হওয়া"
+              }
+            },
+            {
+              "id": "weakness_slurred",
+              "label": {
+                "en": "Sudden Weakness / Slurred Speech",
+                "hi": "अचानक कमजोरी या लड़खड़ाहट",
+                "bn": "হঠাৎ দুর্বলতা বা জড়িয়ে যাওয়া কথা"
+              },
+              "flagWarning": "RF-002"
+            }
+          ]
+        },
+        {
+          "id": "ortho_pain",
+          "icon": "bi-person-walking",
+          "title": {
+            "en": "Joints / Bones / Injury",
+            "hi": "जोड़ों / हड्डियों में दर्द / चोट",
+            "bn": "হাড় / গিঁটে ব্যথা / চোট"
+          },
+          "options": [
+            {
+              "id": "joint_knee_pain",
+              "label": {
+                "en": "Joint / Knee Pain",
+                "hi": "जोड़ों या घुटनों में दर्द",
+                "bn": "হাঁটু বা গাঁটের ব্যথা"
+              }
+            },
+            {
+              "id": "back_pain",
+              "label": {
+                "en": "Severe Back / Spine Pain",
+                "hi": "कमर या रीढ़ की हड्डी में दर्द",
+                "bn": "কোমরে বা পিঠে ব্যথা"
+              }
+            },
+            {
+              "id": "swelling_injury",
+              "label": {
+                "en": "Sprain / Fracture / Swelling",
+                "hi": "मोच, फ्रैक्चर या सूजन",
+                "bn": "মচকে যাওয়া, ফ্র্যাকচার বা ফোলা"
+              }
+            }
+          ]
+        }
+      ],
+      "durationOptions": [
+        {
+          "value": "less_than_1_day",
+          "label": {
+            "en": "Today (< 24 Hours)",
+            "hi": "आज (24 घंटे से कम)",
+            "bn": "আজকে (২৪ ঘণ্টার কম)"
+          }
+        },
+        {
+          "value": "1_to_3_days",
+          "label": {
+            "en": "1 to 3 Days",
+            "hi": "1 से 3 दिन",
+            "bn": "১ থেকে ৩ দিন"
+          }
+        },
+        {
+          "value": "1_to_2_weeks",
+          "label": {
+            "en": "1 to 2 Weeks",
+            "hi": "1 से 2 सप्ताह",
+            "bn": "১ থেকে ২ সপ্তাহ"
+          }
+        },
+        {
+          "value": "more_than_1_month",
+          "label": {
+            "en": "Over 1 Month (Chronic)",
+            "hi": "1 महीने से अधिक",
+            "bn": "১ মাসের বেশি"
+          }
+        }
+      ]
+    },
+    {
+      "id": "step3_hpi",
+      "number": 3,
+      "title": {
+        "en": "History of Present Illness (HPI)",
+        "hi": "वर्तमान बीमारी का विवरण",
+        "bn": "বর্তমান অসুস্থতার বিস্তারিত"
+      },
+      "description": {
+        "en": "Tell us more about how the symptoms started and their intensity.",
+        "hi": "लक्षण कैसे शुरू हुए और उनकी तीव्रता क्या है, इसके बारे में बताएं।",
+        "bn": "লক্ষণগুলি কীভাবে শুরু হয়েছিল এবং তার তীব্রতা কেমন তা জানান।"
+      },
+      "questions": [
+        {
+          "id": "onset",
+          "title": {
+            "en": "How did the symptoms begin?",
+            "hi": "लक्षणों की शुरुआत कैसे हुई?",
+            "bn": "লক্ষণগুলি কীভাবে শুরু হয়েছিল?"
+          },
+          "options": [
+            {
+              "value": "sudden",
+              "label": {
+                "en": "Sudden onset (Started abruptly)",
+                "hi": "अचानक (एकदम से शुरू हुआ)",
+                "bn": "হঠাৎ করে শুরু হয়েছিল"
+              }
+            },
+            {
+              "value": "gradual",
+              "label": {
+                "en": "Gradual onset (Slowly built up)",
+                "hi": "धीरे-धीरे (समय के साथ बढ़ा)",
+                "bn": "ধীরে ধীরে বৃদ্ধি পেয়েছিল"
+              }
+            }
+          ]
+        },
+        {
+          "id": "progression",
+          "title": {
+            "en": "Is the condition worsening or stable?",
+            "hi": "क्या स्थिति बढ़ रही है या स्थिर है?",
+            "bn": "পরিস্থিতি কি খারাপ হচ্ছে নাকি স্থিতিশীল?"
+          },
+          "options": [
+            {
+              "value": "worsening",
+              "label": {
+                "en": "Worsening over time",
+                "hi": "समय के साथ बढ़ रही है",
+                "bn": "সময়ের সাথে বাড়ছে"
+              }
+            },
+            {
+              "value": "stable",
+              "label": {
+                "en": "Stable / Constant",
+                "hi": "स्थिर है",
+                "bn": "একই রকম আছে"
+              }
+            },
+            {
+              "value": "intermittent",
+              "label": {
+                "en": "Comes and goes (Intermittent)",
+                "hi": "आती-जाती रहती है",
+                "bn": "আসে এবং চলে যায়"
+              }
+            }
+          ]
+        },
+        {
+          "id": "severity",
+          "title": {
+            "en": "Pain / Discomfort Severity (1 - Mild to 10 - Unbearable)",
+            "hi": "दर्द या परेशानी की तीव्रता (1 से 10)",
+            "bn": "ব্যথা বা অস্বস্তির তীব্রতা (১ থেকে ১০)"
+          },
+          "type": "range",
+          "min": 1,
+          "max": 10
+        }
+      ]
+    },
+    {
+      "id": "step4_pmh",
+      "number": 4,
+      "title": {
+        "en": "Past Medical History",
+        "hi": "पिछला मेडिकल इतिहास",
+        "bn": "অতীতের চিকিৎসার ইতিহাস"
+      },
+      "description": {
+        "en": "Do you have any existing chronic illnesses or past surgeries?",
+        "hi": "क्या आपको पहले से कोई पुरानी बीमारी या पिछली सर्जरी हुई है?",
+        "bn": "আপনার কি আগে থেকে কোনো দীর্ঘস্থায়ী রোগ বা পূর্ববর্তী সার্জারি আছে?"
+      },
+      "conditions": [
+        {
+          "id": "hypertension",
+          "label": {
+            "en": "High Blood Pressure (Hypertension)",
+            "hi": "हाई ब्लड प्रेशर (उच्च रक्तचाप)",
+            "bn": "উচ্চ রক্তচাপ (হাই ব্লাড প্রেশার)"
+          }
+        },
+        {
+          "id": "diabetes",
+          "label": {
+            "en": "Diabetes (Sugar)",
+            "hi": "मधुमेह (डायबिटीज / शुगर)",
+            "bn": "ডায়াবেটিস (সুগার)"
+          }
+        },
+        {
+          "id": "asthma_copd",
+          "label": {
+            "en": "Asthma / Breathing Issues / COPD",
+            "hi": "अस्थमा / दमा / सांस की बीमारी",
+            "bn": "অ্যাজমা / শ্বাসকষ্ট / সিওপিডি"
+          }
+        },
+        {
+          "id": "heart_disease",
+          "label": {
+            "en": "Heart Disease / Prior Heart Attack",
+            "hi": "दिल की बीमारी / पुराना हार्ट अटैक",
+            "bn": "হৃদরোগ / হার্ট অ্যাটাক"
+          }
+        },
+        {
+          "id": "kidney_disease",
+          "label": {
+            "en": "Kidney Disease / Dialysis",
+            "hi": "किडनी की बीमारी",
+            "bn": "কিডনির রোগ"
+          }
+        },
+        {
+          "id": "thyroid",
+          "label": {
+            "en": "Thyroid Disorder",
+            "hi": "थायराइड की समस्या",
+            "bn": "থাইরয়েডের সমস্যা"
+          }
+        },
+        {
+          "id": "surgeries",
+          "label": {
+            "en": "Past Surgery / Hospitalization",
+            "hi": "पिछली सर्जरी या अस्पताल में भर्ती",
+            "bn": "পূর্ববর্তী সার্জারি বা হাসপাতালে ভর্তি"
+          }
+        }
+      ],
+      "allowSkip": true
+    },
+    {
+      "id": "step5_allergies",
+      "number": 5,
+      "title": {
+        "en": "Allergies",
+        "hi": "एलर्जी (दवाएं / खाद्य पदार्थ)",
+        "bn": "অ্যালার্জি (ওষুধ / খাদ্যদ্রব্য)"
+      },
+      "description": {
+        "en": "Do you have any known allergic reactions to medications or foods?",
+        "hi": "क्या आपको किसी दवा या भोजन से एलर्जी है?",
+        "bn": "আপনার কি কোনো ওষুধ বা খাবারে অ্যালার্জি আছে?"
+      },
+      "options": [
+        {
+          "id": "no_allergies",
+          "label": {
+            "en": "No Known Drug Allergies (NKDA)",
+            "hi": "कोई ज्ञात एलर्जी नहीं है",
+            "bn": "কোনো পরিচিত অ্যালার্জি নেই"
+          }
+        },
+        {
+          "id": "penicillin",
+          "label": {
+            "en": "Penicillin / Antibiotics Allergy",
+            "hi": "पेनिसिलिन या एंटीबायोटिक एलर्जी",
+            "bn": "পেনিসিলিন বা অ্যান্টিবায়োটিক অ্যালার্জি"
+          }
+        },
+        {
+          "id": "nsaids_painkillers",
+          "label": {
+            "en": "Painkillers (NSAIDs / Aspirin) Allergy",
+            "hi": "दर्द निवारक दवाओं से एलर्जी",
+            "bn": "ব্যথানাশক ওষুধে অ্যালার্জি"
+          }
+        },
+        {
+          "id": "food_allergy",
+          "label": {
+            "en": "Food Allergy (Peanuts, Eggs, Seafood)",
+            "hi": "भोजन से एलर्जी",
+            "bn": "খাবারের অ্যালার্জি"
+          }
+        },
+        {
+          "id": "other_allergy",
+          "label": {
+            "en": "Other Allergy (Specify)",
+            "hi": "अन्य एलर्जी",
+            "bn": "অন্যান্য অ্যালার্জি"
+          }
+        }
+      ],
+      "allowSkip": true
+    },
+    {
+      "id": "step6_medications",
+      "number": 6,
+      "title": {
+        "en": "Current Medications",
+        "hi": "वर्तमान में चल रही दवाएं",
+        "bn": "বর্তমানে চলমান ওষুধ"
+      },
+      "description": {
+        "en": "Are you currently taking any prescription, OTC, or AYUSH/Herbal medicines?",
+        "hi": "क्या आप वर्तमान में कोई एलोपैथिक, आयुर्वेदिक या अन्य दवाएं ले रहे हैं?",
+        "bn": "আপনি কি বর্তমানে কোনো এলোপ্যাথিক, আয়ুর্বেদিক বা অন্যান্য ওষুধ নিচ্ছেন?"
+      },
+      "categories": [
+        {
+          "id": "none",
+          "label": {
+            "en": "I am not taking any medicines currently",
+            "hi": "मैं वर्तमान में कोई दवा नहीं ले रहा हूँ",
+            "bn": "আমি বর্তমানে কোনো ওষুধ খাচ্ছি না"
+          }
+        },
+        {
+          "id": "bp_sugar_meds",
+          "label": {
+            "en": "Daily BP / Diabetes Medications",
+            "hi": "ब्लड प्रेशर या शुगर की नियमित दवाएं",
+            "bn": "রক্তচাপ বা সুগারের নিয়মিত ওষুধ"
+          }
+        },
+        {
+          "id": "heart_blood_thinners",
+          "label": {
+            "en": "Blood Thinners / Heart Medicines",
+            "hi": "खून पतला करने की दवा / दिल की दवा",
+            "bn": "রক্ত তরল করার ওষুধ / হার্টের ওষুধ"
+          }
+        },
+        {
+          "id": "ayush_herbal",
+          "label": {
+            "en": "Ayurvedic / Homeopathic / Herbal Remedies",
+            "hi": "आयुर्वेदिक / होम्योपैथिक उपचार",
+            "bn": "আয়ুর্বেদিক / হোমিওপ্যাথি ওষুধ"
+          }
+        }
+      ],
+      "allowSkip": true
+    },
+    {
+      "id": "step7_family_history",
+      "number": 7,
+      "title": {
+        "en": "Family History",
+        "hi": "पारिवारिक स्वास्थ्य इतिहास",
+        "bn": "পারিবারিক চিকিৎসার ইতিহাস"
+      },
+      "description": {
+        "en": "Does anyone in your direct family (parents, siblings) have major conditions?",
+        "hi": "क्या आपके परिवार (माता-पिता, भाई-बहन) में किसी को बड़ी बीमारी है?",
+        "bn": "আপনার পরিবারে (পিতা-মাতা, ভাই-বোন) কারও কি কোনো গুরুতর রোগ আছে?"
+      },
+      "options": [
+        {
+          "id": "fam_heart",
+          "label": {
+            "en": "Early Heart Disease / Stroke",
+            "hi": "दिल की बीमारी या स्ट्रोक",
+            "bn": "হৃদরোগ বা স্ট্রোক"
+          }
+        },
+        {
+          "id": "fam_diabetes",
+          "label": {
+            "en": "Diabetes",
+            "hi": "मधुमेह (डायबिटीज)",
+            "bn": "ডায়াবেটিস"
+          }
+        },
+        {
+          "id": "fam_hypertension",
+          "label": {
+            "en": "High Blood Pressure",
+            "hi": "हाई ब्लड प्रेशर",
+            "bn": "উচ্চ রক্তচাপ"
+          }
+        },
+        {
+          "id": "fam_cancer",
+          "label": {
+            "en": "Cancer",
+            "hi": "कैंसर",
+            "bn": "ক্যান্সার"
+          }
+        },
+        {
+          "id": "fam_none",
+          "label": {
+            "en": "None / Not sure",
+            "hi": "कोई नहीं / जानकारी नहीं",
+            "bn": "কিছু নেই / নিশ্চিত নই"
+          }
+        }
+      ],
+      "allowSkip": true
+    },
+    {
+      "id": "step8_personal_lifestyle",
+      "number": 8,
+      "title": {
+        "en": "Personal & Lifestyle History",
+        "hi": "व्यक्तिगत और जीवनशैली की आदतें",
+        "bn": "ব্যক্তিগত ও জীবনধারার অভ্যাস"
+      },
+      "description": {
+        "en": "Select lifestyle habits relevant to your health (Optional).",
+        "hi": "अपनी जीवनशैली से जुड़ी आदतें चुनें (वैकल्पिक)।",
+        "bn": "আপনার জীবনধারার প্রাসঙ্গিক অভ্যাসগুলি নির্বাচন করুন (ঐচ্ছিক)।"
+      },
+      "options": [
+        {
+          "id": "tobacco_smoking",
+          "label": {
+            "en": "Tobacco / Bidi / Cigarette Smoker",
+            "hi": "तंबाकू / बीड़ी / सिगरेट का सेवन",
+            "bn": "তামাক / বিড়ি / সিগারেট সেবন"
+          }
+        },
+        {
+          "id": "alcohol",
+          "label": {
+            "en": "Alcohol Consumption",
+            "hi": "शराब का सेवन",
+            "bn": "মদ্যপান"
+          }
+        },
+        {
+          "id": "vegetarian",
+          "label": {
+            "en": "Vegetarian Diet",
+            "hi": "शाकाहारी भोजन",
+            "bn": "নিরামিষ আহার"
+          }
+        },
+        {
+          "id": "non_vegetarian",
+          "label": {
+            "en": "Non-Vegetarian Diet",
+            "hi": "मांसाहारी भोजन",
+            "bn": "আমিষ আহার"
+          }
+        }
+      ],
+      "allowSkip": true
+    }
+  ]
+}

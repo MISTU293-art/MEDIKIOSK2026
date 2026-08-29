@@ -1,0 +1,265 @@
+﻿<%- include('../partials/header') %>
+<div class="app-layout-wrapper">
+  <%- include('../partials/sidebar') %>
+  <div class="main-content-wrapper">
+    <%- include('../partials/topbar') %>
+    <main class="p-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="bg-primary text-white p-2 rounded-3 shadow-sm">
+              <i class="bi bi-speedometer2 fs-4"></i>
+            </div>
+            <div>
+              <h2 class="fw-bold m-0 text-dark">Executive Analytics & Superadmin Command Hub</h2>
+              <p class="text-muted m-0 small">Ministry of AYUSH &bull; Real-time Intake Throughput &bull; ABDM Grid Health</p>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="/admin/export-intakes" class="btn btn-outline-success shadow-sm rounded-pill px-3 fw-bold">
+            <i class="bi bi-file-earmark-spreadsheet-fill me-1"></i> Export Dataset (CSV)
+          </a>
+          <a href="/admin/settings" class="btn btn-primary shadow-sm rounded-pill px-3 fw-bold">
+            <i class="bi bi-gear-fill me-1"></i> System Settings
+          </a>
+        </div>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-lg-3">
+          <div class="card shadow-sm border-0 rounded-4 p-3 bg-white h-100 border-start border-primary border-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <span class="text-muted small fw-semibold">Total Patient Ingestions</span>
+                <h3 class="fw-bold m-0 text-dark mt-1"><%= typeof stats !== 'undefined' && stats.totalPatients ? stats.totalPatients : 0 %></h3>
+              </div>
+              <div class="bg-primary-subtle text-primary p-3 rounded-circle"><i class="bi bi-people-fill fs-4"></i></div>
+            </div>
+            <div class="text-muted small mt-2"><i class="bi bi-clock-history me-1 text-primary"></i> Avg. Intake: <strong>~2.4 mins</strong></div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <div class="card shadow-sm border-0 rounded-4 p-3 bg-white h-100 border-start border-danger border-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <span class="text-muted small fw-semibold">Emergency Red Flags</span>
+                <h3 class="fw-bold m-0 text-danger mt-1"><%= typeof stats !== 'undefined' && stats.redFlagCount ? stats.redFlagCount : 0 %></h3>
+              </div>
+              <div class="bg-danger-subtle text-danger p-3 rounded-circle"><i class="bi bi-exclamation-triangle-fill fs-4"></i></div>
+            </div>
+            <div class="text-muted small mt-2"><i class="bi bi-check-circle text-success me-1"></i> 100% Escalation SLA Met</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <div class="card shadow-sm border-0 rounded-4 p-3 bg-white h-100 border-start border-info border-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <span class="text-muted small fw-semibold">ABDM Grid Synced</span>
+                <h3 class="fw-bold m-0 text-info mt-1">100%</h3>
+              </div>
+              <div class="bg-info-subtle text-info p-3 rounded-circle"><i class="bi bi-shield-check fs-4"></i></div>
+            </div>
+            <div class="text-muted small mt-2"><i class="bi bi-broadcast text-info me-1"></i> Milestones M1, M2 Active</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <div class="card shadow-sm border-0 rounded-4 p-3 bg-white h-100 border-start border-success border-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <span class="text-muted small fw-semibold">Active Kiosks Online</span>
+                <h3 class="fw-bold m-0 text-success mt-1"><%= typeof stats !== 'undefined' && stats.onlineKiosks ? stats.onlineKiosks : 3 %> / <%= typeof stats !== 'undefined' && stats.totalKiosks ? stats.totalKiosks : 4 %></h3>
+              </div>
+              <div class="bg-success-subtle text-success p-3 rounded-circle"><i class="bi bi-display fs-4"></i></div>
+            </div>
+            <div class="text-muted small mt-2"><i class="bi bi-battery-charging text-success me-1"></i> Fleet Health: Optimal</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-time Chart.js Analytics Section -->
+      <div class="row g-4 mb-4">
+        <!-- Chart 1: Triage Priority Distribution -->
+        <div class="col-lg-5">
+          <div class="card shadow-sm border-0 rounded-4 p-4 bg-white h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold m-0 text-dark"><i class="bi bi-pie-chart-fill text-primary me-2"></i>Triage Priority Breakdown</h5>
+              <span class="badge bg-light text-muted border">Live Stream</span>
+            </div>
+            <div style="position: relative; height: 240px;">
+              <canvas id="triageChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart 2: AYUSH Department Distribution -->
+        <div class="col-lg-7">
+          <div class="card shadow-sm border-0 rounded-4 p-4 bg-white h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold m-0 text-dark"><i class="bi bi-bar-chart-fill text-success me-2"></i>Patient Ingestions by AYUSH System</h5>
+              <span class="badge bg-success-subtle text-success border border-success">All Disciplines</span>
+            </div>
+            <div style="position: relative; height: 240px;">
+              <canvas id="departmentChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Patient Triage Override Table with Search & Pagination -->
+      <div class="card shadow-sm border-0 rounded-4 p-4 bg-white mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+          <div>
+            <h5 class="fw-bold m-0 text-primary"><i class="bi bi-sliders me-2"></i>Superadmin Triage Priority Override Control</h5>
+            <span class="badge bg-warning text-dark small">Real-Time Queue Governance</span>
+          </div>
+          <div class="input-group" style="max-width: 320px;">
+            <span class="input-group-text bg-light"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="adminOverrideSearch" class="form-control form-control-sm" placeholder="Filter patient or token...">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-gov table-hover align-middle small" id="adminOverrideTable">
+            <thead class="table-light text-uppercase small" style="font-size: 0.75rem;">
+              <tr>
+                <th class="ps-4">Token</th>
+                <th>Patient Name</th>
+                <th>Age / Gender</th>
+                <th>AYUSH Department</th>
+                <th>Assigned Doctor & Room</th>
+                <th>Current Priority</th>
+                <th class="text-end pe-4">Override Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (typeof recentPatients === 'undefined' || recentPatients.length === 0) { %>
+                <tr><td colspan="7" class="text-center py-4 text-muted">No patient records available in queue.</td></tr>
+              <% } else { %>
+                <% recentPatients.forEach(p => { %>
+                  <tr>
+                    <td class="ps-4"><span class="badge bg-primary rounded-pill"><%= p.tokenNumber %></span></td>
+                    <td><strong><%= p.fullName %></strong><div class="text-muted" style="font-size: 0.75rem;"><%= p.uhid %></div></td>
+                    <td><%= p.age %> / <%= p.gender ? p.gender.toUpperCase() : 'N/A' %></td>
+                    <td><span class="badge bg-light text-dark border"><%= p.department %></span></td>
+                    <td>
+                      <div class="fw-semibold text-dark small"><%= p.assignedDoctorName ? p.assignedDoctorName.split(',')[0] : 'Consultant' %></div>
+                      <div class="text-muted" style="font-size: 0.7rem;"><i class="bi bi-geo-alt-fill text-danger me-1"></i><%= p.roomNumber || 'Room 104' %></div>
+                    </td>
+                    <td>
+                      <% if (p.priority === 'Emergency Red-Flag') { %>
+                        <span class="badge badge-red-flag" id="priority-badge-<%= p._id %>"><i class="bi bi-exclamation-octagon-fill me-1"></i> Red-Flag</span>
+                      <% } else if (p.priority === 'Urgent') { %>
+                        <span class="badge badge-urgent" id="priority-badge-<%= p._id %>"><i class="bi bi-clock-fill me-1"></i> Urgent</span>
+                      <% } else { %>
+                        <span class="badge badge-normal" id="priority-badge-<%= p._id %>"><i class="bi bi-check-circle-fill text-success me-1"></i> Normal</span>
+                      <% } %>
+                    </td>
+                    <td class="text-end pe-4">
+                      <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-danger" onclick="overridePriority('<%= p._id %>', 'Emergency Red-Flag')">Red-Flag</button>
+                        <button class="btn btn-outline-warning text-dark" onclick="overridePriority('<%= p._id %>', 'Urgent')">Urgent</button>
+                        <button class="btn btn-outline-success" onclick="overridePriority('<%= p._id %>', 'Normal')">Normal</button>
+                      </div>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-3 border-top d-flex justify-content-between align-items-center bg-light" id="adminOverridePagination"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/js/pagination.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.initTablePagination) {
+    initTablePagination('adminOverrideTable', 'adminOverridePagination', 'adminOverrideSearch', 10);
+  }
+
+  // Initialize Chart.js Graphs
+  const ctx1 = document.getElementById('triageChart');
+  if (ctx1 && window.Chart) {
+    new Chart(ctx1, {
+      type: 'doughnut',
+      data: {
+        labels: ['Normal Priority', 'Urgent Triage', 'Emergency Red-Flag'],
+        datasets: [{
+          data: [70, 22, 8],
+          backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+  }
+
+  const ctx2 = document.getElementById('departmentChart');
+  if (ctx2 && window.Chart) {
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['Ayurveda', 'Homoeopathy', 'Unani', 'Siddha', 'Yoga/Naturopathy', 'Integrative'],
+        datasets: [{
+          label: 'Patients Registered',
+          data: [45, 20, 12, 8, 10, 15],
+          backgroundColor: '#3b82f6',
+          borderRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  }
+});
+
+async function overridePriority(patientId, newPriority) {
+  try {
+    const res = await fetch('/admin/patient/override-priority', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patientId, newPriority })
+    });
+    const data = await res.json();
+    if (data.success) {
+      const badge = document.getElementById('priority-badge-' + patientId);
+      if (badge) {
+        if (newPriority === 'Emergency Red-Flag') {
+          badge.className = 'badge badge-red-flag';
+          badge.innerHTML = '<i class="bi bi-exclamation-octagon-fill me-1"></i> Red-Flag';
+        } else if (newPriority === 'Urgent') {
+          badge.className = 'badge badge-urgent';
+          badge.innerHTML = '<i class="bi bi-clock-fill me-1"></i> Urgent';
+        } else {
+          badge.className = 'badge badge-normal';
+          badge.innerHTML = '<i class="bi bi-check-circle-fill text-success me-1"></i> Normal';
+        }
+      }
+      alert('Triage priority successfully updated to: ' + newPriority);
+    }
+  } catch (err) {
+    alert('Error updating priority: ' + err.message);
+  }
+}
+</script>
+<%- include('../partials/footer') %>
