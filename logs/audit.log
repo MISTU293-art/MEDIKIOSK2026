@@ -200,3 +200,5 @@
 [2026-08-29T07:47:05.758Z] [AUDIT] Action: PHARMACY_DISPENSED | User: mistu14112006@gmail.com {"uhid":"UHID-AYUSH-127715-996","bill":"240"}
 [2026-08-29T09:48:30.663Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
 [2026-08-29T09:49:56.495Z] [AUDIT] Action: USER_CREATED_BY_ADMIN | User: admin@hospital.org {"createdEmail":"mistu14112006@gmail.com","role":"admin"}
+[2026-08-29T09:55:51.676Z] [AUDIT] Action: LOGIN_FAILED | User: mistu14112006@gmail.com {"reason":"User not found or inactive"}
+[2026-08-29T09:55:54.013Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
