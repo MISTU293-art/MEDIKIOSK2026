@@ -1,0 +1,7 @@
+const mongoose = require('mongoose');
+const { isLiveMongo, memoryDb } = require('../config/db');
+const bedSchema = new mongoose.Schema({ wardId: { type: String, required: true, index: true }, bedNumber: { type: String, required: true }, bedType: { type: String, default: 'General' }, status: { type: String, enum: ['available', 'occupied', 'cleaning', 'reserved', 'out_of_service'], default: 'available' }, patientId: String, visitId: String, allocatedBy: String, allocatedAt: Date, updatedAt: { type: Date, default: Date.now } });
+bedSchema.index({ wardId: 1, bedNumber: 1 }, { unique: true });
+const MongooseBed = mongoose.model('Bed', bedSchema);
+class BedAdapter { static async find(query = {}) { if (isLiveMongo()) return MongooseBed.find(query).sort({ bedNumber: 1 }); return memoryDb.getCollection('Bed').find(query); } static async findById(id) { if (isLiveMongo()) return MongooseBed.findById(id); return memoryDb.getCollection('Bed').findById(id); } static async create(data) { if (isLiveMongo()) return MongooseBed.create(data); return memoryDb.getCollection('Bed').create(data); } static async findByIdAndUpdate(id, update) { if (isLiveMongo()) return MongooseBed.findByIdAndUpdate(id, update, { new: true }); return memoryDb.getCollection('Bed').findByIdAndUpdate(id, update, { new: true }); } }
+module.exports = BedAdapter;

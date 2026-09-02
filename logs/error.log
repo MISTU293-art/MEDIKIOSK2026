@@ -563,3 +563,14 @@ departments is not defined
     at exports.getUsers (C:\Users\Mistu\.gemini\antigravity\scratch\medikiosk\controllers\adminController.js:121:9)
     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
 [2026-08-29T07:33:18.962Z] [ERROR] Error during database seeding: ConsultationNote validation failed: doctorName: Path `doctorName` is required., doctorId: Path `doctorId` is required.
+[2026-09-02T15:26:56.645Z] [ERROR] ========================================
+[2026-09-02T15:26:56.650Z] [ERROR] ❌ MongoDB Connection Failed
+[2026-09-02T15:26:56.652Z] [ERROR] MONGODB_URI environment variable is not configured
+[2026-09-02T15:26:56.654Z] [ERROR] ========================================
+[2026-09-02T15:26:56.656Z] [ERROR] Fatal error starting MediKiosk server: MONGODB_URI environment variable is not configured
+[2026-09-02T15:55:37.648Z] [ERROR] Ayushman lookup error: Visit validation failed: cardNumber: Path `cardNumber` is required.
+[2026-09-02T15:55:39.049Z] [ERROR] Ayushman lookup error: Visit validation failed: cardNumber: Path `cardNumber` is required.
+[2026-09-02T16:00:23.008Z] [ERROR] ========================================
+[2026-09-02T16:00:23.011Z] [ERROR] ❌ MongoDB Connection Failed
+[2026-09-02T16:00:23.013Z] [ERROR] MONGODB_URI environment variable is not configured
+[2026-09-02T16:00:23.014Z] [ERROR] ========================================

@@ -7,12 +7,18 @@ if (mongoose.models.Patient) {
 
 const patientSchema = new mongoose.Schema({
   uhid: { type: String, required: true, unique: true },
+  cardNumber: { type: String, unique: true, sparse: true, index: true },
   tokenNumber: { type: String, required: true },
   fullName: { type: String, required: true },
   age: { type: Number, required: true },
   gender: { type: String, enum: ['male', 'female', 'other'], required: true },
   phone: { type: String, required: true },
   emergencyContact: { type: String },
+  address: { type: String, default: '' },
+  medicalHistory: { type: String, default: '' },
+  allergies: { type: String, default: '' },
+  currentMedications: { type: String, default: '' },
+  registrationSource: { type: String, enum: ['kiosk', 'doctor', 'staff'], default: 'kiosk' },
   guardianName: { type: String },
   aadhaarNumber: { type: String, default: '' },
   abhaId: { type: String, default: '' },

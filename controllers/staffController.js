@@ -4,6 +4,7 @@ const RedFlagAudit = require('../models/RedFlagAudit');
 const { DOCUMENT_TYPES } = require('../config/constants');
 const { getDoctorForDepartment } = require('../utils/doctorRoster');
 const logger = require('../utils/logger');
+const { validateRegistration, nextToken, createIdentifiers, maskAadhaar, DEFAULT_DEPARTMENT } = require('../utils/patientRegistry');
 
 exports.getDashboard = async (req, res) => {
   try {
@@ -27,31 +28,23 @@ exports.getDashboard = async (req, res) => {
 exports.postRegisterPatient = async (req, res) => {
   try {
     const { fullName, age, gender, phone, department, priority, aadhaarNumber, abhaId, ayushmanSchemeType } = req.body;
-    const count = await Patient.countDocuments({});
-    const tokenNumber = 'AYUSH-' + (101 + count);
-    const uhid = 'UHID-AYUSH-' + Date.now().toString().slice(-6) + '-' + Math.floor(Math.random()*900+100);
+    const validation = validateRegistration({ fullName, age, gender, phone });
+    if (!validation.valid) return res.status(400).json({ success: false, error: 'Please correct the patient fields.', fields: validation.errors });
+    const tokenNumber = await nextToken(Patient);
+    const { uhid, cardNumber } = createIdentifiers();
 
-    let maskedAadhaar = '';
-    if (aadhaarNumber) {
-      const cleanA = aadhaarNumber.replace(/\D/g, '');
-      if (cleanA.length >= 4) {
-        maskedAadhaar = 'XXXX-XXXX-' + cleanA.slice(-4);
-      } else {
-        maskedAadhaar = aadhaarNumber;
-      }
-    }
-
-    const dept = department || 'Ayurveda (Kayachikitsa & Panchakarma)';
+    const dept = department || DEFAULT_DEPARTMENT;
     const doctorAssignment = getDoctorForDepartment(dept);
 
     const patient = await Patient.create({
       uhid,
+      cardNumber,
       tokenNumber,
-      fullName,
-      age: parseInt(age, 10),
-      gender,
-      phone,
-      aadhaarNumber: maskedAadhaar,
+      fullName: validation.fullName,
+      age: validation.age,
+      gender: validation.gender,
+      phone: validation.phone,
+      aadhaarNumber: maskAadhaar(aadhaarNumber),
       abhaId: abhaId || uhid,
       ayushmanSchemeType: ayushmanSchemeType || 'PM-JAY Golden Card (₹5 Lakh Cover)',
       department: dept,
@@ -61,6 +54,7 @@ exports.postRegisterPatient = async (req, res) => {
       roomNumber: doctorAssignment.roomNumber,
       priority: priority || 'Normal',
       prioritySource: 'staff_assigned',
+      registrationSource: 'staff',
       status: 'queued'
     });
 
@@ -70,6 +64,7 @@ exports.postRegisterPatient = async (req, res) => {
       tokenNumber: patient.tokenNumber
     });
 
+    if (req.accepts('json')) return res.json({ success: true, patient, cardNumber });
     return res.redirect('/staff/dashboard');
   } catch (err) {
     logger.error('Staff patient registration error: ' + err.message);

@@ -28,6 +28,7 @@
 
       <form id="kioskUploadForm" enctype="multipart/form-data">
         <input type="hidden" name="sessionToken" value="<%= typeof sessionToken !== 'undefined' ? sessionToken : 'KS-DEMO-001' %>">
+        <input type="hidden" name="patientId" value="<%= typeof patientId !== 'undefined' ? patientId : '' %>">
         
         <div class="row g-3 mb-4 text-start">
           <div class="col-md-6">

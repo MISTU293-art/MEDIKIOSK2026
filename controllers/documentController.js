@@ -2,6 +2,8 @@ const Document = require('../models/Document');
 const OcrService = require('../services/ocrService');
 const ImageKitService = require('../services/imageKitService');
 const logger = require('../utils/logger');
+const Patient = require('../models/Patient');
+const IntakeSession = require('../models/IntakeSession');
 
 exports.uploadDocument = async (req, res) => {
   try {
@@ -9,7 +11,13 @@ exports.uploadDocument = async (req, res) => {
       return res.status(400).json({ success: false, error: 'No file uploaded.' });
     }
 
-    const { patientId, sessionToken, docType = 'Prescription' } = req.body;
+    const { patientId: requestedPatientId, sessionToken, docType = 'Prescription' } = req.body;
+    let patientId = requestedPatientId;
+    if (!patientId && sessionToken) {
+      const session = await IntakeSession.findOne({ sessionToken });
+      patientId = session?.patientId;
+    }
+    if (!patientId || !(await Patient.findById(patientId))) return res.status(400).json({ success: false, error: 'A valid patient or intake session is required for this upload.' });
     const filePath = req.file.path;
     const mimeType = req.file.mimetype;
     const originalName = req.file.originalname;

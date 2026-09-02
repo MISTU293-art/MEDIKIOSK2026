@@ -5,6 +5,11 @@ const ConsultationNote = require('../models/ConsultationNote');
 const DispensationRecord = require('../models/DispensationRecord');
 const AiClinicalCopilotService = require('../services/aiClinicalCopilotService');
 const logger = require('../utils/logger');
+const Visit = require('../models/Visit');
+const Report = require('../models/Report');
+const { validateRegistration, nextToken, createIdentifiers, DEFAULT_DEPARTMENT, normalizePhone } = require('../utils/patientRegistry');
+const { getDoctorForDepartment } = require('../utils/doctorRoster');
+const KioskAssistantService = require('../services/kioskAssistantService');
 
 exports.getQueue = async (req, res) => {
   try {
@@ -27,6 +32,46 @@ exports.getQueue = async (req, res) => {
     logger.error('Doctor queue error: ' + err.message);
     res.status(500).send('Error loading doctor queue');
   }
+};
+
+exports.postCreatePatient = async (req, res) => {
+  try {
+    const { fullName, age, gender, phone, emergencyContact, department, medicalHistory, allergies, currentMedications } = req.body;
+    const validation = validateRegistration({ fullName, age, gender, phone });
+    if (!validation.valid) return res.status(400).json({ success: false, error: 'Please correct the patient fields.', fields: validation.errors });
+    const dept = department || req.user.department || DEFAULT_DEPARTMENT;
+    const assignment = getDoctorForDepartment(dept);
+    const { uhid, cardNumber } = createIdentifiers();
+    const patient = await Patient.create({ uhid, cardNumber, tokenNumber: await nextToken(Patient), fullName: validation.fullName, age: validation.age, gender: validation.gender, phone: validation.phone, emergencyContact: String(emergencyContact || '').trim(), department: dept, medicalHistory: String(medicalHistory || '').trim(), allergies: String(allergies || '').trim(), currentMedications: String(currentMedications || '').trim(), registrationSource: 'doctor', assignedDoctorName: req.user.name, assignedDoctorId: String(req.user.id), assignedDoctorQualification: assignment.qualification, roomNumber: assignment.roomNumber, status: 'queued' });
+    await Visit.create({ patientId: String(patient._id), cardNumber, tokenNumber: patient.tokenNumber, department: dept, assignedDoctorId: String(req.user.id), assignedDoctorName: req.user.name, status: 'queued' });
+    logger.audit('DOCTOR_PATIENT_REGISTER', req.user.email, { patientId: patient._id, cardNumber });
+    return res.json({ success: true, patientId: patient._id, cardNumber, tokenNumber: patient.tokenNumber });
+  } catch (err) {
+    logger.error('Doctor patient registration error: ' + err.message);
+    return res.status(500).json({ success: false, error: 'Failed to register patient.' });
+  }
+};
+
+exports.postAssistant = (req, res) => {
+  const message = String(req.body.message || '').trim();
+  if (!message) return res.status(400).json({ success: false, error: 'Please enter a question.' });
+  return res.json({ success: true, ...KioskAssistantService.answer(message, 'doctor') });
+};
+
+exports.getReports = async (req, res) => {
+  const reports = await Report.find({ requestedBy: String(req.user.id) });
+  const patients = await Patient.find({});
+  res.render('doctor/reports', { title: 'Doctor Reports & Tests', user: req.user, reports, patients });
+};
+
+exports.postRequestReport = async (req, res) => {
+  const { patientId, reportType, priority, instructions } = req.body;
+  if (!patientId || !String(reportType || '').trim()) return res.status(400).json({ success: false, error: 'Patient and report type are required.' });
+  const patient = await Patient.findById(patientId);
+  if (!patient) return res.status(404).json({ success: false, error: 'Patient not found.' });
+  const report = await Report.create({ patientId: String(patient._id), requestedBy: String(req.user.id), reportType: String(reportType).trim(), priority: priority || 'routine', instructions: String(instructions || '').trim(), status: 'requested' });
+  logger.audit('REPORT_REQUESTED', req.user.email, { reportId: report._id, patientId: patient._id });
+  return res.json({ success: true, reportId: report._id });
 };
 
 exports.getPatientDetail = async (req, res) => {
@@ -104,6 +149,7 @@ exports.postAiAutoSuggest = (req, res) => {
 exports.postSaveConsultation = async (req, res) => {
   try {
     const { patientId, approvedSummary, clinicalImpression, prescribedMedications, labOrders, followUpDate } = req.body;
+    if (!String(patientId || '').trim() || !String(clinicalImpression || '').trim()) return res.status(400).json({ success: false, error: 'Patient and clinical impression are required.' });
 
     const patient = await Patient.findById(patientId);
     if (!patient) return res.status(404).json({ success: false, error: 'Patient not found' });
@@ -114,10 +160,10 @@ exports.postSaveConsultation = async (req, res) => {
       doctorId: req.user ? String(req.user.id) : 'DOC-01',
       doctorName: req.user ? req.user.name : (patient.assignedDoctorName || 'Dr. Rajesh Kumar Sharma, BAMS, MD'),
       department: patient.department,
-      approvedSummary,
-      clinicalImpression,
-      prescribedMedications: Array.isArray(prescribedMedications) ? prescribedMedications : [{ medicineName: prescribedMedications }],
-      labOrders: Array.isArray(labOrders) ? labOrders : [labOrders],
+      approvedIntakeSummary: String(approvedSummary || '').trim(),
+      clinicalImpression: String(clinicalImpression).trim(),
+      prescribedMedications: (Array.isArray(prescribedMedications) ? prescribedMedications : [{ medicineName: prescribedMedications }]).filter(item => item && String(item.medicineName || '').trim()),
+      labOrders: (Array.isArray(labOrders) ? labOrders : [labOrders]).filter(item => String(item || '').trim()),
       followUpDate
     });
 

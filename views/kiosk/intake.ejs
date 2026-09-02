@@ -54,7 +54,7 @@
         </div>
         <div class="col-md-6">
           <label class="form-label fw-bold"><%= questionBank.steps[0].fields[3].label[lang] || 'Mobile Phone' %> *</label>
-          <input type="tel" id="input_phone" class="form-control form-control-lg" placeholder="10-digit mobile number" required>
+          <input type="tel" id="input_phone" class="form-control form-control-lg" placeholder="10-digit mobile number" value="<%= prefillMobile || '' %>" required>
         </div>
         <div class="col-md-6">
           <label class="form-label fw-bold"><%= questionBank.steps[0].fields[4].label[lang] || 'Emergency Contact' %></label>
@@ -365,6 +365,7 @@
   </button>
 
 </div>
+<script>window.existingPatientId = <%- JSON.stringify(prefillPatientId || '') %>;</script>
 
 
   </div>

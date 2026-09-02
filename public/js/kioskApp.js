@@ -220,6 +220,10 @@ function nextStep() {
     stepPayload.demographics = { fullName: name, age: parseInt(age), gender, phone, emergencyContact, aadhaarNumber: aadhaar, abhaId: abha, ayushmanSchemeType: scheme };
   }
 
+  if (currentStep === 2) {
+    stepPayload.chiefComplaint.freeTextDescription = document.getElementById('chiefComplaintFreeText')?.value.trim() || '';
+  }
+
   if (currentStep < totalSteps) {
     renderStep(currentStep + 1);
   }
@@ -238,6 +242,17 @@ function skipStep() {
 }
 
 async function submitIntakeForm() {
+  const demographics = stepPayload.demographics;
+  const validation = [
+    [demographics.fullName, 'Please enter your full name.'],
+    [demographics.age, 'Please enter your age.'],
+    [demographics.phone, 'Please enter your 10-digit mobile number.']
+  ];
+  const missing = validation.find(([value]) => !String(value || '').trim());
+  if (missing || !/^\d{10}$/.test(String(demographics.phone || '').replace(/\D/g, ''))) {
+    alert(missing ? missing[1] : 'Please enter a valid 10-digit mobile number.');
+    return;
+  }
   const submitBtn = document.getElementById('submitIntakeBtn');
   if (submitBtn) {
     submitBtn.disabled = true;
@@ -247,6 +262,7 @@ async function submitIntakeForm() {
   const payload = {
     sessionToken: window.kioskSessionToken,
     kioskId: window.kioskId || 'KIOSK-01',
+    existingPatientId: window.existingPatientId || undefined,
     language: window.kioskLang || 'en',
     consent: {
       medicalDataSharing: true,

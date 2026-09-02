@@ -7,6 +7,7 @@ const Document = require('../models/Document');
 const DispensationRecord = require('../models/DispensationRecord');
 const { DEPARTMENT_DOCTOR_ROSTER } = require('../utils/doctorRoster');
 const logger = require('../utils/logger');
+const bcrypt = require('bcryptjs');
 
 // Dynamic System Settings Store
 let systemSettings = {
@@ -75,6 +76,17 @@ exports.getDashboard = async (req, res) => {
   }
 };
 
+exports.getPatients = async (req, res) => {
+  const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+  const pageSize = 15;
+  const query = String(req.query.search || '').trim().toLowerCase();
+  const allPatients = await Patient.find({});
+  const filtered = query ? allPatients.filter(patient => [patient.fullName, patient.cardNumber, patient.uhid, patient.phone].some(value => String(value || '').toLowerCase().includes(query))) : allPatients;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const safePage = Math.min(page, totalPages);
+  res.render('admin/patients', { title: 'Patient Directory & Export', user: req.user, patients: filtered.slice((safePage - 1) * pageSize, safePage * pageSize), page: safePage, totalPages, total: filtered.length, search: req.query.search || '' });
+};
+
 exports.getSettings = (req, res) => {
   res.render('admin/settings', {
     title: 'Hospital Facility & Cloud AI Backend Settings — MediKiosk',
@@ -138,12 +150,9 @@ exports.postCreateUser = async (req, res) => {
     
     const existing = await User.findOne({ email: cleanEmail });
     if (existing) {
-      existing.name = name || existing.name;
-      existing.password = password || existing.password;
-      existing.role = role || existing.role;
-      existing.department = department || existing.department;
-      existing.active = true;
-      await existing.save();
+      const update = { name: name || existing.name, role: role || existing.role, department: department || existing.department, active: true };
+      if (password) update.password = await bcrypt.hash(password, 10);
+      await User.findByIdAndUpdate(existing._id, update, { new: true, runValidators: true });
     } else {
       await User.create({
         name: name || 'Doctor / Staff',
@@ -292,3 +301,12 @@ exports.getExportIntakesCsv = async (req, res) => {
 };
 
 exports.getExportIntakes = exports.getExportIntakesCsv;
+
+exports.getExportPatientsExcel = async (req, res) => {
+  const patients = await Patient.find({});
+  const rows = patients.map(patient => `<tr><td>${patient.cardNumber || ''}</td><td>${patient.uhid}</td><td>${patient.fullName}</td><td>${patient.age}</td><td>${patient.gender}</td><td>${patient.phone}</td><td>${patient.department || ''}</td><td>${patient.status || ''}</td><td>${new Date(patient.createdAt).toISOString()}</td></tr>`).join('');
+  const html = `<table><thead><tr><th>Card Number</th><th>UHID</th><th>Full Name</th><th>Age</th><th>Gender</th><th>Phone</th><th>Department</th><th>Status</th><th>Registered</th></tr></thead><tbody>${rows}</tbody></table>`;
+  res.setHeader('Content-Type', 'application/vnd.ms-excel');
+  res.setHeader('Content-Disposition', 'attachment; filename="medikiosk-patients.xls"');
+  return res.send(html);
+};

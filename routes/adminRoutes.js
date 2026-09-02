@@ -7,6 +7,8 @@ const requireRole = require('../middleware/roleMiddleware');
 router.use(authenticate, requireRole('admin'));
 
 router.get('/dashboard', adminController.getDashboard);
+router.get('/patients', adminController.getPatients);
+router.get('/patients/export.xlsx', adminController.getExportPatientsExcel);
 router.get('/reports', adminController.getReports);
 router.get('/audit-logs', adminController.getAuditLogs);
 router.get('/settings', adminController.getSettings);

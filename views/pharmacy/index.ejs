@@ -52,6 +52,14 @@
         </div>
       </div>
 
+      <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"><h5 class="fw-bold m-0"><i class="bi bi-box-seam text-success me-2"></i>Inventory Control</h5><button class="btn btn-outline-success btn-sm rounded-pill" data-bs-toggle="collapse" data-bs-target="#inventoryForm">Add stock item</button></div>
+        <form id="inventoryForm" class="collapse row g-2 mb-3"><div class="col-md-4"><input name="name" class="form-control" placeholder="Medicine name" required></div><div class="col-md-3"><input name="batchNumber" class="form-control" placeholder="Batch number" required></div><div class="col-6 col-md-2"><input name="quantity" type="number" min="0" class="form-control" placeholder="Quantity" required></div><div class="col-6 col-md-2"><input name="unitPrice" type="number" min="0" step="0.01" class="form-control" placeholder="Unit price" required></div><div class="col-md-1"><button class="btn btn-success w-100" type="submit"><i class="bi bi-plus-lg"></i></button></div><div id="inventoryFeedback" class="col-12 small" role="alert"></div></form>
+        <div class="table-responsive"><table class="table table-gov align-middle small"><thead><tr><th>Medicine</th><th>Batch</th><th>Stock</th><th>Expiry</th><th>Action</th></tr></thead><tbody><% (inventory || []).forEach(item => { %><tr class="<%= item.quantity <= item.reorderLevel ? 'table-warning' : '' %>"><td><strong><%= item.name %></strong><div class="text-muted"><%= item.category || 'Medicine' %></div></td><td><%= item.batchNumber %></td><td><span class="badge bg-<%= item.quantity <= item.reorderLevel ? 'warning text-dark' : 'success' %>"><%= item.quantity %></span></td><td><%= item.expiryDate ? new Date(item.expiryDate).toLocaleDateString() : 'Not set' %></td><td><form class="d-flex gap-1 stock-adjust-form"><input type="hidden" name="itemId" value="<%= item._id %>"><input name="amount" type="number" class="form-control form-control-sm" placeholder="+/-" required style="max-width:70px"><button class="btn btn-sm btn-outline-primary" type="submit">Adjust</button></form></td></tr><% }) %><% if (!(inventory || []).length) { %><tr><td colspan="5" class="text-center text-muted py-3">No inventory recorded.</td></tr><% } %></tbody></table></div>
+      </div>
+
+      <%- include('../partials/pharmacyReceiving') %>
+
       <% if (typeof searchedPatient !== 'undefined' && searchedPatient) { %>
         <div class="row g-4 mb-4">
           <!-- Left Column: Patient & Doctor Prescription Details -->
@@ -134,12 +142,12 @@
                 <div class="mb-3">
                   <label class="form-label small fw-bold">Prescribed Items & Quantity:</label>
                   <div class="input-group input-group-sm mb-2">
-                    <input type="text" name="item_1_name" class="form-control" value="AYUSH Classical Formulation Pack" readonly>
+                    <input type="text" name="items" class="form-control" value="AYUSH Classical Formulation Pack" readonly>
                     <span class="input-group-text">Qty: 1</span>
                     <span class="input-group-text">&#8377;180</span>
                   </div>
                   <div class="input-group input-group-sm">
-                    <input type="text" name="item_2_name" class="form-control" value="Anupana Herbal Carrier Bottle" readonly>
+                    <input type="text" name="items" class="form-control" value="Anupana Herbal Carrier Bottle" readonly>
                     <span class="input-group-text">Qty: 1</span>
                     <span class="input-group-text">&#8377;60</span>
                   </div>
@@ -192,8 +200,8 @@
                     <td><strong><%= d.patientName %></strong></td>
                     <td><span class="badge bg-secondary"><%= d.uhid %></span></td>
                     <td><%= d.doctorName %></td>
-                    <td><strong class="text-success">&#8377; <%= d.totalAmount %></strong></td>
-                    <td><span class="badge bg-success"><i class="bi bi-check2-circle me-1"></i><%= (d.status || 'completed').toUpperCase() %></span></td>
+                    <td><strong class="text-success">&#8377; <%= d.totalBillAmount || 0 %></strong></td>
+                    <td><span class="badge bg-success"><i class="bi bi-check2-circle me-1"></i><%= (d.dispensationStatus || 'completed').toUpperCase() %></span></td>
                   </tr>
                 <% }) %>
               <% } %>
@@ -212,6 +220,8 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   initTablePagination('pharmacyTable', 'pharmacyTablePagination', 6);
+  document.getElementById('inventoryForm').addEventListener('submit', async event => { event.preventDefault(); const form = event.currentTarget; if (!form.checkValidity()) { form.classList.add('was-validated'); return; } const response = await fetch('/pharmacy/inventory', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form))) }); const data = await response.json(); if (data.success) location.reload(); else document.getElementById('inventoryFeedback').textContent = data.error; });
+  document.querySelectorAll('.stock-adjust-form').forEach(form => form.addEventListener('submit', async event => { event.preventDefault(); const response = await fetch('/pharmacy/inventory/adjust', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form))) }); const data = await response.json(); if (data.success) location.reload(); else alert(data.error); }));
 });
 </script>
 <%- include('../partials/footer') %>

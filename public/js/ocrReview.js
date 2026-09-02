@@ -3,6 +3,11 @@
  */
 function verifyDocument(docId, action) {
   const form = document.getElementById('ocrVerifyForm');
+  if (action === 'verify' && !form.checkValidity()) {
+    form.classList.add('was-validated');
+    alert('Please complete the required verification fields before approving this document.');
+    return;
+  }
   const formData = new FormData(form);
 
   const verifiedData = {

@@ -210,3 +210,40 @@
 [2026-08-29T10:17:50.405Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
 [2026-08-29T10:24:26.749Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
 [2026-08-29T10:24:27.462Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-09-02T15:28:39.362Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-02T15:32:21.305Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-02T15:32:37.605Z] [AUDIT] Action: REPORT_REQUESTED | User: doctor@hospital.org {"reportId":"6a984195e504250bc793a468","patientId":"6a928d6bca985197c5dd8ce6"}
+[2026-09-02T15:35:39.753Z] [AUDIT] Action: LOGIN_FAILED | User: mistu14112006@gmail.com {"reason":"User not found or inactive"}
+[2026-09-02T15:35:45.698Z] [AUDIT] Action: LOGIN_FAILED | User: mistu14112006@gmail.com {"reason":"User not found or inactive"}
+[2026-09-02T15:35:58.788Z] [AUDIT] Action: LOGIN_FAILED | User: mistu14112006@gmail.com {"reason":"User not found or inactive"}
+[2026-09-02T15:36:07.324Z] [AUDIT] Action: LOGIN_FAILED | User: mistu14112006@gmail.com {"reason":"User not found or inactive"}
+[2026-09-02T15:36:14.428Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-09-02T15:41:52.160Z] [AUDIT] Action: INTAKE_SUBMITTED | User: UHID-AYUSH-5937D41EB0 {"patientId":"6a9843bf4264e7444de69809","kioskId":"KIOSK-01","priority":"Normal","redFlagTriggered":false}
+[2026-09-02T15:59:45.781Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-02T16:01:25.819Z] [AUDIT] Action: USER_LOGIN | User: pharmacy@hospital.org {"role":"staff","ip":"::1"}
+[2026-09-02T16:01:26.523Z] [AUDIT] Action: USER_LOGIN | User: pharmacy@hospital.org {"role":"staff","ip":"::1"}
+[2026-09-02T16:10:01.608Z] [AUDIT] Action: LOGIN_FAILED | User: mistu14112006@gmail.com {"reason":"User not found or inactive"}
+[2026-09-02T16:12:28.748Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-09-02T16:18:03.313Z] [AUDIT] Action: USER_LOGIN | User: pharmacy@hospital.org {"role":"staff","ip":"::1"}
+[2026-09-02T16:19:17.265Z] [AUDIT] Action: PHARMACY_INVENTORY_CREATED | User: pharmacy@hospital.org {"inventoryId":"6a984c85b53edf9d197db61e","name":"PARACITAMOL"}
+[2026-09-02T16:19:29.424Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-02T16:19:51.194Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-09-02T16:21:02.876Z] [AUDIT] Action: STAFF_CARD_ISSUED | User: admin@hospital.org {"cardId":"SC-aedfc866d3b01ce8dcee814b903d6c9984e2","staffId":"6a9842fd2152c00ace3f7f8b"}
+[2026-09-02T16:25:10.410Z] [AUDIT] Action: STAFF_CLOCK_IN | User: admin@hospital.org {"staffId":"6a9842fd2152c00ace3f7f8b","cardId":"SC-aedfc866d3b01ce8dcee814b903d6c9984e2","attendanceId":"6a984de6192eddad8a0f31ac"}
+[2026-09-02T16:31:09.303Z] [AUDIT] Action: USER_CREATED_BY_ADMIN | User: admin@hospital.org {"createdEmail":"mistu14112006@gmail.com","role":"admin"}
+[2026-09-02T16:35:39.386Z] [AUDIT] Action: DOCUMENT_UPLOADED_AND_OCR_PROCESSED | User: kiosk {"documentId":"6a98505bb031ca1066a69dd9","docType":"Lab Report","cdnProvider":"imagekit.io","ocrStatus":"draft"}
+[2026-09-02T16:35:45.995Z] [AUDIT] Action: DOCUMENT_UPLOADED_AND_OCR_PROCESSED | User: kiosk {"documentId":"6a985061b031ca1066a69ddd","docType":"Lab Report","cdnProvider":"imagekit.io","ocrStatus":"draft"}
+[2026-09-02T16:38:26.701Z] [AUDIT] Action: STAFF_CARD_ISSUED | User: admin@hospital.org {"cardId":"SC-ad55aabd79f7f0223585606ef582f59482af","staffId":"6a9842fc2152c00ace3f7f86"}
+[2026-09-02T16:39:56.669Z] [AUDIT] Action: DOCUMENT_UPLOADED_AND_OCR_PROCESSED | User: kiosk {"documentId":"6a98515cb031ca1066a69e12","docType":"Lab Report","cdnProvider":"imagekit.io","ocrStatus":"draft"}
+[2026-09-02T16:42:04.509Z] [AUDIT] Action: WARD_CREATED | User: admin@hospital.org {"wardId":"6a9851dc0997ce310fa85ec4"}
+[2026-09-02T16:42:09.728Z] [AUDIT] Action: BED_CREATED | User: admin@hospital.org {"bedId":"6a9851e10997ce310fa85ecd"}
+[2026-09-02T16:50:27.297Z] [AUDIT] Action: INTAKE_SUBMITTED | User: UHID-AYUSH-936EE173D7 {"patientId":"6a9853d2e2a33c73a529eb67","kioskId":"KIOSK-01","priority":"Normal","redFlagTriggered":false}
+[2026-09-02T16:51:25.218Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-02T16:53:17.584Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-02T16:54:42.759Z] [AUDIT] Action: DOCTOR_CONSULTATION_SAVED | User: doctor@hospital.org {"patientId":"6a9853d2e2a33c73a529eb67","noteId":"6a9854d2e2a33c73a529eb8e"}
+[2026-09-02T16:54:59.415Z] [AUDIT] Action: USER_LOGIN | User: pharmacy@hospital.org {"role":"staff","ip":"::1"}
+[2026-09-02T16:56:33.396Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-09-02T16:57:31.345Z] [AUDIT] Action: STAFF_CARD_ISSUED | User: admin@hospital.org {"cardId":"SC-37392016f214329dff9463dccdb60a39a126","staffId":"6a9842fc2152c00ace3f7f89"}
+[2026-09-02T16:59:01.328Z] [AUDIT] Action: SUPERADMIN_SETTINGS_UPDATED | User: admin@hospital.org {"provider":"gemini-1.5-flash","hospital":"National Institute of Ayurveda & AYUSH Research Hospital","state":"Delhi (National Capital Territory)"}
+[2026-09-02T16:59:17.778Z] [AUDIT] Action: USER_LOGIN | User: staff@hospital.org {"role":"staff","ip":"::1"}
+[2026-09-02T17:00:05.965Z] [AUDIT] Action: AYUSHMAN_PATIENT_RECOGNIZED | User: UHID-AYUSH-936EE173D7 {"patientId":"6a9853d2e2a33c73a529eb67","tokenNumber":"AYUSH-104","identifier":"UHID-AYUSH-936EE173D7"}

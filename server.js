@@ -30,6 +30,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const pharmacyRoutes = require("./routes/pharmacyRoutes");
 const documentRoutes = require("./routes/documentRoutes");
 const syncRoutes = require("./routes/syncRoutes");
+const operationsRoutes = require("./routes/operationsRoutes");
 
 const app = express();
 app.set("trust proxy", 1);
@@ -77,6 +78,7 @@ app.use("/admin", adminRoutes);
 app.use("/pharmacy", pharmacyRoutes);
 app.use("/api/documents", documentRoutes);
 app.use("/api/sync", syncRoutes);
+app.use("/", operationsRoutes);
 
 // 404 Handler
 app.use((req, res) => {

@@ -409,3 +409,37 @@ body.high-contrast .topbar {
   overflow-y: auto;
   max-height: 600px;
 }
+
+@media (max-width: 767.98px) {
+  .app-layout-wrapper { display: block; }
+  .sidebar { position: fixed; inset: 0 auto 0 0; width: min(280px, 88vw); transform: translateX(-100%); transition: transform 0.2s ease; box-shadow: 12px 0 28px rgba(0, 0, 0, 0.2); }
+  .sidebar.show { transform: translateX(0); }
+  .main-content-wrapper { width: 100%; }
+  main.p-4 { padding: 1rem !important; }
+  .medikiosk-topbar { padding: 0 12px !important; }
+  .topbar-right { gap: 8px !important; }
+  .kiosk-launch-btn { padding: 8px 10px !important; }
+  .card { border-radius: var(--radius-md) !important; }
+  .ocr-form-panel { max-height: none; overflow: visible; padding: 1rem; }
+  .table-responsive { border-radius: var(--radius-md); }
+  .touch-btn-lg { min-height: 56px; font-size: 1rem; }
+  .topbar-left { min-width: 0 !important; gap: 8px !important; }
+  .brand-content { min-width: 0; }
+  .brand-title { white-space: normal !important; overflow-wrap: anywhere; line-height: 1.15; }
+  .kiosk-nav-btn, .kiosk-btn-next, .kiosk-btn-submit { min-width: 0 !important; white-space: normal !important; width: 100%; }
+  .mobile-stack { flex-direction: column !important; align-items: stretch !important; }
+  .mobile-stack > * { width: 100% !important; max-width: none !important; }
+  .overflow-safe { overflow-wrap: anywhere; }
+  #intakeTabs { border-radius: var(--radius-md) !important; }
+  #intakeTabs .nav-link { white-space: normal; min-height: 52px; }
+  #ayushman-pane .p-4, #new-pane .p-4 { padding: 1rem !important; }
+  #ayushman-pane h5 { font-size: 1rem; }
+}
+
+@media (max-width: 420px) {
+  .container { padding-left: 10px !important; padding-right: 10px !important; }
+  .display-6 { font-size: 1.8rem; }
+  #ayushman-pane .input-group-lg { flex-wrap: wrap; }
+  #ayushman-pane .input-group-lg .input-group-text { width: 100%; border-radius: .375rem .375rem 0 0; }
+  #ayushman-pane .input-group-lg .form-control { width: 100%; border-radius: 0 0 .375rem .375rem; }
+}

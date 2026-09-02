@@ -42,6 +42,10 @@
               <%= patient.age %> Years &bull; <%= patient.gender.toUpperCase() %> &bull; Mobile: <%= patient.phone %>
               <% if (patient.emergencyContact) { %> &bull; Emergency: <%= patient.emergencyContact %> <% } %>
             </p>
+            <div class="d-flex flex-wrap gap-2 mt-2 small">
+              <span class="badge bg-light text-dark border">Card: <%= patient.cardNumber || 'Legacy record' %></span>
+              <span class="badge bg-light text-dark border">Registered via: <%= (patient.registrationSource || 'kiosk').toUpperCase() %></span>
+            </div>
             <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
               <span class="badge bg-warning-subtle text-warning-emphasis border border-warning px-2 py-1 small">
                 <i class="bi bi-credit-card-2-front-fill me-1 text-warning"></i> <%= patient.ayushmanSchemeType || 'PM-JAY Golden Card Holder (₹5L Cover)' %>
@@ -58,6 +62,16 @@
               <span class="badge badge-normal fs-6">Priority: <%= patient.priority %></span>
             <% } %>
           </div>
+        </div>
+      </div>
+
+      <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+        <h5 class="fw-bold mb-3"><i class="bi bi-person-vcard text-primary me-2"></i>Patient History</h5>
+        <div class="row g-3 small">
+          <div class="col-md-6"><strong>Address</strong><div class="text-muted"><%= patient.address || 'Not recorded' %></div></div>
+          <div class="col-md-6"><strong>Medical history</strong><div class="text-muted"><%= patient.medicalHistory || 'No history recorded' %></div></div>
+          <div class="col-md-6"><strong>Allergies</strong><div class="text-danger"><%= patient.allergies || 'No known allergies recorded' %></div></div>
+          <div class="col-md-6"><strong>Current medications</strong><div class="text-muted"><%= patient.currentMedications || 'No current medicines recorded' %></div></div>
         </div>
       </div>
 

@@ -3,7 +3,7 @@ const { DOCUMENT_TYPES, OCR_STATUS } = require('../config/constants');
 const { isLiveMongo, memoryDb } = require('../config/db');
 
 const documentSchema = new mongoose.Schema({
-  patientId: { type: String, required: true },
+  patientId: { type: String, default: null, index: true },
   sessionToken: { type: String },
   originalName: { type: String, required: true },
   fileName: { type: String, required: true },

@@ -11,6 +11,7 @@
         </div>
         <div class="d-flex align-items-center gap-2">
           <span class="badge bg-primary fs-6 px-3 py-2 rounded-pill"><%= patients.length %> Patients in Queue</span>
+          <button class="btn btn-success rounded-pill fw-semibold" data-bs-toggle="modal" data-bs-target="#newPatientModal"><i class="bi bi-person-plus me-1"></i> Add Walk-in</button>
         </div>
       </div>
 
@@ -83,10 +84,37 @@
     </main>
   </div>
 </div>
+<div class="modal fade" id="newPatientModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable"><div class="modal-content">
+    <form id="doctorPatientForm">
+      <div class="modal-header"><h5 class="modal-title">Register Walk-in Patient</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body row g-3">
+        <div class="col-12"><label class="form-label">Full name *</label><input name="fullName" class="form-control" required minlength="2"></div>
+        <div class="col-6"><label class="form-label">Age *</label><input name="age" type="number" min="0" max="120" class="form-control" required></div>
+        <div class="col-6"><label class="form-label">Gender *</label><select name="gender" class="form-select" required><option value="">Select</option><option value="female">Female</option><option value="male">Male</option><option value="other">Other</option></select></div>
+        <div class="col-12"><label class="form-label">Mobile number *</label><input name="phone" inputmode="numeric" pattern="[0-9]{10}" class="form-control" required></div>
+        <div class="col-12"><label class="form-label">Medical history</label><textarea name="medicalHistory" class="form-control" rows="2"></textarea></div>
+        <div class="col-12"><label class="form-label">Allergies and current medicines</label><textarea name="allergies" class="form-control" rows="2"></textarea></div>
+        <div id="doctorPatientFeedback" class="col-12" role="alert"></div>
+      </div><div class="modal-footer"><button class="btn btn-primary" type="submit">Create patient</button></div>
+    </form>
+  </div></div>
+</div>
 <script src="/js/pagination.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   initTablePagination('doctorQueueTable', 'doctorQueuePagination', 6);
+  document.getElementById('doctorPatientForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!form.checkValidity()) { form.classList.add('was-validated'); return; }
+    const feedback = document.getElementById('doctorPatientFeedback');
+    const response = await fetch('/doctor/patients', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
+    const data = await response.json();
+    if (!data.success) { feedback.className = 'col-12 alert alert-danger'; feedback.textContent = data.error || 'Unable to register patient.'; return; }
+    feedback.className = 'col-12 alert alert-success'; feedback.textContent = `Patient created. Card: ${data.cardNumber}`;
+    setTimeout(() => window.location.reload(), 700);
+  });
 });
 </script>
 <%- include('../partials/footer') %>

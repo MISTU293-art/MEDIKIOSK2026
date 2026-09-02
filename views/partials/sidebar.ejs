@@ -59,6 +59,7 @@
           <span>Reports & Analytics</span>
         </a>
       </li>
+      <li class="nav-item"><a href="/admin/patients" class="nav-link sidebar-nav-link"><i class="bi bi-people me-2 fs-5 text-warning"></i><span>Patient Directory</span></a></li>
       <li class="nav-item">
         <a href="/admin/audit-logs" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Audit') ? 'active' : '' %>">
           <i class="bi bi-journal-text me-2 fs-5 text-success"></i>
@@ -89,6 +90,9 @@
           <span>Emergency Red Flags</span>
         </a>
       </li>
+      <li class="nav-item"><a href="/admin/staff-cards" class="nav-link sidebar-nav-link"><i class="bi bi-person-vcard me-2 fs-5 text-warning"></i><span>Staff ID Cards</span></a></li>
+      <li class="nav-item"><a href="/admin/attendance" class="nav-link sidebar-nav-link"><i class="bi bi-calendar2-check me-2 fs-5 text-info"></i><span>Attendance</span></a></li>
+      <li class="nav-item"><a href="/admin/beds" class="nav-link sidebar-nav-link"><i class="bi bi-hospital me-2 fs-5 text-success"></i><span>Bed Capacity</span></a></li>
     <% } %>
 
     <!-- Clinical Doctor Consultation (PRD Module 7 & 8) -->
@@ -102,6 +106,10 @@
           <span>OPD Doctor Queue</span>
         </a>
       </li>
+      <li class="nav-item"><a href="/doctor/reports" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Reports') ? 'active' : '' %>"><i class="bi bi-clipboard2-pulse me-2 fs-5"></i><span>Reports & Tests</span></a></li>
+      <li class="nav-item"><a href="/beds" class="nav-link sidebar-nav-link"><i class="bi bi-hospital me-2 fs-5"></i><span>Bed Board</span></a></li>
+      <li class="nav-item"><a href="/staff/id-card" class="nav-link sidebar-nav-link"><i class="bi bi-person-vcard me-2 fs-5"></i><span>My Staff ID Card</span></a></li>
+      <li class="nav-item"><a href="/attendance" class="nav-link sidebar-nav-link"><i class="bi bi-person-check me-2 fs-5"></i><span>My Attendance</span></a></li>
     <% } %>
 
     <!-- Medicine Shop / Pharmacy (PRD Module 11) -->
@@ -138,6 +146,9 @@
           <span>Assisted Intake</span>
         </a>
       </li>
+      <li class="nav-item"><a href="/attendance" class="nav-link sidebar-nav-link"><i class="bi bi-person-check me-2 fs-5"></i><span>Staff Attendance</span></a></li>
+      <li class="nav-item"><a href="/beds" class="nav-link sidebar-nav-link"><i class="bi bi-hospital me-2 fs-5"></i><span>Bed Board</span></a></li>
+      <li class="nav-item"><a href="/staff/id-card" class="nav-link sidebar-nav-link"><i class="bi bi-person-vcard me-2 fs-5"></i><span>My Staff ID Card</span></a></li>
     <% } %>
 
     <!-- Citizen Kiosk Mode -->

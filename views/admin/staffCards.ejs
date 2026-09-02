@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+<div class="app-layout-wrapper"><%- include('../partials/sidebar') %><div class="main-content-wrapper"><%- include('../partials/topbar') %>
+<main class="p-4">
+  <h2 class="fw-bold">Staff Identity Cards</h2>
+  <p class="text-muted">Issue or revoke opaque QR credentials. QR codes contain no personal or medical data.</p>
+  <div class="card border-0 shadow-sm p-4">
+    <h5>Issue or reissue card</h5>
+    <form id="issueCardForm" class="row g-2">
+      <div class="col-md-9"><select name="userId" class="form-select" required><option value="">Select staff member</option><% users.forEach(member => { %><option value="<%= member._id %>"><%= member.name %> · <%= member.role %> · <%= member.department %></option><% }) %></select></div>
+      <div class="col-md-3"><button class="btn btn-primary w-100" type="submit">Issue card</button></div>
+    </form>
+    <hr>
+    <div class="table-responsive"><table class="table table-gov"><thead><tr><th>Staff</th><th>Card ID</th><th>QR</th><th>Status</th><th>Action</th></tr></thead><tbody>
+      <% cards.forEach(card => { const member = users.find(item => String(item._id) === card.userId); %>
+      <tr><td><%= member ? member.name : card.userId %></td><td><code><%= card.cardId %></code></td><td><canvas class="staff-qr" data-card="<%= card.cardId %>" width="64" height="64"></canvas></td><td><span class="badge bg-<%= card.status === 'active' ? 'success' : 'secondary' %>"><%= card.status %></span></td><td><% if (card.status === 'active') { %><a class="btn btn-sm btn-outline-primary me-1" href="/admin/staff-cards/<%= card.cardId %>/print" target="_blank">Print</a><button class="btn btn-sm btn-outline-danger revoke-card" data-card="<%= card.cardId %>">Revoke</button><% } %></td></tr>
+      <% }) %>
+    </tbody></table></div>
+  </div>
+</main></div></div>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script>
+if (window.QRCode) document.querySelectorAll('.staff-qr').forEach(canvas => QRCode.toCanvas(canvas, canvas.dataset.card, { width: 64, margin: 1 }));
+document.getElementById('issueCardForm').addEventListener('submit', async event => { event.preventDefault(); const response = await fetch('/admin/staff-cards/issue', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget))) }); const data = await response.json(); if (data.success) location.reload(); else alert(data.error); });
+document.querySelectorAll('.revoke-card').forEach(button => button.addEventListener('click', async () => { const response = await fetch('/admin/staff-cards/revoke', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cardId: button.dataset.card, reason: 'Administrator revocation' }) }); const data = await response.json(); if (data.success) location.reload(); else alert(data.error); }));
+</script><%- include('../partials/footer') %>

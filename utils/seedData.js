@@ -11,10 +11,13 @@ const logger = require('./logger');
 
 const seedDatabase = async () => {
   try {
-    await User.deleteMany({});
-    logger.info('Resetting users with clean single-hashed passwords...');
+    if (process.env.SEED_DEMO_DATA !== 'true') {
+      logger.info('Automatic demo seeding is disabled; existing records are preserved.');
+      return;
+    }
+    logger.info('Optional demo seeding enabled; existing records will be preserved.');
 
-    await User.create({
+    if (!(await User.findOne({ email: 'admin@hospital.org' }))) await User.create({
       name: 'Dr. Anand Verma (Medical Superintendent)',
       email: 'admin@hospital.org',
       password: 'admin123',
@@ -22,7 +25,7 @@ const seedDatabase = async () => {
       department: 'Hospital Administration'
     });
 
-    await User.create({
+    if (!(await User.findOne({ email: 'doctor@hospital.org' }))) await User.create({
       name: 'Dr. Arindam Banerjee (MD, Internal Medicine)',
       email: 'doctor@hospital.org',
       password: 'doctor123',
@@ -30,7 +33,7 @@ const seedDatabase = async () => {
       department: 'General Medicine'
     });
 
-    await User.create({
+    if (!(await User.findOne({ email: 'cardio@hospital.org' }))) await User.create({
       name: 'Dr. Meera Sharma (MD, DM Cardiology)',
       email: 'cardio@hospital.org',
       password: 'doctor123',
@@ -38,7 +41,7 @@ const seedDatabase = async () => {
       department: 'Cardiology'
     });
 
-    await User.create({
+    if (!(await User.findOne({ email: 'staff@hospital.org' }))) await User.create({
       name: 'Priya Sen (OPD Reception Desk)',
       email: 'staff@hospital.org',
       password: 'staff123',
@@ -46,7 +49,7 @@ const seedDatabase = async () => {
       department: 'OPD Registration & Triage'
     });
 
-    await User.create({
+    if (!(await User.findOne({ email: 'pharmacy@hospital.org' }))) await User.create({
       name: 'Vikram Joshi (Registered Pharmacist)',
       email: 'pharmacy@hospital.org',
       password: 'pharmacy123',
@@ -61,6 +64,7 @@ const seedDatabase = async () => {
     if (patientCount === 0) {
       const patient1 = await Patient.create({
         uhid: 'UHID-880124-12',
+        cardNumber: 'MKC-880124',
         tokenNumber: 'T-101',
         fullName: 'Rajesh Kumar Chatterjee',
         age: 58,
@@ -127,6 +131,7 @@ const seedDatabase = async () => {
       // Sample second patient: Normal OPD
       const patient2 = await Patient.create({
         uhid: 'UHID-880124-15',
+        cardNumber: 'MKC-880125',
         tokenNumber: 'T-102',
         fullName: 'Sunita Devi Sharma',
         age: 42,

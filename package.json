@@ -25,7 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "express": "^4.21.2",
+    "express": "^4.22.2",
     "express-rate-limit": "^7.5.0",
     "helmet": "^8.0.0",
     "imagekit": "^6.0.0",
@@ -33,5 +33,17 @@
     "mongoose": "^8.9.5",
     "multer": "^1.4.5-lts.1",
     "uuid": "^11.0.5"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MISTU293-art/MEDIKIOSK2026.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MISTU293-art/MEDIKIOSK2026/issues"
+  },
+  "homepage": "https://github.com/MISTU293-art/MEDIKIOSK2026#readme"
 }
