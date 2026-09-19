@@ -96,6 +96,10 @@
             Health Intake
           </button>
         </li>
+   <a href="/kiosk/emergency" class="btn btn-danger">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    Emergency
+</a>
       </ul>
 
       <div class="tab-content" id="intakeTabsContent">
@@ -152,10 +156,25 @@
               </div>
             </form>
 
-            <div class="mt-3"><button type="button" id="patientQrScanButton" class="btn btn-outline-primary w-100"><i class="bi bi-camera me-1"></i> Scan Patient Card QR</button><video id="patientQrCamera" class="w-100 rounded border mt-2 d-none" autoplay muted playsinline style="max-height:220px;object-fit:cover"></video><div id="patientQrStatus" class="form-text"></div></div>
+            <div class="mt-3">
+              <button
+                type="button"
+                id="patientQrScanButton"
+                class="btn btn-outline-primary w-100"
+              >
+                <i class="bi bi-camera me-1"></i> Scan Patient Card QR</button
+              ><video
+                id="patientQrCamera"
+                class="w-100 rounded border mt-2 d-none"
+                autoplay
+                muted
+                playsinline
+                style="max-height: 220px; object-fit: cover"
+              ></video>
+              <div id="patientQrStatus" class="form-text"></div>
+            </div>
 
             <div id="lookupAlert" class="alert mt-3 d-none small"></div>
-
           </div>
         </div>
 
@@ -322,7 +341,12 @@
                 >58 / MALE</strong
               >
             </div>
-          <div class="small text-white-50">Patient Card: <strong class="text-white" id="recognizedCardNumber">Card verified</strong></div>
+            <div class="small text-white-50">
+              Patient Card:
+              <strong class="text-white" id="recognizedCardNumber"
+                >Card verified</strong
+              >
+            </div>
             <div class="col-6">
               <span>UHID:</span>
               <code
@@ -393,8 +417,64 @@
   </div>
 </div>
 
-<button id="assistantToggle" class="btn btn-primary rounded-circle shadow position-fixed" style="right:18px;bottom:18px;width:58px;height:58px;z-index:20" aria-label="Open MediKiosk assistant"><i class="bi bi-chat-dots-fill fs-4"></i></button>
-<section id="assistantPanel" class="card shadow-lg border-0 position-fixed d-none" style="right:18px;bottom:86px;width:min(360px,calc(100vw - 36px));z-index:20" aria-label="MediKiosk assistant"><div class="card-header bg-primary text-white d-flex justify-content-between"><strong><i class="bi bi-robot me-1"></i> MediKiosk Assistant</strong><button id="assistantClose" class="btn btn-sm text-white" type="button" aria-label="Close assistant"><i class="bi bi-x-lg"></i></button></div><div id="assistantMessages" class="card-body small" style="max-height:220px;overflow-y:auto"><p class="mb-0">I can help with registration, returning-patient search, privacy, and when to alert staff.</p></div><form id="assistantForm" class="card-footer d-flex gap-2"><input id="assistantInput" class="form-control" placeholder="Ask for help" required><button id="assistantMic" class="btn btn-outline-primary" type="button" aria-label="Speak to assistant"><i class="bi bi-mic"></i></button><button class="btn btn-primary" type="submit" aria-label="Send question"><i class="bi bi-send"></i></button></form></section>
+<button
+  id="assistantToggle"
+  class="btn btn-primary rounded-circle shadow position-fixed"
+  style="right: 18px; bottom: 18px; width: 58px; height: 58px; z-index: 20"
+  aria-label="Open MediKiosk assistant"
+>
+  <i class="bi bi-chat-dots-fill fs-4"></i>
+</button>
+<section
+  id="assistantPanel"
+  class="card shadow-lg border-0 position-fixed d-none"
+  style="
+    right: 18px;
+    bottom: 86px;
+    width: min(360px, calc(100vw - 36px));
+    z-index: 20;
+  "
+  aria-label="MediKiosk assistant"
+>
+  <div class="card-header bg-primary text-white d-flex justify-content-between">
+    <strong><i class="bi bi-robot me-1"></i> MediKiosk Assistant</strong
+    ><button
+      id="assistantClose"
+      class="btn btn-sm text-white"
+      type="button"
+      aria-label="Close assistant"
+    >
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+  <div
+    id="assistantMessages"
+    class="card-body small"
+    style="max-height: 220px; overflow-y: auto"
+  >
+    <p class="mb-0">
+      I can help with registration, returning-patient search, privacy, and when
+      to alert staff.
+    </p>
+  </div>
+  <form id="assistantForm" class="card-footer d-flex gap-2">
+    <input
+      id="assistantInput"
+      class="form-control"
+      placeholder="Ask for help"
+      required
+    /><button
+      id="assistantMic"
+      class="btn btn-outline-primary"
+      type="button"
+      aria-label="Speak to assistant"
+    >
+      <i class="bi bi-mic"></i></button
+    ><button class="btn btn-primary" type="submit" aria-label="Send question">
+      <i class="bi bi-send"></i>
+    </button>
+  </form>
+</section>
 
 <script>
   function fillAyushman(val) {
@@ -413,7 +493,9 @@
       const input = document.getElementById("ayushmanInput").value.trim();
 
       if (!input) {
-        document.getElementById("ayushmanInput").setCustomValidity("Patient Card Number is required.");
+        document
+          .getElementById("ayushmanInput")
+          .setCustomValidity("Patient Card Number is required.");
         document.getElementById("ayushmanInput").reportValidity();
         return;
       }
@@ -467,8 +549,11 @@
           alertBox.innerHTML =
             '<i class="bi bi-info-circle me-1"></i> No prior record found. Redirecting to Ayushman Registration...';
           setTimeout(() => {
-            const phone = input.replace(/\D/g, '').slice(-10);
-            window.location.href = phone.length === 10 ? `/kiosk/intake?lang=en&mobile=${encodeURIComponent(phone)}` : '/kiosk/intake?lang=en';
+            const phone = input.replace(/\D/g, "").slice(-10);
+            window.location.href =
+              phone.length === 10
+                ? `/kiosk/intake?lang=en&mobile=${encodeURIComponent(phone)}`
+                : "/kiosk/intake?lang=en";
           }, 1200);
         }
       } catch (err) {
@@ -481,21 +566,89 @@
       }
     });
 
-  const assistantPanel = document.getElementById('assistantPanel');
-  document.getElementById('assistantToggle').addEventListener('click', () => assistantPanel.classList.toggle('d-none'));
-  document.getElementById('assistantClose').addEventListener('click', () => assistantPanel.classList.add('d-none'));
-  document.getElementById('assistantForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const input = document.getElementById('assistantInput');
-    const message = input.value.trim();
-    if (!message) return;
-    const response = await fetch('/kiosk/assistant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message, mode: 'patient' }) });
-    const data = await response.json();
-    const item = document.createElement('p'); item.className = 'border-top pt-2 mt-2 mb-0'; item.textContent = data.message || data.error;
-    document.getElementById('assistantMessages').appendChild(item); input.value = '';
-    if (data.message && 'speechSynthesis' in window) { window.speechSynthesis.cancel(); window.speechSynthesis.speak(new SpeechSynthesisUtterance(data.message)); }
+  const assistantPanel = document.getElementById("assistantPanel");
+  document
+    .getElementById("assistantToggle")
+    .addEventListener("click", () => assistantPanel.classList.toggle("d-none"));
+  document
+    .getElementById("assistantClose")
+    .addEventListener("click", () => assistantPanel.classList.add("d-none"));
+  document
+    .getElementById("assistantForm")
+    .addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const input = document.getElementById("assistantInput");
+      const message = input.value.trim();
+      if (!message) return;
+      const response = await fetch("/kiosk/assistant", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, mode: "patient" }),
+      });
+      const data = await response.json();
+      const item = document.createElement("p");
+      item.className = "border-top pt-2 mt-2 mb-0";
+      item.textContent = data.message || data.error;
+      document.getElementById("assistantMessages").appendChild(item);
+      input.value = "";
+      if (data.message && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(
+          new SpeechSynthesisUtterance(data.message),
+        );
+      }
+    });
+  document.getElementById("assistantMic").addEventListener("click", () => {
+    const Recognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!Recognition) {
+      alert("Voice input is not supported in this browser.");
+      return;
+    }
+    const recognition = new Recognition();
+    recognition.lang = "en-IN";
+    recognition.onresult = (event) => {
+      document.getElementById("assistantInput").value =
+        event.results[0][0].transcript;
+      document.getElementById("assistantForm").requestSubmit();
+    };
+    recognition.start();
   });
-  document.getElementById('assistantMic').addEventListener('click', () => { const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition; if (!Recognition) { alert('Voice input is not supported in this browser.'); return; } const recognition = new Recognition(); recognition.lang = 'en-IN'; recognition.onresult = event => { document.getElementById('assistantInput').value = event.results[0][0].transcript; document.getElementById('assistantForm').requestSubmit(); }; recognition.start(); });
-  document.getElementById('patientQrScanButton').addEventListener('click', async () => { const camera = document.getElementById('patientQrCamera'); const status = document.getElementById('patientQrStatus'); const Detector = window.BarcodeDetector; if (!Detector || !navigator.mediaDevices?.getUserMedia) { status.textContent = 'QR camera scanning is not supported here. Enter the card number manually.'; return; } try { const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } } }); camera.srcObject = stream; camera.classList.remove('d-none'); status.textContent = 'Point the camera at the patient card QR code.'; const detector = new Detector({ formats: ['qr_code'] }); const scan = async () => { const codes = await detector.detect(camera); if (codes.length) { document.getElementById('ayushmanInput').value = codes[0].rawValue; stream.getTracks().forEach(track => track.stop()); camera.classList.add('d-none'); status.textContent = 'Card captured. Verifying...'; document.getElementById('ayushmanLookupForm').requestSubmit(); } else if (!camera.classList.contains('d-none')) requestAnimationFrame(scan); }; scan(); } catch (error) { status.textContent = 'Camera permission was unavailable. Enter the card number manually.'; } });
+  document
+    .getElementById("patientQrScanButton")
+    .addEventListener("click", async () => {
+      const camera = document.getElementById("patientQrCamera");
+      const status = document.getElementById("patientQrStatus");
+      const Detector = window.BarcodeDetector;
+      if (!Detector || !navigator.mediaDevices?.getUserMedia) {
+        status.textContent =
+          "QR camera scanning is not supported here. Enter the card number manually.";
+        return;
+      }
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: "environment" } },
+        });
+        camera.srcObject = stream;
+        camera.classList.remove("d-none");
+        status.textContent = "Point the camera at the patient card QR code.";
+        const detector = new Detector({ formats: ["qr_code"] });
+        const scan = async () => {
+          const codes = await detector.detect(camera);
+          if (codes.length) {
+            document.getElementById("ayushmanInput").value = codes[0].rawValue;
+            stream.getTracks().forEach((track) => track.stop());
+            camera.classList.add("d-none");
+            status.textContent = "Card captured. Verifying...";
+            document.getElementById("ayushmanLookupForm").requestSubmit();
+          } else if (!camera.classList.contains("d-none"))
+            requestAnimationFrame(scan);
+        };
+        scan();
+      } catch (error) {
+        status.textContent =
+          "Camera permission was unavailable. Enter the card number manually.";
+      }
+    });
 </script>
 <%- include('../partials/footer') %>

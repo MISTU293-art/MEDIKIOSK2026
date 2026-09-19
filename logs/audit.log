@@ -247,3 +247,27 @@
 [2026-09-02T16:59:01.328Z] [AUDIT] Action: SUPERADMIN_SETTINGS_UPDATED | User: admin@hospital.org {"provider":"gemini-1.5-flash","hospital":"National Institute of Ayurveda & AYUSH Research Hospital","state":"Delhi (National Capital Territory)"}
 [2026-09-02T16:59:17.778Z] [AUDIT] Action: USER_LOGIN | User: staff@hospital.org {"role":"staff","ip":"::1"}
 [2026-09-02T17:00:05.965Z] [AUDIT] Action: AYUSHMAN_PATIENT_RECOGNIZED | User: UHID-AYUSH-936EE173D7 {"patientId":"6a9853d2e2a33c73a529eb67","tokenNumber":"AYUSH-104","identifier":"UHID-AYUSH-936EE173D7"}
+[2026-09-19T12:50:53.236Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-19T13:01:39.872Z] [AUDIT] Action: AYUSHMAN_PATIENT_RECOGNIZED | User: UHID-880124-12 {"patientId":"6a928b3e8b80fa0e60c76e94","tokenNumber":"AYUSH-101","identifier":"UHID-880124-12"}
+[2026-09-19T13:20:43.426Z] [AUDIT] Action: USER_LOGIN | User: pharmacy@hospital.org {"role":"staff","ip":"::1"}
+[2026-09-19T13:22:01.650Z] [AUDIT] Action: USER_LOGIN | User: staff@hospital.org {"role":"staff","ip":"::1"}
+[2026-09-19T13:23:26.798Z] [AUDIT] Action: LOGIN_FAILED | User: admin@hospital.org {"reason":"Password mismatch"}
+[2026-09-19T13:23:40.890Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-09-19T13:47:04.874Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-19T13:48:03.349Z] [AUDIT] Action: INTAKE_SUBMITTED | User: UHID-AYUSH-E99E876575 {"patientId":"6aae92921cc72a8dc83e29a5","kioskId":"KIOSK-01","priority":"Emergency Red-Flag","redFlagTriggered":true}
+[2026-09-19T13:48:44.974Z] [AUDIT] Action: DOCUMENT_UPLOADED_AND_OCR_PROCESSED | User: kiosk {"documentId":"6aae92bc1cc72a8dc83e29be","docType":"Prescription","cdnProvider":"imagekit.io","ocrStatus":"draft"}
+[2026-09-19T13:48:55.139Z] [AUDIT] Action: DOCTOR_SUMMARY_REVIEW | User: doctor@hospital.org {"sessionToken":"KS-A9FB5B4F-3228","action":"approve","status":"approved"}
+[2026-09-19T13:49:36.876Z] [AUDIT] Action: DOCTOR_CONSULTATION_SAVED | User: doctor@hospital.org {"patientId":"6aae92921cc72a8dc83e29a5","noteId":"6aae92f01cc72a8dc83e29d4"}
+[2026-09-19T13:51:22.170Z] [AUDIT] Action: USER_LOGIN | User: staff@hospital.org {"role":"staff","ip":"::1"}
+[2026-09-19T15:01:59.307Z] [AUDIT] Action: EMERGENCY_PATIENT_REGISTERED | User: UHID-AYUSH-66ED08730C {"patientId":"6aaea3e7ad86703e4181ea44","tokenNumber":"AYUSH-102","registrationSource":"emergency_kiosk","priority":"Emergency"}
+[2026-09-19T15:06:50.924Z] [AUDIT] Action: EMERGENCY_PATIENT_REGISTERED | User: UHID-AYUSH-75812FA6E8 {"patientId":"6aaea50a2f0d25936edc71a4","tokenNumber":"AYUSH-102","registrationSource":"emergency_kiosk","priority":"Emergency"}
+[2026-09-19T15:08:55.135Z] [AUDIT] Action: EMERGENCY_PATIENT_REGISTERED | User: UHID-AYUSH-4DC9E4F519 {"patientId":"6aaea5862f0d25936edc71b3","tokenNumber":"AYUSH-102","registrationSource":"emergency_kiosk","priority":"Emergency"}
+[2026-09-19T15:09:05.370Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-19T15:12:26.969Z] [AUDIT] Action: EMERGENCY_PATIENT_REGISTERED | User: UHID-AYUSH-97678CA3A4 {"patientId":"6aaea65ae3afb7bc0316f92d","tokenNumber":"AYUSH-102","registrationSource":"emergency_kiosk","priority":"Emergency"}
+[2026-09-19T15:15:04.953Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-19T15:25:01.834Z] [AUDIT] Action: LOGIN_FAILED | User: admin@hospital.org {"reason":"User not found or inactive"}
+[2026-09-19T15:25:10.176Z] [AUDIT] Action: LOGIN_FAILED | User: admin@hospital.org {"reason":"User not found or inactive"}
+[2026-09-19T15:25:18.745Z] [AUDIT] Action: LOGIN_FAILED | User: admin@hospital.org {"reason":"User not found or inactive"}
+[2026-09-19T15:25:28.643Z] [AUDIT] Action: USER_LOGIN | User: mistu14112006@gmail.com {"role":"admin","ip":"::1"}
+[2026-09-19T15:38:35.269Z] [AUDIT] Action: USER_LOGIN | User: pharmacy@hospital.org {"role":"staff","ip":"::1"}
+[2026-09-19T15:40:48.669Z] [AUDIT] Action: USER_LOGIN | User: mistu14112006@gmail.com {"role":"admin","ip":"::1"}

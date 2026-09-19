@@ -1,3 +1,90 @@
-<%- include('../partials/header') %><div class="app-layout-wrapper"><%- include('../partials/sidebar') %><div class="main-content-wrapper"><%- include('../partials/topbar') %><main class="p-4">
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4"><div><h2 class="fw-bold m-0">Patient Directory</h2><p class="text-muted m-0">Search, review, and export registered patients.</p></div><a class="btn btn-success rounded-pill" href="/admin/patients/export.xlsx"><i class="bi bi-file-earmark-spreadsheet me-1"></i> Export Excel</a></div>
-<div class="card border-0 shadow-sm p-4"><form class="row g-2 mb-3"><div class="col-sm-9"><input class="form-control" name="search" value="<%= search %>" placeholder="Search name, card, UHID, or mobile"></div><div class="col-sm-3"><button class="btn btn-primary w-100" type="submit">Search</button></div></form><div class="table-responsive"><table class="table table-gov align-middle"><thead><tr><th>Card</th><th>Patient</th><th>Age/Gender</th><th>Contact</th><th>Source</th><th>Status</th><th></th></tr></thead><tbody><% if (!patients.length) { %><tr><td colspan="7" class="text-center text-muted py-4">No patients found.</td></tr><% } %><% patients.forEach(patient => { %><tr><td><strong><%= patient.cardNumber || 'Legacy' %></strong><div class="small text-muted"><%= patient.uhid %></div></td><td><%= patient.fullName %></td><td><%= patient.age %> / <%= patient.gender %></td><td><%= patient.phone %></td><td><%= (patient.registrationSource || 'kiosk').toUpperCase() %></td><td><span class="badge bg-light text-dark border"><%= patient.status %></span></td><td><a href="/doctor/patient/<%= patient._id %>" class="btn btn-sm btn-outline-primary">Open</a></td></tr><% }) %></tbody></table></div><div class="d-flex justify-content-between align-items-center mt-3"><small class="text-muted"><%= total %> patient records</small><nav><ul class="pagination pagination-sm mb-0"><% for (let index = 1; index <= totalPages; index++) { %><li class="page-item <%= index === page ? 'active' : '' %>"><a class="page-link" href="/admin/patients?page=<%= index %>&search=<%= encodeURIComponent(search) %>"><%= index %></a></li><% } %></ul></nav></div></div></main></div></div><%- include('../partials/footer') %>
+<%- include('../partials/header') %>
+    <div class="app-layout-wrapper"><%- include('../partials/sidebar') %>
+            <div class="main-content-wrapper"><%- include('../partials/topbar') %>
+                    <main class="p-4">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                            <div>
+                                <h2 class="fw-bold m-0">Patient Directory</h2>
+                                <p class="text-muted m-0">Search, review, and export registered patients.</p>
+                            </div><a class="btn btn-success rounded-pill" href="/admin/patients/export.xlsx"><i
+                                    class="bi bi-file-earmark-spreadsheet me-1"></i> Export Excel</a>
+                        </div>
+                        <div class="card border-0 shadow-sm p-4">
+                            <form class="row g-2 mb-3">
+                                <div class="col-sm-9"><input class="form-control" name="search" value="<%= search %>"
+                                        placeholder="Search name, card, UHID, or mobile"></div>
+                                <div class="col-sm-3"><button class="btn btn-primary w-100"
+                                        type="submit">Search</button></div>
+                            </form>
+                            <div class="table-responsive">
+                                <table class="table table-gov align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>Card</th>
+                                            <th>Patient</th>
+                                            <th>Age/Gender</th>
+                                            <th>Contact</th>
+                                            <th>Source</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (!patients.length) { %>
+                                            <tr>
+                                                <td colspan="7" class="text-center text-muted py-4">No patients found.
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                                <% patients.forEach(patient=> { %><tr>
+                                                    
+                                                        <td><strong>
+                                                                <%= patient.cardNumber || 'Legacy' %>
+                                                            </strong>
+                                                            <div class="small text-muted">
+                                                                <%= patient.uhid %>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <%= patient.fullName %>
+                                                        </td>
+                                                        <td>
+                                                            <%= patient.age %> / <%= patient.gender %>
+                                                        </td>
+                                                        <td>
+                                                            <%= patient.phone %>
+                                                        </td>
+                                                        <td>
+                                                            <%= (patient.registrationSource || 'kiosk' ).toUpperCase()
+                                                                %>
+                                                        </td>
+                                                        <td><span class="badge bg-light text-dark border">
+                                                                <%= patient.status %>
+                                                            </span></td>
+                                                        <td><a href="/doctor/patient/<%= patient._id %>"
+                                                                class="btn btn-sm btn-outline-primary">Open</a></td>
+                                                    </tr>
+                                                    <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3"><small
+                                    class="text-muted">
+                                    <%= total %> patient records
+                                </small>
+                                <nav>
+                                    <ul class="pagination pagination-sm mb-0">
+                                        <% for (let index=1; index <=totalPages; index++) { %>
+                                            <li class="page-item <%= index === page ? 'active' : '' %>"><a
+                                                    class="page-link"
+                                                    href="/admin/patients?page=<%= index %>&search=<%= encodeURIComponent(search) %>">
+                                                    <%= index %>
+                                                </a></li>
+                                            <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </main>
+            </div>
+    </div><%- include('../partials/footer') %>

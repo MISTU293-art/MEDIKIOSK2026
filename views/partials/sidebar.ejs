@@ -1,176 +1,508 @@
 <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark-sidebar" id="sidebarMenu">
-  <!-- National AYUSH & MediKiosk Header -->
-  <a href="/staff/dashboard" class="d-flex align-items-center mb-2 text-white text-decoration-none px-2 py-2">
-    <div class="bg-white rounded-3 me-2 shadow-sm d-flex align-items-center justify-content-center p-1" style="width: 48px; height: 48px;">
-  <img
-    src="/uploads/new_logo.png"
-    alt="MediKiosk Logo"
-    class="img-fluid"
-    style="max-width: 40px; max-height: 40px; object-fit: contain;"
+
+  <!-- =========================================================
+       BRAND
+  ========================================================== -->
+  <a
+    href="<%= user && user.role === 'admin'
+      ? '/admin/dashboard'
+      : user && user.role === 'doctor'
+      ? '/doctor/queue'
+      : '/staff/dashboard' %>"
+    class="d-flex align-items-center mb-3 text-white text-decoration-none px-2 py-2"
   >
-</div>
+    <div
+      class="bg-white rounded-3 me-2 shadow-sm d-flex align-items-center justify-content-center p-1"
+      style="width: 48px; height: 48px;"
+    >
+      <img
+        src="/uploads/new_logo.png"
+        alt="MediKiosk Logo"
+        class="img-fluid"
+        style="max-width: 40px; max-height: 40px; object-fit: contain;"
+      >
+    </div>
 
     <div>
-      <span class="sidebar-brand-title d-block">MediKiosk AYUSH</span>
-      
+      <span class="sidebar-brand-title d-block fw-bold">
+        MediKiosk AYUSH
+      </span>
+
+      <small class="text-white-50">
+        Smart Clinical Kiosk
+      </small>
     </div>
   </a>
+
   <hr class="border-secondary my-2">
 
-  <!-- User Profile Badge in Sidebar -->
+
+  <!-- =========================================================
+       USER PROFILE
+  ========================================================== -->
   <% if (typeof user !== 'undefined' && user) { %>
+
     <div class="sidebar-user-card p-2 rounded-3 mb-3 d-flex align-items-center gap-2">
-      <div class="sidebar-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold">
-        <%= user.name.charAt(0) %>
+
+      <div
+        class="sidebar-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold"
+        style="width: 38px; height: 38px;"
+      >
+        <%= (user.name || 'U').charAt(0).toUpperCase() %>
       </div>
+
       <div class="overflow-hidden">
-        <div class="fw-bold text-white small text-truncate"><%= user.name %></div>
-        <div class="text-white-50" style="font-size: 0.75rem;">
-          <% if (user.role === 'admin') { %>
-            <span class="badge badge-superadmin">SUPERADMIN</span>
-          <% } else { %>
-            <span class="badge bg-<%= user.role === 'doctor' ? 'primary' : 'info text-dark' %> text-uppercase py-0">
-              <%= user.role %>
-            </span>
-          <% } %>
-          <span class="ms-1 text-truncate"><%= user.department || 'General' %></span>
+
+        <div class="fw-bold text-white small text-truncate">
+          <%= user.name || 'User' %>
         </div>
+
+        <div class="d-flex align-items-center gap-1 mt-1">
+
+          <% if (user.role === 'admin') { %>
+
+            <span class="badge badge-superadmin">
+              <i class="bi bi-shield-fill-check me-1"></i>
+              SUPERADMIN
+            </span>
+
+          <% } else if (user.role === 'doctor') { %>
+
+            <span class="badge bg-primary text-uppercase py-0">
+              <i class="bi bi-stethoscope me-1"></i>
+              DOCTOR
+            </span>
+
+          <% } else if (user.role === 'staff') { %>
+
+            <span class="badge bg-info text-dark text-uppercase py-0">
+              <i class="bi bi-person-badge me-1"></i>
+              STAFF
+            </span>
+
+          <% } else if (user.role === 'pharmacist') { %>
+
+            <span class="badge bg-success text-uppercase py-0">
+              <i class="bi bi-capsule me-1"></i>
+              PHARMACIST
+            </span>
+
+          <% } else { %>
+
+            <span class="badge bg-secondary text-uppercase py-0">
+              <%= user.role || 'USER' %>
+            </span>
+
+          <% } %>
+
+        </div>
+
       </div>
     </div>
+
   <% } %>
 
-  <!-- Standard PRD Section 8 & 9 Sidebar Menu -->
+
+  <!-- =========================================================
+       MAIN NAVIGATION
+  ========================================================== -->
   <ul class="nav nav-pills flex-column mb-auto gap-1">
-    
-    <!-- Superadmin Master Navigation -->
-    <% if (typeof user !== 'undefined' && user && user.role === 'admin') { %>
-      <li class="nav-section-header text-uppercase text-warning small px-3 mt-1 mb-1" style="font-size: 0.7rem; font-weight: 800;">
-        <i class="bi bi-shield-lock-fill me-1"></i> Super Admin Master
+
+
+    <!-- =======================================================
+         SUPER ADMIN
+    ======================================================== -->
+    <% if (user && user.role === 'admin') { %>
+
+      <li class="nav-section-header text-uppercase text-warning small px-3 mt-1 mb-1">
+        <i class="bi bi-shield-lock-fill me-1"></i>
+        Administration
       </li>
+
       <li class="nav-item">
-        <a href="/admin/dashboard" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Superadmin') ? 'active' : '' %>">
-          <i class="bi bi-house-door-fill me-2 fs-5 text-warning"></i>
+        <a
+          href="/admin/dashboard"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Superadmin') ? 'active' : '' %>"
+        >
+          <i class="bi bi-speedometer2 me-2 fs-5 text-warning"></i>
           <span>Dashboard</span>
         </a>
       </li>
+
       <li class="nav-item">
-        <a href="/admin/reports" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Reports') ? 'active' : '' %>">
+        <a
+          href="/admin/reports"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Reports') ? 'active' : '' %>"
+        >
           <i class="bi bi-bar-chart-line-fill me-2 fs-5 text-info"></i>
           <span>Reports & Analytics</span>
         </a>
       </li>
-      <li class="nav-item"><a href="/admin/patients" class="nav-link sidebar-nav-link"><i class="bi bi-people me-2 fs-5 text-warning"></i><span>Patient Directory</span></a></li>
+
       <li class="nav-item">
-        <a href="/admin/audit-logs" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Audit') ? 'active' : '' %>">
-          <i class="bi bi-journal-text me-2 fs-5 text-success"></i>
-          <span>Audit Logs (PRD §23)</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/admin/settings" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Settings') ? 'active' : '' %>">
-          <i class="bi bi-gear-fill me-2 fs-5 text-warning"></i>
-          <span>Settings & AI Gateway</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/admin/users" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('User') ? 'active' : '' %>">
-          <i class="bi bi-people-fill me-2 fs-5 text-info"></i>
+        <a
+          href="/admin/users"
+          class="nav-link sidebar-nav-link <%= title && title.includes('User') ? 'active' : '' %>"
+        >
+          <i class="bi bi-person-gear me-2 fs-5 text-info"></i>
           <span>Users & RBAC</span>
         </a>
       </li>
+
       <li class="nav-item">
-        <a href="/admin/kiosks" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Device') ? 'active' : '' %>">
+        <a
+          href="/admin/audit-logs"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Audit') ? 'active' : '' %>"
+        >
+          <i class="bi bi-journal-text me-2 fs-5 text-success"></i>
+          <span>Audit Logs</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          href="/admin/kiosks"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Device') ? 'active' : '' %>"
+        >
           <i class="bi bi-display me-2 fs-5 text-success"></i>
           <span>Kiosk Fleet & Health</span>
         </a>
       </li>
+
       <li class="nav-item">
-        <a href="/admin/compliance" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Compliance') ? 'active' : '' %>">
+        <a
+          href="/admin/compliance"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Compliance') ? 'active' : '' %>"
+        >
           <i class="bi bi-shield-check me-2 fs-5 text-danger"></i>
           <span>Emergency Red Flags</span>
         </a>
       </li>
-      <li class="nav-item"><a href="/admin/staff-cards" class="nav-link sidebar-nav-link"><i class="bi bi-person-vcard me-2 fs-5 text-warning"></i><span>Staff ID Cards</span></a></li>
-      <li class="nav-item"><a href="/admin/attendance" class="nav-link sidebar-nav-link"><i class="bi bi-calendar2-check me-2 fs-5 text-info"></i><span>Attendance</span></a></li>
-      <li class="nav-item"><a href="/admin/beds" class="nav-link sidebar-nav-link"><i class="bi bi-hospital me-2 fs-5 text-success"></i><span>Bed Capacity</span></a></li>
+
+      <li class="nav-item">
+        <a
+          href="/admin/staff-cards"
+          class="nav-link sidebar-nav-link"
+        >
+          <i class="bi bi-person-vcard me-2 fs-5 text-warning"></i>
+          <span>Staff ID Cards</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          href="/admin/attendance"
+          class="nav-link sidebar-nav-link"
+        >
+          <i class="bi bi-calendar2-check me-2 fs-5 text-info"></i>
+          <span>Attendance</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          href="/admin/beds"
+          class="nav-link sidebar-nav-link"
+        >
+          <i class="bi bi-hospital me-2 fs-5 text-success"></i>
+          <span>Bed Capacity</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          href="/admin/settings"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Settings') ? 'active' : '' %>"
+        >
+          <i class="bi bi-gear-fill me-2 fs-5 text-warning"></i>
+          <span>Settings & AI Gateway</span>
+        </a>
+      </li>
+
     <% } %>
 
-    <!-- Clinical Doctor Consultation (PRD Module 7 & 8) -->
-    <% if (typeof user !== 'undefined' && user && (user.role === 'doctor' || user.role === 'admin')) { %>
-      <li class="nav-section-header text-uppercase text-white-50 small px-3 mt-3 mb-1" style="font-size: 0.7rem; font-weight: 700;">
-        Clinical Consultation
+
+    <!-- =======================================================
+         CLINICAL CONSULTATION
+    ======================================================== -->
+    <% if (user && (user.role === 'doctor' || user.role === 'admin')) { %>
+
+      <li class="nav-section-header text-uppercase text-white-50 small px-3 mt-3 mb-1">
+        <i class="bi bi-heart-pulse me-1"></i>
+        Clinical Care
       </li>
+
       <li class="nav-item">
-        <a href="/doctor/queue" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && (title.includes('Doctor') || title.includes('Patient 360')) ? 'active' : '' %>">
+        <a
+          href="/doctor/queue"
+          class="nav-link sidebar-nav-link <%= title && (title.includes('Doctor Consultation') || title.includes('Patient 360')) ? 'active' : '' %>"
+        >
           <i class="bi bi-stethoscope me-2 fs-5"></i>
           <span>OPD Doctor Queue</span>
         </a>
       </li>
-      <li class="nav-item"><a href="/doctor/reports" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Reports') ? 'active' : '' %>"><i class="bi bi-clipboard2-pulse me-2 fs-5"></i><span>Reports & Tests</span></a></li>
-      <li class="nav-item"><a href="/beds" class="nav-link sidebar-nav-link"><i class="bi bi-hospital me-2 fs-5"></i><span>Bed Board</span></a></li>
-      <li class="nav-item"><a href="/staff/id-card" class="nav-link sidebar-nav-link"><i class="bi bi-person-vcard me-2 fs-5"></i><span>My Staff ID Card</span></a></li>
-      <li class="nav-item"><a href="/attendance" class="nav-link sidebar-nav-link"><i class="bi bi-person-check me-2 fs-5"></i><span>My Attendance</span></a></li>
+
+      <li class="nav-item">
+        <a
+          href="/doctor/reports"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Reports') ? 'active' : '' %>"
+        >
+          <i class="bi bi-clipboard2-pulse me-2 fs-5"></i>
+          <span>Reports & Tests</span>
+        </a>
+      </li>
+
     <% } %>
 
-    <!-- Medicine Shop / Pharmacy (PRD Module 11) -->
-    <li class="nav-section-header text-uppercase text-white-50 small px-3 mt-3 mb-1" style="font-size: 0.7rem; font-weight: 700;">
-      Pharmacy & Dispensation
-    </li>
-    <li class="nav-item">
-      <a href="/pharmacy" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Pharmacy') ? 'active' : '' %>">
-        <i class="bi bi-capsule me-2 fs-5 text-success"></i>
-        <span>Medicine Shop Desk</span>
-      </a>
-    </li>
 
-    <!-- Reception & Triage (PRD Module 1 & 6) -->
-    <% if (typeof user !== 'undefined' && user && (user.role === 'staff' || user.role === 'admin')) { %>
-      <li class="nav-section-header text-uppercase text-white-50 small px-3 mt-3 mb-1" style="font-size: 0.7rem; font-weight: 700;">
+    <!-- =======================================================
+         PATIENT MANAGEMENT
+    ======================================================== -->
+
+    <% if (user && (
+      user.role === 'admin' ||
+      user.role === 'doctor' ||
+      user.role === 'staff'
+    )) { %>
+
+      <li class="nav-section-header text-uppercase text-white-50 small px-3 mt-3 mb-1">
+        <i class="bi bi-people-fill me-1"></i>
+        Patient Management
+      </li>
+
+      <li class="nav-item">
+        <a
+          href="/admin/patients"
+          class="nav-link sidebar-nav-link <%= title && (title.includes('Patient Directory') || title.includes('All Patients')) ? 'active' : '' %>"
+        >
+          <i class="bi bi-people-fill me-2 fs-5 text-info"></i>
+          <span>All Patients</span>
+        </a>
+      </li>
+
+      <% if (user.role === 'doctor' || user.role === 'admin') { %>
+
+        <li class="nav-item">
+          <a
+            href="/doctor/queue"
+            class="nav-link sidebar-nav-link"
+          >
+            <i class="bi bi-person-lines-fill me-2 fs-5 text-primary"></i>
+            <span>Consultation Queue</span>
+          </a>
+        </li>
+
+      <% } %>
+
+      <% if (user.role === 'staff' || user.role === 'admin') { %>
+
+        <li class="nav-item">
+          <a
+            href="/staff/dashboard"
+            class="nav-link sidebar-nav-link"
+          >
+            <i class="bi bi-person-workspace me-2 fs-5 text-warning"></i>
+            <span>Registration & Triage</span>
+          </a>
+        </li>
+
+      <% } %>
+
+    <% } %>
+
+
+    <!-- =======================================================
+         RECEPTION / STAFF
+    ======================================================== -->
+    <% if (user && (user.role === 'staff' || user.role === 'admin')) { %>
+
+      <li class="nav-section-header text-uppercase text-white-50 small px-3 mt-3 mb-1">
+        <i class="bi bi-person-lines-fill me-1"></i>
         Reception & Intake
       </li>
+
       <li class="nav-item">
-        <a href="/staff/dashboard" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Reception') ? 'active' : '' %>">
+        <a
+          href="/staff/dashboard"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Reception') ? 'active' : '' %>"
+        >
           <i class="bi bi-person-lines-fill me-2 fs-5"></i>
           <span>Triage Desk & Queue</span>
         </a>
       </li>
+
       <li class="nav-item">
-        <a href="/staff/ocr-verify" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('OCR') ? 'active' : '' %>">
+        <a
+          href="/staff/ocr-verify"
+          class="nav-link sidebar-nav-link <%= title && title.includes('OCR') ? 'active' : '' %>"
+        >
           <i class="bi bi-file-earmark-medical me-2 fs-5"></i>
           <span>Side-by-Side OCR</span>
         </a>
       </li>
+
       <li class="nav-item">
-        <a href="/staff/assist" class="nav-link sidebar-nav-link <%= typeof title !== 'undefined' && title.includes('Assisted') ? 'active' : '' %>">
+        <a
+          href="/staff/assist"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Assisted') ? 'active' : '' %>"
+        >
           <i class="bi bi-person-workspace me-2 fs-5"></i>
           <span>Assisted Intake</span>
         </a>
       </li>
-      <li class="nav-item"><a href="/attendance" class="nav-link sidebar-nav-link"><i class="bi bi-person-check me-2 fs-5"></i><span>Staff Attendance</span></a></li>
-      <li class="nav-item"><a href="/beds" class="nav-link sidebar-nav-link"><i class="bi bi-hospital me-2 fs-5"></i><span>Bed Board</span></a></li>
-      <li class="nav-item"><a href="/staff/id-card" class="nav-link sidebar-nav-link"><i class="bi bi-person-vcard me-2 fs-5"></i><span>My Staff ID Card</span></a></li>
+
+      <li class="nav-item">
+        <a
+          href="/attendance"
+          class="nav-link sidebar-nav-link"
+        >
+          <i class="bi bi-person-check me-2 fs-5"></i>
+          <span>Staff Attendance</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          href="/beds"
+          class="nav-link sidebar-nav-link"
+        >
+          <i class="bi bi-hospital me-2 fs-5"></i>
+          <span>Bed Board</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          href="/staff/id-card"
+          class="nav-link sidebar-nav-link"
+        >
+          <i class="bi bi-person-vcard me-2 fs-5"></i>
+          <span>My Staff ID Card</span>
+        </a>
+      </li>
+
     <% } %>
 
-    <!-- Citizen Kiosk Mode -->
-    <li class="nav-section-header text-uppercase text-white-50 small px-3 mt-3 mb-1" style="font-size: 0.7rem; font-weight: 700;">
-      Citizen Kiosk
+
+    <!-- =======================================================
+         PHARMACY
+    ======================================================== -->
+    <% if (user && (
+      user.role === 'pharmacist' ||
+      user.role === 'staff' ||
+      user.role === 'doctor' ||
+      user.role === 'admin'
+    )) { %>
+
+      <li class="nav-section-header text-uppercase text-white-50 small px-3 mt-3 mb-1">
+        <i class="bi bi-capsule me-1"></i>
+        Pharmacy
+      </li>
+
+      <li class="nav-item">
+        <a
+          href="/pharmacy"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Pharmacy') ? 'active' : '' %>"
+        >
+          <i class="bi bi-capsule me-2 fs-5 text-success"></i>
+          <span>Medicine Shop Desk</span>
+        </a>
+      </li>
+
+    <% } %>
+
+
+    <!-- =======================================================
+         OTHER CLINICAL SERVICES
+    ======================================================== -->
+
+    <% if (user && (
+      user.role === 'doctor' ||
+      user.role === 'staff' ||
+      user.role === 'admin'
+    )) { %>
+
+      <li class="nav-section-header text-uppercase text-white-50 small px-3 mt-3 mb-1">
+        <i class="bi bi-hospital me-1"></i>
+        Clinical Services
+      </li>
+
+      <li class="nav-item">
+        <a
+          href="/beds"
+          class="nav-link sidebar-nav-link"
+        >
+          <i class="bi bi-hospital me-2 fs-5"></i>
+          <span>Bed Board</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          href="/attendance"
+          class="nav-link sidebar-nav-link"
+        >
+          <i class="bi bi-calendar-check me-2 fs-5"></i>
+          <span>Attendance</span>
+        </a>
+      </li>
+
+    <% } %>
+
+
+    <!-- =======================================================
+         CITIZEN KIOSK
+    ======================================================== -->
+
+    <li class="nav-section-header text-uppercase text-white-50 small px-3 mt-3 mb-1">
+      <i class="bi bi-display me-1"></i>
+      Patient Services
     </li>
+
     <li class="nav-item">
-      <a href="/kiosk" target="_blank" class="nav-link sidebar-nav-link text-info">
+
+      <a
+        href="/kiosk"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="nav-link sidebar-nav-link text-info"
+      >
         <i class="bi bi-box-arrow-up-right me-2 fs-5"></i>
         <span>Launch Patient Kiosk</span>
       </a>
+
     </li>
+
   </ul>
 
-  <!-- Bottom Gov Status & Logout -->
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================== -->
+
   <hr class="border-secondary my-2">
+
   <div class="d-flex justify-content-between align-items-center px-2">
-    <div class="d-flex align-items-center gap-2">
-      <span class="badge bg-success py-1 px-2" style="font-size: 0.7rem;"><i class="bi bi-flower1 me-1"></i>AYUSH &bull; SIH</span>
+
+    <div>
+      <span
+        class="badge bg-success py-1 px-2"
+        style="font-size: 0.7rem;"
+      >
+        <i class="bi bi-flower1 me-1"></i>
+        AYUSH &bull; SIH 2026
+      </span>
     </div>
-    <a href="/auth/logout" class="btn btn-outline-danger btn-sm py-1 px-3 rounded-pill" title="Logout">
-      <i class="bi bi-box-arrow-right me-1"></i> Logout
+
+    <a
+      href="/auth/logout"
+      class="btn btn-outline-danger btn-sm py-1 px-3 rounded-pill"
+      title="Logout"
+    >
+      <i class="bi bi-box-arrow-right me-1"></i>
+      Logout
     </a>
+
   </div>
+
 </div>

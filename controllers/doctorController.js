@@ -10,30 +10,88 @@ const Report = require('../models/Report');
 const { validateRegistration, nextToken, createIdentifiers, DEFAULT_DEPARTMENT, normalizePhone } = require('../utils/patientRegistry');
 const { getDoctorForDepartment } = require('../utils/doctorRoster');
 const KioskAssistantService = require('../services/kioskAssistantService');
-
+const EmergencyModel = require("../models/Emergency");
 exports.getQueue = async (req, res) => {
   try {
-    const patients = await Patient.find({ status: { $in: ['queued', 'in_consultation'] } });
-    
-    // Sort Emergency Red-Flag first, then Urgent, then Normal
-    const priorityWeight = { 'Emergency Red-Flag': 3, 'Urgent': 2, 'Normal': 1 };
-    patients.sort((a, b) => {
-      const wA = priorityWeight[a.priority] || 1;
-      const wB = priorityWeight[b.priority] || 1;
-      return wB - wA;
+    const patients = await Patient.find({
+      status: { $in: ["queued", "in_consultation"] }
     });
 
-    res.render('doctor/queue', {
-      title: 'Doctor Consultation Queue — MediKiosk',
-      user: req.user,
-      patients
+    const emergencyPatients = await EmergencyModel.find({
+      status: { $in: ["queued", "in-progress"] }
     });
+
+    console.log("NORMAL PATIENTS:", patients.length);
+    console.log("EMERGENCY PATIENTS:", emergencyPatients.length);
+
+    const normalData = patients.map((patient) => ({
+      ...patient.toObject(),
+      patientType: "Normal",
+      isEmergency: false,
+    }));
+
+    const emergencyData = emergencyPatients.map((patient) => ({
+      ...patient.toObject(),
+      fullName: patient.name,
+      phone: patient.mobile,
+      patientType: "Emergency",
+      isEmergency: true,
+      priority: "Emergency",
+    }));
+
+    const allPatients = [
+      ...emergencyData,
+      ...normalData,
+    ];
+
+    const priorityWeight = {
+      "Emergency Red-Flag": 4,
+      Emergency: 3,
+      Urgent: 2,
+      Normal: 1,
+    };
+
+    allPatients.sort((a, b) => {
+      const priorityA = priorityWeight[a.priority] || 1;
+      const priorityB = priorityWeight[b.priority] || 1;
+
+      if (priorityA !== priorityB) {
+        return priorityB - priorityA;
+      }
+
+      return new Date(a.createdAt || 0) -
+             new Date(b.createdAt || 0);
+    });
+
+    console.log("TOTAL QUEUE:", allPatients.length);
+
+    res.render("doctor/queue", {
+      title: "Doctor Consultation Queue — MediKiosk",
+      user: req.user,
+      patients: allPatients,
+      stats: {
+        total: allPatients.length,
+        emergency: emergencyData.length,
+        normal: normalData.length,
+        waiting: allPatients.filter(
+          p => p.status === "queued"
+        ).length,
+        consultation: allPatients.filter(
+          p =>
+            p.status === "in_consultation" ||
+            p.status === "in-progress"
+        ).length,
+      },
+    });
+
   } catch (err) {
-    logger.error('Doctor queue error: ' + err.message);
-    res.status(500).send('Error loading doctor queue');
+    console.error("DOCTOR QUEUE ERROR:", err);
+    res.status(500).send(
+      "Error loading doctor consultation queue: " +
+      err.message
+    );
   }
 };
-
 exports.postCreatePatient = async (req, res) => {
   try {
     const { fullName, age, gender, phone, emergencyContact, department, medicalHistory, allergies, currentMedications } = req.body;
@@ -77,36 +135,115 @@ exports.postRequestReport = async (req, res) => {
 exports.getPatientDetail = async (req, res) => {
   try {
     const { patientId } = req.params;
-    const patient = await Patient.findById(patientId);
-    if (!patient) return res.status(404).send('Patient not found');
 
-    const intake = await IntakeSession.findOne({ patientId: String(patient._id) });
-    const documents = await Document.find({ patientId: String(patient._id) });
-    const pastNotes = await ConsultationNote.find({ patientId: String(patient._id) });
-    const pastDispensations = await DispensationRecord.find({ patientId: String(patient._id) });
+    let patient = null;
+    let isEmergency = false;
 
-    // Generate AI Clinical Auto-Suggestions based on intake data
-    const aiCopilotSuggestions = AiClinicalCopilotService.getClinicalSuggestions({
-      stepData: intake ? intake.stepData : null,
-      chiefComplaint: intake?.stepData?.chiefComplaint,
-      prakriti: intake?.stepData?.prakritiAssessment || 'Vata-Pitta Prakriti',
-      age: patient.age,
-      gender: patient.gender
-    });
+    // First search normal Patient collection
+    patient = await Patient.findById(patientId);
 
-    res.render('doctor/patientDetail', {
-      title: `Patient 360 & AI Clinical Workspace: ${patient.fullName}`,
+    // If not found, search Emergency collection
+    if (!patient) {
+      patient = await EmergencyModel.findById(patientId);
+      isEmergency = true;
+    }
+
+    if (!patient) {
+      return res.status(404).send("Patient not found");
+    }
+
+    // Convert emergency data into the same structure
+    // expected by the patient detail page
+    if (isEmergency) {
+      patient = {
+        ...patient.toObject(),
+
+        fullName: patient.name,
+        phone: patient.mobile,
+
+        age: patient.age || "-",
+        gender: patient.gender || "-",
+        preferredLanguage:
+          patient.preferredLanguage || "English",
+
+        patientType: "Emergency",
+        isEmergency: true,
+        priority: "Emergency",
+      };
+    }
+
+    let intake = null;
+    let documents = [];
+    let pastNotes = [];
+    let pastDispensations = [];
+    let aiCopilotSuggestions = null;
+
+    // Normal patients have intake/AI data
+    if (!isEmergency) {
+      intake = await IntakeSession.findOne({
+        patientId: String(patient._id),
+      });
+
+      documents = await Document.find({
+        patientId: String(patient._id),
+      });
+
+      pastNotes = await ConsultationNote.find({
+        patientId: String(patient._id),
+      });
+
+      pastDispensations = await DispensationRecord.find({
+        patientId: String(patient._id),
+      });
+
+      if (intake) {
+        aiCopilotSuggestions =
+          await AiClinicalCopilotService.getClinicalSuggestions({
+            stepData: intake.stepData,
+            chiefComplaint:
+              intake?.stepData?.chiefComplaint,
+            prakriti:
+              intake?.stepData?.prakritiAssessment ||
+              "Vata-Pitta Prakriti",
+            age: patient.age,
+            gender: patient.gender,
+          });
+      }
+    }
+
+    res.render("doctor/patientDetail", {
+      title: `Patient 360 — ${
+        patient.fullName || patient.name
+      }`,
+
       user: req.user,
+
       patient,
+
       intake,
+
       documents,
+
       pastNotes,
+
       pastDispensations,
-      aiSuggestions: aiCopilotSuggestions
+
+      aiSuggestions: aiCopilotSuggestions,
+
+      isEmergency,
     });
+
   } catch (err) {
-    logger.error('Patient detail error: ' + err.message);
-    res.status(500).send('Error loading patient detail');
+    console.error("PATIENT DETAIL ERROR:", err);
+
+    logger.error(
+      "Patient detail error: " + err.message
+    );
+
+    res.status(500).send(
+      "Error loading patient detail: " +
+      err.message
+    );
   }
 };
 

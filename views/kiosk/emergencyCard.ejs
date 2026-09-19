@@ -1,0 +1,459 @@
+<%- include('../partials/header') %>
+
+<style>
+  body {
+    background: #f4f7fb;
+  }
+
+  .emergency-card-wrapper {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 15px;
+  }
+
+  .emergency-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #b91c1c, #dc2626);
+    color: #fff;
+    text-align: center;
+    padding: 24px 20px;
+  }
+
+  .emergency-badge {
+    display: inline-block;
+    background: #fff;
+    color: #b91c1c;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .card-header h2 {
+    margin: 5px 0;
+    font-weight: 800;
+  }
+
+  .card-header p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  .token-section {
+    text-align: center;
+    background: #fff7f7;
+    padding: 22px;
+    border-bottom: 1px solid #fee2e2;
+  }
+
+  .token-label {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .token-number {
+    font-size: 40px;
+    font-weight: 900;
+    color: #dc2626;
+    margin-top: 4px;
+  }
+
+  .success-message {
+    margin: 18px 20px 0;
+    padding: 12px 15px;
+    border-radius: 10px;
+    background: #ecfdf5;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: 25px;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 15px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .info-item {
+    background: #f8fafc;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #eef2f7;
+  }
+
+  .info-label {
+    display: block;
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .info-value {
+    font-size: 15px;
+    color: #111827;
+    font-weight: 700;
+    word-break: break-word;
+  }
+
+  .emergency-box {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .emergency-box h4 {
+    margin: 0 0 6px;
+    color: #b91c1c;
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .emergency-box p {
+    margin: 0;
+    color: #7f1d1d;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .doctor-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .doctor-box h4 {
+    margin: 0 0 12px;
+    color: #1d4ed8;
+    font-weight: 800;
+    font-size: 15px;
+  }
+
+  .doctor-name {
+    font-size: 17px;
+    font-weight: 800;
+    color: #111827;
+  }
+
+  .doctor-details {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #475569;
+  }
+
+  .reception-box {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-left: 5px solid #f59e0b;
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 20px;
+  }
+
+  .reception-box h4 {
+    margin: 0 0 7px;
+    color: #92400e;
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .reception-box p {
+    margin: 0;
+    color: #78350f;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+
+  .action-buttons button,
+  .action-buttons a {
+    min-width: 170px;
+  }
+
+  .footer-note {
+    text-align: center;
+    color: #64748b;
+    font-size: 11px;
+    margin-top: 15px;
+  }
+
+  @media (max-width: 600px) {
+    .emergency-card-wrapper {
+      margin: 10px auto;
+      padding: 8px;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .token-number {
+      font-size: 34px;
+    }
+
+    .action-buttons button,
+    .action-buttons a {
+      width: 100%;
+    }
+  }
+
+  @media print {
+    body {
+      background: #fff;
+    }
+
+    .action-buttons,
+    .footer-note {
+      display: none !important;
+    }
+
+    .emergency-card {
+      box-shadow: none;
+      border: 1px solid #ddd;
+    }
+  }
+</style>
+
+
+<div class="emergency-card-wrapper">
+
+  <div class="emergency-card">
+
+    <!-- HEADER -->
+    <div class="card-header">
+
+      <div class="emergency-badge">
+        🚨 EMERGENCY REGISTRATION
+      </div>
+
+      <h2>MediKiosk</h2>
+
+      <p>
+        Ministry of AYUSH — Emergency Patient Card
+      </p>
+
+    </div>
+
+
+    <!-- TOKEN -->
+    <div class="token-section">
+
+      <div class="token-label">
+        Emergency Token
+      </div>
+
+      <div class="token-number">
+        <%= patient.tokenNumber %>
+      </div>
+
+    </div>
+
+
+    <% if (message) { %>
+
+      <div class="success-message">
+        <%= message %>
+      </div>
+
+    <% } %>
+
+
+    <div class="card-body">
+
+
+      <!-- PATIENT INFORMATION -->
+      <div class="section-title">
+        Patient Information
+      </div>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+          <span class="info-label">
+            Patient Name
+          </span>
+
+          <span class="info-value">
+            <%= patient.name %>
+          </span>
+        </div>
+
+
+        <div class="info-item">
+          <span class="info-label">
+            Mobile Number
+          </span>
+
+          <span class="info-value">
+            <%= patient.mobile %>
+          </span>
+        </div>
+
+
+        <div class="info-item">
+          <span class="info-label">
+            Blood Group
+          </span>
+
+          <span class="info-value">
+            <%= patient.bloodGroup %>
+          </span>
+        </div>
+
+
+        <div class="info-item">
+          <span class="info-label">
+            UHID
+          </span>
+
+          <span class="info-value">
+            <%= patient.uhid %>
+          </span>
+        </div>
+
+      </div>
+
+
+      <!-- EMERGENCY STATUS -->
+      <div class="emergency-box">
+
+        <h4>
+          🚨 Emergency Priority
+        </h4>
+
+        <p>
+          The patient has been successfully registered through
+          the emergency kiosk and has been placed in the
+          emergency queue.
+        </p>
+
+      </div>
+
+
+      <!-- DOCTOR -->
+      <div class="doctor-box">
+
+        <h4>
+          👨‍⚕️ Assigned Medical Staff
+        </h4>
+
+        <div class="doctor-name">
+          <%= patient.assignedDoctorName || "Medical Staff" %>
+        </div>
+
+        <div class="doctor-details">
+
+          Department:
+          <strong>
+            <%= patient.department || "Emergency / General OPD" %>
+          </strong>
+
+          <br>
+
+          Room:
+          <strong>
+            <%= patient.roomNumber || "Please check reception" %>
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- IMPORTANT RECEPTION MESSAGE -->
+      <div class="reception-box">
+
+        <h4>
+          📌 Important Information
+        </h4>
+
+        <p>
+          After the patient is stable, please contact the
+          <strong>Reception / Registration Desk</strong>
+          for the patient's complete registration and
+          remaining formalities.
+        </p>
+
+      </div>
+
+
+      <!-- ACTIONS -->
+      <div class="action-buttons">
+
+        <button
+          type="button"
+          class="btn btn-danger"
+          onclick="window.print()"
+        >
+          <i class="bi bi-printer"></i>
+          Print Card
+        </button>
+
+
+        <a
+          href="/kiosk"
+          class="btn btn-outline-primary"
+        >
+          <i class="bi bi-house"></i>
+          Back to Kiosk
+        </a>
+
+      </div>
+
+
+      <div class="footer-note">
+
+        Please keep this card and show the emergency token
+        to the medical staff.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<%- include('../partials/footer') %>

@@ -36,7 +36,7 @@ function createIdentifiers() {
   const suffix = uuidv4().replace(/-/g, '').slice(0, 10).toUpperCase();
   return {
     uhid: `UHID-AYUSH-${suffix}`,
-    cardNumber: `MKC-${suffix.slice(0, 6)}`
+    cardNumber: `MEDIKIOSK-${suffix.slice(0, 6)}`
   };
 }
 

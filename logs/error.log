@@ -574,3 +574,271 @@ departments is not defined
 [2026-09-02T16:00:23.011Z] [ERROR] ❌ MongoDB Connection Failed
 [2026-09-02T16:00:23.013Z] [ERROR] MONGODB_URI environment variable is not configured
 [2026-09-02T16:00:23.014Z] [ERROR] ========================================
+[2026-09-19T14:48:31.622Z] [ERROR] Emergency patient registration error: Patient validation failed: gender: `Unknown` is not a valid enum value for path `gender`., registrationSource: `emergency_kiosk` is not a valid enum value for path `registrationSource`., prioritySource: `emergency_registration` is not a valid enum value for path `prioritySource`.
+[2026-09-19T14:54:03.945Z] [ERROR] Emergency patient registration error: Emergency validation failed: aadhaar: Path `aadhaar` is required., mobile: Path `mobile` is required., name: Path `name` is required.
+[2026-09-19T14:56:00.545Z] [ERROR] Emergency patient registration error: Patient validation failed: gender: `Unknown` is not a valid enum value for path `gender`., registrationSource: `emergency_kiosk` is not a valid enum value for path `registrationSource`., prioritySource: `emergency_registration` is not a valid enum value for path `prioritySource`.
+[2026-09-19T14:56:14.352Z] [ERROR] Emergency patient registration error: Patient validation failed: gender: `Unknown` is not a valid enum value for path `gender`., registrationSource: `emergency_kiosk` is not a valid enum value for path `registrationSource`., prioritySource: `emergency_registration` is not a valid enum value for path `prioritySource`.
+[2026-09-19T14:57:08.255Z] [ERROR] Emergency patient registration error: Patient validation failed: gender: `Unknown` is not a valid enum value for path `gender`., registrationSource: `emergency_kiosk` is not a valid enum value for path `registrationSource`., prioritySource: `emergency_registration` is not a valid enum value for path `prioritySource`.
+[2026-09-19T14:57:19.300Z] [ERROR] Emergency patient registration error: Patient validation failed: gender: `Unknown` is not a valid enum value for path `gender`., registrationSource: `emergency_kiosk` is not a valid enum value for path `registrationSource`., prioritySource: `emergency_registration` is not a valid enum value for path `prioritySource`.
+[2026-09-19T14:59:06.652Z] [ERROR] Emergency patient registration error: Visit validation failed: cardNumber: Path `cardNumber` is required.
+[2026-09-19T14:59:17.366Z] [ERROR] Emergency patient registration error: E11000 duplicate key error collection: medikiosk.emergencies index: bloodGroup_1 dup key: { bloodGroup: "B+" }
+[2026-09-19T15:00:59.303Z] [ERROR] Emergency patient registration error: Emergency validation failed: tokenNumber: Cast to Number failed for value "AYUSH-102" (type string) at path "tokenNumber"
+[2026-09-19T15:01:48.223Z] [ERROR] Emergency patient registration error: E11000 duplicate key error collection: medikiosk.emergencies index: bloodGroup_1 dup key: { bloodGroup: "B+" }
+[2026-09-19T15:01:59.315Z] [ERROR] Unhandled express error: Error: Failed to lookup view "kiosk/emergencyCard" in views directory "C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views"
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:597:17)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at exports.emergencyPatientData (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\controllers\kioskController.js:609:16)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-19T15:03:49.674Z] [ERROR] Emergency patient registration error: E11000 duplicate key error collection: medikiosk.emergencies index: aadhaar_1 dup key: { aadhaar: "XXXX-XXXX-8389" }
+[2026-09-19T15:03:58.332Z] [ERROR] Emergency patient registration error: E11000 duplicate key error collection: medikiosk.emergencies index: bloodGroup_1 dup key: { bloodGroup: "B+" }
+[2026-09-19T15:08:24.723Z] [ERROR] Emergency patient registration error: E11000 duplicate key error collection: medikiosk.emergencies index: aadhaar_1 dup key: { aadhaar: "XXXX-XXXX-8589" }
+[2026-09-19T15:10:33.681Z] [ERROR] Doctor queue error: Patient.find(...).sort is not a function
+[2026-09-19T15:11:17.763Z] [ERROR] Doctor queue error: Patient.find(...).sort is not a function
+[2026-09-19T15:12:57.028Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\pharmacy\index.ejs:58
+    56|         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"><h5 class="fw-bold m-0"><i class="bi bi-box-seam text-success me-2"></i>Inventory Control</h5><button class="btn btn-outline-success btn-sm rounded-pill" data-bs-toggle="collapse" data-bs-target="#inventoryForm">Add stock item</button></div>
+    57|         <form id="inventoryForm" class="collapse row g-2 mb-3"><div class="col-md-4"><input name="name" class="form-control" placeholder="Medicine name" required></div><div class="col-md-3"><input name="batchNumber" class="form-control" placeholder="Batch number" required></div><div class="col-6 col-md-2"><input name="quantity" type="number" min="0" class="form-control" placeholder="Quantity" required></div><div class="col-6 col-md-2"><input name="unitPrice" type="number" min="0" step="0.01" class="form-control" placeholder="Unit price" required></div><div class="col-md-1"><button class="btn btn-success w-100" type="submit"><i class="bi bi-plus-lg"></i></button></div><div id="inventoryFeedback" class="col-12 small" role="alert"></div></form>
+ >> 58|         <div class="table-responsive"><table class="table table-gov align-middle small"><thead><tr><th>Medicine</th><th>Batch</th><th>Stock</th><th>Expiry</th><th>Action</th></tr></thead><tbody><% (inventory || []).forEach(item => { %><tr class="<%= item.quantity <= item.reorderLevel ? 'table-warning' : '' %>"><td><strong><%= item.name %></strong><div class="text-muted"><%= item.category || 'Medicine' %></div></td><td><%= item.batchNumber %></td><td><span class="badge bg-<%= item.quantity <= item.reorderLevel ? 'warning text-dark' : 'success' %>"><%= item.quantity %></span></td><td><%= item.expiryDate ? new Date(item.expiryDate).toLocaleDateString() : 'Not set' %></td><td><form class="d-flex gap-1 stock-adjust-form"><input type="hidden" name="itemId" value="<%= item._id %>"><input name="amount" type="number" class="form-control form-control-sm" placeholder="+/-" required style="max-width:70px"><button class="btn btn-sm btn-outline-primary" type="submit">Adjust</button></form></td></tr><% }) %><% if (!(inventory || []).length) { %><tr><td colspan="5" class="text-center text-muted py-3">No inventory recorded.</td></tr><% } %></tbody></table></div>
+    59|       </div>
+    60| 
+    61|       <%- include('../partials/pharmacyReceiving') %>
+
+inventory is not defined
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\pharmacy\\index.ejs":36:8)
+    at index (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at exports.lookupPatient (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\controllers\pharmacyController.js:54:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-19T15:13:23.546Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\doctor\queue.ejs:58
+    56|                     <td>
+    57|                       <strong><%= p.fullName %></strong>
+ >> 58|                       <div class="text-muted small">UHID: <%= p.uhid %> &bull; Lang: <%= p.preferredLanguage.toUpperCase() %></div>
+    59|                     </td>
+    60|                     <td><%= p.age %> yrs / <%= p.gender %></td>
+    61|                     <td><%= p.phone %></td>
+
+Cannot read properties of undefined (reading 'toUpperCase')
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":59:46)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":33:17)
+    at queue (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-19T15:14:17.597Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\doctor\queue.ejs:58
+    56|                     <td>
+    57|                       <strong><%= p.fullName %></strong>
+ >> 58|                       <div class="text-muted small">UHID: <%= p.uhid %> &bull; Lang: <%= p.preferredLanguage.toUpperCase() %></div>
+    59|                     </td>
+    60|                     <td><%= p.age %> yrs / <%= p.gender %></td>
+    61|                     <td><%= p.phone %></td>
+
+Cannot read properties of undefined (reading 'toUpperCase')
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":59:46)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":33:17)
+    at queue (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-19T15:14:50.159Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\doctor\queue.ejs:58
+    56|                     <td>
+    57|                       <strong><%= p.fullName %></strong>
+ >> 58|                       <div class="text-muted small">UHID: <%= p.uhid %> &bull; Lang: <%= p.preferredLanguage.toUpperCase() %></div>
+    59|                     </td>
+    60|                     <td><%= p.age %> yrs / <%= p.gender %></td>
+    61|                     <td><%= p.phone %></td>
+
+Cannot read properties of undefined (reading 'toUpperCase')
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":59:46)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":33:17)
+    at queue (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-19T15:14:51.046Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\doctor\queue.ejs:58
+    56|                     <td>
+    57|                       <strong><%= p.fullName %></strong>
+ >> 58|                       <div class="text-muted small">UHID: <%= p.uhid %> &bull; Lang: <%= p.preferredLanguage.toUpperCase() %></div>
+    59|                     </td>
+    60|                     <td><%= p.age %> yrs / <%= p.gender %></td>
+    61|                     <td><%= p.phone %></td>
+
+Cannot read properties of undefined (reading 'toUpperCase')
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":59:46)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":33:17)
+    at queue (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-19T15:14:51.621Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\doctor\queue.ejs:58
+    56|                     <td>
+    57|                       <strong><%= p.fullName %></strong>
+ >> 58|                       <div class="text-muted small">UHID: <%= p.uhid %> &bull; Lang: <%= p.preferredLanguage.toUpperCase() %></div>
+    59|                     </td>
+    60|                     <td><%= p.age %> yrs / <%= p.gender %></td>
+    61|                     <td><%= p.phone %></td>
+
+Cannot read properties of undefined (reading 'toUpperCase')
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":59:46)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":33:17)
+    at queue (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-19T15:14:51.992Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\doctor\queue.ejs:58
+    56|                     <td>
+    57|                       <strong><%= p.fullName %></strong>
+ >> 58|                       <div class="text-muted small">UHID: <%= p.uhid %> &bull; Lang: <%= p.preferredLanguage.toUpperCase() %></div>
+    59|                     </td>
+    60|                     <td><%= p.age %> yrs / <%= p.gender %></td>
+    61|                     <td><%= p.phone %></td>
+
+Cannot read properties of undefined (reading 'toUpperCase')
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":59:46)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\doctor\\queue.ejs":33:17)
+    at queue (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-19T15:15:43.430Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\pharmacy\index.ejs:58
+    56|         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"><h5 class="fw-bold m-0"><i class="bi bi-box-seam text-success me-2"></i>Inventory Control</h5><button class="btn btn-outline-success btn-sm rounded-pill" data-bs-toggle="collapse" data-bs-target="#inventoryForm">Add stock item</button></div>
+    57|         <form id="inventoryForm" class="collapse row g-2 mb-3"><div class="col-md-4"><input name="name" class="form-control" placeholder="Medicine name" required></div><div class="col-md-3"><input name="batchNumber" class="form-control" placeholder="Batch number" required></div><div class="col-6 col-md-2"><input name="quantity" type="number" min="0" class="form-control" placeholder="Quantity" required></div><div class="col-6 col-md-2"><input name="unitPrice" type="number" min="0" step="0.01" class="form-control" placeholder="Unit price" required></div><div class="col-md-1"><button class="btn btn-success w-100" type="submit"><i class="bi bi-plus-lg"></i></button></div><div id="inventoryFeedback" class="col-12 small" role="alert"></div></form>
+ >> 58|         <div class="table-responsive"><table class="table table-gov align-middle small"><thead><tr><th>Medicine</th><th>Batch</th><th>Stock</th><th>Expiry</th><th>Action</th></tr></thead><tbody><% (inventory || []).forEach(item => { %><tr class="<%= item.quantity <= item.reorderLevel ? 'table-warning' : '' %>"><td><strong><%= item.name %></strong><div class="text-muted"><%= item.category || 'Medicine' %></div></td><td><%= item.batchNumber %></td><td><span class="badge bg-<%= item.quantity <= item.reorderLevel ? 'warning text-dark' : 'success' %>"><%= item.quantity %></span></td><td><%= item.expiryDate ? new Date(item.expiryDate).toLocaleDateString() : 'Not set' %></td><td><form class="d-flex gap-1 stock-adjust-form"><input type="hidden" name="itemId" value="<%= item._id %>"><input name="amount" type="number" class="form-control form-control-sm" placeholder="+/-" required style="max-width:70px"><button class="btn btn-sm btn-outline-primary" type="submit">Adjust</button></form></td></tr><% }) %><% if (!(inventory || []).length) { %><tr><td colspan="5" class="text-center text-muted py-3">No inventory recorded.</td></tr><% } %></tbody></table></div>
+    59|       </div>
+    60| 
+    61|       <%- include('../partials/pharmacyReceiving') %>
+
+inventory is not defined
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\pharmacy\\index.ejs":36:8)
+    at index (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at exports.lookupPatient (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\controllers\pharmacyController.js:54:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-19T15:18:35.153Z] [ERROR] Emergency patient registration error: E11000 duplicate key error collection: medikiosk.emergencies index: aadhaar_1 dup key: { aadhaar: "XXXX-XXXX-2382" }
+[2026-09-19T15:32:17.139Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\admin\patients.ejs:41
+    39|                                                 <% patients.forEach(patient=> { %><tr>
+    40|                                                     <pre>
+ >> 41| <%= JSON.stringify(p, null, 2) %>
+    42| </pre>
+    43|                                                         <td><strong>
+    44|                                                                 <%= patient.cardNumber || 'Legacy' %>
+
+p is not defined
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\admin\\patients.ejs":31:41)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\admin\\patients.ejs":28:17)
+    at patients (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-19T15:32:21.889Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\admin\patients.ejs:41
+    39|                                                 <% patients.forEach(patient=> { %><tr>
+    40|                                                     <pre>
+ >> 41| <%= JSON.stringify(p, null, 2) %>
+    42| </pre>
+    43|                                                         <td><strong>
+    44|                                                                 <%= patient.cardNumber || 'Legacy' %>
+
+p is not defined
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\admin\\patients.ejs":31:41)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\admin\\patients.ejs":28:17)
+    at patients (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-19T15:32:27.587Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\admin\patients.ejs:41
+    39|                                                 <% patients.forEach(patient=> { %><tr>
+    40|                                                     <pre>
+ >> 41| <%= JSON.stringify(p, null, 2) %>
+    42| </pre>
+    43|                                                         <td><strong>
+    44|                                                                 <%= patient.cardNumber || 'Legacy' %>
+
+p is not defined
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\admin\\patients.ejs":31:41)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\admin\\patients.ejs":28:17)
+    at patients (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-19T15:32:33.717Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\admin\patients.ejs:41
+    39|                                                 <% patients.forEach(patient=> { %><tr>
+    40|                                                     <pre>
+ >> 41| <%= JSON.stringify(p, null, 2) %>
+    42| </pre>
+    43|                                                         <td><strong>
+    44|                                                                 <%= patient.cardNumber || 'Legacy' %>
+
+p is not defined
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\admin\\patients.ejs":31:41)
+    at Array.forEach (<anonymous>)
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\admin\\patients.ejs":28:17)
+    at patients (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-19T15:38:23.307Z] [ERROR] Unhandled express error: ReferenceError: C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\views\pharmacy\index.ejs:58
+    56|         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"><h5 class="fw-bold m-0"><i class="bi bi-box-seam text-success me-2"></i>Inventory Control</h5><button class="btn btn-outline-success btn-sm rounded-pill" data-bs-toggle="collapse" data-bs-target="#inventoryForm">Add stock item</button></div>
+    57|         <form id="inventoryForm" class="collapse row g-2 mb-3"><div class="col-md-4"><input name="name" class="form-control" placeholder="Medicine name" required></div><div class="col-md-3"><input name="batchNumber" class="form-control" placeholder="Batch number" required></div><div class="col-6 col-md-2"><input name="quantity" type="number" min="0" class="form-control" placeholder="Quantity" required></div><div class="col-6 col-md-2"><input name="unitPrice" type="number" min="0" step="0.01" class="form-control" placeholder="Unit price" required></div><div class="col-md-1"><button class="btn btn-success w-100" type="submit"><i class="bi bi-plus-lg"></i></button></div><div id="inventoryFeedback" class="col-12 small" role="alert"></div></form>
+ >> 58|         <div class="table-responsive"><table class="table table-gov align-middle small"><thead><tr><th>Medicine</th><th>Batch</th><th>Stock</th><th>Expiry</th><th>Action</th></tr></thead><tbody><% (inventory || []).forEach(item => { %><tr class="<%= item.quantity <= item.reorderLevel ? 'table-warning' : '' %>"><td><strong><%= item.name %></strong><div class="text-muted"><%= item.category || 'Medicine' %></div></td><td><%= item.batchNumber %></td><td><span class="badge bg-<%= item.quantity <= item.reorderLevel ? 'warning text-dark' : 'success' %>"><%= item.quantity %></span></td><td><%= item.expiryDate ? new Date(item.expiryDate).toLocaleDateString() : 'Not set' %></td><td><form class="d-flex gap-1 stock-adjust-form"><input type="hidden" name="itemId" value="<%= item._id %>"><input name="amount" type="number" class="form-control form-control-sm" placeholder="+/-" required style="max-width:70px"><button class="btn btn-sm btn-outline-primary" type="submit">Adjust</button></form></td></tr><% }) %><% if (!(inventory || []).length) { %><tr><td colspan="5" class="text-center text-muted py-3">No inventory recorded.</td></tr><% } %></tbody></table></div>
+    59|       </div>
+    60| 
+    61|       <%- include('../partials/pharmacyReceiving') %>
+
+inventory is not defined
+    at eval ("C:\\Users\\Mistu\\OneDrive\\Desktop\\SIH\\MEDIKIOSK2026\\views\\pharmacy\\index.ejs":36:8)
+    at index (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at exports.lookupPatient (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\controllers\pharmacyController.js:54:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

@@ -38,43 +38,165 @@
               </tr>
             </thead>
             <tbody>
-              <% if (patients.length === 0) { %>
-                <tr><td colspan="7" class="text-center py-4 text-muted">No patients currently queued in this department.</td></tr>
-              <% } else { %>
-                <% patients.forEach(p => { %>
-                  <tr class="<%= p.priority === 'Emergency Red-Flag' ? 'table-danger' : '' %>">
-                    <td>
-                      <% if (p.priority === 'Emergency Red-Flag') { %>
-                        <span class="badge badge-red-flag"><i class="bi bi-exclamation-triangle-fill me-1"></i> Red-Flag</span>
-                      <% } else if (p.priority === 'Urgent') { %>
-                        <span class="badge badge-urgent">Urgent</span>
-                      <% } else { %>
-                        <span class="badge badge-normal">Normal</span>
-                      <% } %>
-                    </td>
-                    <td><span class="badge bg-primary fs-6"><%= p.tokenNumber %></span></td>
-                    <td>
-                      <strong><%= p.fullName %></strong>
-                      <div class="text-muted small">UHID: <%= p.uhid %> &bull; Lang: <%= p.preferredLanguage.toUpperCase() %></div>
-                    </td>
-                    <td><%= p.age %> yrs / <%= p.gender %></td>
-                    <td><%= p.phone %></td>
-                    <td>
-                      <% if (p.status === 'completed') { %>
-                        <span class="badge bg-success">Completed</span>
-                      <% } else { %>
-                        <span class="badge bg-warning text-dark">Ready for Review</span>
-                      <% } %>
-                    </td>
-                    <td>
-                      <a href="/doctor/patient/<%= p._id %>" class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-sm">
-                        <i class="bi bi-file-earmark-medical me-1"></i> Open Case File
-                      </a>
-                    </td>
-                  </tr>
-                <% }) %>
-              <% } %>
-            </tbody>
+  <% if (!patients || patients.length === 0) { %>
+    <tr>
+      <td colspan="7" class="text-center py-4 text-muted">
+        No patients currently queued in this department.
+      </td>
+    </tr>
+  <% } else { %>
+
+    <% patients.forEach(p => { %>
+
+      <%
+        const isEmergency = p.isEmergency === true;
+
+        const patientName = p.fullName || p.name || "Unknown Patient";
+        const patientPhone = p.phone || p.mobile || "-";
+        const patientAge = p.age || "-";
+        const patientGender = p.gender || "-";
+        const patientLanguage = (
+          p.preferredLanguage || "English"
+        ).toUpperCase();
+
+        const priority = p.priority || (
+          isEmergency ? "Emergency" : "Normal"
+        );
+      %>
+
+      <tr class="
+        <%= priority === 'Emergency Red-Flag'
+          ? 'table-danger'
+          : isEmergency
+          ? 'table-warning'
+          : '' %>
+      ">
+
+        <!-- Priority -->
+        <td>
+
+          <% if (priority === 'Emergency Red-Flag') { %>
+
+            <span class="badge badge-red-flag">
+              <i class="bi bi-exclamation-triangle-fill me-1"></i>
+              Red-Flag
+            </span>
+
+          <% } else if (priority === 'Emergency') { %>
+
+            <span class="badge bg-danger">
+              <i class="bi bi-heart-pulse-fill me-1"></i>
+              Emergency
+            </span>
+
+          <% } else if (priority === 'Urgent') { %>
+
+            <span class="badge badge-urgent">
+              Urgent
+            </span>
+
+          <% } else { %>
+
+            <span class="badge badge-normal">
+              Normal
+            </span>
+
+          <% } %>
+
+        </td>
+
+        <!-- Token -->
+        <td>
+          <span class="badge bg-primary fs-6">
+            <%= p.tokenNumber || "-" %>
+          </span>
+        </td>
+
+        <!-- Patient -->
+        <td>
+
+          <strong>
+            <%= patientName %>
+          </strong>
+
+          <% if (isEmergency) { %>
+            <span class="badge bg-danger ms-1">
+              EMERGENCY
+            </span>
+          <% } %>
+
+          <div class="text-muted small">
+            UHID: <%= p.uhid || "-" %>
+            &bull;
+            Lang: <%= patientLanguage %>
+          </div>
+
+        </td>
+
+        <!-- Age / Gender -->
+        <td>
+          <%= patientAge %> yrs /
+          <%= patientGender %>
+        </td>
+
+        <!-- Phone -->
+        <td>
+          <%= patientPhone %>
+        </td>
+
+        <!-- Status -->
+        <td>
+
+          <% if (p.status === 'completed') { %>
+
+            <span class="badge bg-success">
+              Completed
+            </span>
+
+          <% } else if (
+            p.status === 'in_consultation' ||
+            p.status === 'in-progress'
+          ) { %>
+
+            <span class="badge bg-primary">
+              In Consultation
+            </span>
+
+          <% } else if (isEmergency) { %>
+
+            <span class="badge bg-danger">
+              Emergency — Ready
+            </span>
+
+          <% } else { %>
+
+            <span class="badge bg-warning text-dark">
+              Ready for Review
+            </span>
+
+          <% } %>
+
+        </td>
+
+        <!-- Action -->
+        <td>
+
+          <a
+            href="/doctor/patient/<%= p._id %>"
+            class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-sm"
+          >
+            <i class="bi bi-file-earmark-medical me-1"></i>
+            Open Case File
+          </a>
+
+        </td>
+
+      </tr>
+
+    <% }) %>
+
+  <% } %>
+</tbody>
           </table>
         </div>
 

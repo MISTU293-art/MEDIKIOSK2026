@@ -1,0 +1,374 @@
+<%- include('../partials/header') %>
+
+<style>
+  body {
+    background: radial-gradient(circle at 50% 15%, #fffaf0 0%, #f8fafc 75%);
+  }
+
+  .kiosk-card {
+    max-width: 720px;
+    width: 100%;
+    border-radius: 24px;
+  }
+
+  .gov-tricolor-bar {
+    height: 6px;
+    background: linear-gradient(90deg, #ff9933 0%, #ffffff 50%, #138808 100%);
+  }
+
+  .logo-box {
+    width: 110px;
+    height: 110px;
+    background: #e9f2ff;
+    border: 3px solid #0d6efd;
+  }
+
+  .touch-input {
+    min-height: 58px;
+    font-size: 1.05rem;
+    border-radius: 12px;
+  }
+
+  .touch-input:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.12);
+  }
+
+  .emergency-header {
+    background: linear-gradient(135deg, #fff1f2, #fff7ed);
+    border: 1px solid #fecaca;
+  }
+
+  .emergency-icon {
+    width: 70px;
+    height: 70px;
+    background: #fee2e2;
+    color: #dc3545;
+  }
+
+  .emergency-btn {
+    min-height: 60px;
+    border-radius: 14px;
+    font-size: 1.1rem;
+  }
+
+  .small-note {
+    font-size: 0.8rem;
+  }
+</style>
+
+<div
+  class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-4"
+>
+  <!-- MAIN KIOSK CARD -->
+  <div class="card kiosk-card shadow-lg border-0 overflow-hidden bg-white">
+    <!-- Government Tricolor -->
+    <div class="gov-tricolor-bar"></div>
+
+    <div class="p-4 p-md-5">
+      <!-- =====================================================
+           HEADER
+      ====================================================== -->
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill">
+          <i class="bi bi-flower1 me-1 text-success"></i>
+          MINISTRY OF AYUSH
+        </span>
+
+        <span
+          class="badge bg-danger-subtle text-danger border border-danger px-3 py-2 rounded-pill"
+        >
+          <i class="bi bi-heart-pulse-fill me-1"></i>
+          EMERGENCY
+        </span>
+      </div>
+
+      <!-- LOGO -->
+      <div class="text-center mb-3">
+        <div
+          class="logo-box rounded-4 d-inline-flex align-items-center justify-content-center shadow-sm"
+        >
+          <img
+            src="/uploads/logo.png"
+            alt="MediKiosk AYUSH"
+            class="img-fluid"
+            style="width: 90px; height: 90px; object-fit: contain"
+          />
+        </div>
+
+        <h1 class="fw-bold text-dark mt-3 mb-1">MediKiosk AYUSH</h1>
+
+        <p class="text-muted mb-0">Emergency Patient Registration</p>
+      </div>
+
+      <!-- =====================================================
+           EMERGENCY NOTICE
+      ====================================================== -->
+
+      <div class="emergency-header rounded-4 p-3 p-md-4 mb-4">
+        <% if (error) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    <strong>Error:</strong> <%= error %>
+
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+    ></button>
+  </div>
+<% } %>
+
+<% if (message) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    <strong>Success:</strong> <%= message %>
+
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+    ></button>
+  </div>
+<% } %>
+        <div class="d-flex gap-3 align-items-start">
+          <div
+            class="emergency-icon rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+          >
+            <i class="bi bi-heart-pulse-fill fs-3"></i>
+          </div>
+
+          <div>
+            <h5 class="fw-bold text-danger mb-1">Emergency Registration</h5>
+
+            <p class="text-muted small mb-0">
+              Please enter the patient's basic details for immediate
+              registration.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           FORM
+      ====================================================== -->
+
+      <form id="emergencyPatientForm" method="POST" action="/kiosk/emergency">
+        <!-- PATIENT NAME -->
+        <div class="mb-3">
+          <label for="name" class="form-label fw-bold"> Patient Name </label>
+
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-person-fill text-danger"></i>
+            </span>
+
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control touch-input"
+              placeholder="Enter patient's full name"
+              autocomplete="name"
+              maxlength="100"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- MOBILE NUMBER -->
+        <div class="mb-3">
+          <label for="mobile" class="form-label fw-bold"> Mobile Number </label>
+
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-phone-fill text-primary"></i>
+            </span>
+
+            <input
+              type="tel"
+              id="mobile"
+              name="mobile"
+              class="form-control touch-input"
+              placeholder="Enter 10-digit mobile number"
+              inputmode="numeric"
+              maxlength="10"
+              pattern="[0-9]{10}"
+              autocomplete="tel"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- AADHAAR -->
+        <div class="mb-3">
+          <label for="aadhaar" class="form-label fw-bold">
+            Aadhaar Number
+          </label>
+
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-person-vcard-fill text-warning"></i>
+            </span>
+
+            <input
+              type="text"
+              id="aadhaar"
+              name="aadhaar"
+              class="form-control touch-input"
+              placeholder="Enter 12-digit Aadhaar number"
+              inputmode="numeric"
+              maxlength="12"
+              pattern="[0-9]{12}"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="form-text small-note">
+            Aadhaar number is used only for patient identification.
+          </div>
+        </div>
+
+        <!-- BLOOD GROUP -->
+        <div class="mb-4">
+          <label for="bloodGroup" class="form-label fw-bold">
+            Blood Group
+          </label>
+
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-droplet-fill text-danger"></i>
+            </span>
+
+            <select
+              id="bloodGroup"
+              name="bloodGroup"
+              class="form-select touch-input"
+              required
+            >
+              <option value="">Select Blood Group</option>
+
+              <option value="A+">A+</option>
+              <option value="A-">A−</option>
+
+              <option value="B+">B+</option>
+              <option value="B-">B−</option>
+
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB−</option>
+
+              <option value="O+">O+</option>
+              <option value="O-">O−</option>
+
+              <option value="Unknown">Unknown / Not Known</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ALERT -->
+        <div id="emergencyAlert" class="alert d-none"></div>
+
+        <!-- SUBMIT -->
+        <button
+          type="submit"
+          id="emergencySubmit"
+          class="btn btn-danger emergency-btn w-100 fw-bold shadow-sm"
+        >
+          <i class="bi bi-lightning-charge-fill me-1"></i>
+
+          Register Emergency Patient
+        </button>
+
+        <!-- BACK -->
+        <a
+          href="/kiosk"
+          class="btn btn-outline-secondary w-100 mt-2 rounded-pill py-2"
+        >
+          <i class="bi bi-arrow-left me-1"></i>
+
+          Back to Kiosk
+        </a>
+      </form>
+
+      <!-- =====================================================
+           FOOTER NOTE
+      ====================================================== -->
+
+      <div class="text-center text-muted small mt-4">
+        <i class="bi bi-shield-check text-success me-1"></i>
+
+        Patient information is handled securely.
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div
+      class="card-footer bg-light border-0 text-center text-muted small py-3"
+    >
+      <i class="bi bi-shield-check text-success me-1"></i>
+
+      National AYUSH Mission
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+  const form = document.getElementById("emergencyPatientForm");
+
+  const mobile = document.getElementById("mobile");
+
+  const aadhaar = document.getElementById("aadhaar");
+
+  const submitButton = document.getElementById("emergencySubmit");
+
+  const alertBox = document.getElementById("emergencyAlert");
+
+  /*
+   * Mobile: numbers only
+   */
+  mobile.addEventListener("input", function () {
+    this.value = this.value.replace(/\D/g, "").slice(0, 10);
+  });
+
+  /*
+   * Aadhaar: numbers only
+   */
+  aadhaar.addEventListener("input", function () {
+    this.value = this.value.replace(/\D/g, "").slice(0, 12);
+  });
+
+  /*
+   * Form validation
+   */
+  form.addEventListener("submit", function (event) {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+
+      form.classList.add("was-validated");
+
+      return;
+    }
+
+    /*
+     * Loading state
+     */
+    submitButton.disabled = true;
+
+    submitButton.innerHTML = `
+          <span
+            class="spinner-border
+                   spinner-border-sm me-2"
+          ></span>
+
+          Registering Patient...
+        `;
+  });
+</script>
+
+<%- include('../partials/footer') %>
