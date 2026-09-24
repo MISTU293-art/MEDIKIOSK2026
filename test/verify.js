@@ -1,4 +1,5 @@
-﻿async function runEndToEndVerification() {
+require('dotenv').config();
+async function runEndToEndVerification() {
   console.log('==================================================');
   console.log('STARTING ADVANCED MEDIKIOSK & PHARMACY VERIFICATION');
   console.log('==================================================');

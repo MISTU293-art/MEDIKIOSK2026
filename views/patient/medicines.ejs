@@ -1,0 +1,148 @@
+<%- include('header', { title: 'Medicine History & Timeline — MediKiosk', patient, activeNav: 'medicines' }) %>
+
+<div class="container py-4">
+  <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+    <div>
+      <h3 class="fw-bold text-dark mb-1">Medicine History & Timeline</h3>
+      <p class="text-muted small mb-0">Track active regimens, completed courses, and past medication timelines</p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <a href="/patient/prescriptions" class="btn btn-outline-primary btn-sm">View Doctor Prescriptions</a>
+    </div>
+  </div>
+
+  <!-- Medicine Categories Pills (Section 51) -->
+  <ul class="nav nav-pills mb-4 gap-2" id="medicineTabs" role="tablist">
+    <li class="nav-item">
+      <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-current">
+        <i class="bi bi-capsule-pill me-1"></i> Current Medicines (<%= current.length %>)
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-completed">
+        <i class="bi bi-check-circle me-1"></i> Completed Courses (<%= completed.length %>)
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-previous">
+        <i class="bi bi-archive me-1"></i> Previous Medicines (<%= previous.length %>)
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-timeline">
+        <i class="bi bi-clock-history me-1"></i> Medicine Timeline
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="medicineTabsContent">
+    
+    <!-- CURRENT MEDICINES TAB -->
+    <div class="tab-pane fade show active" id="tab-current" role="tabpanel">
+      <% if (current.length === 0) { %>
+        <div class="portal-card p-5 text-center">
+          <i class="bi bi-capsule text-muted fs-1 mb-2"></i>
+          <h5 class="fw-bold text-dark">No Active Current Medications</h5>
+          <p class="text-muted small mb-0">You do not have any ongoing medication courses prescribed within the last 7 days.</p>
+        </div>
+      <% } else { %>
+        <div class="row g-3">
+          <% current.forEach(function(m) { %>
+            <div class="col-md-6 col-lg-4">
+              <div class="portal-card p-3 h-100 border-start border-4 border-success">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <span class="badge bg-success-subtle text-success">Active / Current</span>
+                  <span class="text-muted small" style="font-size: 0.72rem;"><%= new Date(m.prescriptionDate).toLocaleDateString() %></span>
+                </div>
+                <h5 class="fw-bold text-dark mb-1"><%= m.medicineName %></h5>
+                <div class="small text-muted mb-2">Dosage: <strong><%= m.dosage %></strong></div>
+                <div class="small text-secondary mb-2"><i class="bi bi-repeat me-1"></i><%= m.frequency %> &bull; <%= m.duration %></div>
+                <div class="small text-muted"><i class="bi bi-person me-1"></i><%= m.prescribedBy || m.doctor || 'Attending Physician' %></div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- COMPLETED MEDICINES TAB -->
+    <div class="tab-pane fade" id="tab-completed" role="tabpanel">
+      <% if (completed.length === 0) { %>
+        <div class="portal-card p-5 text-center">
+          <p class="text-muted small mb-0">No completed medication courses in this cycle.</p>
+        </div>
+      <% } else { %>
+        <div class="row g-3">
+          <% completed.forEach(function(m) { %>
+            <div class="col-md-6 col-lg-4">
+              <div class="portal-card p-3 h-100 border-start border-4 border-info">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <span class="badge bg-info-subtle text-info">Completed Course</span>
+                  <span class="text-muted small" style="font-size: 0.72rem;"><%= new Date(m.prescriptionDate).toLocaleDateString() %></span>
+                </div>
+                <h5 class="fw-bold text-dark mb-1"><%= m.medicineName %></h5>
+                <div class="small text-muted mb-1">Prescribed dosage: <%= m.dosage %></div>
+                <div class="small text-secondary"><%= m.duration %> course successfully completed.</div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- PREVIOUS MEDICINES TAB -->
+    <div class="tab-pane fade" id="tab-previous" role="tabpanel">
+      <% if (previous.length === 0) { %>
+        <div class="portal-card p-5 text-center">
+          <p class="text-muted small mb-0">No historical past medicines on file.</p>
+        </div>
+      <% } else { %>
+        <div class="row g-3">
+          <% previous.forEach(function(m) { %>
+            <div class="col-md-6 col-lg-4">
+              <div class="portal-card p-3 h-100 border-start border-4 border-secondary">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <span class="badge bg-secondary-subtle text-secondary">Historical Record</span>
+                  <span class="text-muted small" style="font-size: 0.72rem;"><%= new Date(m.prescriptionDate).toLocaleDateString() %></span>
+                </div>
+                <h5 class="fw-bold text-dark mb-1"><%= m.medicineName %></h5>
+                <div class="small text-muted">Dosage: <%= m.dosage %> &bull; <%= m.frequency %></div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- CHRONOLOGICAL MEDICINE TIMELINE TAB (Section 51) -->
+    <div class="tab-pane fade" id="tab-timeline" role="tabpanel">
+      <div class="portal-card p-4">
+        <h5 class="fw-bold text-dark mb-4 border-bottom pb-2">
+          <i class="bi bi-calendar3-range text-primary me-2"></i>Chronological Medication Timeline
+        </h5>
+
+        <div class="position-relative ps-4" style="border-left: 2px solid #cbd5e1; margin-left: 1rem;">
+          <% timeline.forEach(function(m) { %>
+            <div class="position-relative mb-4">
+              <!-- Dot Indicator -->
+              <div class="position-absolute bg-primary rounded-circle" style="width: 12px; height: 12px; left: -27px; top: 5px;"></div>
+              
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-light text-dark font-monospace border"><%= new Date(m.prescriptionDate).toLocaleDateString() %></span>
+                <strong class="text-dark"><%= m.medicineName %></strong>
+                <span class="badge <%= m.status === 'current' ? 'bg-success' : 'bg-secondary' %>" style="font-size: 0.68rem;"><%= m.status.toUpperCase() %></span>
+              </div>
+              <div class="text-muted small mt-1">
+                <%= m.dosage %> &bull; <%= m.duration %> course &bull; Prescribed by <%= m.doctor || m.prescribedBy || 'Attending Physician' %>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<%- include('footer') %>

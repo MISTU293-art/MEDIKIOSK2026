@@ -1,0 +1,80 @@
+<%- include('header', { title: 'Medical Timeline — MediKiosk', patient, activeNav: 'timeline' }) %>
+
+<div class="container py-4">
+  <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+    <div>
+      <h3 class="fw-bold text-dark mb-1">Medical Timeline</h3>
+      <p class="text-muted small mb-0">Unified chronological healthcare journey synthesized by MediKiosk Document Intelligence</p>
+    </div>
+    <span class="badge bg-primary px-3 py-2 fs-6"><%= timeline.totalEvents %> Recorded Milestone(s)</span>
+  </div>
+
+  <% if (!timeline.years || timeline.years.length === 0) { %>
+    <div class="portal-card p-5 text-center">
+      <i class="bi bi-clock-history text-muted fs-1 mb-2"></i>
+      <h5 class="fw-bold text-dark">Timeline Initialized</h5>
+      <p class="text-muted small">Your medical timeline will automatically chronicle visits, tests, and prescriptions over time.</p>
+    </div>
+  <% } else { %>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        
+        <% timeline.years.forEach(function(yearGroup) { %>
+          <div class="mb-5">
+            <!-- Year Header Badge -->
+            <div class="d-flex align-items-center gap-3 mb-4">
+              <span class="badge bg-dark fs-5 px-3 py-2 shadow-sm font-monospace">
+                <i class="bi bi-calendar-event me-2 text-warning"></i><%= yearGroup.year %>
+              </span>
+              <div class="flex-grow-1" style="height: 2px; background: linear-gradient(90deg, #1e293b, transparent);"></div>
+            </div>
+
+            <!-- Vertical Tree -->
+            <div class="position-relative ps-4 ms-3" style="border-left: 3px solid #cbd5e1;">
+              <% yearGroup.events.forEach(function(evt) { %>
+                <div class="position-relative mb-4">
+                  <!-- Tree Node Dot -->
+                  <div class="position-absolute rounded-circle bg-<%= evt.badgeColor || 'primary' %> d-flex align-items-center justify-content-center shadow-xs"
+                       style="width: 28px; height: 28px; left: -39px; top: 0px; border: 3px solid #ffffff;">
+                    <i class="bi <%= evt.icon || 'bi-circle-fill' %> text-white" style="font-size: 0.75rem;"></i>
+                  </div>
+
+                  <!-- Event Card -->
+                  <div class="portal-card p-3 shadow-xs">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center border-bottom pb-2 mb-2 gap-1">
+                      <div>
+                        <span class="badge bg-<%= evt.badgeColor || 'primary' %>-subtle text-<%= evt.badgeColor || 'primary' %> text-uppercase fw-semibold" style="font-size: 0.72rem;">
+                          <%= evt.type %>
+                        </span>
+                        <strong class="text-dark ms-2"><%= evt.title %></strong>
+                      </div>
+                      <span class="text-muted small" style="font-size: 0.75rem;">
+                        <%= new Date(evt.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }) %>
+                      </span>
+                    </div>
+
+                    <p class="text-secondary small mb-2"><%= evt.description %></p>
+
+                    <div class="d-flex justify-content-end">
+                      <a href="<%= evt.recordLink %>" class="btn btn-sm btn-outline-primary py-0 px-2" style="font-size: 0.78rem;">
+                        Open Authorized Record &rarr;
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+              <% }); %>
+            </div>
+
+          </div>
+        <% }); %>
+
+      </div>
+    </div>
+
+  <% } %>
+
+</div>
+
+<%- include('footer') %>

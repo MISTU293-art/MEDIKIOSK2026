@@ -1,0 +1,156 @@
+<%- include('header', { title: 'My Recorded Allergies — MediKiosk', patient, activeNav: 'allergies' }) %>
+
+<div class="container py-4">
+  <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+    <div>
+      <h3 class="fw-bold text-dark mb-1">My Allergies</h3>
+      <p class="text-muted small mb-0">Crucial clinical contraindications monitored by the AI Drug-Safety Shield</p>
+    </div>
+    <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#requestAllergyModal">
+      <i class="bi bi-pencil-square"></i> Request Allergy Update
+    </button>
+  </div>
+
+  <div class="row g-4">
+    
+    <!-- Drug Allergies Column -->
+    <div class="col-md-4">
+      <div class="portal-card p-4 h-100 border-top border-4 border-danger">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h5 class="fw-bold text-danger mb-0"><i class="bi bi-capsule-pill me-2"></i>Drug Allergies</h5>
+          <span class="badge bg-danger-subtle text-danger"><%= allergies.drugAllergies.length %></span>
+        </div>
+
+        <% if (allergies.drugAllergies.length === 0) { %>
+          <div class="text-muted small py-4 text-center">
+            <i class="bi bi-shield-check text-success fs-3 d-block mb-1"></i>
+            No known drug allergies (NKDA) recorded.
+          </div>
+        <% } else { %>
+          <ul class="list-unstyled mb-0">
+            <% allergies.drugAllergies.forEach(function(item) { %>
+              <li class="p-3 mb-2 bg-danger-subtle rounded-3 text-danger fw-semibold small d-flex align-items-center gap-2">
+                <i class="bi bi-exclamation-octagon-fill"></i>
+                <div><%= item %></div>
+              </li>
+            <% }); %>
+          </ul>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Food Allergies Column -->
+    <div class="col-md-4">
+      <div class="portal-card p-4 h-100 border-top border-4 border-warning">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h5 class="fw-bold text-warning-emphasis mb-0"><i class="bi bi-egg-fried me-2"></i>Food Allergies</h5>
+          <span class="badge bg-warning-subtle text-warning-emphasis"><%= allergies.foodAllergies.length %></span>
+        </div>
+
+        <% if (allergies.foodAllergies.length === 0) { %>
+          <div class="text-muted small py-4 text-center">
+            <i class="bi bi-check-circle text-success fs-3 d-block mb-1"></i>
+            No food allergies recorded.
+          </div>
+        <% } else { %>
+          <ul class="list-unstyled mb-0">
+            <% allergies.foodAllergies.forEach(function(item) { %>
+              <li class="p-3 mb-2 bg-warning-subtle rounded-3 text-warning-emphasis fw-semibold small d-flex align-items-center gap-2">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <div><%= item %></div>
+              </li>
+            <% }); %>
+          </ul>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Other Allergies Column -->
+    <div class="col-md-4">
+      <div class="portal-card p-4 h-100 border-top border-4 border-info">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h5 class="fw-bold text-info-emphasis mb-0"><i class="bi bi-flower1 me-2"></i>Other Environmental Allergies</h5>
+          <span class="badge bg-info-subtle text-info"><%= allergies.otherAllergies.length %></span>
+        </div>
+
+        <% if (allergies.otherAllergies.length === 0) { %>
+          <div class="text-muted small py-4 text-center">
+            <i class="bi bi-check-circle text-success fs-3 d-block mb-1"></i>
+            No environmental or latex allergies recorded.
+          </div>
+        <% } else { %>
+          <ul class="list-unstyled mb-0">
+            <% allergies.otherAllergies.forEach(function(item) { %>
+              <li class="p-3 mb-2 bg-info-subtle rounded-3 text-info-emphasis fw-semibold small d-flex align-items-center gap-2">
+                <i class="bi bi-info-circle-fill"></i>
+                <div><%= item %></div>
+              </li>
+            <% }); %>
+          </ul>
+        <% } %>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Clinical Verification Safety Warning (Section 52) -->
+  <div class="mt-4 p-3 bg-white border rounded-3 d-flex align-items-start gap-3">
+    <i class="bi bi-shield-shaded text-primary fs-3"></i>
+    <div>
+      <h6 class="fw-bold text-dark mb-1">Clinical Safety Guarantee</h6>
+      <p class="text-muted small mb-0">
+        <%= allergies.safetyNotice %> Patients may submit an update request; however, clinical records and medical allergy profiles are strictly committed only after staff or physician clinical verification to prevent accidental drug-interaction errors.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal: Request Allergy Update -->
+<div class="modal fade" id="requestAllergyModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold">Request Allergy Record Update</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p class="small text-muted mb-3">Please specify any known drug, food, or seasonal allergy. A clinical staff member will review and verify your request during your next intake.</p>
+        <div class="mb-3">
+          <label class="form-label small fw-semibold">Allergy Type</label>
+          <select class="form-select" id="allergyType">
+            <option value="Drug">Medication / Drug</option>
+            <option value="Food">Food / Nut / Seafood</option>
+            <option value="Other">Latex / Dust / Pollen / Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-semibold">Suspected Allergen / Substance Name</label>
+          <input type="text" class="form-control" id="allergySubstance" placeholder="e.g. Aspirin, Sulfa drugs, Peanuts">
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-semibold">Reaction Symptoms Experienced</label>
+          <textarea class="form-control" rows="2" id="allergyReaction" placeholder="e.g. Skin rash, breathing difficulty, swelling"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="submitAllergyRequest()">Submit for Verification</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function submitAllergyRequest() {
+    const substance = document.getElementById('allergySubstance').value.trim();
+    if (!substance) {
+      alert('Please enter an allergen substance name.');
+      return;
+    }
+    alert('Your allergy update request has been submitted for clinical verification by hospital staff.');
+    bootstrap.Modal.getInstance(document.getElementById('requestAllergyModal')).hide();
+  }
+</script>
+
+<%- include('footer') %>

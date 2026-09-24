@@ -1,0 +1,102 @@
+<%- include('header', { title: 'Diagnostic Reports — MediKiosk', patient, activeNav: 'reports' }) %>
+
+<div class="container py-4">
+  <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+    <div>
+      <h3 class="fw-bold text-dark mb-1">My Medical Reports</h3>
+      <p class="text-muted small mb-0">Authorized diagnostic scans, hematology, and laboratory evaluations</p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <span class="badge bg-primary px-3 py-2 fs-6"><%= reports.length %> Reports on File</span>
+    </div>
+  </div>
+
+  <% if (reports.length === 0) { %>
+    <div class="portal-card p-5 text-center">
+      <i class="bi bi-file-earmark-x text-muted fs-1 mb-2"></i>
+      <h5 class="fw-bold text-dark">No Diagnostic Reports Available</h5>
+      <p class="text-muted small mb-3">When hospital pathology or radiology uploads reports, they will securely appear here.</p>
+    </div>
+  <% } else { %>
+    <div class="row g-4">
+      <% reports.forEach(function(r) { %>
+        <div class="col-md-6 col-lg-6">
+          <div class="portal-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-light text-primary border small"><%= r.reportType %></span>
+                <span class="badge <%= r.status === 'reviewed' ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning' %>">
+                  <i class="bi bi-check2-circle me-1"></i><%= r.statusLabel %>
+                </span>
+              </div>
+
+              <h5 class="fw-bold text-dark mb-1"><%= r.testName %></h5>
+              <div class="text-muted small mb-3">
+                <i class="bi bi-calendar3 me-1"></i><%= new Date(r.date).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }) %> &bull; Requisition by: <%= r.requestedBy %>
+              </div>
+
+              <!-- Lab Values Table Preview -->
+              <% if (r.labValues && Object.keys(r.labValues).length > 0) { %>
+                <div class="table-responsive bg-light rounded-3 p-2 mb-3 border">
+                  <table class="table table-sm table-borderless mb-0" style="font-size: 0.85rem;">
+                    <thead>
+                      <tr class="text-muted border-bottom" style="font-size: 0.75rem;">
+                        <th>Parameter</th>
+                        <th>Value</th>
+                        <th>Reference</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% Object.entries(r.labValues).forEach(function([param, data]) { %>
+                        <% const v = typeof data === 'object' ? data.value + ' ' + (data.unit || '') : data; %>
+                        <% const ref = typeof data === 'object' && data.normalRange ? data.normalRange : 'Normal'; %>
+                        <tr>
+                          <td class="fw-semibold text-dark"><%= param %></td>
+                          <td class="fw-bold text-primary"><%= v %></td>
+                          <td class="text-muted" style="font-size: 0.75rem;"><%= ref %></td>
+                        </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              <% } %>
+
+              <% if (r.reviewNotes) { %>
+                <div class="small text-muted mb-3">
+                  <i class="bi bi-chat-left-text text-secondary me-1"></i><%= r.reviewNotes %>
+                </div>
+              <% } %>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="pt-3 border-top d-flex flex-wrap gap-2 justify-content-between align-items-center">
+              <a href="/patient/chat?q=<%= encodeURIComponent('Explain my ' + r.testName) %>" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
+                <i class="bi bi-robot"></i> Explain with AI
+              </a>
+
+              <div class="d-flex gap-2">
+                <a href="<%= r.downloadUrl %>" target="_blank" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+                  <i class="bi bi-eye"></i> View
+                </a>
+                <a href="<%= r.downloadUrl %>" download class="btn btn-sm btn-primary d-flex align-items-center gap-1">
+                  <i class="bi bi-download"></i> Download
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+
+  <!-- Section 49 Security Notice -->
+  <div class="mt-4 p-3 bg-white border rounded-3 text-muted small d-flex align-items-center gap-2">
+    <i class="bi bi-shield-lock-fill text-success fs-5"></i>
+    <div>
+      <strong>Security & HIPAA/DISHA Compliance:</strong> Report files are delivered strictly through authorization-aware endpoints. Predictable public URLs are permanently disabled.
+    </div>
+  </div>
+</div>
+
+<%- include('footer') %>

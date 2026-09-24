@@ -23,6 +23,21 @@ class VisitAdapter {
     return list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   }
 
+  static async findById(id) {
+    if (isLiveMongo()) return MongooseVisit.findById(id);
+    return memoryDb.getCollection('Visit').findById(id);
+  }
+
+  static async findOne(query) {
+    if (isLiveMongo()) return MongooseVisit.findOne(query);
+    return memoryDb.getCollection('Visit').findOne(query);
+  }
+
+  static async findByIdAndUpdate(id, update, opts = { new: true }) {
+    if (isLiveMongo()) return MongooseVisit.findByIdAndUpdate(id, update, opts);
+    return memoryDb.getCollection('Visit').findByIdAndUpdate(id, update, opts);
+  }
+
   static async create(data) {
     if (isLiveMongo()) return MongooseVisit.create(data);
     return memoryDb.getCollection('Visit').create(data);

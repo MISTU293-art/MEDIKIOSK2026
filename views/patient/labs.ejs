@@ -1,0 +1,79 @@
+<%- include('header', { title: 'Laboratory Results — MediKiosk', patient, activeNav: 'labs' }) %>
+
+<div class="container py-4">
+  <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+    <div>
+      <h3 class="fw-bold text-dark mb-1">Laboratory & Pathology Results</h3>
+      <p class="text-muted small mb-0">Direct clinical laboratory parameters with standard physiological reference ranges</p>
+    </div>
+    <a href="/patient/reports" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-file-earmark-medical me-1"></i> View Full Reports
+    </a>
+  </div>
+
+  <div class="row g-4">
+    <% labResults.forEach(function(lab) { %>
+      <div class="col-md-6 col-lg-4">
+        <div class="portal-card p-4 h-100 d-flex flex-column justify-content-between <%= lab.isPotentiallyAbnormal ? 'border-warning' : '' %>">
+          <div>
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <span class="badge bg-light text-dark border small"><%= lab.testName %></span>
+              <span class="badge <%= lab.isPotentiallyAbnormal ? 'badge-soft-warning' : 'badge-soft-success' %>">
+                <i class="bi <%= lab.isPotentiallyAbnormal ? 'bi-exclamation-circle' : 'bi-check-circle' %> me-1"></i>
+                <%= lab.status %>
+              </span>
+            </div>
+
+            <h5 class="fw-bold text-dark mb-1"><%= lab.parameter %></h5>
+            <div class="text-muted small mb-3">
+              <i class="bi bi-calendar3 me-1"></i><%= new Date(lab.reportDate).toLocaleDateString() %>
+            </div>
+
+            <div class="p-3 bg-light rounded-3 mb-3 border text-center">
+              <div class="fs-2 fw-bold <%= lab.isPotentiallyAbnormal ? 'text-warning-emphasis' : 'text-primary' %>">
+                <%= lab.value %> <span class="fs-5 text-muted fw-normal"><%= lab.unit %></span>
+              </div>
+              <div class="text-muted small mt-1" style="font-size: 0.78rem;">
+                Reference Range: <strong><%= lab.referenceRange %></strong>
+              </div>
+            </div>
+
+            <!-- Mandatory Safety Notice (Section 55) -->
+            <% if (lab.isPotentiallyAbnormal) { %>
+              <div class="alert alert-warning py-2 px-3 small mb-3 d-flex align-items-center gap-2" role="alert" style="font-size: 0.75rem;">
+                <i class="bi bi-exclamation-triangle-fill text-warning fs-6"></i>
+                <div><%= lab.safetyNotice %></div>
+              </div>
+            <% } else { %>
+              <div class="text-success small mb-3" style="font-size: 0.75rem;">
+                <i class="bi bi-check2-all me-1"></i><%= lab.safetyNotice %>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="pt-3 border-top d-flex align-items-center justify-content-between">
+            <a href="/patient/chat?q=<%= encodeURIComponent('What does my ' + lab.parameter + ' value of ' + lab.value + ' mean?') %>" class="btn btn-sm btn-outline-primary" style="font-size: 0.8rem;">
+              <i class="bi bi-robot me-1"></i> Ask AI Explanation
+            </a>
+            <a href="/patient/reports" class="btn btn-sm btn-light text-muted" style="font-size: 0.8rem;">Full Report &rarr;</a>
+          </div>
+
+        </div>
+      </div>
+    <% }); %>
+  </div>
+
+  <!-- Section 55 Clinical Safety Disclaimer Box -->
+  <div class="mt-4 p-4 bg-white border rounded-3 text-muted small">
+    <div class="d-flex align-items-center gap-2 mb-2 text-dark fw-bold">
+      <i class="bi bi-shield-exclamation text-warning fs-5"></i>
+      <span>Clinical Safety Guidance (Section 55):</span>
+    </div>
+    <p class="mb-0">
+      Potentially abnormal values may be visually flagged to assist your awareness, but the MediKiosk patient interface does not present an AI-generated flag as a medical diagnosis. Please discuss all findings with your physician during clinical consultation.
+    </p>
+  </div>
+
+</div>
+
+<%- include('footer') %>

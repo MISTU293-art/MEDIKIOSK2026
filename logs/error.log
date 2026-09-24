@@ -842,3 +842,15 @@ inventory is not defined
     at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
     at exports.lookupPatient (C:\Users\Mistu\OneDrive\Desktop\SIH\MEDIKIOSK2026\controllers\pharmacyController.js:54:18)
     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T14:26:17.320Z] [ERROR] ========================================
+[2026-09-24T14:26:17.322Z] [ERROR] ❌ MongoDB Connection Failed
+[2026-09-24T14:26:17.322Z] [ERROR] MONGODB_URI environment variable is not configured
+[2026-09-24T14:26:17.324Z] [ERROR] ========================================
+[2026-09-24T14:43:30.724Z] [ERROR] Error during database seeding: Visit validation failed: cardNumber: Path `cardNumber` is required.
+[2026-09-24T14:43:44.060Z] [ERROR] Error during database seeding: Visit validation failed: cardNumber: Path `cardNumber` is required.
+[2026-09-24T14:43:47.453Z] [ERROR] Error during database seeding: Visit validation failed: cardNumber: Path `cardNumber` is required.
+[2026-09-24T14:44:23.114Z] [ERROR] AI postChat error: AIMessage validation failed: source: `assistant` is not a valid enum value for path `source`.
+[2026-09-24T14:44:32.754Z] [ERROR] Error during database seeding: Visit validation failed: cardNumber: Path `cardNumber` is required.
+[2026-09-24T14:44:47.360Z] [ERROR] Error during database seeding: Visit validation failed: cardNumber: Path `cardNumber` is required.
+[2026-09-24T14:52:18.517Z] [ERROR] Error during database seeding: Visit validation failed: cardNumber: Path `cardNumber` is required.
+[2026-09-24T14:58:27.007Z] [ERROR] Error during database seeding: Visit validation failed: cardNumber: Path `cardNumber` is required.

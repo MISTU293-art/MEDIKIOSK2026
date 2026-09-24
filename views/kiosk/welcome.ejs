@@ -1,4 +1,4 @@
-﻿<%- include('../partials/header') %>
+<%- include('../partials/header') %>
 <div
   class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-4"
   style="
@@ -14,20 +14,29 @@
     <div class="p-4 p-md-5">
       <!-- Ministry & SIH National Header -->
       <div
-        class="d-flex flex-wrap justify-content-between align-items-center mb-3"
+        class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2"
       >
-        <span
-          class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-sm"
-          style="font-size: 0.78rem"
+        <div class="d-flex align-items-center gap-2">
+          <span
+            class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-sm"
+            style="font-size: 0.78rem"
+          >
+            <i class="bi bi-flower1 me-1 text-success fs-6"></i> MINISTRY OF AYUSH
+          </span>
+          <span
+            class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill small"
+          >
+            <i class="bi bi-shield-check me-1"></i> Ayushman Bharat (ABDM)
+            Compatible
+          </span>
+        </div>
+        <a
+          href="/patient/login"
+          class="btn btn-sm btn-primary rounded-pill px-3 py-1 fw-bold shadow-xs d-flex align-items-center gap-1"
         >
-          <i class="bi bi-flower1 me-1 text-success fs-6"></i> MINISTRY OF AYUSH
-        </span>
-        <span
-          class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill small"
-        >
-          <i class="bi bi-shield-check me-1"></i> Ayushman Bharat (ABDM)
-          Compatible
-        </span>
+          <i class="bi bi-heart-pulse-fill text-warning"></i>
+          <span>Patient Portal & AI Login</span>
+        </a>
       </div>
 
       <div class="text-center mb-4">
@@ -96,10 +105,19 @@
             Health Intake
           </button>
         </li>
-   <a href="/kiosk/emergency" class="btn btn-danger">
-    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-    Emergency
-</a>
+        <li class="nav-item">
+          <a
+            href="/patient/login"
+            class="nav-link rounded-pill fw-bold py-2 fs-6 text-primary bg-primary-subtle border border-primary-subtle text-decoration-none d-flex align-items-center justify-content-center"
+          >
+            <i class="bi bi-heart-pulse-fill me-1 text-danger"></i> Patient Login & AI
+          </a>
+        </li>
+        <li class="nav-item ms-1">
+          <a href="/kiosk/emergency" class="btn btn-danger rounded-pill fw-bold py-2 px-3 w-100 h-100 d-flex align-items-center justify-content-center">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i> Emergency
+          </a>
+        </li>
       </ul>
 
       <div class="tab-content" id="intakeTabsContent">
@@ -240,7 +258,19 @@
         </div>
       </div>
 
-      <div class="row g-2 mt-2">
+      <!-- Starting Page Patient Portal & AI Assistant Access (Sections 43-45) -->
+      <div class="row g-2 mt-3">
+        <div class="col-12 mb-1">
+          <a
+            href="/patient/login"
+            class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2"
+            style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border: none; font-size: 1.05rem;"
+          >
+            <i class="bi bi-heart-pulse-fill text-warning fs-5"></i>
+            <span>Patient Portal & AI Health Assistant Login</span>
+            <i class="bi bi-arrow-right-circle-fill fs-5 ms-1"></i>
+          </a>
+        </div>
         <div class="col-6">
           <a
             href="/auth/login"
@@ -512,8 +542,9 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ identifier: input }),
         });
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
         btn.disabled = false;
+        if (!res.ok) throw new Error(data.error || "Lookup request failed");
         btn.innerHTML =
           '<i class="bi bi-check-circle-fill me-1"></i> Fetch My Token';
 
@@ -536,7 +567,7 @@
             data.assignedDoctorName || "Senior Consultant"
           ).split(",")[0];
 
-          document.getElementById("viewCardLink").href = data.cardUrl;
+          document.getElementById("viewCardLink").href = data.cardUrl || `/patient/card?patientId=${encodeURIComponent(data.patient._id)}`;
           document.getElementById("updateIntakeLink").href =
             `/kiosk/intake?lang=en&mobile=${encodeURIComponent(data.patient.phone)}&patientId=${encodeURIComponent(data.patient._id)}`;
 
@@ -580,16 +611,25 @@
       const input = document.getElementById("assistantInput");
       const message = input.value.trim();
       if (!message) return;
-      const response = await fetch("/kiosk/assistant", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, mode: "patient" }),
-      });
-      const data = await response.json();
       const item = document.createElement("p");
       item.className = "border-top pt-2 mt-2 mb-0";
-      item.textContent = data.message || data.error;
+      item.textContent = "Thinking...";
       document.getElementById("assistantMessages").appendChild(item);
+      try {
+        const response = await fetch("/kiosk/assistant", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "same-origin",
+          body: JSON.stringify({ message, mode: "patient" }),
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || "Assistant request failed");
+        item.textContent = data.message || data.error || "No response received.";
+      } catch (error) {
+        item.textContent = "Assistant is temporarily unavailable. Please try again.";
+        console.error("MediKiosk assistant error:", error);
+      }
+      document.getElementById("assistantMessages").scrollTop = document.getElementById("assistantMessages").scrollHeight;
       input.value = "";
       if (data.message && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
@@ -646,6 +686,10 @@
         };
         scan();
       } catch (error) {
+        if (camera.srcObject) {
+          camera.srcObject.getTracks().forEach((track) => track.stop());
+          camera.srcObject = null;
+        }
         status.textContent =
           "Camera permission was unavailable. Enter the card number manually.";
       }

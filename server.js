@@ -1,4 +1,4 @@
-﻿const express = require("express");
+const express = require("express");
 const http = require("http");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -31,6 +31,10 @@ const pharmacyRoutes = require("./routes/pharmacyRoutes");
 const documentRoutes = require("./routes/documentRoutes");
 const syncRoutes = require("./routes/syncRoutes");
 const operationsRoutes = require("./routes/operationsRoutes");
+const patientAuthRoutes = require("./routes/patientAuthRoutes");
+const patientPortalRoutes = require("./routes/patientPortalRoutes");
+const patientAiRoutes = require("./routes/patientAiRoutes");
+const patientApiRoutes = require("./routes/patientApiRoutes");
 
 const app = express();
 app.set("trust proxy", 1);
@@ -78,6 +82,13 @@ app.use("/admin", adminRoutes);
 app.use("/pharmacy", pharmacyRoutes);
 app.use("/api/documents", documentRoutes);
 app.use("/api/sync", syncRoutes);
+
+// Patient Portal & AI Health Assistant Routes (Sections 43 - 77)
+app.use("/patient", patientAuthRoutes);
+app.use("/patient", patientPortalRoutes);
+app.use("/patient/ai", patientAiRoutes);
+app.use("/api/patient", patientApiRoutes);
+
 app.use("/", operationsRoutes);
 
 // 404 Handler
@@ -114,11 +125,13 @@ app.use((err, req, res, next) => {
 function printBanner(activePort) {
   logger.info(`==================================================`);
   logger.info(`MediKiosk Hospital Intake Server running on port ${activePort}`);
-  logger.info(`Kiosk URL:   http://localhost:${activePort}/kiosk`);
-  logger.info(`Staff Portal: http://localhost:${activePort}/staff/dashboard`);
-  logger.info(`Doctor Queue: http://localhost:${activePort}/doctor/queue`);
-  logger.info(`Admin Portal: http://localhost:${activePort}/admin/dashboard`);
-  logger.info(`Pharmacy:     http://localhost:${activePort}/pharmacy`);
+  logger.info(`Kiosk URL:      http://localhost:${activePort}/kiosk`);
+  logger.info(`Patient Portal: http://localhost:${activePort}/patient/dashboard`);
+  logger.info(`Patient Login:  http://localhost:${activePort}/patient/login`);
+  logger.info(`Staff Portal:   http://localhost:${activePort}/staff/dashboard`);
+  logger.info(`Doctor Queue:   http://localhost:${activePort}/doctor/queue`);
+  logger.info(`Admin Portal:   http://localhost:${activePort}/admin/dashboard`);
+  logger.info(`Pharmacy:       http://localhost:${activePort}/pharmacy`);
   logger.info(`==================================================`);
 }
 

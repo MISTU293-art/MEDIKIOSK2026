@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -14,20 +14,16 @@ content="width=device-width, initial-scale=1.0"
     <%= typeof title !== 'undefined' ? title : 'MediKiosk AYUSH' %>
   </title>
 
-  <!-- Favicon -->
+  <meta name="theme-color" content="#0284c7">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="MediKiosk">
 
-  <link
-    rel="icon"
-    type="image/png"
-    href="/uploads/new_logo.png"
-  >
-
-  <!-- Apple Touch Icon -->
-
-  <link
-    rel="apple-touch-icon"
-    href="/uploads/new_logo.png"
-  >
+  <!-- Favicon & PWA Icons -->
+  <link rel="icon" type="image/png" href="/uploads/new_logo.png">
+  <link rel="apple-touch-icon" href="/uploads/new_logo.png">
+  <link rel="manifest" href="/manifest.json">
 
   <!-- Bootstrap 5 CSS -->
 

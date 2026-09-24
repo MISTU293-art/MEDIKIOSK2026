@@ -36,9 +36,19 @@ class ConsultationNoteAdapter {
     return memoryDb.getCollection('ConsultationNote').findOne(query);
   }
 
+  static async findById(id) {
+    if (isLiveMongo()) return MongooseNote.findById(id);
+    return memoryDb.getCollection('ConsultationNote').findById(id);
+  }
+
   static async create(data) {
-    if (isLiveMongo()) return MongooseNote.create(data);
-    return memoryDb.getCollection('ConsultationNote').create(data);
+    const formatted = {
+      ...data,
+      doctorName: data.doctorName || data.attendingDoctor || 'Hospital Doctor',
+      doctorId: data.doctorId || 'DOC-GEN'
+    };
+    if (isLiveMongo()) return MongooseNote.create(formatted);
+    return memoryDb.getCollection('ConsultationNote').create(formatted);
   }
 }
 

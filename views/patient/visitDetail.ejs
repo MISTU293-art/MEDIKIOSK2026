@@ -1,0 +1,96 @@
+<%- include('header', { title: 'Visit Details — MediKiosk', patient, activeNav: 'visits' }) %>
+
+<div class="container py-4">
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+      <div class="d-flex align-items-center gap-2">
+        <a href="/patient/visits" class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to Visits</a>
+        <h4 class="fw-bold text-dark mb-0">Visit Encounter: <%= visit.visitNumber %></h4>
+      </div>
+      <p class="text-muted small mb-0 mt-1">Conducted on <%= new Date(visit.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+    </div>
+    <span class="badge bg-success-subtle text-success fs-6"><%= visit.status.toUpperCase() %></span>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="portal-card p-4 mb-4">
+        <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
+          <i class="bi bi-file-earmark-medical text-primary me-2"></i>Consultation Record
+        </h5>
+        
+        <div class="mb-3">
+          <label class="text-muted small fw-semibold">Attending Doctor & Department:</label>
+          <div class="fs-6 fw-bold text-dark"><%= visit.doctor %></div>
+          <div class="small text-muted"><%= visit.department %> &bull; Room 104, AYUSH Wing</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="text-muted small fw-semibold">Patient Chief Complaint / Symptoms Reported:</label>
+          <div class="p-3 bg-light rounded-3 text-dark small"><%= visit.chiefComplaint || visit.symptoms %></div>
+        </div>
+
+        <div class="mb-3">
+          <label class="text-muted small fw-semibold">Physician's Clinical Impression / Diagnosis:</label>
+          <div class="p-3 bg-primary-subtle text-primary fw-semibold rounded-3"><%= visit.diagnosis %></div>
+        </div>
+
+        <div class="mb-3">
+          <label class="text-muted small fw-semibold">Consultation Summary Notes:</label>
+          <p class="small text-dark mb-0"><%= visit.consultationSummary %></p>
+        </div>
+      </div>
+
+      <!-- Prescribed Medications within this visit -->
+      <div class="portal-card p-4">
+        <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
+          <i class="bi bi-capsule text-success me-2"></i>Prescribed Medications (<%= (visit.prescriptions || []).length %>)
+        </h5>
+
+        <% if (visit.prescriptions && visit.prescriptions.length > 0) { %>
+          <div class="list-group list-group-flush">
+            <% visit.prescriptions.forEach(function(med) { %>
+              <div class="list-group-item px-0 py-3 border-bottom">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <strong class="text-dark"><%= med.medicineName %></strong>
+                  <span class="badge bg-info-subtle text-info"><%= med.duration || 'Standard course' %></span>
+                </div>
+                <div class="small text-muted">
+                  Dosage: <strong><%= med.dosage %></strong> &bull; Frequency: <%= med.frequency %>
+                </div>
+                <% if (med.instructions) { %>
+                  <div class="small text-secondary mt-1">
+                    <i class="bi bi-info-circle me-1"></i><%= med.instructions %>
+                  </div>
+                <% } %>
+              </div>
+            <% }); %>
+          </div>
+        <% } else { %>
+          <p class="text-muted small mb-0">No new medications prescribed during this visit.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="portal-card p-4 mb-4">
+        <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">Encounter Details</h6>
+        <div class="mb-2 small"><span class="text-muted">Date:</span> <strong><%= new Date(visit.date).toLocaleDateString() %></strong></div>
+        <div class="mb-2 small"><span class="text-muted">Type:</span> <strong><%= visit.visitType %></strong></div>
+        <div class="mb-2 small"><span class="text-muted">Follow-up:</span> <strong class="text-primary"><%= visit.followUpInstructions %></strong></div>
+        <div class="mb-2 small"><span class="text-muted">Patient UHID:</span> <strong><%= patient.uhid %></strong></div>
+      </div>
+
+      <div class="portal-card p-4 text-center">
+        <i class="bi bi-robot text-primary fs-2 mb-2"></i>
+        <h6 class="fw-bold text-dark">Have questions about this visit?</h6>
+        <p class="text-muted small mb-3">Ask the MediKiosk AI Health Assistant to summarize doctor instructions or explain terms.</p>
+        <a href="/patient/chat?q=What%20happened%20during%20my%20last%20visit?" class="btn btn-outline-primary btn-sm w-100">
+          Ask Assistant About This Visit
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('footer') %>

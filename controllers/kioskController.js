@@ -25,16 +25,28 @@ const UI_STRINGS = {
     repeatAudio: "Audio Prompt",
     holdToSpeak: "Hold to Speak",
     start: "Start Intake",
+    back: "Back",
+    next: "Next",
+    skip: "Skip",
+    submit: "Complete Registration & Get Token",
   },
   hi: {
     repeatAudio: "ऑडियो सुनें",
     holdToSpeak: "बोलने के लिए दबाएं",
     start: "शुरू करें",
+    back: "पीछे",
+    next: "आगे बढ़ें",
+    skip: "छोड़ें",
+    submit: "पंजीकरण पूरा करें और टोकन लें",
   },
   bn: {
     repeatAudio: "অডিও শুনুন",
     holdToSpeak: "কথা বলতে চাপুন",
     start: "শুরু করুন",
+    back: "পেছনে",
+    next: "পরবর্তী",
+    skip: "এড়িয়ে যান",
+    submit: "নিবন্ধন সম্পন্ন করুন এবং টোকেন নিন",
   },
 };
 
@@ -329,6 +341,24 @@ exports.postSubmitIntake = async (req, res) => {
         assignedDoctorName: doctorAssignment.doctorName,
         status: "queued",
       });
+
+      // Auto-create Patient Portal Account for seamless Patient Portal & AI access (Section 78)
+      try {
+        const PatientAccount = require("../models/PatientAccount");
+        if (!(await PatientAccount.findOne({ patientId: String(patient._id) }))) {
+          await PatientAccount.create({
+            patientId: String(patient._id),
+            uhid: patient.uhid,
+            cardNumber: patient.cardNumber,
+            mobile: patient.phone,
+            password: "patient123",
+            fullName: patient.fullName,
+            preferredLanguage: language || "en",
+          });
+        }
+      } catch (accErr) {
+        logger.warn("PatientAccount auto-create notice: " + accErr.message);
+      }
     }
 
     const redFlagResult = await RedFlagService.evaluateIntake(
