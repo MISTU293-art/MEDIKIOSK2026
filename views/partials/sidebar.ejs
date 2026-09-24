@@ -131,6 +131,16 @@
 
       <li class="nav-item">
         <a
+          href="/admin/patients"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Patient') ? 'active' : '' %>"
+        >
+          <i class="bi bi-people-fill me-2 fs-5 text-primary"></i>
+          <span>Patient Directory</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
           href="/admin/reports"
           class="nav-link sidebar-nav-link <%= title && title.includes('Reports') ? 'active' : '' %>"
         >
@@ -182,7 +192,7 @@
       <li class="nav-item">
         <a
           href="/admin/staff-cards"
-          class="nav-link sidebar-nav-link"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Staff Identity') ? 'active' : '' %>"
         >
           <i class="bi bi-person-vcard me-2 fs-5 text-warning"></i>
           <span>Staff ID Cards</span>
@@ -192,7 +202,7 @@
       <li class="nav-item">
         <a
           href="/admin/attendance"
-          class="nav-link sidebar-nav-link"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Attendance') ? 'active' : '' %>"
         >
           <i class="bi bi-calendar2-check me-2 fs-5 text-info"></i>
           <span>Attendance</span>
@@ -202,7 +212,7 @@
       <li class="nav-item">
         <a
           href="/admin/beds"
-          class="nav-link sidebar-nav-link"
+          class="nav-link sidebar-nav-link <%= title && title.includes('Bed') ? 'active' : '' %>"
         >
           <i class="bi bi-hospital me-2 fs-5 text-success"></i>
           <span>Bed Capacity</span>

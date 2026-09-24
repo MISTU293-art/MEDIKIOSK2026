@@ -1,84 +1,203 @@
 <%- include('header', { title: 'Register Patient Account — MediKiosk', patient: null }) %>
 
-<div class="container py-5">
+<div class="container py-3 py-md-5">
   <div class="row justify-content-center">
     <div class="col-md-7 col-lg-6">
+      
       <!-- Back Switcher & Accessibility -->
-      <div class="d-flex align-items-center justify-content-between mb-3">
+      <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <a href="/patient/login" class="btn btn-outline-secondary btn-sm rounded-pill px-3 d-flex align-items-center gap-1 shadow-xs fw-semibold">
-          <i class="bi bi-arrow-left"></i> <span>Back to Login / वापस</span>
+          <i class="bi bi-arrow-left"></i> <span id="txtBackToLogin">‹ Back to Login / वापस</span>
         </a>
-        <button type="button" onclick="window.toggleSeniorMode()" class="btn btn-outline-warning btn-sm senior-toggle-btn rounded-pill px-3 fw-bold text-dark shadow-xs">
-          <i class="bi bi-eyeglasses"></i> Senior Mode
-        </button>
+
+        <div class="d-flex align-items-center gap-1 ms-auto">
+          <!-- Multilingual Selector -->
+          <div class="btn-group btn-group-sm p-1 bg-light rounded-pill border shadow-xs" role="group">
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill-reg active" id="reg-hi" onclick="setRegisterLang('hi')">हिन्दी</button>
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill-reg" id="reg-en" onclick="setRegisterLang('en')">Eng</button>
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill-reg" id="reg-bn" onclick="setRegisterLang('bn')">বাংলা</button>
+          </div>
+
+          <!-- Senior Mode -->
+          <button type="button" onclick="window.toggleSeniorMode()" class="btn btn-outline-warning btn-sm senior-toggle-btn rounded-pill px-2 py-1 fw-bold text-dark shadow-xs" title="Senior Mode">
+            <i class="bi bi-eyeglasses"></i>
+          </button>
+        </div>
       </div>
 
-      <div class="portal-card p-4 p-md-5">
+      <div class="portal-card p-4 p-md-5 bg-white shadow-sm border-0 rounded-4">
         
+        <!-- Header with Logo -->
         <div class="text-center mb-4">
-          <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-sm" style="width: 52px; height: 52px;">
-            <i class="bi bi-person-plus-fill fs-3"></i>
+          <div class="d-inline-flex align-items-center justify-content-center bg-success-subtle text-success rounded-circle p-2 mb-2 shadow-xs" style="width: 62px; height: 62px;">
+            <img src="/uploads/new_logo.png" alt="MediKiosk Logo" style="width: 44px; height: 44px; object-fit: contain;">
           </div>
-          <h3 class="fw-bold text-dark mb-1">Create Patient Account</h3>
-          <p class="text-muted small">Link with your hospital UHID or create a new digital health profile</p>
+          <h3 class="fw-bold text-dark mb-1" id="txtRegTitle">नया मरीज खाता बनाएं (Register)</h3>
+          <p class="text-muted small" id="txtRegSub">Link with your hospital UHID or create a new digital health profile</p>
         </div>
 
         <% if (typeof error !== 'undefined' && error) { %>
-          <div class="alert alert-danger py-2 px-3 small d-flex align-items-center gap-2 mb-3">
-            <i class="bi bi-exclamation-triangle-fill"></i>
+          <div class="alert alert-danger py-2 px-3 small d-flex align-items-center gap-2 mb-3 rounded-3">
+            <i class="bi bi-exclamation-triangle-fill flex-shrink-0"></i>
             <div><%= error %></div>
           </div>
         <% } %>
 
         <form action="/patient/register" method="POST">
           <div class="row g-3">
+            
             <div class="col-12">
-              <label class="form-label small fw-semibold">Full Name *</label>
-              <input type="text" name="fullName" class="form-control" placeholder="e.g. Ramesh Kumar" required>
+              <label class="form-label small fw-semibold" id="lblRegName">मरीज का पूरा नाम (Full Name) *</label>
+              <input type="text" name="fullName" id="inputRegName" class="form-control form-control-lg border-2" placeholder="e.g. Ramesh Kumar" required>
             </div>
 
             <div class="col-md-6">
-              <label class="form-label small fw-semibold">Mobile Number *</label>
-              <input type="tel" name="phone" class="form-control" placeholder="10-digit mobile number" required pattern="[0-9]{10}">
+              <label class="form-label small fw-semibold" id="lblRegPhone">मोबाइल नंबर (Mobile No.) *</label>
+              <input type="tel" name="phone" class="form-control form-control-lg border-2" placeholder="10-digit mobile number" required pattern="[0-9]{10}">
             </div>
 
             <div class="col-md-6">
-              <label class="form-label small fw-semibold">Email Address (Optional)</label>
-              <input type="email" name="email" class="form-control" placeholder="name@example.com">
+              <label class="form-label small fw-semibold" id="lblRegEmail">ईमेल पता (Email - Optional)</label>
+              <input type="email" name="email" class="form-control form-control-lg border-2" placeholder="name@example.com">
             </div>
 
             <div class="col-12">
-              <label class="form-label small fw-semibold">Existing UHID (If already registered at kiosk)</label>
-              <input type="text" name="uhid" class="form-control" placeholder="e.g. UHID-880124-12 (Optional)">
-              <div class="form-text" style="font-size: 0.75rem;">If you registered at the MediKiosk intake terminal, enter your UHID to link past visits.</div>
+              <label class="form-label small fw-semibold" id="lblRegUhid">अस्पताल UHID (यदि पहले से है / Optional)</label>
+              <input type="text" name="uhid" class="form-control form-control-lg border-2" placeholder="e.g. UHID-880124-12">
+              <div class="form-text" style="font-size: 0.75rem;" id="txtRegUhidHelp">यदि आप पहले कियोस्क पर आए हैं, तो पिछला रिकॉर्ड जोड़ने के लिए UHID दर्ज करें।</div>
             </div>
 
             <div class="col-md-6">
-              <label class="form-label small fw-semibold">Create Password *</label>
-              <input type="password" name="password" class="form-control" placeholder="Minimum 6 characters" required minlength="6">
+              <label class="form-label small fw-semibold" id="lblRegPass">पासवर्ड बनाएं (Password) *</label>
+              <input type="password" name="password" class="form-control form-control-lg border-2" placeholder="Min 6 characters" required minlength="6">
             </div>
 
             <div class="col-md-6">
-              <label class="form-label small fw-semibold">Confirm Password *</label>
-              <input type="password" name="confirmPassword" class="form-control" placeholder="Repeat password" required minlength="6">
+              <label class="form-label small fw-semibold" id="lblRegConfirmPass">पासवर्ड की पुष्टि करें *</label>
+              <input type="password" name="confirmPassword" class="form-control form-control-lg border-2" placeholder="Repeat password" required minlength="6">
             </div>
 
             <div class="col-12 mt-4">
-              <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm">
-                <i class="bi bi-check-circle me-1"></i> Register & Open Dashboard
+              <button type="submit" class="btn btn-success w-100 py-3 fw-bold rounded-pill shadow-xs fs-6">
+                <i class="bi bi-check-circle me-1"></i> <span id="txtRegBtn">खाता बनाएं व डैशबोर्ड खोलें (Register)</span>
               </button>
             </div>
           </div>
         </form>
 
         <div class="text-center mt-4 pt-3 border-top">
-          <span class="text-muted small">Already have an account?</span>
-          <a href="/patient/login" class="text-decoration-none fw-semibold small ms-1 text-primary">Login Here</a>
+          <span class="text-muted small" id="txtHaveAccount">पहले से खाता है?</span>
+          <a href="/patient/login" class="text-decoration-none fw-semibold small ms-1 text-primary" id="txtLoginLink">लॉगिन करें (Login Here)</a>
         </div>
 
       </div>
     </div>
   </div>
 </div>
+
+<style>
+.lang-pill-reg {
+  color: #475569;
+  border: none;
+  padding: 4px 8px;
+  font-size: 0.78rem;
+}
+.lang-pill-reg.active {
+  background-color: #15803d !important;
+  color: #ffffff !important;
+}
+</style>
+
+<script>
+  let currentRegLang = localStorage.getItem('kiosk_lang') || 'hi';
+
+  const regDict = {
+    hi: {
+      txtBackToLogin: "‹ वापस लॉगिन पर जाएं (Back to Login)",
+      txtRegTitle: "नया मरीज खाता बनाएं (Register)",
+      txtRegSub: "अस्पताल UHID से लिंक करें या नया डिजिटल प्रोफाइल बनाएं",
+      lblRegName: "मरीज का पूरा नाम (Full Name) *",
+      phRegName: "उदा. रमेश कुमार",
+      lblRegPhone: "मोबाइल नंबर (Mobile No.) *",
+      lblRegEmail: "ईमेल पता (Email - Optional)",
+      lblRegUhid: "अस्पताल UHID (यदि पहले से है / Optional)",
+      txtRegUhidHelp: "यदि आप पहले कियोस्क पर आए हैं, तो पिछला रिकॉर्ड जोड़ने के लिए UHID दर्ज करें।",
+      lblRegPass: "पासवर्ड बनाएं (Password) *",
+      lblRegConfirmPass: "पासवर्ड की पुष्टि करें *",
+      txtRegBtn: "खाता बनाएं व डैशबोर्ड खोलें (Register)",
+      txtHaveAccount: "पहले से खाता है?",
+      txtLoginLink: "लॉगिन करें (Login Here)"
+    },
+    en: {
+      txtBackToLogin: "‹ Back to Login",
+      txtRegTitle: "Create Patient Account",
+      txtRegSub: "Link with your hospital UHID or create a new digital health profile",
+      lblRegName: "Patient Full Name *",
+      phRegName: "e.g. Ramesh Kumar",
+      lblRegPhone: "Mobile Number *",
+      lblRegEmail: "Email Address (Optional)",
+      lblRegUhid: "Hospital UHID (Optional)",
+      txtRegUhidHelp: "If you registered at the MediKiosk intake terminal, enter your UHID to link past visits.",
+      lblRegPass: "Create Password *",
+      lblRegConfirmPass: "Confirm Password *",
+      txtRegBtn: "Register & Open Dashboard",
+      txtHaveAccount: "Already have an account?",
+      txtLoginLink: "Login Here"
+    },
+    bn: {
+      txtBackToLogin: "‹ লগইন-এ ফিরে যান (Back to Login)",
+      txtRegTitle: "নতুন রোগী অ্যাকাউন্ট তৈরি করুন (Register)",
+      txtRegSub: "হাসপাতালের UHID লিঙ্ক করুন বা নতুন প্রোফাইল তৈরি করুন",
+      lblRegName: "রোগীর পুরো নাম *",
+      phRegName: "উদা. রমেশ কুমার",
+      lblRegPhone: "মোবাইল নম্বর *",
+      lblRegEmail: "ইমেল ঠিকানা (ঐচ্ছিক)",
+      lblRegUhid: "হাসপাতাল UHID (যদি থাকে / ঐচ্ছিক)",
+      txtRegUhidHelp: "আগে কিওস্কে নিবন্ধন করে থাকলে পুরনো রেকর্ড যুক্ত করতে UHID লিখুন।",
+      lblRegPass: "পাসওয়ার্ড তৈরি করুন *",
+      lblRegConfirmPass: "পাসওয়ার্ড নিশ্চিত করুন *",
+      txtRegBtn: "নিবন্ধন করুন ও ড্যাশবোর্ড খুলুন",
+      txtHaveAccount: "আগে থেকেই অ্যাকাউন্ট আছে?",
+      txtLoginLink: "লগইন করুন (Login Here)"
+    }
+  };
+
+  function setRegisterLang(lang) {
+    if (!regDict[lang]) lang = 'hi';
+    currentRegLang = lang;
+    localStorage.setItem('kiosk_lang', lang);
+
+    document.querySelectorAll('.lang-pill-reg').forEach(b => b.classList.remove('active'));
+    const active = document.getElementById(`reg-${lang}`);
+    if (active) active.classList.add('active');
+
+    const d = regDict[lang];
+    const update = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
+
+    update('txtBackToLogin', d.txtBackToLogin);
+    update('txtRegTitle', d.txtRegTitle);
+    update('txtRegSub', d.txtRegSub);
+    update('lblRegName', d.lblRegName);
+    update('lblRegPhone', d.lblRegPhone);
+    update('lblRegEmail', d.lblRegEmail);
+    update('lblRegUhid', d.lblRegUhid);
+    update('txtRegUhidHelp', d.txtRegUhidHelp);
+    update('lblRegPass', d.lblRegPass);
+    update('lblRegConfirmPass', d.lblRegConfirmPass);
+    update('txtRegBtn', d.txtRegBtn);
+    update('txtHaveAccount', d.txtHaveAccount);
+    update('txtLoginLink', d.txtLoginLink);
+
+    const nameInput = document.getElementById('inputRegName');
+    if (nameInput) nameInput.placeholder = d.phRegName;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setRegisterLang(currentRegLang);
+  });
+</script>
 
 <%- include('footer') %>

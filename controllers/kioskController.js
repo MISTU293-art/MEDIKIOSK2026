@@ -510,18 +510,10 @@ exports.emergencyPatientData = async (req, res) => {
     };
 
     // ==========================================
-    // VALIDATION
+    // VALIDATION (Name & Mobile are required)
     // ==========================================
 
-    if (
-      !name ||
-      !name.trim() ||
-      !mobile ||
-      !mobile.trim() ||
-      !aadhaar ||
-      !aadhaar.trim() ||
-      !bloodGroup
-    ) {
+    if (!name || !name.trim() || !mobile || !mobile.trim()) {
       return res.status(400).render("kiosk/emergency", {
         title: "Emergency Patient Registration — MediKiosk",
         kiosk: {
@@ -529,7 +521,7 @@ exports.emergencyPatientData = async (req, res) => {
           name: "Main OPD Kiosk",
           location: "Ground Floor",
         },
-        error: "Please fill all required fields.",
+        error: "Patient Name and Mobile Number are required for emergency intake.",
         message: null,
         formData,
       });
@@ -539,7 +531,8 @@ exports.emergencyPatientData = async (req, res) => {
     // MOBILE VALIDATION
     // ==========================================
 
-    if (!/^[0-9]{10}$/.test(mobile.trim())) {
+    const cleanMobile = mobile.trim().replace(/\D/g, "").slice(-10);
+    if (cleanMobile.length !== 10) {
       return res.status(400).render("kiosk/emergency", {
         title: "Emergency Patient Registration — MediKiosk",
         kiosk: {
@@ -554,22 +547,13 @@ exports.emergencyPatientData = async (req, res) => {
     }
 
     // ==========================================
-    // AADHAAR VALIDATION
+    // AADHAAR & BLOOD GROUP (Emergency-safe defaults)
     // ==========================================
-
-    if (!/^[0-9]{12}$/.test(aadhaar.trim())) {
-      return res.status(400).render("kiosk/emergency", {
-        title: "Emergency Patient Registration — MediKiosk",
-        kiosk: {
-          kioskId: "KIOSK-01",
-          name: "Main OPD Kiosk",
-          location: "Ground Floor",
-        },
-        error: "Please enter a valid 12-digit Aadhaar number.",
-        message: null,
-        formData,
-      });
+    let cleanAadhaar = (aadhaar && aadhaar.trim()) ? aadhaar.trim().replace(/\D/g, "") : "000000000000";
+    if (cleanAadhaar.length !== 12) {
+      cleanAadhaar = "000000000000";
     }
+    const cleanBloodGroup = (bloodGroup && bloodGroup.trim()) ? bloodGroup.trim() : "Unknown";
 
     // ==========================================
     // IDENTIFIERS
@@ -595,12 +579,12 @@ exports.emergencyPatientData = async (req, res) => {
 
       name: name.trim(),
 
-      mobile: normalizePhone(mobile),
+      mobile: normalizePhone(cleanMobile),
 
       // Store masked Aadhaar
-      aadhaar: maskAadhaar(aadhaar.trim()),
+      aadhaar: maskAadhaar(cleanAadhaar),
 
-      bloodGroup: bloodGroup.trim(),
+      bloodGroup: cleanBloodGroup,
 
       tokenNumber,
 

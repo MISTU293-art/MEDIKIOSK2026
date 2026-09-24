@@ -1,95 +1,109 @@
 <%- include('header', { title: 'Patient Login — MediKiosk Health Portal', patient: null }) %>
 
-<div class="container py-5">
+<div class="container py-3 py-md-5">
   <div class="row justify-content-center">
     <div class="col-md-7 col-lg-5">
-      <!-- Back Switcher & Accessibility -->
-      <div class="d-flex align-items-center justify-content-between mb-3">
+      
+      <!-- Top Back Switcher, Language & Senior Accessibility -->
+      <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <a href="/kiosk" class="btn btn-outline-secondary btn-sm rounded-pill px-3 d-flex align-items-center gap-1 shadow-xs fw-semibold">
-          <i class="bi bi-arrow-left"></i> <span>Back to Kiosk / कियोस्क</span>
+          <i class="bi bi-arrow-left"></i> <span id="txtBackToKiosk">‹ Back to Kiosk / कियोस्क</span>
         </a>
-        <button type="button" onclick="window.toggleSeniorMode()" class="btn btn-outline-warning btn-sm senior-toggle-btn rounded-pill px-3 fw-bold text-dark shadow-xs">
-          <i class="bi bi-eyeglasses"></i> Senior Mode
-        </button>
+
+        <div class="d-flex align-items-center gap-1 ms-auto">
+          <!-- Multilingual Selector -->
+          <div class="btn-group btn-group-sm p-1 bg-light rounded-pill border shadow-xs" role="group">
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill-auth active" id="login-hi" onclick="setLoginLang('hi')">हिन्दी</button>
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill-auth" id="login-en" onclick="setLoginLang('en')">Eng</button>
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill-auth" id="login-bn" onclick="setLoginLang('bn')">বাংলা</button>
+          </div>
+
+          <!-- Senior Mode -->
+          <button type="button" onclick="window.toggleSeniorMode()" class="btn btn-outline-warning btn-sm senior-toggle-btn rounded-pill px-2 py-1 fw-bold text-dark shadow-xs" title="Senior / Large Text Mode">
+            <i class="bi bi-eyeglasses"></i>
+          </button>
+        </div>
       </div>
 
-      <div class="portal-card p-4 p-md-5">
+      <div class="portal-card p-4 p-md-5 bg-white shadow-sm border-0 rounded-4">
         
+        <!-- Header with Logo -->
         <div class="text-center mb-4">
-          <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-sm" style="width: 52px; height: 52px;">
-            <i class="bi bi-shield-lock-fill fs-3"></i>
+          <div class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle p-2 mb-2 shadow-xs" style="width: 62px; height: 62px;">
+            <img src="/uploads/new_logo.png" alt="MediKiosk Logo" style="width: 44px; height: 44px; object-fit: contain;">
           </div>
-          <h3 class="fw-bold text-dark mb-1">Patient Portal Login</h3>
-          <p class="text-muted small">Access your personal healthcare records, digital card & AI assistant</p>
+          <h3 class="fw-bold text-dark mb-1" id="txtLoginTitle">मरीज पोर्टल लॉगिन (Patient Login)</h3>
+          <p class="text-muted small" id="txtLoginSub">Access your personal healthcare records, digital card & AI assistant</p>
         </div>
 
         <% if (typeof error !== 'undefined' && error) { %>
-          <div class="alert alert-danger py-2 px-3 small d-flex align-items-center gap-2 mb-3" role="alert">
-            <i class="bi bi-exclamation-triangle-fill"></i>
+          <div class="alert alert-danger py-2 px-3 small d-flex align-items-center gap-2 mb-3 rounded-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill flex-shrink-0"></i>
             <div><%= error %></div>
           </div>
         <% } %>
 
         <% if (typeof logged_out !== 'undefined' && logged_out) { %>
-          <div class="alert alert-success py-2 px-3 small d-flex align-items-center gap-2 mb-3" role="alert">
-            <i class="bi bi-check-circle-fill"></i>
+          <div class="alert alert-success py-2 px-3 small d-flex align-items-center gap-2 mb-3 rounded-3" role="alert">
+            <i class="bi bi-check-circle-fill flex-shrink-0"></i>
             <div>You have been safely logged out. Your session is cleared.</div>
           </div>
         <% } %>
 
         <% if (typeof expired !== 'undefined' && expired) { %>
-          <div class="alert alert-warning py-2 px-3 small d-flex align-items-center gap-2 mb-3" role="alert">
-            <i class="bi bi-clock-history"></i>
+          <div class="alert alert-warning py-2 px-3 small d-flex align-items-center gap-2 mb-3 rounded-3" role="alert">
+            <i class="bi bi-clock-history flex-shrink-0"></i>
             <div>Your session has expired. Please log in again to continue.</div>
           </div>
         <% } %>
 
+        <!-- Login Form -->
         <form action="/patient/login" method="POST">
           <input type="hidden" name="redirect" value="<%= typeof redirect !== 'undefined' ? redirect : '' %>">
           
           <div class="mb-3">
-            <label class="form-label small fw-semibold text-secondary">Mobile No. / Email / UHID / Card No.</label>
+            <label class="form-label small fw-semibold text-secondary" id="lblIdentifier">मोबाइल नंबर / UHID / कार्ड नंबर *</label>
             <div class="input-group">
               <span class="input-group-text bg-light"><i class="bi bi-person-fill text-muted"></i></span>
-              <input type="text" name="identifier" class="form-control" placeholder="e.g. 9830112233 or UHID-880124-12" required autofocus>
+              <input type="text" name="identifier" id="inputIdentifier" class="form-control form-control-lg border-2" placeholder="e.g. 9830112233 or UHID-880124-12" required autofocus>
             </div>
-            <div class="form-text" style="font-size: 0.78rem;">Use your registered 10-digit mobile number, email, or UHID.</div>
+            <div class="form-text" style="font-size: 0.78rem;" id="txtIdentifierHelp">पंजीकृत १०-अंकों का मोबाइल नंबर, ईमेल, या UHID दर्ज करें।</div>
           </div>
 
           <div class="mb-4">
-            <label class="form-label small fw-semibold text-secondary">Password</label>
+            <label class="form-label small fw-semibold text-secondary" id="lblPassword">पासवर्ड (Password) *</label>
             <div class="input-group">
               <span class="input-group-text bg-light"><i class="bi bi-key-fill text-muted"></i></span>
-              <input type="password" name="password" id="patientPassword" class="form-control" placeholder="••••••••" required>
+              <input type="password" name="password" id="patientPassword" class="form-control form-control-lg border-2" placeholder="••••••••" required>
               <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility()">
                 <i class="bi bi-eye" id="toggleIcon"></i>
               </button>
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm mb-3">
-            <i class="bi bi-box-arrow-in-right me-1"></i> Secure Patient Login
+          <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-pill shadow-xs mb-3 fs-6">
+            <i class="bi bi-box-arrow-in-right me-1"></i> <span id="txtLoginBtn">सुरक्षित लॉगिन करें (Secure Login)</span>
           </button>
         </form>
 
-        <div class="text-center mb-4">
-          <span class="text-muted small">New patient or need an account?</span>
-          <a href="/patient/register" class="text-decoration-none fw-semibold small ms-1 text-primary">Register Here</a>
+        <div class="text-center mb-3">
+          <span class="text-muted small" id="txtNoAccountPrompt">नया खाता बनाना चाहते हैं?</span>
+          <a href="/patient/register" class="text-decoration-none fw-semibold small ms-1 text-primary" id="txtRegisterLink">नया पंजीकरण करें (Register)</a>
         </div>
 
-        <!-- Quick 1-Click Demo Logins for Instant Testing -->
+        <!-- 1-Click Quick Evaluator Demo Logins -->
         <div class="border-top pt-3 mt-3">
           <div class="d-flex align-items-center justify-content-between mb-2">
-            <span class="badge bg-secondary-subtle text-dark fw-normal" style="font-size: 0.75rem;">1-Click Evaluator Demo Access</span>
-            <span class="text-muted" style="font-size: 0.72rem;">Default: patient123</span>
+            <span class="badge bg-secondary-subtle text-dark fw-bold" style="font-size: 0.75rem;">1-Click Evaluator Demo Access</span>
+            <span class="text-muted" style="font-size: 0.72rem;">Password: patient123</span>
           </div>
 
           <div class="d-grid gap-2">
             <form action="/patient/quick-demo-login" method="POST">
               <input type="hidden" name="demoType" value="rajesh">
-              <button type="submit" class="btn btn-sm btn-outline-primary w-100 text-start d-flex align-items-center justify-content-between">
+              <button type="submit" class="btn btn-sm btn-outline-primary w-100 text-start d-flex align-items-center justify-content-between rounded-3 py-2">
                 <div>
-                  <strong class="d-block">Rajesh Kumar Chatterjee (58M)</strong>
+                  <strong class="d-block text-dark">Rajesh Kumar Chatterjee (58M)</strong>
                   <span class="small text-muted" style="font-size: 0.72rem;">UHID: UHID-880124-12 | Mob: 9830112233</span>
                 </div>
                 <i class="bi bi-chevron-right text-primary"></i>
@@ -98,9 +112,9 @@
 
             <form action="/patient/quick-demo-login" method="POST">
               <input type="hidden" name="demoType" value="sunita">
-              <button type="submit" class="btn btn-sm btn-outline-secondary w-100 text-start d-flex align-items-center justify-content-between">
+              <button type="submit" class="btn btn-sm btn-outline-secondary w-100 text-start d-flex align-items-center justify-content-between rounded-3 py-2">
                 <div>
-                  <strong class="d-block">Sunita Devi Sharma (42F)</strong>
+                  <strong class="d-block text-dark">Sunita Devi Sharma (42F)</strong>
                   <span class="small text-muted" style="font-size: 0.72rem;">UHID: UHID-880124-15 | Mob: 9876543210</span>
                 </div>
                 <i class="bi bi-chevron-right"></i>
@@ -109,14 +123,14 @@
           </div>
         </div>
 
-        <!-- Security Disclaimers (Section 44) -->
+        <!-- Security Disclaimers -->
         <div class="mt-4 pt-3 border-top text-center text-muted" style="font-size: 0.75rem;">
-          <div class="d-flex justify-content-center gap-3 mb-1">
-            <span><i class="bi bi-shield-check text-success"></i> HTTP-only Secure Cookies</span>
+          <div class="d-flex justify-content-center gap-3 mb-1 flex-wrap">
+            <span><i class="bi bi-shield-check text-success"></i> 256-Bit SSL Encrypted</span>
             <span><i class="bi bi-lock text-primary"></i> Bcrypt Salted Hash</span>
             <span><i class="bi bi-stopwatch text-warning"></i> Rate Limited</span>
           </div>
-          <div>Strict server-side authorization ensures patients access strictly their own clinical data.</div>
+          <div>Strict server-side tenant boundary restricts access strictly to authorized patient records.</div>
         </div>
 
       </div>
@@ -124,7 +138,94 @@
   </div>
 </div>
 
+<style>
+.lang-pill-auth {
+  color: #475569;
+  border: none;
+  padding: 4px 8px;
+  font-size: 0.78rem;
+}
+.lang-pill-auth.active {
+  background-color: #0284c7 !important;
+  color: #ffffff !important;
+}
+</style>
+
 <script>
+  let currentLoginLang = localStorage.getItem('kiosk_lang') || 'hi';
+
+  const loginDict = {
+    hi: {
+      txtBackToKiosk: "‹ वापस कियोस्क पर जाएं (Back to Kiosk)",
+      txtLoginTitle: "मरीज पोर्टल लॉगिन (Patient Login)",
+      txtLoginSub: "अपने डिजिटल पर्चे, टेस्ट रिपोर्ट, कार्ड और AI सहायक तक पहुंचें",
+      lblIdentifier: "मोबाइल नंबर / UHID / कार्ड नंबर *",
+      phIdentifier: "उदा. 9830112233 या UHID-880124-12",
+      txtIdentifierHelp: "पंजीकृत १०-अंकों का मोबाइल नंबर, ईमेल, या UHID दर्ज करें।",
+      lblPassword: "पासवर्ड (Password) *",
+      txtLoginBtn: "सुरक्षित लॉगिन करें (Secure Login)",
+      txtNoAccountPrompt: "नया खाता बनाना चाहते हैं?",
+      txtRegisterLink: "नया पंजीकरण करें (Register)"
+    },
+    en: {
+      txtBackToKiosk: "‹ Back to Kiosk Terminal",
+      txtLoginTitle: "Patient Portal Login",
+      txtLoginSub: "Access your personal healthcare records, digital card & AI assistant",
+      lblIdentifier: "Mobile Number / UHID / Card Number *",
+      phIdentifier: "e.g. 9830112233 or UHID-880124-12",
+      txtIdentifierHelp: "Use your registered 10-digit mobile number, email, or UHID.",
+      lblPassword: "Password *",
+      txtLoginBtn: "Secure Patient Login",
+      txtNoAccountPrompt: "New patient or need an account?",
+      txtRegisterLink: "Register Here"
+    },
+    bn: {
+      txtBackToKiosk: "‹ কিওস্কে ফিরে যান (Back to Kiosk)",
+      txtLoginTitle: "রোগী পোর্টাল লগইন (Patient Login)",
+      txtLoginSub: "আপনার প্রেসক্রিপশন, ল্যাব রিপোর্ট ও এআই সহকারী ব্যবহার করুন",
+      lblIdentifier: "মোবাইল নম্বর / UHID / কার্ড নম্বর *",
+      phIdentifier: "উদা. 9830112233 বা UHID-880124-12",
+      txtIdentifierHelp: "আপনার নিবন্ধিত ১০-সংখ্যার মোবাইল নম্বর বা UHID লিখুন।",
+      lblPassword: "পাসওয়ার্ড (Password) *",
+      txtLoginBtn: "নিরাপদে লগইন করুন (Secure Login)",
+      txtNoAccountPrompt: "নতুন অ্যাকাউন্ট তৈরি করতে চান?",
+      txtRegisterLink: "নতুন নিবন্ধন করুন (Register)"
+    }
+  };
+
+  function setLoginLang(lang) {
+    if (!loginDict[lang]) lang = 'hi';
+    currentLoginLang = lang;
+    localStorage.setItem('kiosk_lang', lang);
+
+    document.querySelectorAll('.lang-pill-auth').forEach(b => b.classList.remove('active'));
+    const active = document.getElementById(`login-${lang}`);
+    if (active) active.classList.add('active');
+
+    const d = loginDict[lang];
+    const update = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
+
+    update('txtBackToKiosk', d.txtBackToKiosk);
+    update('txtLoginTitle', d.txtLoginTitle);
+    update('txtLoginSub', d.txtLoginSub);
+    update('lblIdentifier', d.lblIdentifier);
+    update('txtIdentifierHelp', d.txtIdentifierHelp);
+    update('lblPassword', d.lblPassword);
+    update('txtLoginBtn', d.txtLoginBtn);
+    update('txtNoAccountPrompt', d.txtNoAccountPrompt);
+    update('txtRegisterLink', d.txtRegisterLink);
+
+    const input = document.getElementById('inputIdentifier');
+    if (input) input.placeholder = d.phIdentifier;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setLoginLang(currentLoginLang);
+  });
+
   function togglePasswordVisibility() {
     const input = document.getElementById('patientPassword');
     const icon = document.getElementById('toggleIcon');

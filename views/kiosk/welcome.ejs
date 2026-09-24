@@ -1,357 +1,412 @@
 <%- include('../partials/header') %>
+
 <div
   class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-3 py-md-4"
-  style="background: radial-gradient(circle at 50% 20%, #fdfbf7 0%, #f1f5f9 100%);"
+  style="background: radial-gradient(circle at 50% 15%, #ffffff 0%, #f1f5f9 100%);"
 >
   <div
     class="card shadow border-0 rounded-4 overflow-hidden bg-white w-100"
     style="max-width: 860px;"
   >
-    <!-- Government National Tricolor Top Ribbon -->
+    <!-- Government National Tricolor Ribbon -->
     <div class="gov-tricolor-bar" style="height: 6px"></div>
 
     <div class="p-3 p-md-4">
-      <!-- Top Accessibility & Emergency Header -->
+      
+      <!-- TOP UTILITY BAR: Language Switcher, Senior Mode & Emergency -->
       <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-2 border-bottom gap-2">
-        <div class="d-flex align-items-center gap-2 flex-wrap">
+        
+        <!-- Left: Official Badges -->
+        <div class="d-flex align-items-center gap-2">
           <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill" style="font-size: 0.8rem">
             <i class="bi bi-flower1 me-1 text-success"></i> MINISTRY OF AYUSH
           </span>
-          <span class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill" style="font-size: 0.8rem">
+          <span class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill d-none d-sm-inline" style="font-size: 0.8rem">
             <i class="bi bi-shield-check me-1"></i> Ayushman Bharat (ABDM)
           </span>
         </div>
 
-        <div class="d-flex align-items-center gap-2 flex-wrap ms-auto">
+        <!-- Right: Language Switcher & Accessibility -->
+        <div class="d-flex align-items-center gap-1 ms-auto flex-wrap">
+          
+          <!-- Language Switcher Pills -->
+          <div class="btn-group btn-group-sm p-1 bg-light rounded-pill border shadow-xs me-1" role="group" aria-label="Language Selector">
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill-btn active" id="lang-hi" onclick="setKioskLanguage('hi')">
+              🇮🇳 हिन्दी
+            </button>
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill-btn" id="lang-en" onclick="setKioskLanguage('en')">
+              🇬🇧 English
+            </button>
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill-btn" id="lang-bn" onclick="setKioskLanguage('bn')">
+              🇮🇳 বাংলা
+            </button>
+          </div>
+
           <!-- Senior Citizen Mode Toggle -->
           <button
             type="button"
             onclick="window.toggleSeniorMode()"
             class="btn btn-sm btn-outline-warning senior-toggle-btn rounded-pill px-3 py-1 fw-bold text-dark d-flex align-items-center gap-1 shadow-xs"
             title="Senior / Elderly High-Accessibility Mode"
+            id="kioskSeniorBtn"
           >
             <i class="bi bi-eyeglasses"></i>
-            <span>बड़ा टेक्स्ट (Senior Mode)</span>
-          </button>
-          
-          <!-- Voice Audio Guide -->
-          <button
-            type="button"
-            onclick="window.readTextAloud('Welcome to MediKiosk. For new OPD registration, tap New Patient. If you have an Ayushman Card or Mobile number, tap Fast Check-In. To view your reports and prescriptions, tap Patient Portal.')"
-            class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fw-semibold d-flex align-items-center gap-1 shadow-xs"
-            title="Listen to instructions in audio"
-          >
-            <i class="bi bi-volume-up-fill text-primary"></i>
-            <span class="d-none d-sm-inline">सुने (Listen)</span>
+            <span id="txtSeniorBtn">बड़ा टेक्स्ट (Senior Mode)</span>
           </button>
 
-          <!-- Emergency Alert Button -->
+          <!-- Voice Listen Button -->
+          <button
+            type="button"
+            onclick="speakKioskWelcome()"
+            class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1 fw-semibold d-flex align-items-center gap-1 shadow-xs"
+            title="Listen to instructions in audio"
+            id="kioskAudioBtn"
+          >
+            <i class="bi bi-volume-up-fill text-primary"></i>
+            <span id="txtAudioBtn">सुने</span>
+          </button>
+
+          <!-- 108 Emergency Dial / Button -->
           <a
             href="/kiosk/emergency"
             class="btn btn-sm btn-danger rounded-pill px-3 py-1 fw-bold d-flex align-items-center gap-1 shadow-xs"
             title="Emergency Medical Assistance"
+            id="kioskEmergencyBtn"
           >
             <i class="bi bi-exclamation-triangle-fill"></i>
-            <span>108 आपातकालीन (Emergency)</span>
+            <span id="txtEmergencyBtn">108 आपातकालीन</span>
           </a>
         </div>
       </div>
 
-      <!-- Clean, Friendly Welcoming Header -->
+      <!-- PWA Mobile Install Banner (Appears on Mobile when ready) -->
+      <div id="pwaInstallBanner" class="alert alert-primary d-none py-2 px-3 rounded-pill d-flex align-items-center justify-content-between mb-3 shadow-xs">
+        <div class="d-flex align-items-center gap-2 small fw-semibold">
+          <i class="bi bi-phone-fill fs-5 text-primary"></i>
+          <span id="txtPwaBanner">फोन में MediKiosk ऐप इंस्टॉल करें / Install App for easy access</span>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="button" id="pwaInstallBtn" class="btn btn-sm btn-primary rounded-pill px-3 py-1 fw-bold">
+            <i class="bi bi-download me-1"></i> Install
+          </button>
+          <button type="button" onclick="dismissPwaBanner()" class="btn btn-sm btn-light border rounded-circle py-0 px-2" aria-label="Close">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Friendly Clean Header -->
       <div class="text-center mb-4 pt-1">
-        <div class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle p-2 mb-2 shadow-xs" style="width: 72px; height: 72px;">
+        <div class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle p-2 mb-2 shadow-xs" style="width: 68px; height: 68px;">
           <img
-            src="/uploads/logo.png"
+            src="/uploads/new_logo.png"
             alt="MediKiosk AYUSH Logo"
             class="img-fluid"
-            style="width: 52px; height: 52px; object-fit: contain"
+            style="width: 48px; height: 48px; object-fit: contain"
           />
         </div>
-        <h2 class="fw-bold text-dark mb-1">MediKiosk AYUSH OPD</h2>
-        <p class="text-muted mb-0 small fs-6">
+        <h2 class="fw-bold text-dark mb-1" id="kioskMainTitle">MediKiosk AYUSH OPD</h2>
+        <p class="text-muted mb-0 small fs-6" id="kioskMainSubtitle">
           सरकारी अस्पताल ओपीडी पंजीकरण एवं मरीज सेवा केंद्र &bull; National AYUSH Mission
         </p>
-        <p class="text-secondary small mt-1 mb-0">
+        <p class="text-secondary small mt-1 mb-0" id="kioskInstruction">
           कृपया नीचे दिए गए ३ आसान विकल्पों में से एक चुनें / Please choose an option below:
         </p>
       </div>
 
-      <!-- 3 Simple Navigation Pills (Easy for normal citizens) -->
-      <ul
-        class="nav nav-pills nav-fill mb-4 p-1 bg-light rounded-pill border gap-1"
-        id="intakeTabs"
-        role="tablist"
-      >
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active rounded-pill fw-bold py-2 fs-6 text-dark d-flex align-items-center justify-content-center gap-1"
-            id="new-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#new-pane"
-            type="button"
-            role="tab"
-          >
-            <i class="bi bi-person-plus-fill text-success fs-5"></i>
-            <span>1. नया मरीज (New Patient)</span>
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link rounded-pill fw-bold py-2 fs-6 text-dark d-flex align-items-center justify-content-center gap-1"
-            id="ayushman-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#ayushman-pane"
-            type="button"
-            role="tab"
-          >
-            <i class="bi bi-person-vcard-fill text-warning fs-5"></i>
-            <span>2. पुराना मरीज (Fast Check-In)</span>
-          </button>
-        </li>
-        <li class="nav-item">
-          <a
-            href="/patient/login"
-            class="nav-link rounded-pill fw-bold py-2 fs-6 text-primary d-flex align-items-center justify-content-center gap-1"
-          >
-            <i class="bi bi-heart-pulse-fill text-primary fs-5"></i>
-            <span>3. मरीज पोर्टल व AI (My Records)</span>
-          </a>
-        </li>
-      </ul>
-
-      <!-- Tab Content Area -->
-      <div class="tab-content" id="intakeTabsContent">
-
-        <!-- ========================================== -->
-        <!-- PANE 1: NEW PATIENT REGISTRATION (DEFAULT) -->
-        <!-- ========================================== -->
-        <div class="tab-pane fade show active" id="new-pane" role="tabpanel">
+      <!-- ============================================== -->
+      <!-- VIEW 1: MAIN MENU (3 BIG TOUCH CARDS)          -->
+      <!-- ============================================== -->
+      <div id="kioskMainMenuView" class="row g-3 mb-4">
+        
+        <!-- CARD 1: NEW PATIENT (नया मरीज) -->
+        <div class="col-md-4">
           <div
-            class="p-4 rounded-4 border mb-3 shadow-sm bg-white"
-            style="border-color: #86efac !important; border-width: 2px;"
+            class="card h-100 rounded-4 border-2 p-3 text-center shadow-xs cursor-pointer main-action-card border-success bg-white"
+            onclick="showKioskView('new-patient')"
+            style="transition: all 0.2s ease;"
           >
-            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-              <div class="d-flex align-items-center gap-2">
-                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
-                  <i class="bi bi-person-plus-fill fs-5"></i>
-                </div>
-                <div>
-                  <h5 class="fw-bold m-0 text-dark">नया मरीज ओपीडी पंजीकरण (30 सेकंड)</h5>
-                  <div class="text-muted small">New Patient OPD Registration — Get your doctor token slip</div>
-                </div>
-              </div>
-              <button
-                type="button"
-                onclick="window.readTextAloud('New patient registration. Fill your name, age, gender, and 10-digit mobile number, then click the green button to get your doctor token slip.')"
-                class="btn btn-sm btn-outline-success rounded-pill px-2 py-1"
-                title="Listen form instructions"
-              >
-                <i class="bi bi-volume-up-fill"></i> सुनें
-              </button>
+            <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-xs" style="width: 54px; height: 54px; margin: 0 auto;">
+              <i class="bi bi-person-plus-fill fs-3"></i>
             </div>
-
-            <!-- Simple, Clean Walk-In Form -->
-            <form id="expressKioskRegisterForm" class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label fw-bold small text-dark">1. मरीज का पूरा नाम (Full Name) *</label>
-                <input
-                  type="text"
-                  id="expressFullName"
-                  class="form-control form-control-lg border-2"
-                  placeholder="उदा. रमेश कुमार (e.g. Ramesh Kumar)"
-                  required
-                  minlength="2"
-                >
-              </div>
-
-              <div class="col-md-3 col-6">
-                <label class="form-label fw-bold small text-dark">2. उम्र (Age) *</label>
-                <input
-                  type="number"
-                  id="expressAge"
-                  class="form-control form-control-lg border-2"
-                  placeholder="Years"
-                  min="1"
-                  max="120"
-                  required
-                >
-              </div>
-
-              <div class="col-md-3 col-6">
-                <label class="form-label fw-bold small text-dark">3. लिंग (Gender) *</label>
-                <select id="expressGender" class="form-select form-select-lg border-2">
-                  <option value="male" selected>पुरुष (Male)</option>
-                  <option value="female">महिला (Female)</option>
-                  <option value="other">अन्य (Other)</option>
-                </select>
-              </div>
-
-              <div class="col-md-6">
-                <label class="form-label fw-bold small text-dark">4. 10-अंकों का मोबाइल नंबर (Mobile No.) *</label>
-                <input
-                  type="tel"
-                  id="expressPhone"
-                  class="form-control form-control-lg border-2"
-                  placeholder="10-digit mobile number"
-                  maxlength="10"
-                  pattern="[0-9]{10}"
-                  required
-                >
-              </div>
-
-              <div class="col-md-6">
-                <label class="form-label fw-bold small text-dark">5. परामर्श विभाग (Department)</label>
-                <select id="expressDepartment" class="form-select form-select-lg border-2">
-                  <option value="Ayurveda (Kayachikitsa & Panchakarma)" selected>Ayurveda (कायचिकित्सा & पंचकर्म)</option>
-                  <option value="Homeopathy OPD">Homeopathy (होम्योपैथी)</option>
-                  <option value="Unani Medicine">Unani (यूनानी चिकित्सा)</option>
-                  <option value="Siddha Clinical Desk">Siddha (सिद्ध)</option>
-                  <option value="Yoga & Naturopathy">Yoga & Naturopathy (योग & प्राकृतिक चिकित्सा)</option>
-                </select>
-              </div>
-
-              <div class="col-12 mt-4">
-                <button
-                  type="submit"
-                  id="expressSubmitBtn"
-                  class="btn btn-success w-100 fw-bold fs-5 shadow rounded-pill py-3"
-                >
-                  <i class="bi bi-check-circle-fill me-2"></i> पर्ची निकालें (Register & Print OPD Token)
-                </button>
-              </div>
-            </form>
-
-            <div id="expressAlert" class="alert mt-3 d-none small"></div>
-
-            <!-- Option for Detailed Case-Taking Wizard -->
-            <div class="mt-4 pt-3 border-top text-center">
-              <span class="text-muted small d-block mb-2">
-                डॉक्टर को पूरी बीमारी और लक्षण विस्तार से बताना चाहते हैं? / Want to record full symptoms?
-              </span>
-              <div class="d-flex justify-content-center gap-2 flex-wrap">
-                <a href="/kiosk/intake?lang=hi" class="btn btn-sm btn-outline-warning rounded-pill px-3 fw-semibold text-dark">
-                  <i class="bi bi-card-checklist me-1 text-warning"></i> विस्तृत केस-टेकिंग (हिन्दी)
-                </a>
-                <a href="/kiosk/intake?lang=en" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-semibold">
-                  <i class="bi bi-card-checklist me-1 text-primary"></i> Detailed Intake (English)
-                </a>
-                <a href="/kiosk/intake?lang=bn" class="btn btn-sm btn-outline-info rounded-pill px-3 fw-semibold text-dark">
-                  <i class="bi bi-card-checklist me-1 text-info"></i> বিস্তারিত কেস-টেকিং (বাংলা)
-                </a>
-              </div>
-            </div>
+            <h5 class="fw-bold text-dark mb-1" id="txtCard1Title">1. नया मरीज (New Patient)</h5>
+            <p class="text-muted small mb-3" id="txtCard1Desc">
+              अस्पताल में पहली बार आए हैं? 30 सेकंड में डॉक्टर की पर्ची प्राप्त करें।
+            </p>
+            <button type="button" class="btn btn-success fw-bold rounded-pill w-100 py-2 mt-auto shadow-xs" id="txtCard1Btn">
+              <i class="bi bi-arrow-right-circle me-1"></i> पर्ची निकालें (Register)
+            </button>
           </div>
         </div>
 
-        <!-- ============================================== -->
-        <!-- PANE 2: RETURNING PATIENT / AYUSHMAN FAST CHECK-IN -->
-        <!-- ============================================== -->
-        <div class="tab-pane fade" id="ayushman-pane" role="tabpanel">
+        <!-- CARD 2: FAST CHECK-IN / RETURNING (पुराना मरीज) -->
+        <div class="col-md-4">
           <div
-            class="p-4 rounded-4 border mb-3 shadow-sm bg-white"
-            style="border-color: #fde68a !important; border-width: 2px;"
+            class="card h-100 rounded-4 border-2 p-3 text-center shadow-xs cursor-pointer main-action-card border-warning bg-white"
+            onclick="showKioskView('returning-patient')"
+            style="transition: all 0.2s ease;"
           >
-            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-              <div class="d-flex align-items-center gap-2">
-                <div class="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
-                  <i class="bi bi-person-vcard-fill fs-5"></i>
-                </div>
-                <div>
-                  <h5 class="fw-bold m-0 text-dark">पुराना मरीज / आयुष्मान कार्ड चेक-इन</h5>
-                  <div class="text-muted small">Returning Patient & Ayushman Fast Check-In</div>
-                </div>
-              </div>
-              <button
-                type="button"
-                onclick="window.readTextAloud('Fast check-in for returning patients. Enter your registered mobile number, Ayushman ABHA ID, or scan your patient card to get today\'s token immediately.')"
-                class="btn btn-sm btn-outline-warning rounded-pill px-2 py-1 text-dark"
-                title="Listen form instructions"
-              >
-                <i class="bi bi-volume-up-fill"></i> सुनें
-              </button>
+            <div class="bg-warning text-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-xs" style="width: 54px; height: 54px; margin: 0 auto;">
+              <i class="bi bi-person-vcard-fill fs-3"></i>
             </div>
-
-            <p class="text-muted small mb-3">
-              अपना पंजीकृत १०-अंकों का मोबाइल नंबर, आयुष्मान/ABHA नंबर, या UHID दर्ज करें:
+            <h5 class="fw-bold text-dark mb-1" id="txtCard2Title">2. पुराना मरीज (Fast Check-In)</h5>
+            <p class="text-muted small mb-3" id="txtCard2Desc">
+              मोबाइल नंबर या आयुष्मान/ABHA कार्ड से तुरंत आज का टोकन निकालें।
             </p>
+            <button type="button" class="btn btn-warning fw-bold rounded-pill w-100 py-2 mt-auto shadow-xs text-dark" id="txtCard2Btn">
+              <i class="bi bi-search me-1"></i> पर्ची खोजें (Fetch Token)
+            </button>
+          </div>
+        </div>
 
-            <!-- Search Form -->
-            <form id="ayushmanLookupForm" class="row g-2">
-              <div class="col-md-8">
-                <div class="input-group input-group-lg">
-                  <span class="input-group-text bg-light border-warning border-2">
-                    <i class="bi bi-telephone-fill text-warning"></i>
-                  </span>
-                  <input
-                    type="text"
-                    id="ayushmanInput"
-                    class="form-control form-control-lg border-warning border-2"
-                    placeholder="उदा. 9830112233 या ABHA ID"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="col-md-4">
-                <button
-                  type="submit"
-                  id="lookupBtn"
-                  class="btn btn-warning w-100 fw-bold fs-6 shadow-sm border-2 h-100 rounded-pill py-2"
-                >
-                  <i class="bi bi-check-circle-fill me-1"></i> पर्ची निकालें (Fetch Token)
-                </button>
-              </div>
-            </form>
-
-            <div id="lookupAlert" class="alert mt-3 d-none small"></div>
-
-            <!-- Camera QR Scanner Button -->
-            <div class="mt-4 pt-3 border-top">
-              <div class="d-flex align-items-center justify-content-between mb-2">
-                <span class="small fw-semibold text-secondary">
-                  <i class="bi bi-qr-code me-1"></i> क्या आपके पास अस्पताल का पर्चा/कार्ड है?
-                </span>
-              </div>
-              <button
-                type="button"
-                id="patientQrScanButton"
-                class="btn btn-outline-primary w-100 rounded-pill py-2 fw-semibold"
-              >
-                <i class="bi bi-camera me-1"></i> कैमरे से कार्ड QR स्कैन करें (Scan Patient Card QR)
-              </button>
-              <video
-                id="patientQrCamera"
-                class="w-100 rounded-4 border mt-2 d-none shadow-sm"
-                autoplay
-                muted
-                playsinline
-                style="max-height: 220px; object-fit: cover"
-              ></video>
-              <div id="patientQrStatus" class="form-text text-center mt-1"></div>
+        <!-- CARD 3: PATIENT PORTAL & AI (मरीज पोर्टल और AI) -->
+        <div class="col-md-4">
+          <div
+            class="card h-100 rounded-4 border-2 p-3 text-center shadow-xs cursor-pointer main-action-card border-primary bg-white"
+            onclick="window.location.href='/patient/login'"
+            style="transition: all 0.2s ease;"
+          >
+            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-xs" style="width: 54px; height: 54px; margin: 0 auto;">
+              <i class="bi bi-heart-pulse-fill fs-3"></i>
             </div>
+            <h5 class="fw-bold text-dark mb-1" id="txtCard3Title">3. मरीज पोर्टल व AI (My Records)</h5>
+            <p class="text-muted small mb-3" id="txtCard3Desc">
+              अपने पुराने पर्चे, दवाएं, टेस्ट रिपोर्ट देखें या AI सहायक से बात करें।
+            </p>
+            <button type="button" class="btn btn-primary fw-bold rounded-pill w-100 py-2 mt-auto shadow-xs" id="txtCard3Btn">
+              <i class="bi bi-box-arrow-in-right me-1"></i> पोर्टल खोलें (Open Portal)
+            </button>
           </div>
         </div>
 
       </div>
 
-      <!-- Quick Action: Patient Portal Banner -->
-      <div class="mt-3 p-3 bg-light rounded-4 border d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
+      <!-- ============================================== -->
+      <!-- VIEW 2: NEW PATIENT FORM (SHOWN WHEN TAPPED)   -->
+      <!-- ============================================== -->
+      <div id="kioskNewPatientView" class="d-none">
+        
+        <!-- Back to Main Menu Button -->
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <button type="button" onclick="showKioskView('main-menu')" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-bold d-flex align-items-center gap-1 shadow-xs">
+            <i class="bi bi-arrow-left"></i> <span id="txtBackBtn1">‹ वापस जाएं (Back to Menu)</span>
+          </button>
+          <span class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill small fw-bold">
+            <i class="bi bi-check2-circle me-1"></i> Step 1 of 1: Fast Registration
+          </span>
+        </div>
+
+        <div class="p-4 rounded-4 border shadow-sm bg-white mb-3" style="border-color: #86efac !important; border-width: 2px;">
+          <div class="d-flex align-items-center gap-2 mb-3 border-bottom pb-2">
+            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+              <i class="bi bi-person-plus-fill fs-5"></i>
+            </div>
+            <div>
+              <h5 class="fw-bold m-0 text-dark" id="txtForm1Header">नया मरीज ओपीडी पंजीकरण (30 सेकंड)</h5>
+              <div class="text-muted small" id="txtForm1Sub">Fill basic details to generate your doctor token slip</div>
+            </div>
+          </div>
+
+          <!-- Express Kiosk Registration Form -->
+          <form id="expressKioskRegisterForm" class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label fw-bold small text-dark" id="lblFullName">1. मरीज का पूरा नाम (Full Name) *</label>
+              <input
+                type="text"
+                id="expressFullName"
+                class="form-control form-control-lg border-2"
+                placeholder="उदा. रमेश कुमार (e.g. Ramesh Kumar)"
+                required
+                minlength="2"
+              >
+            </div>
+
+            <div class="col-md-3 col-6">
+              <label class="form-label fw-bold small text-dark" id="lblAge">2. उम्र (Age) *</label>
+              <input
+                type="number"
+                id="expressAge"
+                class="form-control form-control-lg border-2"
+                placeholder="Years"
+                min="1"
+                max="120"
+                required
+              >
+            </div>
+
+            <div class="col-md-3 col-6">
+              <label class="form-label fw-bold small text-dark" id="lblGender">3. लिंग (Gender) *</label>
+              <select id="expressGender" class="form-select form-select-lg border-2">
+                <option value="male" selected id="optMale">पुरुष (Male)</option>
+                <option value="female" id="optFemale">महिला (Female)</option>
+                <option value="other" id="optOther">अन्य (Other)</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-bold small text-dark" id="lblPhone">4. 10-अंकों का मोबाइल नंबर (Mobile No.) *</label>
+              <input
+                type="tel"
+                id="expressPhone"
+                class="form-control form-control-lg border-2"
+                placeholder="10-digit mobile number"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                required
+              >
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-bold small text-dark" id="lblDept">5. परामर्श विभाग (Department)</label>
+              <select id="expressDepartment" class="form-select form-select-lg border-2">
+                <option value="Ayurveda (Kayachikitsa & Panchakarma)" selected>Ayurveda (कायचिकित्सा & पंचकर्म)</option>
+                <option value="Homeopathy OPD">Homeopathy (होम्योपैथी)</option>
+                <option value="Unani Medicine">Unani (यूनानी चिकित्सा)</option>
+                <option value="Siddha Clinical Desk">Siddha (सिद्ध)</option>
+                <option value="Yoga & Naturopathy">Yoga & Naturopathy (योग & प्राकृतिक चिकित्सा)</option>
+              </select>
+            </div>
+
+            <div class="col-12 mt-4">
+              <button
+                type="submit"
+                id="expressSubmitBtn"
+                class="btn btn-success w-100 fw-bold fs-5 shadow rounded-pill py-3"
+              >
+                <i class="bi bi-check-circle-fill me-2"></i> <span id="txtSubmitTokenBtn">पर्ची निकालें (Register & Print OPD Token)</span>
+              </button>
+            </div>
+          </form>
+
+          <div id="expressAlert" class="alert mt-3 d-none small"></div>
+
+          <!-- Secondary Link: Detailed 8-step wizard -->
+          <div class="mt-4 pt-3 border-top text-center">
+            <span class="text-muted small d-block mb-2" id="txtDetailedLinkPrompt">
+              डॉक्टर को पूरी बीमारी और लक्षण विस्तार से बताना चाहते हैं? / Want to record full symptoms?
+            </span>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+              <a href="/kiosk/intake?lang=hi" class="btn btn-sm btn-outline-warning rounded-pill px-3 fw-semibold text-dark">
+                <i class="bi bi-card-checklist me-1 text-warning"></i> विस्तृत केस-टेकिंग (हिन्दी)
+              </a>
+              <a href="/kiosk/intake?lang=en" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-semibold">
+                <i class="bi bi-card-checklist me-1 text-primary"></i> Detailed Intake (English)
+              </a>
+              <a href="/kiosk/intake?lang=bn" class="btn btn-sm btn-outline-info rounded-pill px-3 fw-semibold text-dark">
+                <i class="bi bi-card-checklist me-1 text-info"></i> বিস্তারিত কেস-টেকিং (বাংলা)
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 3: RETURNING / AYUSHMAN FAST CHECK-IN     -->
+      <!-- ============================================== -->
+      <div id="kioskReturningView" class="d-none">
+        
+        <!-- Back to Main Menu Button -->
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <button type="button" onclick="showKioskView('main-menu')" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-bold d-flex align-items-center gap-1 shadow-xs">
+            <i class="bi bi-arrow-left"></i> <span id="txtBackBtn2">‹ वापस जाएं (Back to Menu)</span>
+          </button>
+          <span class="badge bg-warning-subtle text-warning-emphasis border border-warning px-3 py-1 rounded-pill small fw-bold">
+            <i class="bi bi-person-vcard me-1"></i> Existing Patient Check-In
+          </span>
+        </div>
+
+        <div class="p-4 rounded-4 border shadow-sm bg-white mb-3" style="border-color: #fde68a !important; border-width: 2px;">
+          <div class="d-flex align-items-center gap-2 mb-3 border-bottom pb-2">
+            <div class="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+              <i class="bi bi-person-vcard-fill fs-5"></i>
+            </div>
+            <div>
+              <h5 class="fw-bold m-0 text-dark" id="txtForm2Header">पुराना मरीज / आयुष्मान कार्ड चेक-इन</h5>
+              <div class="text-muted small" id="txtForm2Sub">Fetch today's OPD token using registered mobile or ABHA card</div>
+            </div>
+          </div>
+
+          <p class="text-muted small mb-3" id="txtForm2Instruction">
+            अपना पंजीकृत १०-अंकों का मोबाइल नंबर, आयुष्मान/ABHA नंबर, या UHID दर्ज करें:
+          </p>
+
+          <!-- Search Form -->
+          <form id="ayushmanLookupForm" class="row g-2">
+            <div class="col-md-8">
+              <div class="input-group input-group-lg">
+                <span class="input-group-text bg-light border-warning border-2">
+                  <i class="bi bi-telephone-fill text-warning"></i>
+                </span>
+                <input
+                  type="text"
+                  id="ayushmanInput"
+                  class="form-control form-control-lg border-warning border-2"
+                  placeholder="उदा. 9830112233 या ABHA ID"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button
+                type="submit"
+                id="lookupBtn"
+                class="btn btn-warning w-100 fw-bold fs-6 shadow-sm border-2 h-100 rounded-pill py-2 text-dark"
+              >
+                <i class="bi bi-check-circle-fill me-1"></i> <span id="txtFetchTokenBtn">पर्ची निकालें (Fetch Token)</span>
+              </button>
+            </div>
+          </form>
+
+          <div id="lookupAlert" class="alert mt-3 d-none small"></div>
+
+          <!-- Camera QR Scanner Button -->
+          <div class="mt-4 pt-3 border-top">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="small fw-semibold text-secondary" id="txtQrPrompt">
+                <i class="bi bi-qr-code me-1"></i> क्या आपके पास अस्पताल का पर्चा/कार्ड है?
+              </span>
+            </div>
+            <button
+              type="button"
+              id="patientQrScanButton"
+              class="btn btn-outline-primary w-100 rounded-pill py-2 fw-semibold"
+            >
+              <i class="bi bi-camera me-1"></i> <span id="txtScanQrBtn">कैमरे से कार्ड QR स्कैन करें (Scan Patient Card QR)</span>
+            </button>
+            <video
+              id="patientQrCamera"
+              class="w-100 rounded-4 border mt-2 d-none shadow-sm"
+              autoplay
+              muted
+              playsinline
+              style="max-height: 220px; object-fit: cover"
+            ></video>
+            <div id="patientQrStatus" class="form-text text-center mt-1"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Patient Portal Banner at Bottom -->
+      <div class="p-3 bg-light rounded-4 border d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2 mt-2">
         <div class="d-flex align-items-center gap-2">
           <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
             <i class="bi bi-heart-pulse-fill"></i>
           </div>
           <div>
-            <div class="fw-bold text-dark small">अपना पुराना पर्चा, दवाएं या रिपोर्ट देखना चाहते हैं?</div>
-            <div class="text-muted" style="font-size: 0.78rem;">Access Digital Card, Prescriptions, Lab Reports & AI Assistant</div>
+            <div class="fw-bold text-dark small" id="txtBottomBannerTitle">अपना पुराना पर्चा, दवाएं या रिपोर्ट देखना चाहते हैं?</div>
+            <div class="text-muted" style="font-size: 0.78rem;" id="txtBottomBannerSub">Access Digital Card, Prescriptions, Lab Reports & AI Assistant</div>
           </div>
         </div>
         <a href="/patient/login" class="btn btn-primary btn-sm rounded-pill px-3 py-2 fw-bold text-nowrap shadow-xs">
-          <i class="bi bi-box-arrow-in-right me-1"></i> मरीज लॉगिन (Patient Login)
+          <i class="bi bi-box-arrow-in-right me-1"></i> <span id="txtBottomBannerBtn">मरीज लॉगिन (Patient Login)</span>
         </a>
       </div>
 
-      <!-- Discreet Hospital Personnel Footer Links -->
+      <!-- Hospital Staff & Personnel Utility Links -->
       <div class="d-flex align-items-center justify-content-center gap-3 pt-3 mt-3 border-top text-muted small flex-wrap">
-        <span class="text-secondary fw-semibold">अस्पताल स्टाफ (Staff):</span>
+        <span class="text-secondary fw-semibold" id="txtStaffLabel">अस्पताल स्टाफ:</span>
         <a href="/auth/login" class="text-decoration-none fw-semibold text-secondary">
           <i class="bi bi-person-badge me-1"></i> Doctor / Staff Login
         </a>
@@ -397,13 +452,12 @@
 
       <div class="modal-header bg-white border-0 pb-0">
         <div class="d-flex align-items-center gap-2">
-          <span class="badge bg-warning text-dark fw-bold"
-            ><i class="bi bi-check2-circle me-1"></i>RECOGNIZED PATIENT</span
-          >
-          <span
-            class="badge bg-success-subtle text-success border border-success"
-            >Ayushman Verified</span
-          >
+          <span class="badge bg-warning text-dark fw-bold">
+            <i class="bi bi-check2-circle me-1"></i>RECOGNIZED PATIENT
+          </span>
+          <span class="badge bg-success-subtle text-success border border-success">
+            Ayushman Verified
+          </span>
         </div>
         <button
           type="button"
@@ -417,12 +471,7 @@
         <div
           class="p-3 rounded-4 shadow-sm mb-3 position-relative overflow-hidden text-white"
           style="
-            background: linear-gradient(
-              135deg,
-              #b45309 0%,
-              #d97706 50%,
-              #f59e0b 100%
-            );
+            background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%);
             border: 2px solid #fef3c7;
           "
         >
@@ -442,38 +491,21 @@
           <div class="row g-2 small text-white-50 my-2">
             <div class="col-6">
               <span>Age/Gender:</span>
-              <strong class="text-white" id="recognizedAgeGender"
-                >58 / MALE</strong
-              >
+              <strong class="text-white" id="recognizedAgeGender">58 / MALE</strong>
             </div>
             <div class="small text-white-50">
               Patient Card:
-              <strong class="text-white" id="recognizedCardNumber"
-                >Card verified</strong
-              >
+              <strong class="text-white" id="recognizedCardNumber">Card verified</strong>
             </div>
             <div class="col-6">
               <span>UHID:</span>
-              <code
-                class="text-white bg-dark bg-opacity-25 px-1 rounded"
-                id="recognizedUhid"
-                >UHID-001</code
-              >
+              <code class="text-white bg-dark bg-opacity-25 px-1 rounded" id="recognizedUhid">UHID-001</code>
             </div>
           </div>
 
-          <div
-            class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-warning-subtle border-opacity-50"
-          >
-            <span
-              class="badge bg-dark bg-opacity-50 text-white"
-              id="recognizedDept"
-              >Ayurveda</span
-            >
-            <div
-              class="font-monospace small text-warning"
-              style="letter-spacing: 2px"
-            >
+          <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-warning-subtle border-opacity-50">
+            <span class="badge bg-dark bg-opacity-50 text-white" id="recognizedDept">Ayurveda</span>
+            <div class="font-monospace small text-warning" style="letter-spacing: 2px">
               |||| | ||||| ||
             </div>
           </div>
@@ -488,15 +520,12 @@
             AYUSH-108
           </div>
           <div class="text-dark small mt-2">
-            <i class="bi bi-person-badge-fill text-primary me-1"></i> Assigned
-            Doctor:
+            <i class="bi bi-person-badge-fill text-primary me-1"></i> Assigned Doctor:
             <strong id="recognizedDoctorName">Dr. Rajesh Kumar Sharma</strong>
           </div>
           <div class="text-muted small mt-1">
             <i class="bi bi-geo-alt-fill text-danger me-1"></i> Proceed to
-            <strong id="recognizedRoom" class="text-success"
-              >Room 104, AYUSH Wing A</strong
-            >
+            <strong id="recognizedRoom" class="text-success">Room 104, AYUSH Wing A</strong>
           </div>
         </div>
 
@@ -513,8 +542,7 @@
             id="updateIntakeLink"
             class="btn btn-outline-warning btn-sm rounded-pill text-dark fw-semibold py-2"
           >
-            <i class="bi bi-pencil-square me-1"></i> Update Symptoms / New Case
-            Intake
+            <i class="bi bi-pencil-square me-1"></i> Update Symptoms / New Case Intake
           </a>
         </div>
       </div>
@@ -522,78 +550,297 @@
   </div>
 </div>
 
-<!-- Floating Kiosk Assistant Bot (Accessible & Unobtrusive) -->
-<button
-  id="assistantToggle"
-  class="btn btn-primary rounded-circle shadow position-fixed"
-  style="right: 18px; bottom: 18px; width: 56px; height: 56px; z-index: 20"
-  aria-label="Open MediKiosk assistant"
-  title="Need help? Ask MediKiosk Assistant"
->
-  <i class="bi bi-chat-dots-fill fs-4"></i>
-</button>
+<!-- Clean CSS for Card Interactions -->
+<style>
+.main-action-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08) !important;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.lang-pill-btn.active {
+  background-color: #0284c7 !important;
+  color: #ffffff !important;
+}
+.lang-pill-btn {
+  color: #475569;
+  border: none;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}
+</style>
 
-<section
-  id="assistantPanel"
-  class="card shadow-lg border-0 position-fixed d-none"
-  style="
-    right: 18px;
-    bottom: 84px;
-    width: min(360px, calc(100vw - 36px));
-    z-index: 20;
-    border-radius: 16px;
-  "
-  aria-label="MediKiosk assistant"
->
-  <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-2">
-    <strong><i class="bi bi-robot me-1"></i> MediKiosk Help Assistant</strong>
-    <button
-      id="assistantClose"
-      class="btn btn-sm text-white"
-      type="button"
-      aria-label="Close assistant"
-    >
-      <i class="bi bi-x-lg"></i>
-    </button>
-  </div>
-  <div
-    id="assistantMessages"
-    class="card-body small"
-    style="max-height: 220px; overflow-y: auto"
-  >
-    <p class="mb-0 text-muted">
-      Hello! I can help you with registration, finding your doctor token, or explaining hospital procedures.
-    </p>
-  </div>
-  <form id="assistantForm" class="card-footer d-flex gap-2 p-2">
-    <input
-      id="assistantInput"
-      class="form-control form-control-sm"
-      placeholder="Type question or speak..."
-      required
-    />
-    <button
-      id="assistantMic"
-      class="btn btn-sm btn-outline-primary"
-      type="button"
-      aria-label="Speak to assistant"
-    >
-      <i class="bi bi-mic"></i>
-    </button>
-    <button class="btn btn-sm btn-primary" type="submit" aria-label="Send question">
-      <i class="bi bi-send"></i>
-    </button>
-  </form>
-</section>
-
+<!-- Client-side Multilingual Dictionary & Kiosk Logic -->
 <script>
-  function fillAyushman(val) {
-    document.getElementById("ayushmanInput").value = val;
-    document
-      .getElementById("ayushmanLookupForm")
-      .dispatchEvent(new Event("submit"));
+  let currentKioskLang = localStorage.getItem('kiosk_lang') || 'hi';
+
+  const kioskDictionary = {
+    hi: {
+      title: "MediKiosk AYUSH OPD",
+      subtitle: "सरकारी अस्पताल ओपीडी पंजीकरण एवं मरीज सेवा केंद्र • National AYUSH Mission",
+      instruction: "कृपया नीचे दिए गए ३ आसान विकल्पों में से एक चुनें / Please choose an option below:",
+      card1Title: "1. नया मरीज (New Patient)",
+      card1Desc: "अस्पताल में पहली बार आए हैं? 30 सेकंड में डॉक्टर की पर्ची प्राप्त करें।",
+      card1Btn: "पर्ची निकालें (Register)",
+      card2Title: "2. पुराना मरीज (Fast Check-In)",
+      card2Desc: "मोबाइल नंबर या आयुष्मान/ABHA कार्ड से तुरंत आज का टोकन निकालें।",
+      card2Btn: "पर्ची खोजें (Fetch Token)",
+      card3Title: "3. मरीज पोर्टल व AI (My Records)",
+      card3Desc: "अपने पुराने पर्चे, दवाएं, टेस्ट रिपोर्ट देखें या AI सहायक से बात करें।",
+      card3Btn: "पोर्टल खोलें (Open Portal)",
+      backBtn: "‹ मुख्य मेनू पर वापस जाएं (Back to Menu)",
+      form1Header: "नया मरीज ओपीडी पंजीकरण (30 सेकंड)",
+      form1Sub: "Fill basic details to generate your doctor token slip",
+      lblFullName: "1. मरीज का पूरा नाम (Full Name) *",
+      phFullName: "उदा. रमेश कुमार (e.g. Ramesh Kumar)",
+      lblAge: "2. उम्र (Age) *",
+      lblGender: "3. लिंग (Gender) *",
+      optMale: "पुरुष (Male)",
+      optFemale: "महिला (Female)",
+      optOther: "अन्य (Other)",
+      lblPhone: "4. 10-अंकों का मोबाइल नंबर (Mobile No.) *",
+      lblDept: "5. परामर्श विभाग (Department)",
+      submitTokenBtn: "पर्ची निकालें (Register & Print OPD Token)",
+      detailedLinkPrompt: "डॉक्टर को पूरी बीमारी और लक्षण विस्तार से बताना चाहते हैं? / Want to record full symptoms?",
+      form2Header: "पुराना मरीज / आयुष्मान कार्ड चेक-इन",
+      form2Sub: "Fetch today's OPD token using registered mobile or ABHA card",
+      form2Instruction: "अपना पंजीकृत १०-अंकों का मोबाइल नंबर, आयुष्मान/ABHA नंबर, या UHID दर्ज करें:",
+      phAyushmanInput: "उदा. 9830112233 या ABHA ID",
+      fetchTokenBtn: "पर्ची निकालें (Fetch Token)",
+      qrPrompt: "क्या आपके पास अस्पताल का पर्चा/कार्ड है?",
+      scanQrBtn: "कैमरे से कार्ड QR स्कैन करें (Scan Patient Card QR)",
+      bottomBannerTitle: "अपना पुराना पर्चा, दवाएं या रिपोर्ट देखना चाहते हैं?",
+      bottomBannerSub: "Access Digital Card, Prescriptions, Lab Reports & AI Assistant",
+      bottomBannerBtn: "मरीज लॉगिन (Patient Login)",
+      staffLabel: "अस्पताल स्टाफ:",
+      seniorBtn: "बड़ा टेक्स्ट (Senior Mode)",
+      audioBtn: "सुने",
+      emergencyBtn: "108 आपातकालीन",
+      pwaBanner: "फोन में MediKiosk ऐप इंस्टॉल करें / Install App for easy access",
+      voiceWelcome: "सरकारी अस्पताल ओपीडी कियोस्क में आपका स्वागत है। नया मरीज पंजीकरण के लिए हरा बटन दबाएं। पुराने मरीज पीला बटन दबाएं। अपने रिकॉर्ड देखने के लिए नीला बटन दबाएं।"
+    },
+    en: {
+      title: "MediKiosk AYUSH OPD",
+      subtitle: "Government Hospital Smart OPD Token & Patient Registration System",
+      instruction: "Please choose an option below to proceed:",
+      card1Title: "1. New Patient Registration",
+      card1Desc: "First time at the hospital? Get your OPD doctor token in 30 seconds.",
+      card1Btn: "Start Registration (New Patient)",
+      card2Title: "2. Fast Check-In / Returning Patient",
+      card2Desc: "Have a registered mobile number or Ayushman / ABHA card? Get your token instantly.",
+      card2Btn: "Fast Check-In (Fetch Token)",
+      card3Title: "3. Patient Portal & AI (My Records)",
+      card3Desc: "View your previous prescriptions, lab test reports, or talk to AI assistant.",
+      card3Btn: "Open Patient Portal",
+      backBtn: "‹ Back to Main Menu",
+      form1Header: "New Patient OPD Registration (30 Seconds)",
+      form1Sub: "Fill your basic details below to immediately get your doctor queue token",
+      lblFullName: "1. Patient Full Name *",
+      phFullName: "e.g. Ramesh Kumar",
+      lblAge: "2. Age (Years) *",
+      lblGender: "3. Gender *",
+      optMale: "Male",
+      optFemale: "Female",
+      optOther: "Other",
+      lblPhone: "4. 10-Digit Mobile Number *",
+      lblDept: "5. Consulting Department",
+      submitTokenBtn: "✓ Register & Print OPD Token",
+      detailedLinkPrompt: "Want to record your full symptoms and medical history for the doctor?",
+      form2Header: "Returning Patient & Ayushman Fast Check-In",
+      form2Sub: "Enter your phone number or ABHA ID to immediately fetch today's token",
+      form2Instruction: "Enter your registered 10-digit mobile number, ABHA ID, or UHID:",
+      phAyushmanInput: "e.g. 9830112233 or ABHA ID",
+      fetchTokenBtn: "✓ Fetch My OPD Token",
+      qrPrompt: "Do you have your physical patient health card or slip with QR code?",
+      scanQrBtn: "📷 Scan Card QR Code with Camera",
+      bottomBannerTitle: "Want to view your previous prescriptions, lab reports, or doctor advice?",
+      bottomBannerSub: "Access Digital Card, Prescriptions, Lab Reports & AI Assistant",
+      bottomBannerBtn: "Patient Portal Login",
+      staffLabel: "Hospital Staff:",
+      seniorBtn: "Senior Mode (Large Text)",
+      audioBtn: "Listen",
+      emergencyBtn: "108 Emergency",
+      pwaBanner: "Install MediKiosk App on your phone for easy access",
+      voiceWelcome: "Welcome to MediKiosk Hospital OPD. For new patient registration, tap the green card. For returning patients with a phone number or Ayushman card, tap the amber card. To view your records, tap Patient Portal."
+    },
+    bn: {
+      title: "মেডিকিয়স্ক আয়ুষ ওপিডি",
+      subtitle: "সরকারি হাসপাতাল স্মার্ট ওপিডি টোকেন ও রোগী নিবন্ধন কেন্দ্র",
+      instruction: "এগিয়ে যেতে অনুগ্রহ করে নিচের যে কোনো একটি বিকল্প বেছে নিন:",
+      card1Title: "১. নতুন রোগী নিবন্ধন",
+      card1Desc: "প্রথমবার এসেছেন? ৩০ সেকেন্ডে ডাক্তারের ওপিডি টোকেন নিন।",
+      card1Btn: "টোকেন নিন (Register)",
+      card2Title: "২. পুরনো রোগী / দ্রুত চেক-ইন",
+      card2Desc: "মোবাইল নম্বর বা আয়ুষ্মান কার্ড দিয়ে সহজেই আজকেই টোকেন বের করুন।",
+      card2Btn: "টোকেন খুঁজুন (Fetch Token)",
+      card3Title: "৩. রোগী পোর্টাল ও AI (My Records)",
+      card3Desc: "আপনার পুরনো প্রেসক্রিপশন, ল্যাব রিপোর্ট দেখুন ও এআই-এর সাথে কথা বলুন।",
+      card3Btn: "পোর্টাল খুলুন (Open Portal)",
+      backBtn: "‹ প্রধান মেনুতে ফিরে যান (Back to Menu)",
+      form1Header: "নতুন রোগী ওপিডি নিবন্ধন (৩০ সেকেন্ড)",
+      form1Sub: "ডাক্তারের টোকেন স্লিপ পেতে সাধারণ বিবরণ পূরণ করুন",
+      lblFullName: "১. রোগীর পুরো নাম *",
+      phFullName: "উদা. রমেশ কুমার",
+      lblAge: "২. বয়স *",
+      lblGender: "৩. লিঙ্গ *",
+      optMale: "পুরুষ",
+      optFemale: "মহিলা",
+      optOther: "অন্যান্য",
+      lblPhone: "৪. ১০-সংখ্যার মোবাইল নম্বর *",
+      lblDept: "৫. পরামর্শ বিভাগ",
+      submitTokenBtn: "✓ ওপিডি টোকেন প্রিন্ট করুন",
+      detailedLinkPrompt: "ডাক্তারকে সম্পূর্ণ লক্ষণ বিস্তারিত জানাতে চান?",
+      form2Header: "পুরনো রোগী / আয়ুষ্মান কার্ড চেক-ইন",
+      form2Sub: "মোবাইল বা এবিএইচএ কার্ড দিয়ে টোকেন বের করুন",
+      form2Instruction: "আপনার নিবন্ধিত ১০-সংখ্যার মোবাইল নম্বর বা এবিএইচএ আইডি লিখুন:",
+      phAyushmanInput: "উদা. 9830112233 বা ABHA ID",
+      fetchTokenBtn: "✓ আমার টোকেন বের করুন",
+      qrPrompt: "আপনার কাছে কি হাসপাতালের কিউআর কার্ড আছে?",
+      scanQrBtn: "📷 ক্যামেরা দিয়ে কার্ডের QR স্ক্যান করুন",
+      bottomBannerTitle: "আপনার পুরনো প্রেসক্রিপশন বা টেস্ট রিপোর্ট দেখতে চান?",
+      bottomBannerSub: "Access Digital Card, Prescriptions, Lab Reports & AI Assistant",
+      bottomBannerBtn: "রোগী লগইন (Patient Login)",
+      staffLabel: "হাসপাতাল কর্মী:",
+      seniorBtn: "বড় লেখা (সিনিয়র মোড)",
+      audioBtn: "শুনুন",
+      emergencyBtn: "১০৮ জরুরি সেবা",
+      pwaBanner: "ফোনে সহজে ব্যবহারের জন্য MediKiosk অ্যাপ ইনস্টল করুন",
+      voiceWelcome: "সরকারি হাসপাতাল ওপিডি কিওস্কে স্বাগতম। নতুন রোগী নিবন্ধনের জন্য সবুজ বোতাম স্পর্শ করুন। পুরনো রোগীদের জন্য হলুদ বোতাম এবং পূর্ববর্তী রেকর্ড দেখতে নীল বোতাম স্পর্শ করুন।"
+    }
+  };
+
+  // Set & Switch Language Dynamically
+  function setKioskLanguage(lang) {
+    if (!kioskDictionary[lang]) lang = 'hi';
+    currentKioskLang = lang;
+    localStorage.setItem('kiosk_lang', lang);
+
+    // Update active pill button
+    document.querySelectorAll('.lang-pill-btn').forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.getElementById(`lang-${lang}`);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    const dict = kioskDictionary[lang];
+
+    // Update Text Elements
+    const updateText = (id, text) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = text;
+    };
+
+    updateText('kioskMainTitle', dict.title);
+    updateText('kioskMainSubtitle', dict.subtitle);
+    updateText('kioskInstruction', dict.instruction);
+    updateText('txtCard1Title', dict.card1Title);
+    updateText('txtCard1Desc', dict.card1Desc);
+    updateText('txtCard1Btn', dict.card1Btn);
+    updateText('txtCard2Title', dict.card2Title);
+    updateText('txtCard2Desc', dict.card2Desc);
+    updateText('txtCard2Btn', dict.card2Btn);
+    updateText('txtCard3Title', dict.card3Title);
+    updateText('txtCard3Desc', dict.card3Desc);
+    updateText('txtCard3Btn', dict.card3Btn);
+    updateText('txtBackBtn1', dict.backBtn);
+    updateText('txtBackBtn2', dict.backBtn);
+    updateText('txtForm1Header', dict.form1Header);
+    updateText('txtForm1Sub', dict.form1Sub);
+    updateText('lblFullName', dict.lblFullName);
+    updateText('lblAge', dict.lblAge);
+    updateText('lblGender', dict.lblGender);
+    updateText('optMale', dict.optMale);
+    updateText('optFemale', dict.optFemale);
+    updateText('optOther', dict.optOther);
+    updateText('lblPhone', dict.lblPhone);
+    updateText('lblDept', dict.lblDept);
+    updateText('txtSubmitTokenBtn', dict.submitTokenBtn);
+    updateText('txtDetailedLinkPrompt', dict.detailedLinkPrompt);
+    updateText('txtForm2Header', dict.form2Header);
+    updateText('txtForm2Sub', dict.form2Sub);
+    updateText('txtForm2Instruction', dict.form2Instruction);
+    updateText('txtFetchTokenBtn', dict.fetchTokenBtn);
+    updateText('txtQrPrompt', dict.qrPrompt);
+    updateText('txtScanQrBtn', dict.scanQrBtn);
+    updateText('txtBottomBannerTitle', dict.bottomBannerTitle);
+    updateText('txtBottomBannerSub', dict.bottomBannerSub);
+    updateText('txtBottomBannerBtn', dict.bottomBannerBtn);
+    updateText('txtStaffLabel', dict.staffLabel);
+    updateText('txtSeniorBtn', dict.seniorBtn);
+    updateText('txtAudioBtn', dict.audioBtn);
+    updateText('txtEmergencyBtn', dict.emergencyBtn);
+    updateText('txtPwaBanner', dict.pwaBanner);
+
+    // Update Placeholders
+    const fnInput = document.getElementById('expressFullName');
+    if (fnInput) fnInput.placeholder = dict.phFullName;
+    const ayInput = document.getElementById('ayushmanInput');
+    if (ayInput) ayInput.placeholder = dict.phAyushmanInput;
   }
 
+  // Voice speech synthesis
+  function speakKioskWelcome() {
+    const dict = kioskDictionary[currentKioskLang] || kioskDictionary.hi;
+    if (window.readTextAloud) {
+      window.readTextAloud(dict.voiceWelcome, currentKioskLang);
+    }
+  }
+
+  // Simple View Switcher (Main Menu vs New Patient vs Returning Patient)
+  function showKioskView(view) {
+    const mainView = document.getElementById('kioskMainMenuView');
+    const newView = document.getElementById('kioskNewPatientView');
+    const retView = document.getElementById('kioskReturningView');
+
+    if (view === 'new-patient') {
+      mainView.classList.add('d-none');
+      retView.classList.add('d-none');
+      newView.classList.remove('d-none');
+      const fnInput = document.getElementById('expressFullName');
+      if (fnInput) fnInput.focus();
+    } else if (view === 'returning-patient') {
+      mainView.classList.add('d-none');
+      newView.classList.add('d-none');
+      retView.classList.remove('d-none');
+      const ayInput = document.getElementById('ayushmanInput');
+      if (ayInput) ayInput.focus();
+    } else {
+      newView.classList.add('d-none');
+      retView.classList.add('d-none');
+      mainView.classList.remove('d-none');
+    }
+  }
+
+  // Initialize Language on Load
+  window.addEventListener('DOMContentLoaded', () => {
+    setKioskLanguage(currentKioskLang);
+  });
+
+  // PWA Installation Prompt Logic
+  let deferredPwaPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPwaPrompt = e;
+    const banner = document.getElementById('pwaInstallBanner');
+    if (banner) banner.classList.remove('d-none');
+  });
+
+  const pwaBtn = document.getElementById('pwaInstallBtn');
+  if (pwaBtn) {
+    pwaBtn.addEventListener('click', async () => {
+      if (!deferredPwaPrompt) return;
+      deferredPwaPrompt.prompt();
+      const choiceResult = await deferredPwaPrompt.userChoice;
+      deferredPwaPrompt = null;
+      dismissPwaBanner();
+    });
+  }
+
+  function dismissPwaBanner() {
+    const banner = document.getElementById('pwaInstallBanner');
+    if (banner) banner.classList.add('d-none');
+  }
+
+  // Existing Ayushman & Mobile Lookup Form Handler
   document
     .getElementById("ayushmanLookupForm")
     .addEventListener("submit", async (e) => {
@@ -613,8 +860,7 @@
 
       alertBox.className = "alert mt-3 d-none small";
       btn.disabled = true;
-      btn.innerHTML =
-        '<span class="spinner-border spinner-border-sm me-1"></span> Verifying...';
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Verifying...';
 
       try {
         const res = await fetch("/kiosk/ayushman-lookup", {
@@ -625,22 +871,19 @@
         const data = await res.json().catch(() => ({}));
         btn.disabled = false;
         if (!res.ok) throw new Error(data.error || "Lookup request failed");
-        btn.innerHTML =
-          '<i class="bi bi-check-circle-fill me-1"></i> पर्ची निकालें (Fetch Token)';
+        
+        const dict = kioskDictionary[currentKioskLang] || kioskDictionary.hi;
+        btn.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> ${dict.fetchTokenBtn}`;
 
         if (data.success && data.alreadyRegistered) {
-          document.getElementById("recognizedName").innerText =
-            data.patient.fullName;
+          document.getElementById("recognizedName").innerText = data.patient.fullName;
           document.getElementById("recognizedAgeGender").innerText =
             `${data.patient.age} Yrs / ${data.patient.gender ? data.patient.gender.toUpperCase() : "N/A"}`;
-          document.getElementById("recognizedUhid").innerText =
-            data.patient.uhid;
+          document.getElementById("recognizedUhid").innerText = data.patient.uhid;
           document.getElementById("recognizedCardNumber").innerText =
             data.patient.cardNumber || data.patient.uhid;
-          document.getElementById("recognizedDept").innerText =
-            data.patient.department;
-          document.getElementById("recognizedToken").innerText =
-            data.tokenNumber;
+          document.getElementById("recognizedDept").innerText = data.patient.department;
+          document.getElementById("recognizedToken").innerText = data.tokenNumber;
           document.getElementById("recognizedRoom").innerText =
             data.roomNumber || "Room 104, AYUSH Wing A";
           document.getElementById("recognizedDoctorName").innerText = (
@@ -649,35 +892,31 @@
 
           document.getElementById("viewCardLink").href = data.cardUrl || `/kiosk/card/${data.patient._id}`;
           document.getElementById("updateIntakeLink").href =
-            `/kiosk/intake?lang=en&mobile=${encodeURIComponent(data.patient.phone)}&patientId=${encodeURIComponent(data.patient._id)}`;
+            `/kiosk/intake?lang=${currentKioskLang}&mobile=${encodeURIComponent(data.patient.phone)}&patientId=${encodeURIComponent(data.patient._id)}`;
 
-          const modal = new bootstrap.Modal(
-            document.getElementById("ayushmanRecognizedModal"),
-          );
+          const modal = new bootstrap.Modal(document.getElementById("ayushmanRecognizedModal"));
           modal.show();
         } else {
           alertBox.className = "alert alert-info mt-3 d-block small";
-          alertBox.innerHTML =
-            '<i class="bi bi-info-circle me-1"></i> No prior record found. Redirecting to Registration...';
+          alertBox.innerHTML = '<i class="bi bi-info-circle me-1"></i> No prior record found. Redirecting to Registration...';
           setTimeout(() => {
             const phone = input.replace(/\D/g, "").slice(-10);
             window.location.href =
               phone.length === 10
-                ? `/kiosk/intake?lang=en&mobile=${encodeURIComponent(phone)}`
-                : "/kiosk/intake?lang=en";
+                ? `/kiosk/intake?lang=${currentKioskLang}&mobile=${encodeURIComponent(phone)}`
+                : `/kiosk/intake?lang=${currentKioskLang}`;
           }, 1200);
         }
       } catch (err) {
         btn.disabled = false;
-        btn.innerHTML =
-          '<i class="bi bi-check-circle-fill me-1"></i> पर्ची निकालें (Fetch Token)';
+        const dict = kioskDictionary[currentKioskLang] || kioskDictionary.hi;
+        btn.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> ${dict.fetchTokenBtn}`;
         alertBox.className = "alert alert-danger mt-3 d-block small";
-        alertBox.innerText =
-          "Network error verifying Ayushman card. Please try again.";
+        alertBox.innerText = "Network error verifying Ayushman card. Please try again.";
       }
     });
 
-  // Express Kiosk Registration Form Handler (10-Second Quick Register)
+  // Express Registration Form Handler (10-Second Quick Register)
   const expressForm = document.getElementById("expressKioskRegisterForm");
   if (expressForm) {
     expressForm.addEventListener("submit", async (e) => {
@@ -704,7 +943,7 @@
       try {
         const payload = {
           kioskId: "KIOSK-01",
-          language: "en",
+          language: currentKioskLang,
           consent: { medicalDataSharing: true, voiceRecording: false },
           stepData: {
             demographics: {
@@ -731,7 +970,6 @@
           alertBox.className = "alert alert-success mt-3 d-block small";
           alertBox.innerText = `Registration successful! Token: ${data.tokenNumber}. Opening your card...`;
           
-          // Populate recognized patient modal
           document.getElementById("recognizedName").innerText = fullName;
           document.getElementById("recognizedAgeGender").innerText = `${age} Yrs / ${gender.toUpperCase()}`;
           document.getElementById("recognizedUhid").innerText = data.uhid || "UHID-GEN";
@@ -742,12 +980,11 @@
           document.getElementById("recognizedDoctorName").innerText = (data.assignedDoctorName || "Senior Consultant").split(",")[0];
 
           document.getElementById("viewCardLink").href = data.cardUrl || `/kiosk/card/${data.patientId}`;
-          document.getElementById("updateIntakeLink").href = `/kiosk/intake?lang=en&mobile=${encodeURIComponent(phone)}&patientId=${encodeURIComponent(data.patientId)}`;
+          document.getElementById("updateIntakeLink").href = `/kiosk/intake?lang=${currentKioskLang}&mobile=${encodeURIComponent(phone)}&patientId=${encodeURIComponent(data.patientId)}`;
 
           const modal = new bootstrap.Modal(document.getElementById("ayushmanRecognizedModal"));
           modal.show();
 
-          // Reset form
           expressForm.reset();
         } else {
           alertBox.className = "alert alert-danger mt-3 d-block small";
@@ -761,65 +998,7 @@
     });
   }
 
-  const assistantPanel = document.getElementById("assistantPanel");
-  document
-    .getElementById("assistantToggle")
-    .addEventListener("click", () => assistantPanel.classList.toggle("d-none"));
-  document
-    .getElementById("assistantClose")
-    .addEventListener("click", () => assistantPanel.classList.add("d-none"));
-  document
-    .getElementById("assistantForm")
-    .addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const input = document.getElementById("assistantInput");
-      const message = input.value.trim();
-      if (!message) return;
-      const item = document.createElement("p");
-      item.className = "border-top pt-2 mt-2 mb-0";
-      item.textContent = "Thinking...";
-      document.getElementById("assistantMessages").appendChild(item);
-      try {
-        const response = await fetch("/kiosk/assistant", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "same-origin",
-          body: JSON.stringify({ message, mode: "patient" }),
-        });
-        const data = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(data.error || "Assistant request failed");
-        item.textContent = data.message || data.error || "No response received.";
-        if (data.message && "speechSynthesis" in window) {
-          window.speechSynthesis.cancel();
-          window.speechSynthesis.speak(
-            new SpeechSynthesisUtterance(data.message),
-          );
-        }
-      } catch (error) {
-        item.textContent = "Assistant is temporarily unavailable. Please try again.";
-        console.error("MediKiosk assistant error:", error);
-      }
-      document.getElementById("assistantMessages").scrollTop = document.getElementById("assistantMessages").scrollHeight;
-      input.value = "";
-    });
-
-  document.getElementById("assistantMic").addEventListener("click", () => {
-    const Recognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!Recognition) {
-      alert("Voice input is not supported in this browser.");
-      return;
-    }
-    const recognition = new Recognition();
-    recognition.lang = "en-IN";
-    recognition.onresult = (event) => {
-      document.getElementById("assistantInput").value =
-        event.results[0][0].transcript;
-      document.getElementById("assistantForm").requestSubmit();
-    };
-    recognition.start();
-  });
-
+  // Camera QR Scanner Handler
   document
     .getElementById("patientQrScanButton")
     .addEventListener("click", async () => {
@@ -827,8 +1006,7 @@
       const status = document.getElementById("patientQrStatus");
       const Detector = window.BarcodeDetector;
       if (!Detector || !navigator.mediaDevices?.getUserMedia) {
-        status.textContent =
-          "QR camera scanning is not supported on this device. Enter mobile or card number manually above.";
+        status.textContent = "QR camera scanning is not supported on this device. Enter mobile or card number manually above.";
         return;
       }
       try {
@@ -856,9 +1034,9 @@
           camera.srcObject.getTracks().forEach((track) => track.stop());
           camera.srcObject = null;
         }
-        status.textContent =
-          "Camera permission was unavailable. Enter mobile or card number manually above.";
+        status.textContent = "Camera permission was unavailable. Enter mobile or card number manually above.";
       }
     });
 </script>
+
 <%- include('../partials/footer') %>

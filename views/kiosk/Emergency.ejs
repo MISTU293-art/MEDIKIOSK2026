@@ -1,374 +1,351 @@
 <%- include('../partials/header') %>
 
-<style>
-  body {
-    background: radial-gradient(circle at 50% 15%, #fffaf0 0%, #f8fafc 75%);
-  }
-
-  .kiosk-card {
-    max-width: 720px;
-    width: 100%;
-    border-radius: 24px;
-  }
-
-  .gov-tricolor-bar {
-    height: 6px;
-    background: linear-gradient(90deg, #ff9933 0%, #ffffff 50%, #138808 100%);
-  }
-
-  .logo-box {
-    width: 110px;
-    height: 110px;
-    background: #e9f2ff;
-    border: 3px solid #0d6efd;
-  }
-
-  .touch-input {
-    min-height: 58px;
-    font-size: 1.05rem;
-    border-radius: 12px;
-  }
-
-  .touch-input:focus {
-    border-color: #dc3545;
-    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.12);
-  }
-
-  .emergency-header {
-    background: linear-gradient(135deg, #fff1f2, #fff7ed);
-    border: 1px solid #fecaca;
-  }
-
-  .emergency-icon {
-    width: 70px;
-    height: 70px;
-    background: #fee2e2;
-    color: #dc3545;
-  }
-
-  .emergency-btn {
-    min-height: 60px;
-    border-radius: 14px;
-    font-size: 1.1rem;
-  }
-
-  .small-note {
-    font-size: 0.8rem;
-  }
-</style>
-
 <div
-  class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-4"
+  class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-3 py-md-4"
+  style="background: radial-gradient(circle at 50% 15%, #fff5f5 0%, #fef2f2 60%, #f8fafc 100%);"
 >
-  <!-- MAIN KIOSK CARD -->
-  <div class="card kiosk-card shadow-lg border-0 overflow-hidden bg-white">
-    <!-- Government Tricolor -->
-    <div class="gov-tricolor-bar"></div>
+  <!-- MAIN EMERGENCY CARD -->
+  <div class="card shadow-lg border-0 rounded-4 overflow-hidden bg-white w-100" style="max-width: 760px;">
+    <!-- Red Emergency Ribbon -->
+    <div style="height: 6px; background: linear-gradient(90deg, #dc2626 0%, #ef4444 50%, #b91c1c 100%);"></div>
 
-    <div class="p-4 p-md-5">
-      <!-- =====================================================
-           HEADER
-      ====================================================== -->
+    <div class="p-3 p-md-4">
+      
+      <!-- TOP UTILITY BAR: Language Switcher, Senior Mode & Emergency Call -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-2 border-bottom gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge bg-danger text-white fw-bold px-3 py-1 rounded-pill" style="font-size: 0.82rem;">
+            <i class="bi bi-heart-pulse-fill me-1"></i> EMERGENCY OPD (आपातकालीन)
+          </span>
+          <span class="badge bg-warning text-dark fw-bold px-2 py-1 rounded-pill d-none d-sm-inline" style="font-size: 0.78rem;">
+            Priority Care
+          </span>
+        </div>
 
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill">
-          <i class="bi bi-flower1 me-1 text-success"></i>
-          MINISTRY OF AYUSH
-        </span>
+        <div class="d-flex align-items-center gap-1 ms-auto flex-wrap">
+          <!-- Language Selector -->
+          <div class="btn-group btn-group-sm p-1 bg-light rounded-pill border shadow-xs" role="group">
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill active" id="btn-hi" onclick="setEmergencyLang('hi')">
+              🇮🇳 हिन्दी
+            </button>
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill" id="btn-en" onclick="setEmergencyLang('en')">
+              🇬🇧 English
+            </button>
+            <button type="button" class="btn btn-sm rounded-pill fw-bold lang-pill" id="btn-bn" onclick="setEmergencyLang('bn')">
+              🇮🇳 বাংলা
+            </button>
+          </div>
 
-        <span
-          class="badge bg-danger-subtle text-danger border border-danger px-3 py-2 rounded-pill"
-        >
-          <i class="bi bi-heart-pulse-fill me-1"></i>
-          EMERGENCY
-        </span>
+          <!-- Senior Mode -->
+          <button
+            type="button"
+            onclick="window.toggleSeniorMode()"
+            class="btn btn-sm btn-outline-warning senior-toggle-btn rounded-pill px-2 py-1 fw-bold text-dark d-flex align-items-center gap-1"
+            title="Senior / Large Text Mode"
+          >
+            <i class="bi bi-eyeglasses"></i>
+            <span class="d-none d-sm-inline">Senior Mode</span>
+          </button>
+
+          <!-- Voice Listen -->
+          <button
+            type="button"
+            onclick="speakEmergencyGuide()"
+            class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1"
+            title="Listen Instructions"
+          >
+            <i class="bi bi-volume-up-fill text-danger"></i>
+          </button>
+        </div>
       </div>
 
-      <!-- LOGO -->
+      <!-- ONE-TAP DIRECT 108 AMBULANCE CALL BANNER -->
+      <div class="alert alert-danger border-2 border-danger rounded-4 p-3 mb-4 shadow-sm d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-3">
+          <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 48px; height: 48px;">
+            <i class="bi bi-telephone-fill fs-4"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold text-danger mb-0" id="txt108Title">🚨 राष्ट्रीय आपातकालीन एम्बुलेंस (National Ambulance)</h5>
+            <div class="small text-muted" id="txt108Sub">Dial 108 for immediate paramedic or life-support assistance</div>
+          </div>
+        </div>
+        <a href="tel:108" class="btn btn-danger fw-bold rounded-pill px-4 py-2 text-nowrap shadow-sm d-flex align-items-center gap-2">
+          <i class="bi bi-telephone-outbound-fill"></i>
+          <span id="txtCall108Btn">Call 108 Now (तुरंत कॉल करें)</span>
+        </a>
+      </div>
+
+      <!-- Header with Logo -->
       <div class="text-center mb-3">
-        <div
-          class="logo-box rounded-4 d-inline-flex align-items-center justify-content-center shadow-sm"
-        >
+        <div class="d-inline-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle p-2 mb-2 shadow-xs" style="width: 64px; height: 64px;">
           <img
-            src="/uploads/logo.png"
+            src="/uploads/new_logo.png"
             alt="MediKiosk AYUSH"
             class="img-fluid"
-            style="width: 90px; height: 90px; object-fit: contain"
+            style="width: 46px; height: 46px; object-fit: contain"
           />
         </div>
-
-        <h1 class="fw-bold text-dark mt-3 mb-1">MediKiosk AYUSH</h1>
-
-        <p class="text-muted mb-0">Emergency Patient Registration</p>
+        <h3 class="fw-bold text-dark mb-1" id="txtEmergTitle">आपातकालीन मरीज पंजीकरण</h3>
+        <p class="text-muted small mb-0" id="txtEmergSub">Fast Emergency Registration — Immediate Medical Care</p>
       </div>
 
-      <!-- =====================================================
-           EMERGENCY NOTICE
-      ====================================================== -->
-
-      <div class="emergency-header rounded-4 p-3 p-md-4 mb-4">
-        <% if (error) { %>
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-    <strong>Error:</strong> <%= error %>
-
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-    ></button>
-  </div>
-<% } %>
-
-<% if (message) { %>
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="bi bi-check-circle-fill me-2"></i>
-    <strong>Success:</strong> <%= message %>
-
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-    ></button>
-  </div>
-<% } %>
-        <div class="d-flex gap-3 align-items-start">
-          <div
-            class="emergency-icon rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-          >
-            <i class="bi bi-heart-pulse-fill fs-3"></i>
-          </div>
-
-          <div>
-            <h5 class="fw-bold text-danger mb-1">Emergency Registration</h5>
-
-            <p class="text-muted small mb-0">
-              Please enter the patient's basic details for immediate
-              registration.
-            </p>
-          </div>
+      <!-- Flash Alerts -->
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger alert-dismissible fade show rounded-3 p-3 mb-3 shadow-xs" role="alert">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <strong>Error:</strong> <%= error %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-      </div>
+      <% } %>
 
-      <!-- =====================================================
-           FORM
-      ====================================================== -->
+      <% if (typeof message !== 'undefined' && message) { %>
+        <div class="alert alert-success alert-dismissible fade show rounded-3 p-3 mb-3 shadow-xs" role="alert">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          <strong>Success:</strong> <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% } %>
 
-      <form id="emergencyPatientForm" method="POST" action="/kiosk/emergency">
-        <!-- PATIENT NAME -->
-        <div class="mb-3">
-          <label for="name" class="form-label fw-bold"> Patient Name </label>
-
+      <!-- RAPID EMERGENCY FORM -->
+      <form id="emergencyPatientForm" method="POST" action="/kiosk/emergency" class="row g-3">
+        
+        <!-- Patient Name -->
+        <div class="col-md-7">
+          <label for="name" class="form-label fw-bold small text-dark" id="lblPatientName">1. मरीज का पूरा नाम (Patient Name) *</label>
           <div class="input-group">
-            <span class="input-group-text bg-white">
-              <i class="bi bi-person-fill text-danger"></i>
-            </span>
-
+            <span class="input-group-text bg-light"><i class="bi bi-person-fill text-danger"></i></span>
             <input
               type="text"
               id="name"
               name="name"
-              class="form-control touch-input"
-              placeholder="Enter patient's full name"
-              autocomplete="name"
+              class="form-control form-control-lg border-2"
+              placeholder="e.g. Ramesh Kumar"
               maxlength="100"
               required
+              autofocus
             />
           </div>
         </div>
 
-        <!-- MOBILE NUMBER -->
-        <div class="mb-3">
-          <label for="mobile" class="form-label fw-bold"> Mobile Number </label>
-
+        <!-- Mobile Number -->
+        <div class="col-md-5">
+          <label for="mobile" class="form-label fw-bold small text-dark" id="lblMobile">2. 10-अंकों का मोबाइल नंबर (Mobile No.) *</label>
           <div class="input-group">
-            <span class="input-group-text bg-white">
-              <i class="bi bi-phone-fill text-primary"></i>
-            </span>
-
+            <span class="input-group-text bg-light"><i class="bi bi-phone-fill text-danger"></i></span>
             <input
               type="tel"
               id="mobile"
               name="mobile"
-              class="form-control touch-input"
-              placeholder="Enter 10-digit mobile number"
-              inputmode="numeric"
+              class="form-control form-control-lg border-2"
+              placeholder="10-digit mobile number"
               maxlength="10"
               pattern="[0-9]{10}"
-              autocomplete="tel"
               required
             />
           </div>
         </div>
 
-        <!-- AADHAAR -->
-        <div class="mb-3">
-          <label for="aadhaar" class="form-label fw-bold">
-            Aadhaar Number
-          </label>
-
-          <div class="input-group">
-            <span class="input-group-text bg-white">
-              <i class="bi bi-person-vcard-fill text-warning"></i>
-            </span>
-
-            <input
-              type="text"
-              id="aadhaar"
-              name="aadhaar"
-              class="form-control touch-input"
-              placeholder="Enter 12-digit Aadhaar number"
-              inputmode="numeric"
-              maxlength="12"
-              pattern="[0-9]{12}"
-              autocomplete="off"
-              required
-            />
-          </div>
-
-          <div class="form-text small-note">
-            Aadhaar number is used only for patient identification.
-          </div>
+        <!-- Blood Group -->
+        <div class="col-md-6 col-6">
+          <label for="bloodGroup" class="form-label fw-bold small text-dark" id="lblBloodGroup">3. ब्लड ग्रुप (Blood Group)</label>
+          <select id="bloodGroup" name="bloodGroup" class="form-select form-select-lg border-2">
+            <option value="Unknown" selected>Unknown / Not Known (पता नहीं)</option>
+            <option value="A+">A+</option>
+            <option value="A-">A−</option>
+            <option value="B+">B+</option>
+            <option value="B-">B−</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB−</option>
+            <option value="O+">O+</option>
+            <option value="O-">O−</option>
+          </select>
         </div>
 
-        <!-- BLOOD GROUP -->
-        <div class="mb-4">
-          <label for="bloodGroup" class="form-label fw-bold">
-            Blood Group
-          </label>
-
-          <div class="input-group">
-            <span class="input-group-text bg-white">
-              <i class="bi bi-droplet-fill text-danger"></i>
-            </span>
-
-            <select
-              id="bloodGroup"
-              name="bloodGroup"
-              class="form-select touch-input"
-              required
-            >
-              <option value="">Select Blood Group</option>
-
-              <option value="A+">A+</option>
-              <option value="A-">A−</option>
-
-              <option value="B+">B+</option>
-              <option value="B-">B−</option>
-
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB−</option>
-
-              <option value="O+">O+</option>
-              <option value="O-">O−</option>
-
-              <option value="Unknown">Unknown / Not Known</option>
-            </select>
-          </div>
+        <!-- Aadhaar Number (Optional in Emergency) -->
+        <div class="col-md-6 col-6">
+          <label for="aadhaar" class="form-label fw-bold small text-dark" id="lblAadhaar">4. आधार नंबर (Aadhaar - Optional)</label>
+          <input
+            type="text"
+            id="aadhaar"
+            name="aadhaar"
+            class="form-control form-control-lg border-2"
+            placeholder="12-digit Aadhaar (वैकल्पिक)"
+            maxlength="12"
+          />
         </div>
 
-        <!-- ALERT -->
-        <div id="emergencyAlert" class="alert d-none"></div>
+        <!-- Submit & Back Buttons -->
+        <div class="col-12 mt-4">
+          <button
+            type="submit"
+            id="emergencySubmit"
+            class="btn btn-danger w-100 fw-bold fs-5 shadow rounded-pill py-3"
+          >
+            <i class="bi bi-lightning-charge-fill me-2"></i>
+            <span id="txtSubmitBtn">तुरंत आपातकालीन पर्ची बनाएं (Generate Emergency Token)</span>
+          </button>
+        </div>
 
-        <!-- SUBMIT -->
-        <button
-          type="submit"
-          id="emergencySubmit"
-          class="btn btn-danger emergency-btn w-100 fw-bold shadow-sm"
-        >
-          <i class="bi bi-lightning-charge-fill me-1"></i>
-
-          Register Emergency Patient
-        </button>
-
-        <!-- BACK -->
-        <a
-          href="/kiosk"
-          class="btn btn-outline-secondary w-100 mt-2 rounded-pill py-2"
-        >
-          <i class="bi bi-arrow-left me-1"></i>
-
-          Back to Kiosk
-        </a>
+        <div class="col-12 text-center mt-2">
+          <a href="/kiosk" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold">
+            <i class="bi bi-arrow-left me-1"></i> <span id="txtBackKioskBtn">‹ सामान्य कियोस्क पर वापस जाएं (Back to Kiosk)</span>
+          </a>
+        </div>
       </form>
 
-      <!-- =====================================================
-           FOOTER NOTE
-      ====================================================== -->
-
-      <div class="text-center text-muted small mt-4">
-        <i class="bi bi-shield-check text-success me-1"></i>
-
-        Patient information is handled securely.
-      </div>
     </div>
 
-    <!-- FOOTER -->
-    <div
-      class="card-footer bg-light border-0 text-center text-muted small py-3"
-    >
+    <!-- Sub-footer -->
+    <div class="card-footer bg-light border-0 text-center text-muted small py-2">
       <i class="bi bi-shield-check text-success me-1"></i>
-
-      National AYUSH Mission
+      MediKiosk Emergency Medical Triage System &bull; National AYUSH Mission
     </div>
   </div>
 </div>
 
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
+<style>
+.lang-pill {
+  color: #475569;
+  border: none;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}
+.lang-pill.active {
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
+}
+</style>
 
 <script>
-  const form = document.getElementById("emergencyPatientForm");
+  let currentEmergLang = localStorage.getItem('kiosk_lang') || 'hi';
 
-  const mobile = document.getElementById("mobile");
-
-  const aadhaar = document.getElementById("aadhaar");
-
-  const submitButton = document.getElementById("emergencySubmit");
-
-  const alertBox = document.getElementById("emergencyAlert");
-
-  /*
-   * Mobile: numbers only
-   */
-  mobile.addEventListener("input", function () {
-    this.value = this.value.replace(/\D/g, "").slice(0, 10);
-  });
-
-  /*
-   * Aadhaar: numbers only
-   */
-  aadhaar.addEventListener("input", function () {
-    this.value = this.value.replace(/\D/g, "").slice(0, 12);
-  });
-
-  /*
-   * Form validation
-   */
-  form.addEventListener("submit", function (event) {
-    if (!form.checkValidity()) {
-      event.preventDefault();
-
-      form.classList.add("was-validated");
-
-      return;
+  const emergDict = {
+    hi: {
+      txt108Title: "🚨 राष्ट्रीय आपातकालीन एम्बुलेंस (National Ambulance)",
+      txt108Sub: "तत्काल पैरामेडिक या एम्बुलेंस सहायता के लिए 108 डायल करें",
+      txtCall108Btn: "Call 108 Now (तुरंत कॉल करें)",
+      txtEmergTitle: "आपातकालीन मरीज पंजीकरण",
+      txtEmergSub: "Fast Emergency Registration — Immediate Medical Care",
+      lblPatientName: "1. मरीज का पूरा नाम (Patient Name) *",
+      phName: "उदा. रमेश कुमार",
+      lblMobile: "2. 10-अंकों का मोबाइल नंबर (Mobile No.) *",
+      phMobile: "10-अंकों का मोबाइल नंबर",
+      lblBloodGroup: "3. ब्लड ग्रुप (Blood Group)",
+      lblAadhaar: "4. आधार नंबर (Aadhaar - Optional)",
+      phAadhaar: "12-digit Aadhaar (वैकल्पिक)",
+      txtSubmitBtn: "तुरंत आपातकालीन पर्ची बनाएं (Generate Emergency Token)",
+      txtBackKioskBtn: "‹ सामान्य कियोस्क पर वापस जाएं (Back to Kiosk)",
+      voiceText: "यह अस्पताल का आपातकालीन पंजीकरण पोर्टल है। यदि तत्काल एम्बुलेंस सहायता की आवश्यकता है तो लाल बटन दबाकर 108 पर कॉल करें या मरीज का नाम और मोबाइल नंबर भरकर तुरंत आपातकालीन पर्ची निकालें।"
+    },
+    en: {
+      txt108Title: "🚨 National Emergency Ambulance Service",
+      txt108Sub: "Dial 108 for immediate paramedic or life-support ambulance",
+      txtCall108Btn: "Call 108 Now",
+      txtEmergTitle: "Emergency Patient Registration",
+      txtEmergSub: "Fast Emergency Intake — Immediate Doctor Allocation",
+      lblPatientName: "1. Patient Full Name *",
+      phName: "e.g. Ramesh Kumar",
+      lblMobile: "2. 10-Digit Mobile Number *",
+      phMobile: "10-digit mobile number",
+      lblBloodGroup: "3. Blood Group",
+      lblAadhaar: "4. Aadhaar Number (Optional)",
+      phAadhaar: "12-digit Aadhaar (optional)",
+      txtSubmitBtn: "Generate Emergency Token & Alert Doctor",
+      txtBackKioskBtn: "‹ Back to Main Kiosk Menu",
+      voiceText: "This is the Emergency Patient Registration portal. If you need immediate ambulance service, dial 108 or fill the patient's name and mobile number to generate an emergency OPD token immediately."
+    },
+    bn: {
+      txt108Title: "🚨 জাতীয় জরুরি অ্যাম্বুলেন্স পরিষেবা (National Ambulance)",
+      txt108Sub: "জরুরি চিকিৎসার জন্য ১০৮ নম্বরে ডায়াল করুন",
+      txtCall108Btn: "১০৮ নম্বরে কল করুন",
+      txtEmergTitle: "জরুরি রোগী নিবন্ধন (Emergency Intake)",
+      txtEmergSub: "Fast Emergency Registration — Immediate Medical Care",
+      lblPatientName: "১. রোগীর পুরো নাম *",
+      phName: "উদা. রমেশ কুমার",
+      lblMobile: "২. ১০-সংখ্যার মোবাইল নম্বর *",
+      phMobile: "১০-সংখ্যার মোবাইল নম্বর",
+      lblBloodGroup: "৩. রক্তের গ্রুপ (Blood Group)",
+      lblAadhaar: "৪. আধার নম্বর (ঐচ্ছিক)",
+      phAadhaar: "১২-সংখ্যার আধার (ঐচ্ছিক)",
+      txtSubmitBtn: "জরুরি ওপিডি টোকেন বের করুন",
+      txtBackKioskBtn: "‹ প্রধান কিওস্কে ফিরে যান",
+      voiceText: "এটি জরুরি রোগী নিবন্ধন পোর্টাল। জরুরি অ্যাম্বুলেন্স সেবার জন্য ১০৮ নম্বরে কল করুন অথবা রোগীর নাম ও মোবাইল নম্বর পূরণ করে এখনই টোকেন সংগ্রহ করুন।"
     }
+  };
 
-    /*
-     * Loading state
-     */
-    submitButton.disabled = true;
+  function setEmergencyLang(lang) {
+    if (!emergDict[lang]) lang = 'hi';
+    currentEmergLang = lang;
+    localStorage.setItem('kiosk_lang', lang);
 
-    submitButton.innerHTML = `
-          <span
-            class="spinner-border
-                   spinner-border-sm me-2"
-          ></span>
+    document.querySelectorAll('.lang-pill').forEach(btn => btn.classList.remove('active'));
+    const active = document.getElementById(`btn-${lang}`);
+    if (active) active.classList.add('active');
 
-          Registering Patient...
-        `;
+    const d = emergDict[lang];
+    const update = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
+
+    update('txt108Title', d.txt108Title);
+    update('txt108Sub', d.txt108Sub);
+    update('txtCall108Btn', d.txtCall108Btn);
+    update('txtEmergTitle', d.txtEmergTitle);
+    update('txtEmergSub', d.txtEmergSub);
+    update('lblPatientName', d.lblPatientName);
+    update('lblMobile', d.lblMobile);
+    update('lblBloodGroup', d.lblBloodGroup);
+    update('lblAadhaar', d.lblAadhaar);
+    update('txtSubmitBtn', d.txtSubmitBtn);
+    update('txtBackKioskBtn', d.txtBackKioskBtn);
+
+    const nameInput = document.getElementById('name');
+    if (nameInput) nameInput.placeholder = d.phName;
+    const mobInput = document.getElementById('mobile');
+    if (mobInput) mobInput.placeholder = d.phMobile;
+    const aadhInput = document.getElementById('aadhaar');
+    if (aadhInput) aadhInput.placeholder = d.phAadhaar;
+  }
+
+  function speakEmergencyGuide() {
+    const d = emergDict[currentEmergLang] || emergDict.hi;
+    if (window.readTextAloud) {
+      window.readTextAloud(d.voiceText, currentEmergLang);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setEmergencyLang(currentEmergLang);
   });
+
+  // Mobile number input sanitization
+  const mobileInput = document.getElementById("mobile");
+  if (mobileInput) {
+    mobileInput.addEventListener("input", function () {
+      this.value = this.value.replace(/\D/g, "").slice(0, 10);
+    });
+  }
+
+  // Aadhaar input sanitization
+  const aadhaarInput = document.getElementById("aadhaar");
+  if (aadhaarInput) {
+    aadhaarInput.addEventListener("input", function () {
+      this.value = this.value.replace(/\D/g, "").slice(0, 12);
+    });
+  }
+
+  const form = document.getElementById("emergencyPatientForm");
+  const submitButton = document.getElementById("emergencySubmit");
+  if (form) {
+    form.addEventListener("submit", function () {
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Registering Emergency Patient...`;
+      }
+    });
+  }
 </script>
 
 <%- include('../partials/footer') %>

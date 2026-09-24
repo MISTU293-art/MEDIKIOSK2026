@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ऑफ़लाइन मोड (Offline Mode) — MediKiosk</title>
+  
+  <meta name="theme-color" content="#dc2626">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/png" href="/uploads/new_logo.png">
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <style>
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .gov-tricolor-bar {
+      height: 5px;
+      background: linear-gradient(90deg, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%);
+    }
+    .offline-pulse {
+      animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.08); }
+    }
+    .touch-btn {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+    }
+    .lang-pill.active {
+      background-color: #0284c7 !important;
+      color: #ffffff !important;
+      border-color: #0284c7 !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="gov-tricolor-bar"></div>
+
+  <!-- Reconnect Notification Bar (hidden until back online) -->
+  <div id="onlineAlertBar" class="alert alert-success m-0 rounded-0 text-center py-2 fw-bold d-none" role="alert">
+    <i class="bi bi-wifi me-2"></i> <span id="onlineAlertText">इंटरनेट कनेक्शन पुनः स्थापित हो गया है! पेज रीलोड हो रहा है... (Connection Restored! Reloading...)</span>
+  </div>
+
+  <div class="container py-4 flex-grow-1 d-flex flex-column justify-content-center" style="max-width: 650px;">
+    
+    <!-- Top Bar with Logo & Language Toggle -->
+    <div class="d-flex align-items-center justify-content-between mb-3 bg-white p-3 rounded-4 shadow-sm border">
+      <div class="d-flex align-items-center gap-2">
+        <img src="/uploads/new_logo.png" alt="MediKiosk Logo" style="height: 42px; width: auto;" onerror="this.src='/uploads/logo.png'">
+        <div>
+          <h5 class="fw-bold text-dark m-0">MediKiosk</h5>
+          <div class="text-muted small" style="font-size: 0.72rem;">National AYUSH Network &bull; Emergency Ready</div>
+        </div>
+      </div>
+
+      <!-- Language Selector -->
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" class="btn btn-outline-secondary lang-pill active" id="btn-hi" onclick="setOfflineLanguage('hi')">हिन्दी</button>
+        <button type="button" class="btn btn-outline-secondary lang-pill" id="btn-en" onclick="setOfflineLanguage('en')">English</button>
+        <button type="button" class="btn btn-outline-secondary lang-pill" id="btn-bn" onclick="setOfflineLanguage('bn')">বাংলা</button>
+      </div>
+    </div>
+
+    <!-- Offline Warning Card -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-3">
+      <div class="p-4 text-center bg-white border-bottom">
+        <div class="offline-pulse d-inline-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle p-3 mb-2" style="width: 72px; height: 72px;">
+          <i class="bi bi-wifi-off fs-1"></i>
+        </div>
+        <h4 class="fw-bold text-dark mb-1" id="offlineTitle">ऑफ़लाइन मोड (Offline Mode)</h4>
+        <p class="text-muted small mb-3" id="offlineSubtitle">
+          आपका डिवाइस वर्तमान में इंटरनेट से कनेक्ट नहीं है। आपातकालीन हेल्पलाइन और बुनियादी सेवाएं उपलब्ध हैं।
+        </p>
+
+        <!-- Retry Button -->
+        <button type="button" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-xs touch-btn" onclick="checkConnection()">
+          <i class="bi bi-arrow-clockwise me-1" id="retryIcon"></i> <span id="retryBtnText">पुनः प्रयास करें (Retry Connection)</span>
+        </button>
+      </div>
+
+      <!-- Emergency Hotline Quick Buttons -->
+      <div class="card-body bg-light p-3 p-md-4">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="small fw-bold text-danger text-uppercase" id="emergencyHeader">
+            <i class="bi bi-exclamation-octagon-fill me-1"></i> 24/7 आपातकालीन नंबर (Direct Call Helpline)
+          </span>
+          <span class="badge bg-danger text-white">Free / टोल फ्री</span>
+        </div>
+
+        <div class="row g-2 mb-3">
+          <div class="col-12 col-sm-4">
+            <a href="tel:108" class="btn btn-danger w-100 fw-bold py-2 shadow-xs d-flex flex-column align-items-center">
+              <span class="fs-5"><i class="bi bi-telephone-fill me-1"></i> 108</span>
+              <span style="font-size: 0.72rem;" id="lbl108">एम्बुलेंस (Ambulance)</span>
+            </a>
+          </div>
+          <div class="col-6 col-sm-4">
+            <a href="tel:112" class="btn btn-outline-danger w-100 fw-bold py-2 d-flex flex-column align-items-center bg-white">
+              <span class="fs-5"><i class="bi bi-shield-fill me-1"></i> 112</span>
+              <span style="font-size: 0.72rem;" id="lbl112">राष्ट्रीय आपात (National)</span>
+            </a>
+          </div>
+          <div class="col-6 col-sm-4">
+            <a href="tel:104" class="btn btn-outline-success w-100 fw-bold py-2 d-flex flex-column align-items-center bg-white">
+              <span class="fs-5 text-success"><i class="bi bi-heart-pulse-fill me-1"></i> 104</span>
+              <span style="font-size: 0.72rem;" class="text-success" id="lbl104">स्वास्थ्य सलाह (Medical)</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Offline Emergency Temporary Token Generator -->
+        <div class="p-3 bg-white rounded-3 border mb-3">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-ticket-perforated-fill text-warning fs-5"></i>
+            <h6 class="fw-bold m-0 text-dark" id="tokenGenTitle">ऑफ़लाइन आपातकालीन पर्ची (Offline Emergency Token)</h6>
+          </div>
+          <p class="text-muted small mb-2" id="tokenGenDesc">
+            यदि आप तुरंत अस्पताल पहुँचे हैं, तो बिना इंटरनेट के यह अस्थायी टोकन तैयार करें और स्वागत डेस्क पर दिखाएं:
+          </p>
+
+          <form id="offlineTokenForm" onsubmit="generateOfflineToken(event)" class="row g-2">
+            <div class="col-sm-6">
+              <input type="text" id="offName" class="form-control form-control-sm" placeholder="मरीज का नाम (Patient Name)" required>
+            </div>
+            <div class="col-sm-6">
+              <input type="tel" id="offPhone" class="form-control form-control-sm" placeholder="10-अंकों का मोबाइल (Mobile)" maxlength="10" pattern="[0-9]{10}" required>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-warning btn-sm w-100 fw-bold text-dark rounded-pill py-2">
+                <i class="bi bi-check2-circle me-1"></i> <span id="generateBtnText">ऑफ़लाइन पर्ची बनाएं (Generate Offline Slip)</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Result Slip (hidden by default) -->
+          <div id="offlineTokenSlip" class="mt-3 p-3 bg-warning-subtle border border-warning rounded-3 text-center d-none">
+            <span class="badge bg-warning text-dark fw-bold mb-1">OFFLINE EMERGENCY PASS</span>
+            <h3 class="fw-bold text-danger m-0 font-monospace" id="displayTokenCode">OFF-9921</h3>
+            <div class="small fw-semibold text-dark mt-1" id="displayPatientInfo">Ramesh Kumar &bull; 9876543210</div>
+            <div class="text-muted mt-1" style="font-size: 0.75rem;" id="slipNotice">
+              यह पर्चा आपके डिवाइस में सुरक्षित है। कृपया इसे ट्रायज काउंटर पर दिखाएं।
+            </div>
+          </div>
+        </div>
+
+        <!-- Cached Pages Quick Navigation -->
+        <div class="p-3 bg-white rounded-3 border">
+          <span class="small fw-bold text-secondary text-uppercase d-block mb-2" id="cachedPagesHeader">
+            <i class="bi bi-folder-check me-1"></i> सुरक्षित कैश किए गए पेज (Cached Pages Available Offline):
+          </span>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="/kiosk/emergency" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+              <i class="bi bi-exclamation-triangle me-1"></i> Emergency Desk
+            </a>
+            <a href="/kiosk" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+              <i class="bi bi-display me-1"></i> OPD Kiosk Home
+            </a>
+            <a href="/patient/login" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+              <i class="bi bi-box-arrow-in-right me-1"></i> Patient Login
+            </a>
+            <a href="/patient/register" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+              <i class="bi bi-person-plus me-1"></i> New Registration
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer Note -->
+    <div class="text-center text-muted small" style="font-size: 0.78rem;">
+      <i class="bi bi-shield-check text-success me-1"></i>
+      MediKiosk 2.0 PWA &bull; Auto-Sync Activated &bull; Government of India
+    </div>
+
+  </div>
+
+  <script>
+    let currentOfflineLang = localStorage.getItem('kiosk_lang') || 'hi';
+
+    const offlineDict = {
+      hi: {
+        title: "ऑफ़लाइन मोड (Offline Mode)",
+        subtitle: "आपका डिवाइस वर्तमान में इंटरनेट से कनेक्ट नहीं है। आपातकालीन हेल्पलाइन और बुनियादी सेवाएं उपलब्ध हैं।",
+        retry: "पुनः प्रयास करें (Retry Connection)",
+        emergency: "24/7 आपातकालीन नंबर (Direct Call Helpline)",
+        lbl108: "एम्बुलेंस (Ambulance)",
+        lbl112: "राष्ट्रीय आपात (National)",
+        lbl104: "स्वास्थ्य सलाह (Medical)",
+        tokenTitle: "ऑफ़लाइन आपातकालीन पर्ची (Offline Emergency Token)",
+        tokenDesc: "यदि आप तुरंत अस्पताल पहुँचे हैं, तो बिना इंटरनेट के यह अस्थायी टोकन तैयार करें और स्वागत डेस्क पर दिखाएं:",
+        namePh: "मरीज का नाम (Patient Name)",
+        phonePh: "10-अंकों का मोबाइल (Mobile)",
+        genBtn: "ऑफ़लाइन पर्ची बनाएं (Generate Offline Slip)",
+        slipNotice: "यह पर्चा आपके डिवाइस में सुरक्षित है। कृपया इसे ट्रायज काउंटर पर दिखाएं।",
+        cachedHeader: "सुरक्षित कैश किए गए पेज (Cached Pages Available Offline):",
+        onlineNotice: "इंटरनेट कनेक्शन पुनः स्थापित हो गया है! पेज रीलोड हो रहा है..."
+      },
+      en: {
+        title: "Offline Mode Active",
+        subtitle: "Your device is currently disconnected from the internet. Emergency hotlines and offline cached records remain available.",
+        retry: "Retry Connection",
+        emergency: "24/7 Emergency Helplines (Direct Call)",
+        lbl108: "Ambulance Hotline",
+        lbl112: "National Emergency",
+        lbl104: "Medical Helpline",
+        tokenTitle: "Offline Emergency OPD Token",
+        tokenDesc: "Generate an offline emergency slip instantly on your device and present it to the hospital triage nurse:",
+        namePh: "Patient Full Name",
+        phonePh: "10-Digit Mobile Number",
+        genBtn: "Generate Offline Slip",
+        slipNotice: "Saved to device storage. Show this token code at the OPD triage desk.",
+        cachedHeader: "Cached Pages Available Offline:",
+        onlineNotice: "Internet connection restored! Reloading..."
+      },
+      bn: {
+        title: "অফলাইন মোড সক্রিয় (Offline Mode)",
+        subtitle: "আপনার ডিভাইসটি ইন্টারনেট সংযোগ বিচ্ছিন্ন রয়েছে। জরুরি সেবা ও অফলাইন সংরক্ষিত পৃষ্ঠা উপলব্ধ রয়েছে।",
+        retry: "পুনরায় চেষ্টা করুন (Retry)",
+        emergency: "২৪/৭ জরুরি হেল্পলাইন (Direct Call)",
+        lbl108: "অ্যাম্বুলেন্স (Ambulance)",
+        lbl112: "জরুরি সেবা (National)",
+        lbl104: "স্বাস্থ্য পরামর্শ (Medical)",
+        tokenTitle: "অফলাইন জরুরি ওপিডি টোকেন",
+        tokenDesc: "ইন্টারনেট ছাড়াই একটি অস্থায়ী টোকেন তৈরি করুন এবং হাসপাতালের ট্রায়াজ ডেস্কে দেখান:",
+        namePh: "রোগীর নাম (Patient Name)",
+        phonePh: "১০-সংখ্যার মোবাইল নম্বর",
+        genBtn: "অফলাইন টোকেন তৈরি করুন",
+        slipNotice: "টোকেনটি ডিভাইসে সংরক্ষিত। অনুগ্রহ করে এটি ট্রায়াজ ডেস্কে দেখান।",
+        cachedHeader: "অফলাইনে সংরক্ষিত পেজগুলি:",
+        onlineNotice: "ইন্টারনেট সংযোগ পুনরুদ্ধার হয়েছে! পুনরায় লোড হচ্ছে..."
+      }
+    };
+
+    function setOfflineLanguage(lang) {
+      if (!offlineDict[lang]) lang = 'hi';
+      currentOfflineLang = lang;
+      localStorage.setItem('kiosk_lang', lang);
+
+      document.querySelectorAll('.lang-pill').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const d = offlineDict[lang];
+      document.getElementById('offlineTitle').innerText = d.title;
+      document.getElementById('offlineSubtitle').innerText = d.subtitle;
+      document.getElementById('retryBtnText').innerText = d.retry;
+      document.getElementById('emergencyHeader').innerHTML = '<i class="bi bi-exclamation-octagon-fill me-1"></i> ' + d.emergency;
+      document.getElementById('lbl108').innerText = d.lbl108;
+      document.getElementById('lbl112').innerText = d.lbl112;
+      document.getElementById('lbl104').innerText = d.lbl104;
+      document.getElementById('tokenGenTitle').innerText = d.tokenTitle;
+      document.getElementById('tokenGenDesc').innerText = d.tokenDesc;
+      document.getElementById('offName').placeholder = d.namePh;
+      document.getElementById('offPhone').placeholder = d.phonePh;
+      document.getElementById('generateBtnText').innerText = d.genBtn;
+      document.getElementById('slipNotice').innerText = d.slipNotice;
+      document.getElementById('cachedPagesHeader').innerHTML = '<i class="bi bi-folder-check me-1"></i> ' + d.cachedHeader;
+      document.getElementById('onlineAlertText').innerText = d.onlineNotice;
+    }
+
+    function checkConnection() {
+      const icon = document.getElementById('retryIcon');
+      icon.classList.add('spinner-border', 'spinner-border-sm');
+      if (navigator.onLine) {
+        window.location.reload();
+      } else {
+        setTimeout(() => {
+          icon.classList.remove('spinner-border', 'spinner-border-sm');
+          alert('Still offline. Please check your Wi-Fi or mobile data connection.');
+        }, 1200);
+      }
+    }
+
+    window.addEventListener('online', () => {
+      const bar = document.getElementById('onlineAlertBar');
+      bar.classList.remove('d-none');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    });
+
+    function generateOfflineToken(e) {
+      e.preventDefault();
+      const name = document.getElementById('offName').value.trim();
+      const phone = document.getElementById('offPhone').value.trim();
+      if (!name || !phone) return;
+
+      const randomNum = Math.floor(1000 + Math.random() * 9000);
+      const token = 'OFF-EMG-' + randomNum;
+
+      const record = {
+        token,
+        name,
+        phone,
+        timestamp: new Date().toISOString(),
+        offline: true
+      };
+
+      try {
+        const stored = JSON.parse(localStorage.getItem('medikiosk_offline_tokens') || '[]');
+        stored.push(record);
+        localStorage.setItem('medikiosk_offline_tokens', JSON.stringify(stored));
+      } catch (err) {
+        console.warn('LocalStorage error:', err);
+      }
+
+      document.getElementById('displayTokenCode').innerText = token;
+      document.getElementById('displayPatientInfo').innerText = `${name} • ${phone}`;
+      document.getElementById('offlineTokenSlip').classList.remove('d-none');
+    }
+
+    // Initialize with current language
+    document.addEventListener('DOMContentLoaded', () => {
+      setOfflineLanguage(currentOfflineLang);
+    });
+  </script>
+</body>
+</html>
