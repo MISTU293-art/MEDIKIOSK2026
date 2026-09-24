@@ -3507,3 +3507,357 @@
 [2026-09-24T15:15:28.360Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
 [2026-09-24T15:15:28.372Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
 [2026-09-24T15:15:28.382Z] [INFO] ==================================================
+[2026-09-24T15:15:39.782Z] [INFO] ========================================
+[2026-09-24T15:15:39.784Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:15:39.785Z] [INFO] Host: localhost
+[2026-09-24T15:15:39.785Z] [INFO] Database: medikiosk
+[2026-09-24T15:15:39.786Z] [INFO] ========================================
+[2026-09-24T15:15:39.939Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:15:39.943Z] [INFO] ==================================================
+[2026-09-24T15:15:39.944Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:15:39.945Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:15:39.946Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:15:39.948Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:15:39.949Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:15:39.949Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:15:39.950Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:15:39.950Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:15:39.951Z] [INFO] ==================================================
+[2026-09-24T15:15:52.188Z] [INFO] ========================================
+[2026-09-24T15:15:52.190Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:15:52.191Z] [INFO] Host: localhost
+[2026-09-24T15:15:52.194Z] [INFO] Database: medikiosk
+[2026-09-24T15:15:52.195Z] [INFO] ========================================
+[2026-09-24T15:15:52.377Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:15:52.381Z] [INFO] ==================================================
+[2026-09-24T15:15:52.382Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:15:52.383Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:15:52.384Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:15:52.385Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:15:52.385Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:15:52.386Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:15:52.388Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:15:52.389Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:15:52.390Z] [INFO] ==================================================
+[2026-09-24T15:16:43.524Z] [INFO] ========================================
+[2026-09-24T15:16:43.525Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:16:43.528Z] [INFO] Host: localhost
+[2026-09-24T15:16:43.532Z] [INFO] Database: medikiosk
+[2026-09-24T15:16:43.535Z] [INFO] ========================================
+[2026-09-24T15:16:43.692Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:16:43.698Z] [INFO] ==================================================
+[2026-09-24T15:16:43.699Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:16:43.701Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:16:43.705Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:16:43.710Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:16:43.715Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:16:43.718Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:16:43.726Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:16:43.730Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:16:43.737Z] [INFO] ==================================================
+[2026-09-24T15:16:46.359Z] [INFO] ========================================
+[2026-09-24T15:16:46.360Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:16:46.362Z] [INFO] Host: localhost
+[2026-09-24T15:16:46.364Z] [INFO] Database: medikiosk
+[2026-09-24T15:16:46.365Z] [INFO] ========================================
+[2026-09-24T15:16:46.506Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:16:46.511Z] [INFO] ==================================================
+[2026-09-24T15:16:46.513Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:16:46.516Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:16:46.519Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:16:46.521Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:16:46.528Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:16:46.544Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:16:46.565Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:16:46.584Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:16:46.616Z] [INFO] ==================================================
+[2026-09-24T15:17:21.021Z] [INFO] ========================================
+[2026-09-24T15:17:21.023Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:17:21.026Z] [INFO] Host: localhost
+[2026-09-24T15:17:21.030Z] [INFO] Database: medikiosk
+[2026-09-24T15:17:21.034Z] [INFO] ========================================
+[2026-09-24T15:17:21.193Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:17:21.198Z] [INFO] ==================================================
+[2026-09-24T15:17:21.200Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:17:21.203Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:17:21.207Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:17:21.221Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:17:21.223Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:17:21.230Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:17:21.243Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:17:21.253Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:17:21.258Z] [INFO] ==================================================
+[2026-09-24T15:17:24.187Z] [INFO] ========================================
+[2026-09-24T15:17:24.191Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:17:24.194Z] [INFO] Host: localhost
+[2026-09-24T15:17:24.200Z] [INFO] Database: medikiosk
+[2026-09-24T15:17:24.206Z] [INFO] ========================================
+[2026-09-24T15:17:24.398Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:17:24.405Z] [INFO] ==================================================
+[2026-09-24T15:17:24.410Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:17:24.417Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:17:24.427Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:17:24.435Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:17:24.441Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:17:24.450Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:17:24.461Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:17:24.464Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:17:24.475Z] [INFO] ==================================================
+[2026-09-24T15:18:10.090Z] [INFO] ========================================
+[2026-09-24T15:18:10.092Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:18:10.094Z] [INFO] Host: localhost
+[2026-09-24T15:18:10.098Z] [INFO] Database: medikiosk
+[2026-09-24T15:18:10.104Z] [INFO] ========================================
+[2026-09-24T15:18:10.294Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:18:10.301Z] [INFO] ==================================================
+[2026-09-24T15:18:10.305Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:18:10.317Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:18:10.320Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:18:10.327Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:18:10.336Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:18:10.343Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:18:10.350Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:18:10.360Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:18:10.368Z] [INFO] ==================================================
+[2026-09-24T15:18:16.404Z] [INFO] ========================================
+[2026-09-24T15:18:16.405Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:18:16.407Z] [INFO] Host: localhost
+[2026-09-24T15:18:16.409Z] [INFO] Database: medikiosk
+[2026-09-24T15:18:16.411Z] [INFO] ========================================
+[2026-09-24T15:18:16.581Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:18:16.593Z] [INFO] ==================================================
+[2026-09-24T15:18:16.597Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:18:16.605Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:18:16.635Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:18:16.658Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:18:16.664Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:18:16.685Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:18:16.714Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:18:16.736Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:18:16.765Z] [INFO] ==================================================
+[2026-09-24T15:19:22.346Z] [INFO] ========================================
+[2026-09-24T15:19:22.348Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:19:22.351Z] [INFO] Host: ac-tijfd4v-shard-00-00.xs297yi.mongodb.net
+[2026-09-24T15:19:22.353Z] [INFO] Database: /medikiosk
+[2026-09-24T15:19:22.357Z] [INFO] ========================================
+[2026-09-24T15:19:23.341Z] [INFO] ==================================================
+[2026-09-24T15:19:23.383Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:19:23.414Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:19:23.456Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:19:23.487Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:19:23.549Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:19:23.595Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:19:23.631Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:19:23.678Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:19:23.713Z] [INFO] ==================================================
+[2026-09-24T15:19:39.549Z] [INFO] ========================================
+[2026-09-24T15:19:39.552Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:19:39.555Z] [INFO] Host: ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-24T15:19:39.559Z] [INFO] Database: /medikiosk
+[2026-09-24T15:19:39.564Z] [INFO] ========================================
+[2026-09-24T15:19:40.612Z] [INFO] ==================================================
+[2026-09-24T15:19:40.635Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:19:40.681Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:19:40.709Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:19:40.760Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:19:40.791Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:19:40.824Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:19:40.840Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:19:40.892Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:19:40.925Z] [INFO] ==================================================
+[2026-09-24T15:20:07.352Z] [INFO] ========================================
+[2026-09-24T15:20:07.355Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:20:07.358Z] [INFO] Host: ac-tijfd4v-shard-00-01.xs297yi.mongodb.net
+[2026-09-24T15:20:07.359Z] [INFO] Database: /medikiosk
+[2026-09-24T15:20:07.364Z] [INFO] ========================================
+[2026-09-24T15:20:08.941Z] [INFO] ==================================================
+[2026-09-24T15:20:08.958Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:20:08.971Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:20:08.976Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:20:08.993Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:20:08.999Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:20:09.002Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:20:09.019Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:20:09.023Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:20:09.031Z] [INFO] ==================================================
+[2026-09-24T15:20:31.743Z] [INFO] ========================================
+[2026-09-24T15:20:31.745Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:20:31.748Z] [INFO] Host: ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-24T15:20:31.751Z] [INFO] Database: /medikiosk
+[2026-09-24T15:20:31.754Z] [INFO] ========================================
+[2026-09-24T15:20:32.810Z] [INFO] ==================================================
+[2026-09-24T15:20:32.834Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:20:32.858Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:20:32.879Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:20:32.906Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:20:32.930Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:20:32.978Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:20:32.999Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:20:33.022Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:20:33.047Z] [INFO] ==================================================
+[2026-09-24T15:22:25.539Z] [INFO] ========================================
+[2026-09-24T15:22:25.544Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:22:25.549Z] [INFO] Host: ac-tijfd4v-shard-00-00.xs297yi.mongodb.net
+[2026-09-24T15:22:25.560Z] [INFO] Database: medikiosk
+[2026-09-24T15:22:25.571Z] [INFO] ========================================
+[2026-09-24T15:22:31.628Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:22:31.639Z] [INFO] ==================================================
+[2026-09-24T15:22:31.653Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:22:31.666Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:22:31.686Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:22:31.698Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:22:31.706Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:22:31.735Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:22:31.747Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:22:31.759Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:22:31.768Z] [INFO] ==================================================
+[2026-09-24T15:23:16.162Z] [INFO] ========================================
+[2026-09-24T15:23:16.163Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:23:16.166Z] [INFO] Host: ac-tijfd4v-shard-00-00.xs297yi.mongodb.net
+[2026-09-24T15:23:16.168Z] [INFO] Database: medikiosk
+[2026-09-24T15:23:16.169Z] [INFO] ========================================
+[2026-09-24T15:23:19.051Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:23:19.056Z] [INFO] ==================================================
+[2026-09-24T15:23:19.057Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:23:19.058Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:23:19.059Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:23:19.060Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:23:19.062Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:23:19.063Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:23:19.064Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:23:19.065Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:23:19.066Z] [INFO] ==================================================
+[2026-09-24T15:24:53.994Z] [INFO] ========================================
+[2026-09-24T15:24:53.995Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:24:53.998Z] [INFO] Host: ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-24T15:24:54.000Z] [INFO] Database: medikiosk
+[2026-09-24T15:24:54.004Z] [INFO] ========================================
+[2026-09-24T15:24:57.038Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:24:57.047Z] [INFO] ==================================================
+[2026-09-24T15:24:57.053Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:24:57.056Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:24:57.060Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:24:57.066Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:24:57.070Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:24:57.076Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:24:57.082Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:24:57.087Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:24:57.090Z] [INFO] ==================================================
+[2026-09-24T15:25:41.371Z] [INFO] ========================================
+[2026-09-24T15:25:41.373Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:25:41.374Z] [INFO] Host: ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-24T15:25:41.375Z] [INFO] Database: medikiosk
+[2026-09-24T15:25:41.377Z] [INFO] ========================================
+[2026-09-24T15:25:43.860Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:26:15.152Z] [INFO] ========================================
+[2026-09-24T15:26:15.154Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:26:15.158Z] [INFO] Host: ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-24T15:26:15.159Z] [INFO] Database: medikiosk
+[2026-09-24T15:26:15.165Z] [INFO] ========================================
+[2026-09-24T15:26:17.808Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:26:17.817Z] [INFO] ==================================================
+[2026-09-24T15:26:17.821Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:26:17.848Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:26:17.860Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:26:17.877Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:26:17.899Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:26:17.912Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:26:17.928Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:26:17.942Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:26:17.953Z] [INFO] ==================================================
+[2026-09-24T15:33:30.069Z] [INFO] ========================================
+[2026-09-24T15:33:30.071Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:33:30.073Z] [INFO] Host: ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-24T15:33:30.075Z] [INFO] Database: medikiosk
+[2026-09-24T15:33:30.077Z] [INFO] ========================================
+[2026-09-24T15:33:32.601Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:33:32.627Z] [INFO] ==================================================
+[2026-09-24T15:33:32.640Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:33:32.649Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:33:32.663Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:33:32.673Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:33:32.680Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:33:32.685Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:33:32.694Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:33:32.701Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:33:32.722Z] [INFO] ==================================================
+[2026-09-24T15:33:42.325Z] [INFO] ========================================
+[2026-09-24T15:33:42.330Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:33:42.334Z] [INFO] Host: ac-tijfd4v-shard-00-01.xs297yi.mongodb.net
+[2026-09-24T15:33:42.337Z] [INFO] Database: medikiosk
+[2026-09-24T15:33:42.339Z] [INFO] ========================================
+[2026-09-24T15:33:44.914Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:33:44.924Z] [INFO] ==================================================
+[2026-09-24T15:33:44.927Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:33:44.938Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:33:44.940Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:33:44.955Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:33:44.968Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:33:44.974Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:33:44.983Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:33:44.987Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:33:44.990Z] [INFO] ==================================================
+[2026-09-24T15:33:47.498Z] [INFO] ========================================
+[2026-09-24T15:33:47.499Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:33:47.500Z] [INFO] Host: ac-tijfd4v-shard-00-01.xs297yi.mongodb.net
+[2026-09-24T15:33:47.501Z] [INFO] Database: medikiosk
+[2026-09-24T15:33:47.501Z] [INFO] ========================================
+[2026-09-24T15:33:49.915Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:34:36.191Z] [INFO] ========================================
+[2026-09-24T15:34:36.192Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:34:36.192Z] [INFO] Host: ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-24T15:34:36.193Z] [INFO] Database: medikiosk
+[2026-09-24T15:34:36.194Z] [INFO] ========================================
+[2026-09-24T15:34:38.911Z] [INFO] ========================================
+[2026-09-24T15:34:38.912Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:34:38.913Z] [INFO] Host: ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-24T15:34:38.913Z] [INFO] Database: medikiosk
+[2026-09-24T15:34:38.914Z] [INFO] ========================================
+[2026-09-24T15:34:39.219Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:34:39.222Z] [INFO] ==================================================
+[2026-09-24T15:34:39.223Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:34:39.223Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:34:39.224Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:34:39.224Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:34:39.225Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:34:39.225Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:34:39.226Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:34:39.226Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:34:39.227Z] [INFO] ==================================================
+[2026-09-24T15:34:41.479Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:34:55.205Z] [INFO] ========================================
+[2026-09-24T15:34:55.206Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:34:55.207Z] [INFO] Host: ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-24T15:34:55.207Z] [INFO] Database: medikiosk
+[2026-09-24T15:34:55.209Z] [INFO] ========================================
+[2026-09-24T15:34:57.374Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:35:02.209Z] [WARN] [EMERGENCY_DETECTED_IN_PATIENT_CHAT] Matched pattern: /\b(chest pain|chest pressure|crushing pain in chest|pain radiating to arm|heart attack)\b/i
+[2026-09-24T15:35:02.212Z] [WARN] [EMERGENCY_DETECTED_IN_PATIENT_CHAT] Matched pattern: /(छाती में तेज दर्द|सीने में दर्द|दिल का दौरा|हार्ट अटैक)/
+[2026-09-24T15:35:10.977Z] [INFO] ========================================
+[2026-09-24T15:35:10.979Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:35:10.981Z] [INFO] Host: ac-tijfd4v-shard-00-01.xs297yi.mongodb.net
+[2026-09-24T15:35:10.982Z] [INFO] Database: medikiosk
+[2026-09-24T15:35:10.983Z] [INFO] ========================================
+[2026-09-24T15:35:13.079Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:54:35.789Z] [INFO] ========================================
+[2026-09-24T15:54:35.790Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:54:35.791Z] [INFO] Host: ac-tijfd4v-shard-00-00.xs297yi.mongodb.net
+[2026-09-24T15:54:35.792Z] [INFO] Database: medikiosk
+[2026-09-24T15:54:35.792Z] [INFO] ========================================
+[2026-09-24T15:54:38.240Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:55:02.909Z] [INFO] ========================================
+[2026-09-24T15:55:02.910Z] [INFO] ✅ MongoDB Connected Successfully
+[2026-09-24T15:55:02.911Z] [INFO] Host: ac-tijfd4v-shard-00-01.xs297yi.mongodb.net
+[2026-09-24T15:55:02.911Z] [INFO] Database: medikiosk
+[2026-09-24T15:55:02.912Z] [INFO] ========================================
+[2026-09-24T15:55:05.412Z] [INFO] Database seeding: Verified users, demo patients, accounts, and clinical reports.
+[2026-09-24T15:55:05.416Z] [INFO] ==================================================
+[2026-09-24T15:55:05.417Z] [INFO] MediKiosk Hospital Intake Server running on port 3000
+[2026-09-24T15:55:05.418Z] [INFO] Kiosk URL:      http://localhost:3000/kiosk
+[2026-09-24T15:55:05.418Z] [INFO] Patient Portal: http://localhost:3000/patient/dashboard
+[2026-09-24T15:55:05.418Z] [INFO] Patient Login:  http://localhost:3000/patient/login
+[2026-09-24T15:55:05.419Z] [INFO] Staff Portal:   http://localhost:3000/staff/dashboard
+[2026-09-24T15:55:05.419Z] [INFO] Doctor Queue:   http://localhost:3000/doctor/queue
+[2026-09-24T15:55:05.420Z] [INFO] Admin Portal:   http://localhost:3000/admin/dashboard
+[2026-09-24T15:55:05.420Z] [INFO] Pharmacy:       http://localhost:3000/pharmacy
+[2026-09-24T15:55:05.421Z] [INFO] ==================================================

@@ -2,6 +2,26 @@
 
 <div class="container-fluid px-3 px-lg-4 py-4">
 
+  <!-- Top Accessibility, Senior Citizen & Back Switcher Bar -->
+  <div class="senior-toggle-bar mb-3">
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+      <a href="/kiosk" class="btn btn-sm btn-outline-dark rounded-pill px-3 fw-semibold shadow-xs">
+        <i class="bi bi-arrow-left-circle me-1"></i> Back to Kiosk / कियोस्क
+      </a>
+      <button type="button" onclick="window.toggleSeniorMode()" class="btn btn-sm btn-outline-warning senior-toggle-btn rounded-pill px-3 fw-bold text-dark shadow-xs">
+        <i class="bi bi-eyeglasses me-1"></i> Senior View (बड़ा टेक्स्ट)
+      </button>
+    </div>
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+      <button type="button" onclick="window.readTextAloud('Welcome <%= (patient.fullName || '').replace(/'/g, '') %>. Your Patient Card number is <%= patientCard.patientCardNumber %> and your UHID is <%= patient.uhid %>. Your current token is <%= patient.tokenNumber || 'T-101' %> for <%= (patient.department || 'AYUSH OPD').replace(/'/g, '') %>.')" class="btn btn-sm btn-outline-primary rounded-pill px-3 voice-read-btn fw-semibold shadow-xs" title="Listen to summary">
+        <i class="bi bi-volume-up-fill me-1"></i> Read Out / सुनें
+      </button>
+      <a href="tel:108" class="btn btn-sm btn-danger rounded-pill px-3 fw-bold shadow-xs" title="Emergency Ambulance Call">
+        <i class="bi bi-telephone-fill me-1"></i> 108 Emergency
+      </a>
+    </div>
+  </div>
+
   <!-- Welcome & Top Cards (Section 45) -->
   <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
     <div>

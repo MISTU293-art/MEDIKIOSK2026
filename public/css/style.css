@@ -443,3 +443,121 @@ body.high-contrast .topbar {
   #ayushman-pane .input-group-lg .input-group-text { width: 100%; border-radius: .375rem .375rem 0 0; }
   #ayushman-pane .input-group-lg .form-control { width: 100%; border-radius: 0 0 .375rem .375rem; }
 }
+
+/* ==========================================================================
+   Senior Citizen / Elderly Friendly High-Accessibility Mode (बुजुर्ग मोड)
+   ========================================================================== */
+body.senior-mode {
+  font-size: 1.18rem !important;
+  line-height: 1.65 !important;
+  background-color: #f8fafc !important;
+  color: #000000 !important;
+}
+
+body.senior-mode h1, body.senior-mode .display-6 {
+  font-size: 2.25rem !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+}
+
+body.senior-mode h2, 
+body.senior-mode h3, 
+body.senior-mode h4, 
+body.senior-mode h5, 
+body.senior-mode h6 {
+  font-weight: 800 !important;
+  color: #000000 !important;
+}
+
+body.senior-mode p, 
+body.senior-mode span, 
+body.senior-mode div, 
+body.senior-mode label {
+  color: #000000 !important;
+}
+
+body.senior-mode .text-muted {
+  color: #334155 !important;
+}
+
+body.senior-mode .btn {
+  font-size: 1.15rem !important;
+  min-height: 52px !important;
+  padding: 10px 22px !important;
+  font-weight: 700 !important;
+  border-width: 2px !important;
+  border-radius: 12px !important;
+}
+
+body.senior-mode .btn-sm {
+  font-size: 1.05rem !important;
+  min-height: 46px !important;
+  padding: 8px 18px !important;
+}
+
+body.senior-mode .form-control, 
+body.senior-mode .form-select {
+  font-size: 1.25rem !important;
+  min-height: 58px !important;
+  border-width: 2.5px !important;
+  border-color: #1e293b !important;
+  color: #000000 !important;
+  font-weight: 600 !important;
+  background-color: #ffffff !important;
+}
+
+body.senior-mode .form-label {
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+  margin-bottom: 6px !important;
+}
+
+body.senior-mode .portal-card {
+  border: 2px solid #94a3b8 !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12) !important;
+  background-color: #ffffff !important;
+}
+
+body.senior-mode .badge {
+  font-size: 1rem !important;
+  padding: 6px 14px !important;
+  font-weight: 700 !important;
+}
+
+body.senior-mode .uhid-pill {
+  font-size: 1.15rem !important;
+  padding: 4px 12px !important;
+  border: 2px dashed #0284c7 !important;
+  font-weight: 800 !important;
+}
+
+body.senior-mode .mobile-bottom-nav {
+  height: 78px !important;
+  padding: 8px 0 10px !important;
+  border-top: 2px solid #0284c7 !important;
+  background-color: #ffffff !important;
+}
+
+body.senior-mode .mobile-nav-item {
+  font-size: 0.82rem !important;
+  font-weight: 800 !important;
+}
+
+body.senior-mode .mobile-nav-item i {
+  font-size: 1.6rem !important;
+}
+
+/* Floating Senior Accessibility & Read Aloud Widget */
+.senior-toggle-bar {
+  background: #fef3c7;
+  border: 2px solid #f59e0b;
+  border-radius: 12px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+

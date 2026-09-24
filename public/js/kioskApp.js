@@ -182,6 +182,17 @@ function renderStep(stepNumber) {
     bar.innerText = `Step ${stepNumber} of ${totalSteps} (${progressPercent}%)`;
   }
 
+  // Highlight step switcher pills
+  document.querySelectorAll('.step-switch-pill').forEach((pill, idx) => {
+    if (idx + 1 === stepNumber) {
+      pill.classList.remove('btn-outline-secondary');
+      pill.classList.add('btn-primary', 'active');
+    } else {
+      pill.classList.remove('btn-primary', 'active');
+      pill.classList.add('btn-outline-secondary');
+    }
+  });
+
   // Nav Buttons
   const prevBtn = document.getElementById('prevStepBtn');
   const nextBtn = document.getElementById('nextStepBtn');
@@ -198,6 +209,23 @@ function renderStep(stepNumber) {
       voiceAssistant.speak(activeStepTitle);
     }
   }
+}
+
+function jumpToStep(targetStep) {
+  if (currentStep === 1) {
+    const name = document.getElementById('input_fullName')?.value.trim();
+    const age = document.getElementById('input_age')?.value.trim();
+    const gender = document.querySelector('input[name="gender"]:checked')?.value || 'male';
+    const phone = document.getElementById('input_phone')?.value.trim();
+    const emergencyContact = document.getElementById('input_emergencyContact')?.value.trim();
+    const aadhaar = document.getElementById('input_aadhaarNumber')?.value.trim();
+    const abha = document.getElementById('input_abhaId')?.value.trim();
+    const scheme = document.getElementById('input_ayushmanSchemeType')?.value;
+    if (name && age && phone) {
+      stepPayload.demographics = { fullName: name, age: parseInt(age) || 0, gender, phone, emergencyContact, aadhaarNumber: aadhaar, abhaId: abha, ayushmanSchemeType: scheme };
+    }
+  }
+  renderStep(targetStep);
 }
 
 function nextStep() {
@@ -242,6 +270,28 @@ function skipStep() {
 }
 
 async function submitIntakeForm() {
+  // If demographics not populated yet (e.g., direct registration or skipped steps), extract from DOM
+  if (!stepPayload.demographics || !stepPayload.demographics.fullName) {
+    const name = document.getElementById('input_fullName')?.value.trim();
+    const age = document.getElementById('input_age')?.value.trim();
+    const gender = document.querySelector('input[name="gender"]:checked')?.value || 'male';
+    const phone = document.getElementById('input_phone')?.value.trim();
+    const emergencyContact = document.getElementById('input_emergencyContact')?.value.trim();
+    const aadhaar = document.getElementById('input_aadhaarNumber')?.value.trim();
+    const abha = document.getElementById('input_abhaId')?.value.trim();
+    const scheme = document.getElementById('input_ayushmanSchemeType')?.value;
+    stepPayload.demographics = { 
+      fullName: name, 
+      age: parseInt(age) || 0, 
+      gender, 
+      phone, 
+      emergencyContact, 
+      aadhaarNumber: aadhaar, 
+      abhaId: abha, 
+      ayushmanSchemeType: scheme 
+    };
+  }
+
   const demographics = stepPayload.demographics;
   const validation = [
     [demographics.fullName, 'Please enter your full name.'],

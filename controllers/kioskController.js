@@ -237,6 +237,38 @@ exports.getPatientCard = async (req, res) => {
   }
 };
 
+exports.getSummary = async (req, res) => {
+  try {
+    const { sessionToken, patientId } = req.query;
+    let patient = null;
+    if (patientId) {
+      patient = await Patient.findById(patientId);
+    }
+    if (!patient && sessionToken) {
+      const intakeSession = await IntakeSession.findOne({ sessionToken });
+      if (intakeSession && intakeSession.patientId) {
+        patient = await Patient.findById(intakeSession.patientId);
+      }
+    }
+    if (!patient) {
+      const allPatients = await Patient.find({});
+      if (allPatients && allPatients.length > 0) {
+        patient = allPatients[allPatients.length - 1];
+      }
+    }
+    if (!patient) {
+      return res.redirect("/kiosk");
+    }
+    res.render("kiosk/summary", {
+      title: "Intake Completed — MediKiosk",
+      patient,
+    });
+  } catch (err) {
+    logger.error("Error loading intake summary: " + err.message);
+    res.redirect("/kiosk");
+  }
+};
+
 exports.postSubmitIntake = async (req, res) => {
   try {
     const {

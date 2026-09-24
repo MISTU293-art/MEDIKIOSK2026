@@ -398,3 +398,15 @@
 [2026-09-24T15:11:03.570Z] [AUDIT] Action: AI_TOOL_ACCESS | User: 6ab53aadb8ab376cf7ed3d23 {"tool":"getPatientCard"}
 [2026-09-24T15:11:03.576Z] [AUDIT] Action: AI_TOOL_ACCESS | User: 6ab53aadb8ab376cf7ed3d23 {"tool":"getRecentVisits"}
 [2026-09-24T15:11:03.580Z] [AUDIT] Action: AI_TOOL_ACCESS | User: 6ab53aadb8ab376cf7ed3d23 {"tool":"getLatestReports"}
+[2026-09-24T15:35:00.970Z] [AUDIT] Action: AI_TOOL_ACCESS | User: 6ab540355c1f51f064d8c0e8 {"tool":"getPatientProfile"}
+[2026-09-24T15:35:01.056Z] [AUDIT] Action: AI_TOOL_ACCESS | User: 6ab540355c1f51f064d8c0e8 {"tool":"getLatestReports"}
+[2026-09-24T15:35:01.057Z] [AUDIT] Action: AI_TOOL_ACCESS | User: 6ab540355c1f51f064d8c0e8 {"tool":"getLabResults"}
+[2026-09-24T15:35:01.785Z] [AUDIT] Action: AI_TOOL_ACCESS | User: 6ab540355c1f51f064d8c0e8 {"tool":"getPatientProfile"}
+[2026-09-24T15:35:01.880Z] [AUDIT] Action: AI_TOOL_ACCESS | User: 6ab540355c1f51f064d8c0e8 {"tool":"getMedicineHistory"}
+[2026-09-24T15:35:01.881Z] [AUDIT] Action: AI_TOOL_ACCESS | User: 6ab540355c1f51f064d8c0e8 {"tool":"getPrescriptions"}
+[2026-09-24T15:35:01.882Z] [AUDIT] Action: AI_TOOL_ACCESS | User: 6ab540355c1f51f064d8c0e8 {"tool":"getAllergies"}
+[2026-09-24T15:53:00.731Z] [AUDIT] Action: INTAKE_SUBMITTED | User: UHID-AYUSH-82717A534F {"patientId":"6ab5475c8a9f2c8fa2b9e5f2","kioskId":"KIOSK-01","priority":"Normal","redFlagTriggered":false}
+[2026-09-24T15:53:18.620Z] [AUDIT] Action: USER_LOGIN | User: doctor@hospital.org {"role":"doctor","ip":"::1"}
+[2026-09-24T15:53:31.411Z] [AUDIT] Action: REPORT_REQUESTED | User: doctor@hospital.org {"reportId":"6ab5477b8a9f2c8fa2b9e606","patientId":"6ab540365c1f51f064d8c106"}
+[2026-09-24T15:54:08.933Z] [AUDIT] Action: USER_LOGIN | User: admin@hospital.org {"role":"admin","ip":"::1"}
+[2026-09-24T15:54:44.525Z] [AUDIT] Action: STAFF_CARD_ISSUED | User: admin@hospital.org {"cardId":"SC-b70fe760c5c440433cc9a3eba0f3f7b2ea3b","staffId":"6ab540345c1f51f064d8c0e5"}

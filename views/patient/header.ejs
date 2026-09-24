@@ -28,6 +28,9 @@
   <!-- Custom Styles -->
   <link rel="stylesheet" href="/css/style.css">
 
+  <!-- Senior Citizen & Accessibility Assistant -->
+  <script src="/js/seniorMode.js"></script>
+
   <style>
     :root {
       --patient-primary: #0284c7;
@@ -186,6 +189,12 @@
 
         <!-- Right: Language Switcher, Patient Card Preview, Logout -->
         <div class="d-flex align-items-center gap-2">
+          <!-- Senior Citizen Mode Toggle -->
+          <button type="button" onclick="window.toggleSeniorMode()" class="btn btn-sm btn-outline-warning senior-toggle-btn d-flex align-items-center gap-1 fw-bold text-dark shadow-xs" title="Senior / Elderly High-Accessibility Mode">
+            <i class="bi bi-eyeglasses"></i>
+            <span class="d-none d-sm-inline">Senior Mode</span>
+          </button>
+
           <!-- Language Select -->
           <div class="dropdown">
             <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1" type="button" data-bs-toggle="dropdown">
@@ -263,4 +272,31 @@
       <% } %>
     </div>
   </header>
+
+  <!-- Universal Back Switcher Bar for Sub-Pages -->
+  <% if (typeof patient !== 'undefined' && patient && typeof activeNav !== 'undefined' && activeNav !== 'dashboard') { %>
+    <aside class="bg-white border-bottom py-2 shadow-xs" aria-label="Page navigation controls">
+      <div class="container-fluid px-3 px-lg-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <a href="/patient/dashboard" class="btn btn-sm btn-outline-secondary rounded-pill px-3 d-flex align-items-center gap-2 fw-semibold" title="Return to Dashboard">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to Dashboard / वापस जाएं</span>
+          </a>
+          <button type="button" onclick="history.back()" class="btn btn-sm btn-light border rounded-pill px-3 d-flex align-items-center gap-1" title="Go back to previous screen">
+            <i class="bi bi-chevron-left"></i> <span class="d-none d-sm-inline">Previous</span>
+          </button>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" onclick="window.readTextAloud(document.querySelector('main')?.innerText || 'Page content')" class="btn btn-sm btn-outline-primary rounded-pill px-3 d-flex align-items-center gap-1 shadow-xs" title="Read this page out loud">
+            <i class="bi bi-volume-up-fill"></i> <span>Listen Page / सुनें</span>
+          </button>
+          <a href="tel:108" class="btn btn-sm btn-danger rounded-pill px-3 d-flex align-items-center gap-1 shadow-xs fw-bold" title="Emergency Ambulance Call">
+            <i class="bi bi-telephone-fill"></i> <span>108 Emergency</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+  <% } %>
+
   <main class="flex-grow-1">

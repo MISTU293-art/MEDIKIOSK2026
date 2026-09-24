@@ -1,10 +1,25 @@
-﻿<%- include('../partials/header') %>
+<%- include('../partials/header') %>
 <div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-4">
   <div class="card shadow-lg border-0 rounded-4 overflow-hidden bg-white" style="max-width: 680px; width: 100%;">
     <!-- National Tricolor Bar -->
     <div class="gov-tricolor-bar" style="height: 6px;"></div>
 
     <div class="p-4 p-md-5">
+      <!-- Back Switcher & Accessibility Bar -->
+      <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2 d-print-none">
+        <a href="/kiosk" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-semibold shadow-xs">
+          <i class="bi bi-arrow-left"></i> Back to Kiosk / कियोस्क
+        </a>
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" onclick="window.toggleSeniorMode()" class="btn btn-outline-warning btn-sm senior-toggle-btn rounded-pill px-3 fw-bold text-dark shadow-xs">
+            <i class="bi bi-eyeglasses"></i> Senior Mode
+          </button>
+          <button type="button" onclick="window.readTextAloud('Patient name <%= (patient.fullName || '').replace(/'/g, '') %>, OPD Token number <%= currentVisit ? currentVisit.tokenNumber : patient.tokenNumber %>, Assigned room <%= (patient.roomNumber || 'Room 104, AYUSH Wing A').replace(/'/g, '') %>, Doctor <%= (patient.assignedDoctorName || 'Senior Consultant').replace(/'/g, '') %>.')" class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-xs">
+            <i class="bi bi-volume-up-fill"></i> Listen / सुनें
+          </button>
+        </div>
+      </div>
+
       <!-- Ayushman Bharat & Ministry Header -->
       <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="d-flex align-items-center gap-2">
@@ -118,6 +133,12 @@
           <i class="bi bi-printer-fill fs-5 me-1"></i> Print Ayushman OPD Token Slip
         </button>
         <div class="row g-2 mt-1">
+          <div class="col-12">
+            <a href="/patient/login" class="btn btn-outline-primary fw-bold w-100 rounded-pill py-2 shadow-xs d-flex align-items-center justify-content-center gap-2">
+              <i class="bi bi-heart-pulse-fill text-warning"></i>
+              <span>Access Your Patient Portal & AI Health Assistant</span>
+            </a>
+          </div>
           <div class="col-6">
             <a href="/kiosk" class="btn btn-outline-secondary btn-sm w-100 rounded-pill py-2">
               <i class="bi bi-house-door-fill me-1"></i> Kiosk Home

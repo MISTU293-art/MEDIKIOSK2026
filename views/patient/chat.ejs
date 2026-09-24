@@ -1,6 +1,19 @@
 <%- include('header', { title: 'AI Health Assistant — MediKiosk', patient, activeNav: 'chat' }) %>
 
-<div class="container py-3 flex-grow-1 d-flex flex-column" style="max-width: 1000px; height: calc(100vh - 130px);">
+<style>
+  @media (max-width: 768px) {
+    #chatWrapper {
+      height: calc(100dvh - 215px) !important;
+      padding-bottom: 5px;
+    }
+  }
+  @media (min-width: 769px) {
+    #chatWrapper {
+      height: calc(100vh - 150px);
+    }
+  }
+</style>
+<div class="container py-2 py-md-3 flex-grow-1 d-flex flex-column" id="chatWrapper" style="max-width: 1000px;">
   
   <!-- Chat Header Bar -->
   <div class="portal-card px-4 py-3 mb-3 d-flex align-items-center justify-content-between shadow-xs">

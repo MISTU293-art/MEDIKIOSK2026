@@ -1,11 +1,17 @@
 <%- include('../partials/header') %>
 <div class="container-fluid min-vh-100 d-flex flex-column justify-content-between p-3 p-md-4">
-  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3 bg-white p-3 rounded-4 shadow-sm border">
-    <div class="d-flex align-items-center gap-2">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 bg-white p-3 rounded-4 shadow-sm border">
+    <div class="d-flex align-items-center gap-2 flex-wrap">
       <a href="/kiosk" class="btn btn-outline-secondary rounded-pill btn-sm"><i class="bi bi-x-circle me-1"></i> Exit</a>
+      <button type="button" onclick="prevStep()" class="btn btn-warning btn-sm rounded-pill fw-bold text-dark shadow-xs" title="Step Back / पिछला चरण">
+        <i class="bi bi-arrow-left-circle me-1"></i> <%= strings.back %> (वापस)
+      </button>
+      <button type="button" onclick="window.toggleSeniorMode()" class="btn btn-outline-warning btn-sm senior-toggle-btn rounded-pill fw-bold text-dark shadow-xs" title="Toggle Large Text & High Contrast">
+        <i class="bi bi-eyeglasses"></i> Senior Mode
+      </button>
       <span class="badge bg-primary-subtle text-primary border fs-6 px-3 py-1 rounded-pill">Token Session: <%= sessionToken %></span>
     </div>
-    <div class="d-flex align-items-center gap-2">
+    <div class="d-flex align-items-center gap-2 flex-wrap">
       <button type="button" id="repeatAudioBtn" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-volume-up-fill me-1"></i> <%= strings.repeatAudio %></button>
       <% if (voiceConsent) { %>
         <button type="button" id="pushToTalkBtn" class="voice-button btn-sm py-2 px-3 fs-6"><i class="bi bi-mic-fill"></i> <%= strings.holdToSpeak %></button>
@@ -16,6 +22,18 @@
   <div id="voiceTranscriptNotice" class="alert alert-primary text-center py-2 px-4 rounded-pill shadow-sm mx-auto mb-3" style="display: none; max-width: 600px;"></div>
 
   <div class="kiosk-container w-100 mb-3" style="max-width: 900px;">
+    <!-- Step Switcher Bar (Easily change choices or jump back/forward) -->
+    <div class="d-flex overflow-auto gap-1 py-1 mb-2 justify-content-between" id="stepSwitcherBar" style="scrollbar-width: none;">
+      <button type="button" onclick="jumpToStep(1)" class="btn btn-sm btn-primary active rounded-pill step-switch-pill flex-fill py-1 fw-bold" style="font-size: 0.78rem;">1. Info</button>
+      <button type="button" onclick="jumpToStep(2)" class="btn btn-sm btn-outline-secondary rounded-pill step-switch-pill flex-fill py-1 fw-semibold" style="font-size: 0.78rem;">2. Symptoms</button>
+      <button type="button" onclick="jumpToStep(3)" class="btn btn-sm btn-outline-secondary rounded-pill step-switch-pill flex-fill py-1 fw-semibold" style="font-size: 0.78rem;">3. Severity</button>
+      <button type="button" onclick="jumpToStep(4)" class="btn btn-sm btn-outline-secondary rounded-pill step-switch-pill flex-fill py-1 fw-semibold" style="font-size: 0.78rem;">4. History</button>
+      <button type="button" onclick="jumpToStep(5)" class="btn btn-sm btn-outline-secondary rounded-pill step-switch-pill flex-fill py-1 fw-semibold" style="font-size: 0.78rem;">5. Allergies</button>
+      <button type="button" onclick="jumpToStep(6)" class="btn btn-sm btn-outline-secondary rounded-pill step-switch-pill flex-fill py-1 fw-semibold" style="font-size: 0.78rem;">6. Medicines</button>
+      <button type="button" onclick="jumpToStep(7)" class="btn btn-sm btn-outline-secondary rounded-pill step-switch-pill flex-fill py-1 fw-semibold" style="font-size: 0.78rem;">7. Family</button>
+      <button type="button" onclick="jumpToStep(8)" class="btn btn-sm btn-outline-secondary rounded-pill step-switch-pill flex-fill py-1 fw-semibold" style="font-size: 0.78rem;">8. Lifestyle</button>
+    </div>
+
     <div class="progress" style="height: 14px; border-radius: 10px;">
       <div id="kioskProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 12%;">Step 1 of 8 (12%)</div>
     </div>
@@ -81,6 +99,16 @@
             <option value="ABHA Digital Health Record">ABHA Digital Health Account (Personal)</option>
             <option value="General OPD Intake">General OPD Citizen Check-in</option>
           </select>
+        </div>
+
+        <div class="col-12 mt-3 pt-3 border-top d-flex flex-wrap justify-content-between align-items-center gap-2 bg-light p-3 rounded-3">
+          <div>
+            <div class="fw-bold text-dark"><i class="bi bi-lightning-charge-fill text-warning me-1"></i> Quick OPD Token (Senior & Express Walk-In)</div>
+            <div class="text-muted small">In a hurry or prefer not to answer all 8 symptom steps? Register instantly to get your queue token slip.</div>
+          </div>
+          <button type="button" class="btn btn-success fw-bold px-4 py-2 rounded-pill shadow-xs" onclick="submitIntakeForm()">
+            <i class="bi bi-check-circle-fill me-1"></i> Instant Register & Print Token
+          </button>
         </div>
       </div>
     </div>
