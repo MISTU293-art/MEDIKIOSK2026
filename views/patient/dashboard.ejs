@@ -1,6 +1,115 @@
 <%- include('header', { title: 'Dashboard — MediKiosk Patient Portal', patient, activeNav: 'dashboard' }) %>
 
-<div class="container-fluid px-3 px-lg-4 py-4">
+<style>
+  /* Dashboard In-Place Tab Panel Styles */
+  .dash-tab-pill {
+    color: #475569;
+    font-weight: 600;
+    padding: 0.55rem 1rem;
+    border-radius: 9999px;
+    border: 1px solid #e2e8f0;
+    background-color: #ffffff;
+    font-size: 0.88rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+  }
+  .dash-tab-pill:hover {
+    background-color: #f1f5f9;
+    color: #0284c7;
+    border-color: #cbd5e1;
+  }
+  .dash-tab-pill.active {
+    background-color: #0284c7 !important;
+    color: #ffffff !important;
+    border-color: #0284c7 !important;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+  }
+  .dash-panel-pane {
+    display: none;
+  }
+  .dash-panel-pane.active {
+    display: block;
+    animation: fadeInTab 0.2s ease-in-out;
+  }
+  @keyframes fadeInTab {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hover-card-btn {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .hover-card-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08) !important;
+  }
+  @media (max-width: 576px) {
+    .dash-tab-pill {
+      font-size: 0.8rem;
+      padding: 0.45rem 0.75rem;
+    }
+    .portal-card {
+      padding: 1rem !important;
+    }
+  }
+</style>
+<%
+  /*
+   * ============================================================
+   * SAFE DASHBOARD DATA
+   * Computed ONCE here and reused everywhere below. (Previously
+   * this same computation was repeated with a second `const`
+   * declaration further down the file, which threw
+   * "Identifier 'dashboardTimeline' has already been declared"
+   * and crashed the page on every render.)
+   * ============================================================
+   */
+
+  const safeTimeline = timeline && typeof timeline === 'object'
+    ? timeline
+    : {};
+
+  const timelineYears = Array.isArray(safeTimeline.years)
+    ? safeTimeline.years
+    : [];
+
+  const dashboardTimeline = timelineYears
+    .flatMap(function(yearGroup) {
+      return yearGroup && Array.isArray(yearGroup.events)
+        ? yearGroup.events
+        : [];
+    })
+    .filter(Boolean)
+    .sort(function(a, b) {
+      const dateA = a && a.date ? new Date(a.date).getTime() : 0;
+      const dateB = b && b.date ? new Date(b.date).getTime() : 0;
+
+      return dateB - dateA;
+    });
+
+  const timelineEventCount = Number(
+    safeTimeline.totalEvents || dashboardTimeline.length || 0
+  );
+
+  const recentTimeline = dashboardTimeline.slice(0, 5);
+
+  // Pre-built, HTML-escaped read-aloud text. Rendered into a
+  // data-* attribute (see below) instead of directly into an
+  // inline onclick JS string, so a patient name/department
+  // containing a quote character can't break out of the JS
+  // string and execute arbitrary script.
+  const readAloudText =
+    'Welcome ' + (patient.fullName || '') + '. ' +
+    'Your Patient Card number is ' + (patientCard.patientCardNumber || '') + ' ' +
+    'and your UHID is ' + (patient.uhid || '') + '. ' +
+    'Your current token is ' + (patient.tokenNumber || 'T-101') + ' ' +
+    'for ' + (patient.department || 'AYUSH OPD') + '.';
+%>
+<div class="container-fluid px-3 px-lg-4 py-3 py-md-4">
 
   <!-- Top Accessibility, Senior Citizen & Back Switcher Bar -->
   <div class="senior-toggle-bar mb-3">
@@ -13,7 +122,7 @@
       </button>
     </div>
     <div class="d-flex align-items-center gap-2 flex-wrap">
-      <button type="button" onclick="window.readTextAloud('Welcome <%= (patient.fullName || '').replace(/'/g, '') %>. Your Patient Card number is <%= patientCard.patientCardNumber %> and your UHID is <%= patient.uhid %>. Your current token is <%= patient.tokenNumber || 'T-101' %> for <%= (patient.department || 'AYUSH OPD').replace(/'/g, '') %>.')" class="btn btn-sm btn-outline-primary rounded-pill px-3 voice-read-btn fw-semibold shadow-xs" title="Listen to summary">
+      <button type="button" data-read-text="<%= readAloudText %>" onclick="window.readTextAloud(this.dataset.readText)" class="btn btn-sm btn-outline-primary rounded-pill px-3 voice-read-btn fw-semibold shadow-xs" title="Listen to summary">
         <i class="bi bi-volume-up-fill me-1"></i> Read Out / सुनें
       </button>
       <a href="tel:108" class="btn btn-sm btn-danger rounded-pill px-3 fw-bold shadow-xs" title="Emergency Ambulance Call">
@@ -22,340 +131,917 @@
     </div>
   </div>
 
-  <!-- Welcome & Top Cards (Section 45) -->
-  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+  <!-- Welcome Header -->
+  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3">
     <div>
-      <div class="d-flex align-items-center gap-2 mb-1">
-        <h2 class="fw-bold text-dark mb-0">Welcome, <%= patient.fullName %></h2>
+      <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+        <h2 class="fw-bold text-dark mb-0 fs-3">Welcome, <%= patient.fullName %></h2>
         <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1" style="font-size: 0.75rem;">
           <i class="bi bi-shield-check"></i> Authenticated
         </span>
       </div>
       <p class="text-muted mb-0 small">
-        Your personal digital healthcare dashboard & continuous health compass.
+        Universal Healthcare Portal &bull; All records accessible in one unified panel
       </p>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="d-flex align-items-center gap-2">
-      <a href="/patient/card" class="btn btn-outline-primary d-flex align-items-center gap-2 shadow-sm">
+    <!-- Quick Switcher Buttons -->
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+      <button type="button" onclick="switchDashboardTab('card')" class="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center gap-2 shadow-xs fw-semibold">
         <i class="bi bi-credit-card-2-front"></i>
         <span>My Patient Card</span>
-      </a>
-      <a href="/patient/chat" class="btn btn-primary d-flex align-items-center gap-2 shadow-sm">
+      </button>
+      <a href="/patient/chat" class="btn btn-primary btn-sm rounded-pill d-flex align-items-center gap-2 shadow-xs fw-semibold">
         <i class="bi bi-robot"></i>
         <span>AI Health Assistant</span>
       </a>
     </div>
   </div>
 
-  <!-- Identifiers Banner (UHID & Card No) -->
-  <div class="row g-3 mb-4">
-    <div class="col-md-6 col-lg-3">
-      <div class="portal-card p-3 h-100">
-        <div class="text-muted small mb-1">Universal Health ID (UHID)</div>
-        <div class="d-flex align-items-center justify-content-between">
-          <span class="uhid-pill fs-6"><%= patient.uhid %></span>
-          <i class="bi bi-hash text-primary fs-4"></i>
-        </div>
-        <div class="text-muted mt-2" style="font-size: 0.75rem;">Verified across National AYUSH Network</div>
-      </div>
-    </div>
-
-    <div class="col-md-6 col-lg-3">
-      <div class="portal-card p-3 h-100">
-        <div class="text-muted small mb-1">Patient Card Number</div>
-        <div class="d-flex align-items-center justify-content-between">
-          <span class="uhid-pill fs-6 text-primary"><%= patientCard.patientCardNumber %></span>
-          <i class="bi bi-credit-card text-success fs-4"></i>
-        </div>
-        <div class="text-muted mt-2" style="font-size: 0.75rem;">Safe Barcode & QR Code active</div>
-      </div>
-    </div>
-
-    <div class="col-md-6 col-lg-3">
-      <div class="portal-card p-3 h-100">
-        <div class="text-muted small mb-1">Current Healthcare Visit</div>
-        <div class="d-flex align-items-center justify-content-between">
-          <span class="badge bg-primary px-2 py-1 fs-6">Token <%= patient.tokenNumber || 'T-101' %></span>
-          <i class="bi bi-hospital text-info fs-4"></i>
-        </div>
-        <div class="text-muted mt-2 text-truncate" style="font-size: 0.75rem;">
-          <%= patient.department || 'Ayurveda & AYUSH OPD' %>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6 col-lg-3">
-      <div class="portal-card p-3 h-100">
-        <div class="text-muted small mb-1">Ayushman / ABHA Identity</div>
-        <div class="d-flex align-items-center justify-content-between">
-          <span class="badge bg-warning-subtle text-warning-emphasis border px-2 py-1" style="font-size: 0.85rem;">
-            <%= patient.abhaId ? patient.abhaId : 'ABHA Ready' %>
-          </span>
-          <i class="bi bi-fingerprint text-warning fs-4"></i>
-        </div>
-        <div class="text-muted mt-2 text-truncate" style="font-size: 0.75rem;">PM-JAY Scheme Linked</div>
-      </div>
+  <!-- IN-DASHBOARD UNIFIED TAB SWITCHER BAR -->
+  <div class="mb-4 overflow-auto py-1" style="white-space: nowrap; scrollbar-width: none;">
+    <div class="d-inline-flex gap-2">
+      <button type="button" class="dash-tab-pill active" id="pill-overview" onclick="switchDashboardTab('overview')">
+        <i class="bi bi-speedometer2"></i> Overview (मुख्य)
+      </button>
+      <button type="button" class="dash-tab-pill" id="pill-card" onclick="switchDashboardTab('card')">
+        <i class="bi bi-credit-card-2-front-fill"></i> Health Card (कार्ड)
+      </button>
+      <button type="button" class="dash-tab-pill" id="pill-medicines" onclick="switchDashboardTab('medicines')">
+        <i class="bi bi-capsule"></i> Medicines & Rx (दवाएं)
+      </button>
+      <button type="button" class="dash-tab-pill" id="pill-reports" onclick="switchDashboardTab('reports')">
+        <i class="bi bi-file-earmark-medical-fill"></i> Reports & Labs (रिपोर्ट)
+      </button>
+      <button type="button" class="dash-tab-pill" id="pill-visits" onclick="switchDashboardTab('visits')">
+        <i class="bi bi-calendar-check-fill"></i> Visits & History (जांच)
+      </button>
+      <button type="button" class="dash-tab-pill" id="pill-ai" onclick="switchDashboardTab('ai')">
+        <i class="bi bi-robot"></i> AI Health Assistant
+      </button>
     </div>
   </div>
 
-  <div class="row g-4">
-    <!-- LEFT COLUMN: Quick Access & AI Chat Preview -->
-    <div class="col-lg-8">
-      
-      <!-- Quick Access Grid (Section 45) -->
-      <div class="portal-card p-4 mb-4">
-        <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-          <h5 class="fw-bold text-dark mb-0"><i class="bi bi-grid-fill text-primary me-2"></i>Quick Access Records</h5>
-          <span class="badge bg-light text-muted border">Authorized Patient Data</span>
+  <!-- ======================================================== -->
+  <!-- TAB PANE 1: OVERVIEW (DEFAULT)                           -->
+  <!-- ======================================================== -->
+  <div class="dash-panel-pane active" id="pane-overview">
+
+    <!-- Identifiers Banner (UHID, Card No, Token, ABHA) -->
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3">
+        <div class="portal-card p-3 h-100">
+          <div class="text-muted small mb-1" style="font-size: 0.75rem;">UHID Number</div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="uhid-pill fs-6 text-truncate" style="max-width: 130px;"><%= patient.uhid %></span>
+            <i class="bi bi-hash text-primary fs-5"></i>
+          </div>
+          <div class="text-muted mt-2 small" style="font-size: 0.72rem;">AYUSH Grid Verified</div>
         </div>
+      </div>
 
-        <div class="row g-3">
-          <div class="col-6 col-md-4">
-            <a href="/patient/reports" class="text-decoration-none">
-              <div class="p-3 border rounded-3 bg-light text-center h-100 hover-shadow transition">
-                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 44px; height: 44px;">
-                  <i class="bi bi-file-earmark-medical fs-5"></i>
-                </div>
-                <div class="fw-bold text-dark small">My Reports</div>
-                <div class="text-muted" style="font-size: 0.75rem;"><%= reports.length %> Available</div>
-              </div>
-            </a>
+      <div class="col-6 col-md-3">
+        <div class="portal-card p-3 h-100 cursor-pointer" onclick="switchDashboardTab('card')">
+          <div class="text-muted small mb-1" style="font-size: 0.75rem;">Patient Card</div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="uhid-pill fs-6 text-primary text-truncate" style="max-width: 130px;"><%= patientCard.patientCardNumber %></span>
+            <i class="bi bi-credit-card text-success fs-5"></i>
           </div>
+          <div class="text-muted mt-2 small" style="font-size: 0.72rem;">Tap to view card &rarr;</div>
+        </div>
+      </div>
 
-          <div class="col-6 col-md-4">
-            <a href="/patient/medicines" class="text-decoration-none">
-              <div class="p-3 border rounded-3 bg-light text-center h-100 hover-shadow transition">
-                <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 44px; height: 44px;">
-                  <i class="bi bi-capsule fs-5"></i>
-                </div>
-                <div class="fw-bold text-dark small">Medicines</div>
-                <div class="text-muted" style="font-size: 0.75rem;"><%= medicines.length %> Recorded</div>
-              </div>
-            </a>
+      <div class="col-6 col-md-3">
+        <div class="portal-card p-3 h-100 cursor-pointer" onclick="switchDashboardTab('visits')">
+          <div class="text-muted small mb-1" style="font-size: 0.75rem;">Today's OPD Token</div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="badge bg-primary px-2 py-1 fs-6"><%= patient.tokenNumber || 'T-101' %></span>
+            <i class="bi bi-hospital text-info fs-5"></i>
           </div>
-
-          <div class="col-6 col-md-4">
-            <a href="/patient/visits" class="text-decoration-none">
-              <div class="p-3 border rounded-3 bg-light text-center h-100 hover-shadow transition">
-                <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 44px; height: 44px;">
-                  <i class="bi bi-calendar-week fs-5"></i>
-                </div>
-                <div class="fw-bold text-dark small">Visits</div>
-                <div class="text-muted" style="font-size: 0.75rem;"><%= visits.length %> Visits</div>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-6 col-md-4">
-            <a href="/patient/prescriptions" class="text-decoration-none">
-              <div class="p-3 border rounded-3 bg-light text-center h-100 hover-shadow transition">
-                <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 44px; height: 44px;">
-                  <i class="bi bi-prescription fs-5"></i>
-                </div>
-                <div class="fw-bold text-dark small">Prescriptions</div>
-                <div class="text-muted" style="font-size: 0.75rem;"><%= prescriptions.length %> Items</div>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-6 col-md-4">
-            <a href="/patient/documents" class="text-decoration-none">
-              <div class="p-3 border rounded-3 bg-light text-center h-100 hover-shadow transition">
-                <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 44px; height: 44px;">
-                  <i class="bi bi-folder2 fs-5"></i>
-                </div>
-                <div class="fw-bold text-dark small">Documents</div>
-                <div class="text-muted" style="font-size: 0.75rem;"><%= (typeof documents !== 'undefined' && documents ? documents.length : (reports || []).length) %> Files</div>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-6 col-md-4">
-            <a href="/patient/timeline" class="text-decoration-none">
-              <div class="p-3 border rounded-3 bg-light text-center h-100 hover-shadow transition">
-                <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 44px; height: 44px;">
-                  <i class="bi bi-clock-history fs-5"></i>
-                </div>
-                <div class="fw-bold text-dark small">Medical Timeline</div>
-                <div class="text-muted" style="font-size: 0.75rem;">Intelligence View</div>
-              </div>
-            </a>
+          <div class="text-muted mt-2 text-truncate small" style="font-size: 0.72rem;">
+            <%= patient.department || 'Ayurveda & AYUSH OPD' %>
           </div>
         </div>
       </div>
 
-      <!-- AI Health Assistant Section (Section 45 & 57) -->
-      <div class="portal-card p-4 mb-4 border-primary border-opacity-25" style="background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);">
-        <div class="d-flex align-items-center justify-content-between mb-3">
-          <div class="d-flex align-items-center gap-3">
-            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
-              <i class="bi bi-robot fs-4"></i>
+      <div class="col-6 col-md-3">
+        <div class="portal-card p-3 h-100">
+          <div class="text-muted small mb-1" style="font-size: 0.75rem;">Ayushman / ABHA</div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="badge bg-warning-subtle text-warning-emphasis border px-2 py-1 text-truncate" style="max-width: 120px; font-size: 0.8rem;">
+              <%= patient.abhaId ? patient.abhaId : 'ABHA Ready' %>
+            </span>
+            <i class="bi bi-fingerprint text-warning fs-5"></i>
+          </div>
+          <div class="text-muted mt-2 text-truncate small" style="font-size: 0.72rem;">PM-JAY Linked</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- LEFT COLUMN -->
+      <div class="col-lg-8">
+
+        <!-- Quick Access Records Grid -->
+        <div class="portal-card p-3 p-md-4 mb-4">
+          <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+            <h5 class="fw-bold text-dark mb-0 fs-6"><i class="bi bi-grid-fill text-primary me-2"></i>Quick Records Navigation</h5>
+            <span class="badge bg-light text-muted border">Tap to view instantly</span>
+          </div>
+
+          <div class="row g-2 g-md-3">
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded-3 bg-light text-center h-100 cursor-pointer hover-card-btn" onclick="switchDashboardTab('card')">
+                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-xs" style="width: 44px; height: 44px;">
+                  <i class="bi bi-credit-card-2-front fs-5"></i>
+                </div>
+                <div class="fw-bold text-dark small">My Health Card</div>
+                <div class="text-muted" style="font-size: 0.72rem;">Safe QR & Barcode</div>
+              </div>
             </div>
-            <div>
-              <h5 class="fw-bold text-dark mb-0">MediKiosk AI Health Assistant</h5>
-              <div class="text-muted small">"How can I help you today with your medical records?"</div>
+
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded-3 bg-light text-center h-100 cursor-pointer hover-card-btn" onclick="switchDashboardTab('reports')">
+                <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-xs" style="width: 44px; height: 44px;">
+                  <i class="bi bi-file-earmark-medical fs-5"></i>
+                </div>
+                <div class="fw-bold text-dark small">My Reports</div>
+                <div class="text-muted" style="font-size: 0.72rem;"><%= reports.length %> Lab Records</div>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded-3 bg-light text-center h-100 cursor-pointer hover-card-btn" onclick="switchDashboardTab('medicines')">
+                <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-xs" style="width: 44px; height: 44px;">
+                  <i class="bi bi-capsule fs-5"></i>
+                </div>
+                <div class="fw-bold text-dark small">Medicines</div>
+                <div class="text-muted" style="font-size: 0.72rem;"><%= medicines.length %> Prescriptions</div>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded-3 bg-light text-center h-100 cursor-pointer hover-card-btn" onclick="switchDashboardTab('visits')">
+                <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-xs" style="width: 44px; height: 44px;">
+                  <i class="bi bi-calendar-check fs-5"></i>
+                </div>
+                <div class="fw-bold text-dark small">Doctor Visits</div>
+                <div class="text-muted" style="font-size: 0.72rem;"><%= visits.length %> Visits</div>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded-3 bg-light text-center h-100 cursor-pointer hover-card-btn" onclick="switchDashboardTab('visits')">
+                <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-xs" style="width: 44px; height: 44px;">
+                  <i class="bi bi-clock-history fs-5"></i>
+                </div>
+                <div class="fw-bold text-dark small">Medical Timeline</div>
+                <!-- FIX: was `timeline.length` (undefined — timeline is
+                     { years: [...] }, not an array). Use the event
+                     count computed once at the top of the file. -->
+                <div class="text-muted" style="font-size: 0.72rem;"><%= timelineEventCount %> Clinical Events</div>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded-3 bg-light text-center h-100 cursor-pointer hover-card-btn" onclick="switchDashboardTab('ai')">
+                <div class="bg-primary-subtle text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-xs" style="width: 44px; height: 44px;">
+                  <i class="bi bi-robot fs-5"></i>
+                </div>
+                <div class="fw-bold text-primary small">AI Assistant</div>
+                <div class="text-muted" style="font-size: 0.72rem;">Ask Questions</div>
+              </div>
             </div>
           </div>
-          <a href="/patient/chat" class="btn btn-primary shadow-sm px-3 py-2 fw-semibold">
-            <i class="bi bi-chat-dots-fill me-1"></i> Start Chat
-          </a>
         </div>
 
-        <!-- Dynamic Quick Action Chips (Section 64) -->
-        <div class="mt-3">
-          <div class="small fw-semibold text-secondary mb-2">Ask MediKiosk AI Quick Actions:</div>
-          <div class="d-flex flex-wrap gap-2">
-            <% suggestedQuestions.slice(0, 5).forEach(function(sq) { %>
-              <a href="/patient/chat?q=<%= encodeURIComponent(sq) %>" class="btn btn-sm btn-white bg-white border text-primary shadow-xs rounded-pill px-3 py-1">
+        <!-- AI Health Assistant Quick Banner -->
+        <div class="portal-card p-3 p-md-4 mb-4 border-primary border-opacity-25" style="background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);">
+          <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-3">
+              <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 44px; height: 44px;">
+                <i class="bi bi-robot fs-5"></i>
+              </div>
+              <div>
+                <h5 class="fw-bold text-dark mb-0 fs-6">MediKiosk AI Health Assistant</h5>
+                <div class="text-muted small" style="font-size: 0.78rem;">Consult your medicines, lab values, or doctor consultation summaries</div>
+              </div>
+            </div>
+            <a href="/patient/chat" class="btn btn-primary btn-sm rounded-pill shadow-xs px-3 py-2 fw-semibold">
+              <i class="bi bi-chat-dots-fill me-1"></i> Open Full Chat
+            </a>
+          </div>
+
+          <!-- Dynamic Suggestion Chips -->
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <% suggestedQuestions.slice(0, 4).forEach(function(sq) { %>
+              <a href="/patient/chat?q=<%= encodeURIComponent(sq) %>" class="btn btn-sm btn-white bg-white border text-primary shadow-xs rounded-pill px-3 py-1 fw-medium" style="font-size: 0.8rem;">
                 <i class="bi bi-arrow-right-short text-muted"></i> <%= sq %>
               </a>
             <% }); %>
           </div>
         </div>
-      </div>
 
-      <!-- Lab Results Highlights (Section 55) -->
-      <div class="portal-card p-4">
-        <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-          <h5 class="fw-bold text-dark mb-0"><i class="bi bi-activity text-danger me-2"></i>Recent Lab Results</h5>
-          <a href="/patient/labs" class="small text-primary text-decoration-none fw-semibold">View All Labs &rarr;</a>
-        </div>
+        <!-- Lab Results Preview -->
+        <div class="portal-card p-3 p-md-4">
+          <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+            <h5 class="fw-bold text-dark mb-0 fs-6"><i class="bi bi-activity text-danger me-2"></i>Recent Lab Results</h5>
+            <button type="button" onclick="switchDashboardTab('reports')" class="btn btn-link btn-sm text-primary p-0 text-decoration-none fw-semibold">
+              View All Labs &rarr;
+            </button>
+          </div>
 
-        <div class="row g-3">
-          <% labResults.slice(0, 3).forEach(function(lab) { %>
-            <div class="col-md-4">
-              <div class="p-3 border rounded-3 bg-white h-100">
-                <div class="text-muted small text-truncate"><%= lab.parameter %></div>
-                <div class="fs-4 fw-bold text-dark my-1">
-                  <%= lab.value %> <span class="fs-6 fw-normal text-muted"><%= lab.unit %></span>
-                </div>
-                <div class="d-flex align-items-center justify-content-between mt-2">
-                  <span class="badge <%= lab.isPotentiallyAbnormal ? 'badge-soft-warning' : 'badge-soft-success' %>">
-                    <%= lab.status %>
-                  </span>
-                  <span class="text-muted" style="font-size: 0.7rem;"><%= new Date(lab.reportDate).toLocaleDateString() %></span>
+          <div class="row g-3">
+            <% (labResults || []).slice(0, 3).forEach(function(lab) { %>
+              <div class="col-md-4">
+                <div class="p-3 border rounded-3 bg-white h-100">
+                  <div class="text-muted small text-truncate" style="font-size: 0.75rem;"><%= lab.parameter %></div>
+                  <div class="fs-4 fw-bold text-dark my-1">
+                    <%= lab.value %> <span class="fs-6 fw-normal text-muted"><%= lab.unit %></span>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between mt-2">
+                    <span class="badge <%= lab.isPotentiallyAbnormal ? 'badge-soft-warning' : 'badge-soft-success' %>" style="font-size: 0.7rem;">
+                      <%= lab.status %>
+                    </span>
+                    <span class="text-muted" style="font-size: 0.68rem;"><%= new Date(lab.reportDate).toLocaleDateString() %></span>
+                  </div>
                 </div>
               </div>
-            </div>
-          <% }); %>
+            <% }); %>
+          </div>
         </div>
+
       </div>
 
+      <!-- RIGHT COLUMN: Digital Card Widget, Notifications, Allergies -->
+      <div class="col-lg-4">
+
+        <!-- Card Preview Box -->
+        <div class="portal-card p-3 mb-4 text-white cursor-pointer" onclick="switchDashboardTab('card')" style="background: linear-gradient(135deg, #1e3a8a 0%, #0284c7 100%);">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+              <div class="small text-white-50 text-uppercase tracking-wider" style="font-size: 0.68rem;">Hospital Health Card</div>
+              <div class="fw-bold fs-5"><%= patientCard.patientName %></div>
+            </div>
+            <span class="badge bg-white text-dark px-2 py-1 font-monospace" style="font-size: 0.72rem;"><%= patientCard.patientCardNumber %></span>
+          </div>
+
+          <div class="row my-2 g-1 small text-white-75">
+            <div class="col-6">UHID: <strong class="text-white"><%= patientCard.uhid %></strong></div>
+            <div class="col-6">Age/Sex: <strong class="text-white"><%= patientCard.age %> / <%= patientCard.gender %></strong></div>
+            <div class="col-6">Blood: <strong class="text-white"><%= patientCard.bloodGroup %></strong></div>
+            <div class="col-6">Mobile: <strong class="text-white"><%= patientCard.maskedPhone %></strong></div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between pt-2 border-top border-white-50 border-opacity-25 mt-2">
+            <div class="small text-white-50" style="font-size: 0.7rem;">Tap to open card &rarr;</div>
+            <span class="badge bg-light text-primary px-2 py-1">Open Card</span>
+          </div>
+        </div>
+
+        <!-- Notifications Widget -->
+        <div class="portal-card p-3 mb-4">
+          <div class="d-flex align-items-center justify-content-between mb-2 pb-2 border-bottom">
+            <h6 class="fw-bold mb-0 text-dark small"><i class="bi bi-bell-fill text-warning me-1"></i>Notifications</h6>
+            <span class="badge bg-light text-muted border"><%= notifications.length %></span>
+          </div>
+          <% if (notifications.length > 0) { %>
+            <div class="list-group list-group-flush">
+              <% notifications.forEach(function(n) { %>
+                <div class="list-group-item px-2 py-2 border-0 rounded-2 mb-1 bg-light">
+                  <div class="d-flex w-100 justify-content-between align-items-center">
+                    <strong class="small text-dark" style="font-size: 0.8rem;"><%= n.title %></strong>
+                    <small class="text-muted" style="font-size: 0.68rem;"><%= new Date(n.createdAt).toLocaleDateString() %></small>
+                  </div>
+                  <p class="mb-0 text-muted small text-truncate" style="font-size: 0.75rem;"><%= n.message %></p>
+                </div>
+              <% }); %>
+            </div>
+          <% } else { %>
+            <div class="text-muted small py-3 text-center">
+              <i class="bi bi-check2-circle text-success fs-5 d-block mb-1"></i>
+              All caught up! No pending alerts.
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Recorded Allergies -->
+        <div class="portal-card p-3">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h6 class="fw-bold mb-0 text-dark small"><i class="bi bi-shield-exclamation text-danger me-1"></i>Documented Allergies</h6>
+          </div>
+          <% if (allergies && allergies.hasAllergies) { %>
+            <div class="d-flex flex-wrap gap-1">
+              <% (allergies.drugAllergies || []).forEach(function(al) { %>
+                <span class="badge badge-soft-danger px-2 py-1"><i class="bi bi-exclamation-octagon me-1"></i><%= al %></span>
+              <% }); %>
+            </div>
+          <% } else { %>
+            <div class="text-muted small" style="font-size: 0.78rem;">
+              <i class="bi bi-check-circle text-success me-1"></i>No Known Drug Allergies (NKDA) reported.
+            </div>
+          <% } %>
+        </div>
+
+      </div>
     </div>
 
-    <!-- RIGHT COLUMN: Recent Activity, Digital Card Quick Box, Notifications -->
-    <div class="col-lg-4">
-      
-      <!-- Patient Card Quick Access Widget (Section 46) -->
-      <div class="portal-card p-3 mb-4 text-white" style="background: linear-gradient(135deg, #1e3a8a 0%, #0284c7 100%);">
-        <div class="d-flex justify-content-between align-items-start mb-2">
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- TAB PANE 2: DIGITAL PATIENT HEALTH CARD (IN-PLACE)       -->
+  <!-- ======================================================== -->
+  <div class="dash-panel-pane" id="pane-card">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+
+        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
           <div>
-            <div class="small text-white-50 text-uppercase tracking-wider" style="font-size: 0.7rem;">Hospital Health Card</div>
-            <div class="fw-bold fs-5"><%= patientCard.patientName %></div>
+            <h4 class="fw-bold text-dark mb-0 fs-5">Digital Patient Health Card</h4>
+            <div class="text-muted small">ABHA & AYUSH Verified Hospital Identity Card</div>
           </div>
-          <span class="badge bg-white text-dark px-2 py-1 font-monospace" style="font-size: 0.75rem;"><%= patientCard.patientCardNumber %></span>
+          <div class="d-flex gap-2">
+            <button onclick="window.print()" class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-xs">
+              <i class="bi bi-printer me-1"></i> Print / Save Card
+            </button>
+            <button type="button" onclick="switchDashboardTab('overview')" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+              &larr; Back to Overview
+            </button>
+          </div>
         </div>
 
-        <div class="row my-2 g-1 small text-white-75">
-          <div class="col-6">UHID: <strong class="text-white"><%= patientCard.uhid %></strong></div>
-          <div class="col-6">Age / Sex: <strong class="text-white"><%= patientCard.age %> / <%= patientCard.gender %></strong></div>
-          <div class="col-6">Mobile: <strong class="text-white"><%= patientCard.maskedPhone %></strong></div>
-          <div class="col-6">Blood: <strong class="text-white"><%= patientCard.bloodGroup %></strong></div>
-        </div>
+        <!-- THE DIGITAL CARD -->
+        <!-- FIX: patient card number now lives in data-card-number so the
+             barcode script can read it via .dataset instead of splicing
+             it into a JS string literal (see script block below). -->
+        <div class="portal-card overflow-hidden shadow-sm border-2 border-primary border-opacity-25 mb-4" id="printableDashboardCard" data-card-number="<%= patientCard.patientCardNumber %>">
 
-        <div class="d-flex align-items-center justify-content-between pt-2 border-top border-white-50 border-opacity-25 mt-2">
-          <div class="small text-white-50" style="font-size: 0.72rem;">Safe QR & Barcode Verified</div>
-          <a href="/patient/card" class="btn btn-sm btn-light py-1 px-3 fw-semibold text-primary">Open Full Card</a>
-        </div>
-      </div>
+          <!-- Tricolor Ribbon Strip -->
+          <div class="gov-tricolor-bar" style="height: 5px;"></div>
 
-      <!-- Real-Time Notifications (Section 77) -->
-      <div class="portal-card p-3 mb-4">
-        <div class="d-flex align-items-center justify-content-between mb-2 pb-2 border-bottom">
-          <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-bell-fill text-warning me-2"></i>Notifications</h6>
-          <span class="badge bg-light text-muted"><%= notifications.length %></span>
-        </div>
-        <% if (notifications.length > 0) { %>
-          <div class="list-group list-group-flush">
-            <% notifications.forEach(function(n) { %>
-              <a href="<%= n.link || '/patient/dashboard' %>" class="list-group-item list-group-item-action px-2 py-2 border-0 rounded-2 mb-1">
-                <div class="d-flex w-100 justify-content-between align-items-center">
-                  <strong class="small text-dark"><%= n.title %></strong>
-                  <small class="text-muted" style="font-size: 0.68rem;"><%= new Date(n.createdAt).toLocaleDateString() %></small>
+          <!-- Card Header Bar -->
+          <div class="p-3 p-md-4" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0369a1 100%); color: #ffffff;">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div class="d-flex align-items-center gap-2">
+                <div class="bg-white rounded-3 p-1 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
+                  <img src="/uploads/new_logo.png" alt="Logo" style="max-width: 38px; max-height: 38px; object-fit: contain;">
                 </div>
-                <p class="mb-0 text-muted small text-truncate"><%= n.message %></p>
-              </a>
-            <% }); %>
+                <div>
+                  <div class="fw-bold fs-5 text-white lh-sm">MediKiosk Health Card</div>
+                  <small class="text-white-50" style="font-size: 0.75rem;"><%= patientCard.hospitalName %></small>
+                </div>
+              </div>
+              <div class="text-end">
+                <span class="badge bg-warning text-dark font-monospace fw-bold px-2 py-1"><%= patientCard.patientCardNumber %></span>
+                <div class="text-white-50 mt-1" style="font-size: 0.68rem;">ABDM / AYUSH LINKED</div>
+              </div>
+            </div>
           </div>
-        <% } else { %>
-          <div class="text-muted small py-3 text-center">
-            <i class="bi bi-check2-circle text-success fs-5 d-block mb-1"></i>
-            All caught up! No unread notifications.
-          </div>
-        <% } %>
-      </div>
 
-      <!-- Recent Activity Feed (Section 45) -->
-      <div class="portal-card p-3 mb-4">
-        <div class="d-flex align-items-center justify-content-between mb-2 pb-2 border-bottom">
-          <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-journal-medical text-primary me-2"></i>Recent Activity</h6>
-          <a href="/patient/timeline" class="small text-primary text-decoration-none">Timeline &rarr;</a>
+          <!-- Card Body -->
+          <div class="p-3 p-md-4 bg-white">
+            <div class="row align-items-center g-3">
+
+              <!-- Left Info Column -->
+              <div class="col-sm-7">
+                <div class="mb-3">
+                  <div class="text-muted small text-uppercase fw-semibold" style="font-size: 0.72rem;">Patient Full Name</div>
+                  <div class="fs-4 fw-bold text-dark"><%= patientCard.patientName %></div>
+                </div>
+
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <div class="text-muted small" style="font-size: 0.72rem;">UHID Number</div>
+                    <div class="font-monospace fw-bold text-primary"><%= patientCard.uhid %></div>
+                  </div>
+                  <div class="col-6">
+                    <div class="text-muted small" style="font-size: 0.72rem;">ABHA ID</div>
+                    <div class="font-monospace fw-semibold text-dark"><%= patientCard.abhaId %></div>
+                  </div>
+                  <div class="col-6">
+                    <div class="text-muted small" style="font-size: 0.72rem;">Age / Gender</div>
+                    <div class="fw-semibold text-dark"><%= patientCard.age %> Yrs (<%= patientCard.gender %>)</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="text-muted small" style="font-size: 0.72rem;">Blood Group</div>
+                    <div class="fw-bold text-danger"><%= patientCard.bloodGroup %></div>
+                  </div>
+                  <div class="col-6">
+                    <div class="text-muted small" style="font-size: 0.72rem;">Registered Phone</div>
+                    <div class="font-monospace fw-semibold text-dark"><%= patientCard.maskedPhone %></div>
+                  </div>
+                  <div class="col-6">
+                    <div class="text-muted small" style="font-size: 0.72rem;">Registered On</div>
+                    <div class="fw-semibold text-dark"><%= new Date(patientCard.registrationDate).toLocaleDateString() %></div>
+                  </div>
+                </div>
+
+                <!-- Safe Barcode Component -->
+                <div class="mt-3 text-center text-sm-start">
+                  <div class="text-muted mb-1" style="font-size: 0.7rem;">Hospital Intake Scanner Barcode:</div>
+                  <div class="d-inline-block bg-white p-1 border rounded shadow-xs" style="max-width: 100%;">
+                    <img id="dashStaticBarcode" src="<%= patientCard.barcodeData %>" alt="Barcode" class="img-fluid" style="max-height: 46px; max-width: 100%; object-fit: contain;">
+                    <svg id="dashDynamicBarcode" class="d-none img-fluid" style="max-height: 46px; max-width: 220px;"></svg>
+                  </div>
+                  <div class="font-monospace text-muted mt-1 small"><%= patientCard.patientCardNumber %></div>
+                </div>
+              </div>
+
+              <!-- Right QR Column -->
+              <div class="col-sm-5 text-center border-top border-sm-top-0 border-sm-start pt-3 pt-sm-0 ps-sm-3">
+                <div class="p-2 border rounded-3 d-inline-block bg-light shadow-xs mb-2">
+                  <img src="<%= patientCard.qrCodeData %>" alt="Safe QR Code" style="width: 130px; height: 130px; max-width: 100%; object-fit: contain;">
+                </div>
+                <div class="small fw-semibold text-dark">Quick Check-in QR</div>
+                <div class="text-muted mt-1" style="font-size: 0.72rem;">
+                  Scan at any OPD kiosk or reception scanner for instant queueing.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Card Footer Privacy Notice -->
+          <div class="px-3 px-md-4 py-2 bg-light border-top d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2" style="font-size: 0.75rem;">
+            <div class="text-muted">
+              <i class="bi bi-shield-lock-fill text-success me-1"></i>
+              <strong>Privacy-Compliant:</strong> Zero-PHI QR code. Safe identifier only.
+            </div>
+            <span class="badge bg-secondary-subtle text-secondary font-monospace"><%= patientCard.emergencyContact %></span>
+          </div>
+
         </div>
 
-        <ul class="list-unstyled mb-0" style="font-size: 0.85rem;">
-          <li class="py-2 border-bottom d-flex align-items-start gap-2">
-            <i class="bi bi-check-circle-fill text-success mt-1"></i>
-            <div>
-              <div class="fw-semibold text-dark">Doctor consultation recorded</div>
-              <div class="text-muted small">Clinical intake and summary approved</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- TAB PANE 3: MEDICINES & PRESCRIPTIONS (IN-PLACE)         -->
+  <!-- ======================================================== -->
+  <div class="dash-panel-pane" id="pane-medicines">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+      <div>
+        <h4 class="fw-bold text-dark mb-0 fs-5">Active Medicines & Prescriptions</h4>
+        <div class="text-muted small">Doctor prescribed regimens, dosages, and administration schedules</div>
+      </div>
+      <button type="button" onclick="switchDashboardTab('overview')" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+        &larr; Back to Overview
+      </button>
+    </div>
+
+    <% if (!medicines || medicines.length === 0) { %>
+      <div class="portal-card p-5 text-center">
+        <i class="bi bi-capsule text-muted fs-1 mb-2"></i>
+        <h5 class="fw-bold text-dark">No Active Medications Prescribed</h5>
+        <p class="text-muted small mb-0">Your doctor has not prescribed any active medications currently.</p>
+      </div>
+    <% } else { %>
+      <div class="row g-3">
+        <% medicines.forEach(function(m) { %>
+          <div class="col-md-6 col-lg-4">
+            <div class="portal-card p-3 h-100 border-start border-4 border-success">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-success-subtle text-success small">Prescribed Medicine</span>
+                <span class="text-muted small" style="font-size: 0.72rem;"><%= new Date(m.prescriptionDate || Date.now()).toLocaleDateString() %></span>
+              </div>
+              <h5 class="fw-bold text-dark mb-1 fs-6"><%= m.medicineName %></h5>
+              <div class="small text-muted mb-1">Dosage: <strong><%= m.dosage || 'As directed' %></strong></div>
+              <div class="small text-secondary mb-2"><i class="bi bi-clock me-1"></i><%= m.frequency || 'Daily' %> &bull; <%= m.duration || 'Full course' %></div>
+              <div class="small text-muted border-top pt-2" style="font-size: 0.75rem;">
+                <i class="bi bi-person-badge me-1"></i>Prescribed by: <%= m.prescribedBy || m.doctor || 'Attending Physician' %>
+              </div>
             </div>
-          </li>
-          <li class="py-2 border-bottom d-flex align-items-start gap-2">
-            <i class="bi bi-file-earmark-check text-info mt-1"></i>
-            <div>
-              <div class="fw-semibold text-dark">Blood report evaluated</div>
-              <div class="text-muted small">CBC laboratory profile reviewed</div>
+          </div>
+        <% }); %>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- TAB PANE 4: REPORTS & LAB RESULTS (IN-PLACE)             -->
+  <!-- ======================================================== -->
+  <div class="dash-panel-pane" id="pane-reports">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+      <div>
+        <h4 class="fw-bold text-dark mb-0 fs-5">Diagnostic Reports & Lab Evaluations</h4>
+        <div class="text-muted small">Validated laboratory results, radiology scans, and clinical reviews</div>
+      </div>
+      <button type="button" onclick="switchDashboardTab('overview')" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+        &larr; Back to Overview
+      </button>
+    </div>
+
+    <!-- Lab Values Table -->
+    <% if (labResults && labResults.length > 0) { %>
+      <div class="portal-card p-3 p-md-4 mb-4">
+        <h6 class="fw-bold text-dark mb-3"><i class="bi bi-activity text-danger me-2"></i>Laboratory Blood & Diagnostic Values</h6>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0" style="font-size: 0.88rem;">
+            <thead class="table-light">
+              <tr>
+                <th>Test Parameter</th>
+                <th>Measured Value</th>
+                <th>Reference Range</th>
+                <th>Status</th>
+                <th>Report Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% labResults.forEach(function(lab) { %>
+                <tr>
+                  <td class="fw-semibold text-dark"><%= lab.parameter %></td>
+                  <td class="fw-bold text-primary"><%= lab.value %> <%= lab.unit %></td>
+                  <td class="text-muted small"><%= lab.referenceRange || 'Standard' %></td>
+                  <td>
+                    <span class="badge <%= lab.isPotentiallyAbnormal ? 'bg-warning-subtle text-warning' : 'bg-success-subtle text-success' %>">
+                      <%= lab.status %>
+                    </span>
+                  </td>
+                  <td class="text-muted small"><%= new Date(lab.reportDate).toLocaleDateString() %></td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- Reports Cards -->
+    <% if (!reports || reports.length === 0) { %>
+      <div class="portal-card p-5 text-center">
+        <i class="bi bi-file-earmark-x text-muted fs-1 mb-2"></i>
+        <h5 class="fw-bold text-dark">No Uploaded Reports</h5>
+        <p class="text-muted small mb-0">Diagnostic reports uploaded by pathology will securely appear here.</p>
+      </div>
+    <% } else { %>
+      <div class="row g-3">
+        <% reports.forEach(function(r) { %>
+          <div class="col-md-6">
+            <div class="portal-card p-3 h-100">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-light text-primary border small"><%= r.reportType %></span>
+                <span class="badge <%= r.status === 'reviewed' ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning' %>">
+                  <%= r.statusLabel %>
+                </span>
+              </div>
+              <h5 class="fw-bold text-dark mb-1 fs-6"><%= r.testName %></h5>
+              <div class="text-muted small mb-2">
+                <i class="bi bi-calendar3 me-1"></i><%= new Date(r.date).toLocaleDateString() %> &bull; Req by: <%= r.requestedBy %>
+              </div>
+              <% if (r.reviewNotes) { %>
+                <div class="small text-muted bg-light p-2 rounded mb-2" style="font-size: 0.78rem;">
+                  <i class="bi bi-chat-left-text me-1"></i><%= r.reviewNotes %>
+                </div>
+              <% } %>
+              <div class="pt-2 border-top d-flex gap-2">
+                <a href="/patient/chat?q=<%= encodeURIComponent('Explain my ' + r.testName) %>" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
+                  <i class="bi bi-robot"></i> Explain with AI
+                </a>
+                <% if (r.downloadUrl) { %>
+                  <a href="<%= r.downloadUrl %>" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+                    <i class="bi bi-eye"></i> View
+                  </a>
+                <% } %>
+              </div>
             </div>
-          </li>
-          <li class="py-2 border-bottom d-flex align-items-start gap-2">
-            <i class="bi bi-capsule text-warning mt-1"></i>
-            <div>
-              <div class="fw-semibold text-dark">Prescription generated</div>
-              <div class="text-muted small">Dosage instructions confirmed</div>
-            </div>
-          </li>
-          <li class="py-2 d-flex align-items-start gap-2">
-            <i class="bi bi-calendar2-heart text-primary mt-1"></i>
-            <div>
-              <div class="fw-semibold text-dark">Follow-up schedule created</div>
-              <div class="text-muted small">Review date synchronized with clinic</div>
-            </div>
-          </li>
-        </ul>
+          </div>
+        <% }); %>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- TAB PANE 5: VISITS & MEDICAL TIMELINE (IN-PLACE)         -->
+  <!-- ======================================================== -->
+  <div class="dash-panel-pane" id="pane-visits">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+      <div>
+        <h4 class="fw-bold text-dark mb-0 fs-5">Outpatient Visits & Medical Timeline</h4>
+        <div class="text-muted small">Comprehensive chronology of clinical consultations and healthcare milestones</div>
+      </div>
+      <button type="button" onclick="switchDashboardTab('overview')" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+        &larr; Back to Overview
+      </button>
+    </div>
+
+    <!-- Visits List -->
+    <div class="portal-card p-3 p-md-4 mb-4">
+      <h6 class="fw-bold text-dark mb-3"><i class="bi bi-calendar2-heart text-primary me-2"></i>Outpatient Consultations</h6>
+      <% if (!visits || visits.length === 0) { %>
+        <p class="text-muted small mb-0">No past visits recorded.</p>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0" style="font-size: 0.88rem;">
+            <thead class="table-light">
+              <tr>
+                <th>Date</th>
+                <th>Department</th>
+                <th>Attending Doctor</th>
+                <th>Symptoms & Summary</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% visits.forEach(function(v) { %>
+                <tr>
+                  <td class="text-muted small"><%= new Date(v.date).toLocaleDateString() %></td>
+                  <td class="fw-semibold text-dark"><%= v.department %></td>
+                  <td><%= v.doctor %></td>
+                  <td class="small text-muted" style="max-width: 250px;"><%= v.consultationSummary || v.symptoms %></td>
+                  <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Timeline Events -->
+    <div class="portal-card p-3 p-md-4">
+
+      <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+
+        <h6 class="fw-bold text-dark mb-0">
+          <i class="bi bi-clock-history text-info me-2"></i>
+          Chronological Health Timeline
+        </h6>
+
+        <a
+          href="/patient/timeline"
+          class="btn btn-sm btn-outline-primary"
+        >
+          <i class="bi bi-clock-history me-1"></i>
+          Full Timeline
+        </a>
+
       </div>
 
-      <!-- Recorded Allergies Banner (Section 52) -->
-      <div class="portal-card p-3">
-        <div class="d-flex align-items-center justify-content-between mb-2">
-          <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-shield-exclamation text-danger me-2"></i>Recorded Allergies</h6>
-          <a href="/patient/allergies" class="small text-primary text-decoration-none">View All</a>
+      <!--
+        FIX: `dashboardTimeline` and `recentTimeline` were previously
+        re-declared here with `const`, duplicating the identifiers
+        computed at the top of the file. Since EJS compiles the whole
+        template into a single function, that raised
+        "Identifier 'dashboardTimeline' has already been declared"
+        on every request. We now reuse the single top-level
+        computation instead of recomputing it.
+      -->
+
+      <% if (recentTimeline.length === 0) { %>
+
+        <div class="text-center py-3">
+
+          <i
+            class="bi bi-clock-history text-muted d-block mb-2"
+            style="font-size: 2rem;"
+          ></i>
+
+          <p class="text-muted small mb-0">
+            Timeline starts with your first consultation.
+          </p>
+
         </div>
-        <% if (allergies && allergies.hasAllergies) { %>
-          <div class="d-flex flex-wrap gap-1">
-            <% (allergies.drugAllergies || []).forEach(function(al) { %>
-              <span class="badge badge-soft-danger px-2 py-1"><i class="bi bi-exclamation-octagon me-1"></i><%= al %></span>
-            <% }); %>
+
+      <% } else { %>
+
+        <div class="border-start border-2 border-primary ps-3 ms-2">
+
+          <% recentTimeline.forEach(function(e) { %>
+
+            <%
+              e = e || {};
+
+              const eventTitle =
+                e.title ||
+                'Medical Event';
+
+              const eventType =
+                e.type ||
+                'Healthcare Event';
+
+              const eventDescription =
+                e.description ||
+                '';
+
+              let formattedDate = 'Date unavailable';
+
+              if (e.date) {
+                const parsedDate = new Date(e.date);
+
+                if (!isNaN(parsedDate.getTime())) {
+                  formattedDate = parsedDate.toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                  });
+                }
+              }
+            %>
+
+
+            <!-- TIMELINE EVENT -->
+            <div class="mb-3 position-relative">
+
+              <!-- Timeline Node -->
+              <span
+                class="position-absolute bg-primary rounded-circle"
+                style="
+                  width: 10px;
+                  height: 10px;
+                  left: -21px;
+                  top: 5px;
+                "
+              ></span>
+
+
+              <!-- Event Title -->
+              <div class="small fw-bold text-dark">
+                <%= eventTitle %>
+              </div>
+
+
+              <!-- Date + Type -->
+              <div
+                class="text-muted small"
+                style="font-size: 0.75rem;"
+              >
+                <i class="bi bi-calendar3 me-1"></i>
+
+                <%= formattedDate %>
+
+                <span class="mx-1">&bull;</span>
+
+                <%= eventType %>
+              </div>
+
+
+              <!-- Description -->
+              <% if (eventDescription) { %>
+
+                <div class="text-muted small mt-1">
+                  <%= eventDescription %>
+                </div>
+
+              <% } %>
+
+            </div>
+
+          <% }); %>
+
+        </div>
+
+
+        <% if (dashboardTimeline.length > 5) { %>
+
+          <div class="text-center mt-3">
+
+            <a
+              href="/patient/timeline"
+              class="btn btn-sm btn-outline-primary"
+            >
+              <i class="bi bi-arrow-right me-1"></i>
+              View <%= dashboardTimeline.length %> Timeline Events
+            </a>
+
           </div>
-        <% } else { %>
-          <div class="text-muted small">No known drug allergies (NKDA) currently flagged.</div>
+
         <% } %>
-      </div>
+
+      <% } %>
 
     </div>
   </div>
 
+  <!-- ======================================================== -->
+  <!-- TAB PANE 6: AI HEALTH ASSISTANT (IN-PLACE QUICK CHAT)    -->
+  <!-- ======================================================== -->
+  <div class="dash-panel-pane" id="pane-ai">
+    <div class="portal-card p-3 p-md-4">
+      <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2 flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-xs" style="width: 38px; height: 38px;">
+            <i class="bi bi-robot fs-5"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold text-dark mb-0 fs-6">MediKiosk AI Health Assistant</h5>
+            <div class="text-muted small" style="font-size: 0.75rem;">Record-aware AI guidance &bull; Non-diagnostic informational assistant</div>
+          </div>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="/patient/chat" class="btn btn-primary btn-sm rounded-pill px-3 shadow-xs">
+            <i class="bi bi-arrows-angle-expand me-1"></i> Launch Full Screen Chat
+          </a>
+          <button type="button" onclick="switchDashboardTab('overview')" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+            &larr; Back to Overview
+          </button>
+        </div>
+      </div>
+
+      <p class="text-muted small mb-3">
+        Ask questions about your prescribed dosages, laboratory values, previous consultations, or hospital guidance.
+      </p>
+
+      <!-- Quick Question Buttons -->
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <% suggestedQuestions.forEach(function(sq) { %>
+          <a href="/patient/chat?q=<%= encodeURIComponent(sq) %>" class="btn btn-sm btn-white bg-white border text-primary rounded-pill px-3 py-1 shadow-xs fw-medium">
+            <i class="bi bi-chat-text text-muted me-1"></i> <%= sq %>
+          </a>
+        <% }); %>
+      </div>
+
+      <!-- Quick Chat Direct Input -->
+      <form action="/patient/chat" method="GET" class="d-flex gap-2 mt-2">
+        <input type="text" name="q" class="form-control rounded-pill px-3 py-2" placeholder="Type your health question (e.g. Explain my CBC test)..." required>
+        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">
+          <i class="bi bi-send-fill me-1"></i> Ask
+        </button>
+      </form>
+    </div>
+  </div>
+
 </div>
+
+<!-- Client-side Fast Tab Switcher & Dynamic Barcode Fallback -->
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script>
+  function switchDashboardTab(tabId) {
+    if (!tabId) tabId = 'overview';
+
+    // Update pills
+    document.querySelectorAll('.dash-tab-pill').forEach(btn => btn.classList.remove('active'));
+    const activePill = document.getElementById('pill-' + tabId);
+    if (activePill) {
+      activePill.classList.add('active');
+      activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+
+    // Update panes
+    document.querySelectorAll('.dash-panel-pane').forEach(pane => pane.classList.remove('active'));
+    const targetPane = document.getElementById('pane-' + tabId);
+    if (targetPane) {
+      targetPane.classList.add('active');
+    }
+
+    // Update URL hash without causing a page jump
+    if (history.pushState) {
+      history.pushState(null, null, '#' + tabId);
+    } else {
+      location.hash = '#' + tabId;
+    }
+
+    // Initialize Barcode if switching to card tab
+    if (tabId === 'card') {
+      renderDashboardBarcode();
+    }
+  }
+
+  function renderDashboardBarcode() {
+    if (window.JsBarcode) {
+      try {
+        // FIX: previously `const code = '<%= patientCard.patientCardNumber %>';`
+        // spliced server data straight into a JS string literal, which a
+        // card number containing a quote/backslash could break out of.
+        // Reading it from the data-card-number attribute instead is safe
+        // regardless of its contents.
+        const cardEl = document.getElementById('printableDashboardCard');
+        const code = cardEl ? cardEl.dataset.cardNumber : '';
+        if (!code) return;
+
+        JsBarcode('#dashDynamicBarcode', code, {
+          format: 'CODE128',
+          width: 1.5,
+          height: 38,
+          displayValue: false,
+          margin: 2
+        });
+        const dyn = document.getElementById('dashDynamicBarcode');
+        const stat = document.getElementById('dashStaticBarcode');
+        if (dyn && stat) {
+          dyn.classList.remove('d-none');
+          stat.classList.add('d-none');
+        }
+      } catch (e) {
+        console.warn('JsBarcode dashboard fallback:', e);
+      }
+    }
+  }
+
+  // Handle Initial Hash / Tab Selection on Page Load
+  document.addEventListener('DOMContentLoaded', () => {
+    const hash = (window.location.hash || '').replace('#', '');
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    const targetTab = hash || tabParam || 'overview';
+    switchDashboardTab(targetTab);
+  });
+
+  // Listen to browser Back/Forward navigation
+  window.addEventListener('popstate', () => {
+    const hash = (window.location.hash || '').replace('#', '');
+    if (hash) switchDashboardTab(hash);
+  });
+</script>
 
 <%- include('footer') %>

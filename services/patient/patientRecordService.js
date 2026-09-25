@@ -9,21 +9,23 @@ const logger = require('../../utils/logger');
 
 // Generate safe SVG QR Code representation containing ONLY safe identifier
 function generateSafeQRCodeSvg(safePayload) {
-  const encoded = encodeURIComponent(safePayload);
-  return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120"><rect width="120" height="120" fill="white"/><rect x="10" y="10" width="30" height="30" fill="black"/><rect x="15" y="15" width="20" height="20" fill="white"/><rect x="20" y="20" width="10" height="10" fill="black"/><rect x="80" y="10" width="30" height="30" fill="black"/><rect x="85" y="15" width="20" height="20" fill="white"/><rect x="90" y="20" width="10" height="10" fill="black"/><rect x="10" y="80" width="30" height="30" fill="black"/><rect x="15" y="85" width="20" height="20" fill="white"/><rect x="20" y="90" width="10" height="10" fill="black"/><rect x="50" y="20" width="10" height="10" fill="black"/><rect x="65" y="20" width="10" height="10" fill="black"/><rect x="50" y="50" width="20" height="20" fill="black"/><rect x="20" y="55" width="15" height="10" fill="black"/><rect x="85" y="55" width="15" height="10" fill="black"/><rect x="50" y="85" width="10" height="20" fill="black"/><rect x="75" y="85" width="15" height="10" fill="black"/><rect x="95" y="85" width="15" height="15" fill="black"/></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120"><rect width="120" height="120" fill="white"/><rect x="10" y="10" width="30" height="30" fill="black"/><rect x="15" y="15" width="20" height="20" fill="white"/><rect x="20" y="20" width="10" height="10" fill="black"/><rect x="80" y="10" width="30" height="30" fill="black"/><rect x="85" y="15" width="20" height="20" fill="white"/><rect x="90" y="20" width="10" height="10" fill="black"/><rect x="10" y="80" width="30" height="30" fill="black"/><rect x="15" y="85" width="20" height="20" fill="white"/><rect x="20" y="90" width="10" height="10" fill="black"/><rect x="50" y="20" width="10" height="10" fill="black"/><rect x="65" y="20" width="10" height="10" fill="black"/><rect x="50" y="50" width="20" height="20" fill="black"/><rect x="20" y="55" width="15" height="10" fill="black"/><rect x="85" y="55" width="15" height="10" fill="black"/><rect x="50" y="85" width="10" height="20" fill="black"/><rect x="75" y="85" width="15" height="10" fill="black"/><rect x="95" y="85" width="15" height="15" fill="black"/></svg>`;
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 }
 
 // Generate safe SVG Barcode representation containing ONLY safe identifier
 function generateSafeBarcodeSvg(safeCode) {
+  const code = String(safeCode || 'MK-000000').replace(/[^a-zA-Z0-9-]/g, '');
   const bars = [];
-  const width = 240;
-  const height = 50;
-  for (let i = 0; i < 40; i++) {
-    const x = 10 + i * 5.5;
-    const barWidth = (i % 3 === 0 || i % 7 === 0) ? 3 : 1.5;
-    bars.push(`<rect x="${x}" y="5" width="${barWidth}" height="40" fill="#111827"/>`);
+  const totalBars = 48;
+  for (let i = 0; i < totalBars; i++) {
+    const x = 10 + i * 4.6;
+    const charCode = (code.charCodeAt(i % code.length) || 65) + i;
+    const barWidth = (charCode % 4 === 0) ? 2.8 : (charCode % 2 === 0 ? 1.8 : 1.1);
+    bars.push(`<rect x="${x.toFixed(1)}" y="4" width="${barWidth}" height="36" fill="#111827"/>`);
   }
-  return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 50" width="240" height="50"><rect width="240" height="50" fill="white"/>${bars.join('')}</svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 54" width="240" height="54"><rect width="240" height="54" fill="white" rx="4"/>${bars.join('')}<text x="120" y="49" font-family="monospace" font-size="8.5" fill="#374151" text-anchor="middle" letter-spacing="1.5">${code}</text></svg>`;
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 }
 
 // Mask phone number: e.g., 9830112233 -> ******2233

@@ -1,164 +1,1154 @@
-<%- include('header', { title: 'My Medical Documents — MediKiosk', patient, activeNav: 'documents' }) %>
+
+<%- include('header', {
+  title: 'My Medical Documents — MediKiosk',
+  patient: patient,
+  activeNav: 'documents'
+}) %>
+
+<%
+  const safeDocuments = Array.isArray(documents) ? documents : [];
+
+  function formatDate(value) {
+    if (!value) return 'Date unavailable';
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return 'Date unavailable';
+    }
+
+    return date.toLocaleDateString('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  }
+
+  function safeFileUrl(url) {
+    if (!url || typeof url !== 'string') return '';
+
+    const value = url.trim();
+
+    /*
+     * Only allow normal same-origin paths or HTTPS URLs.
+     * Prevents javascript: URLs from being rendered into href.
+     */
+    if (
+      value.startsWith('/') &&
+      !value.startsWith('//')
+    ) {
+      return value;
+    }
+
+    if (value.startsWith('https://')) {
+      return value;
+    }
+
+    return '';
+  }
+
+  function formatFileSize(size) {
+    if (size === null || size === undefined || size === '') {
+      return 'Unknown size';
+    }
+
+    if (typeof size === 'string' && /[a-zA-Z]/.test(size)) {
+      return size;
+    }
+
+    const bytes = Number(size);
+
+    if (!Number.isFinite(bytes) || bytes < 0) {
+      return 'Unknown size';
+    }
+
+    if (bytes < 1024) {
+      return `${bytes} B`;
+    }
+
+    if (bytes < 1024 * 1024) {
+      return `${(bytes / 1024).toFixed(1)} KB`;
+    }
+
+    if (bytes < 1024 * 1024 * 1024) {
+      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)} GB`;
+  }
+%>
+
+<style>
+  .document-card {
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+
+  .document-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .document-file-name {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .upload-drop-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 28px 18px;
+    text-align: center;
+    cursor: pointer;
+    background: #f8fafc;
+    transition: all .15s ease;
+  }
+
+  .upload-drop-zone:hover,
+  .upload-drop-zone.dragover {
+    border-color: #0d6efd;
+    background: #eff6ff;
+  }
+
+  .upload-drop-zone.has-file {
+    border-color: #198754;
+    background: #f0fdf4;
+  }
+
+  #selectedFileName {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  #uploadProgressContainer {
+    display: none;
+  }
+
+  .document-status {
+    font-size: .75rem;
+  }
+
+  @media (max-width: 575.98px) {
+    .document-actions {
+      width: 100%;
+    }
+
+    .document-actions .btn {
+      flex: 1;
+    }
+  }
+</style>
+
 
 <div class="container py-4">
+
+  <!-- PAGE HEADER -->
   <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+
     <div>
-      <h3 class="fw-bold text-dark mb-1">My Medical Documents</h3>
-      <p class="text-muted small mb-0">Uploaded prescriptions, clinical scans, discharge summaries, and OCR extractions</p>
+      <h3 class="fw-bold text-dark mb-1">
+        <i class="bi bi-folder2-open text-primary me-2"></i>
+        My Medical Documents
+      </h3>
+
+      <p class="text-muted small mb-0">
+        Uploaded prescriptions, clinical scans, discharge summaries,
+        and OCR extractions
+      </p>
     </div>
-    <button class="btn btn-primary btn-sm d-flex align-items-center gap-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#uploadDocModal">
-      <i class="bi bi-cloud-arrow-up"></i> Upload Medical Document
+
+    <button
+      type="button"
+      class="btn btn-primary btn-sm d-flex align-items-center justify-content-center gap-1 shadow-sm"
+      data-bs-toggle="modal"
+      data-bs-target="#uploadDocModal"
+    >
+      <i class="bi bi-cloud-arrow-up"></i>
+      Upload Medical Document
     </button>
+
   </div>
 
-  <% if (documents.length === 0) { %>
+
+  <!-- DOCUMENT LIST -->
+  <% if (safeDocuments.length === 0) { %>
+
     <div class="portal-card p-5 text-center">
-      <i class="bi bi-folder-x text-muted fs-1 mb-2"></i>
-      <h5 class="fw-bold text-dark">No Documents Uploaded</h5>
-      <p class="text-muted small mb-3">Upload your external medical records or paper prescriptions for automated OCR processing.</p>
-      <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#uploadDocModal">
+
+      <i class="bi bi-folder-x text-muted fs-1 mb-3"></i>
+
+      <h5 class="fw-bold text-dark">
+        No Documents Uploaded
+      </h5>
+
+      <p class="text-muted small mb-3">
+        Upload your external medical records or paper prescriptions
+        for automated OCR processing.
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#uploadDocModal"
+      >
+        <i class="bi bi-cloud-arrow-up me-1"></i>
         Upload Your First Record
       </button>
+
     </div>
+
   <% } else { %>
+
     <div class="row g-3">
-      <% documents.forEach(function(doc) { %>
-        <div class="col-md-6">
-          <div class="portal-card p-4 h-100 d-flex flex-column justify-content-between">
+
+      <% safeDocuments.forEach(function(doc) { %>
+
+        <%
+          doc = doc || {};
+
+          const fileUrl = safeFileUrl(doc.fileUrl);
+
+          const fileName = doc.fileName ||
+            doc.originalName ||
+            'Medical Document';
+
+          const docType = doc.docType ||
+            'Clinical Document';
+
+          const verificationNote = doc.verificationNote ||
+            'Document is awaiting verification.';
+
+          const ocrStatus = doc.ocrStatus ||
+            'Pending';
+
+          const rawOcrText = typeof doc.rawOcrText === 'string'
+            ? doc.rawOcrText
+            : '';
+
+          const isMachineGenerated =
+            doc.isMachineGenerated === true;
+        %>
+
+        <div class="col-12 col-md-6">
+
+          <div class="portal-card document-card p-4 h-100 d-flex flex-column justify-content-between shadow-sm">
+
             <div>
-              <div class="d-flex justify-content-between align-items-start mb-2">
-                <span class="badge bg-secondary-subtle text-secondary"><%= doc.docType %></span>
-                <% if (doc.isMachineGenerated) { %>
-                  <span class="badge bg-warning-subtle text-warning-emphasis border border-warning" style="font-size: 0.7rem;">
-                    <i class="bi bi-cpu me-1"></i>Machine-Generated (OCR)
+
+              <!-- TOP BADGES -->
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+
+                <span class="badge bg-secondary-subtle text-secondary">
+                  <%= docType %>
+                </span>
+
+                <% if (isMachineGenerated) { %>
+
+                  <span
+                    class="badge bg-warning-subtle text-warning-emphasis border border-warning"
+                    style="font-size:.7rem;"
+                  >
+                    <i class="bi bi-cpu me-1"></i>
+                    Machine-Generated
                   </span>
+
                 <% } else { %>
-                  <span class="badge bg-success-subtle text-success" style="font-size: 0.7rem;">
-                    <i class="bi bi-patch-check-fill me-1"></i>Clinically Verified
+
+                  <span
+                    class="badge bg-success-subtle text-success"
+                    style="font-size:.7rem;"
+                  >
+                    <i class="bi bi-patch-check-fill me-1"></i>
+                    Clinically Verified
                   </span>
+
                 <% } %>
+
               </div>
 
-              <h5 class="fw-bold text-dark mb-1 text-truncate" title="<%= doc.fileName %>">
-                <i class="bi bi-file-earmark-pdf text-danger me-1"></i><%= doc.fileName %>
+
+              <!-- FILE NAME -->
+              <h5
+                class="fw-bold text-dark mb-1 document-file-name"
+                title="<%= fileName %>"
+              >
+
+                <i class="bi bi-file-earmark-medical text-danger me-1"></i>
+
+                <%= fileName %>
+
               </h5>
-              
+
+
+              <!-- FILE INFORMATION -->
               <div class="text-muted small mb-3">
-                <%= new Date(doc.documentDate).toLocaleDateString() %> &bull; Size: <%= doc.fileSize %> &bull; Type: <%= doc.mimeType %>
+
+                <i class="bi bi-calendar3 me-1"></i>
+                <%= formatDate(doc.documentDate) %>
+
+                <span class="mx-1">•</span>
+
+                Size:
+                <%= formatFileSize(doc.fileSize) %>
+
+                <% if (doc.mimeType) { %>
+
+                  <span class="mx-1">•</span>
+
+                  Type:
+                  <%= doc.mimeType %>
+
+                <% } %>
+
               </div>
 
+
+              <!-- OCR STATUS -->
               <div class="p-3 bg-light rounded-3 mb-3 border small">
-                <div class="text-muted fw-semibold mb-1">Document Intelligence Status:</div>
-                <div class="text-secondary"><%= doc.verificationNote %></div>
-                <% if (doc.rawOcrText) { %>
-                  <div class="mt-2 text-dark font-monospace text-truncate" style="font-size: 0.72rem;">
-                    OCR: "<%= doc.rawOcrText.slice(0, 80) %>..."
+
+                <div class="text-muted fw-semibold mb-1">
+                  <i class="bi bi-cpu me-1"></i>
+                  Document Intelligence Status
+                </div>
+
+                <div class="text-secondary">
+                  <%= verificationNote %>
+                </div>
+
+
+                <% if (rawOcrText) { %>
+
+                  <div
+                    class="mt-2 text-dark font-monospace"
+                    style="
+                      font-size:.72rem;
+                      white-space:nowrap;
+                      overflow:hidden;
+                      text-overflow:ellipsis;
+                    "
+                    title="<%= rawOcrText %>"
+                  >
+                    OCR:
+                    "<%= rawOcrText.slice(0, 120) %><%= rawOcrText.length > 120 ? '...' : '' %>"
                   </div>
+
                 <% } %>
+
               </div>
+
             </div>
 
-            <div class="pt-3 border-top d-flex align-items-center justify-content-between">
-              <span class="text-muted small" style="font-size: 0.75rem;">Status: <%= doc.ocrStatus %></span>
-              <div class="d-flex gap-2">
-                <a href="<%= doc.fileUrl %>" class="btn btn-sm btn-outline-secondary" target="_blank">
-                  <i class="bi bi-eye"></i> View
-                </a>
-                <a href="<%= doc.fileUrl %>" class="btn btn-sm btn-primary" download>
-                  <i class="bi bi-download"></i> Download
-                </a>
+
+            <!-- ACTIONS -->
+            <div class="pt-3 border-top">
+
+              <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
+
+                <span class="text-muted document-status">
+
+                  Status:
+
+                  <strong>
+                    <%= ocrStatus %>
+                  </strong>
+
+                </span>
+
               </div>
+
+
+              <div class="d-flex gap-2 document-actions">
+
+                <% if (fileUrl) { %>
+
+                  <a
+                    href="<%= fileUrl %>"
+                    class="btn btn-sm btn-outline-secondary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i class="bi bi-eye me-1"></i>
+                    View
+                  </a>
+
+                  <a
+                    href="<%= fileUrl %>"
+                    class="btn btn-sm btn-primary"
+                    download
+                  >
+                    <i class="bi bi-download me-1"></i>
+                    Download
+                  </a>
+
+                <% } else { %>
+
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    disabled
+                  >
+                    <i class="bi bi-file-earmark-x me-1"></i>
+                    File unavailable
+                  </button>
+
+                <% } %>
+
+              </div>
+
             </div>
 
           </div>
+
         </div>
+
       <% }); %>
+
     </div>
+
   <% } %>
 
-  <!-- Notice Section 54 -->
-  <div class="mt-4 p-3 bg-white border rounded-3 text-muted small d-flex align-items-center gap-2">
+
+  <!-- DOCUMENT INTEGRITY NOTICE -->
+  <div class="mt-4 p-3 bg-white border rounded-3 text-muted small d-flex align-items-start gap-2">
+
     <i class="bi bi-shield-check text-primary fs-5"></i>
+
     <div>
-      <strong>Document Integrity:</strong> OCR-extracted medical information remains strictly marked as machine-generated until verified by hospital staff or attending doctors.
+      <strong>Document Integrity:</strong>
+      OCR-extracted medical information remains strictly marked as
+      machine-generated until verified by hospital staff or attending doctors.
     </div>
+
   </div>
+
 </div>
 
-<!-- Modal: Upload Medical Document -->
-<div class="modal fade" id="uploadDocModal" tabindex="-1">
-  <div class="modal-dialog">
+
+<!-- ========================================================= -->
+<!-- UPLOAD MODAL -->
+<!-- ========================================================= -->
+
+<div
+  class="modal fade"
+  id="uploadDocModal"
+  tabindex="-1"
+  aria-labelledby="uploadDocModalLabel"
+  aria-hidden="true"
+>
+
+  <div class="modal-dialog modal-dialog-centered">
+
     <div class="modal-content">
+
       <div class="modal-header">
-        <h5 class="modal-title fw-bold">Upload Medical Document</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+        <h5
+          class="modal-title fw-bold"
+          id="uploadDocModalLabel"
+        >
+          <i class="bi bi-cloud-arrow-up text-primary me-2"></i>
+          Upload Medical Document
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+
       </div>
-      <div class="modal-body">
-        <form id="uploadDocForm">
+
+
+      <form id="uploadDocForm" enctype="multipart/form-data">
+
+        <div class="modal-body">
+
+          <!-- CATEGORY -->
           <div class="mb-3">
-            <label class="form-label small fw-semibold">Document Category *</label>
-            <select class="form-select" id="docCategory" required>
-              <option value="Prescription">Previous Prescription</option>
-              <option value="Lab Report">Lab Report</option>
-              <option value="Scan Report">Scan / Radiology Report (X-Ray, MRI, CT)</option>
-              <option value="Discharge Summary">Discharge Summary</option>
-              <option value="Medical Certificate">Medical Certificate</option>
-              <option value="Other">Other Clinical Document</option>
+
+            <label
+              for="docCategory"
+              class="form-label small fw-semibold"
+            >
+              Document Category *
+            </label>
+
+            <select
+              class="form-select"
+              id="docCategory"
+              name="docType"
+              required
+            >
+
+              <option value="Prescription">
+                Previous Prescription
+              </option>
+
+              <option value="Lab Report">
+                Lab Report
+              </option>
+
+              <option value="Scan Report">
+                Scan / Radiology Report (X-Ray, MRI, CT)
+              </option>
+
+              <option value="Discharge Summary">
+                Discharge Summary
+              </option>
+
+              <option value="Medical Certificate">
+                Medical Certificate
+              </option>
+
+              <option value="Other">
+                Other Clinical Document
+              </option>
+
             </select>
+
           </div>
 
+
+          <!-- TITLE -->
           <div class="mb-3">
-            <label class="form-label small fw-semibold">Document Title / Name *</label>
-            <input type="text" class="form-control" id="docName" placeholder="e.g. Previous_Cardio_Prescription_2025.pdf" required>
+
+            <label
+              for="docName"
+              class="form-label small fw-semibold"
+            >
+              Document Title / Name
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              id="docName"
+              name="originalName"
+              maxlength="255"
+              placeholder="Optional — taken from file name if empty"
+            >
+
           </div>
 
+
+          <!-- NOTES -->
           <div class="mb-3">
-            <label class="form-label small fw-semibold">Notes / Description (Optional)</label>
-            <textarea class="form-control" rows="2" id="docNotes" placeholder="e.g. Uploaded from previous hospital visit"></textarea>
+
+            <label
+              for="docNotes"
+              class="form-label small fw-semibold"
+            >
+              Notes / Description
+            </label>
+
+            <textarea
+              class="form-control"
+              rows="2"
+              id="docNotes"
+              name="notes"
+              maxlength="1000"
+              placeholder="e.g. Uploaded from previous hospital visit"
+            ></textarea>
+
           </div>
 
-          <div class="p-3 bg-light rounded-3 border text-center">
-            <i class="bi bi-cloud-arrow-up text-primary fs-2 d-block mb-1"></i>
-            <span class="small text-muted">Document will be encrypted and indexed by MediKiosk Document Intelligence.</span>
+
+          <!-- FILE -->
+          <div class="mb-3">
+
+            <label
+              for="medicalDocumentFile"
+              class="form-label small fw-semibold"
+            >
+              Medical Document *
+            </label>
+
+
+            <div
+              class="upload-drop-zone"
+              id="uploadDropZone"
+              tabindex="0"
+              role="button"
+              aria-label="Choose medical document"
+            >
+
+              <i
+                class="bi bi-cloud-arrow-up text-primary"
+                style="font-size:2.5rem;"
+              ></i>
+
+              <div class="fw-semibold text-dark mt-2">
+                Choose Medical Document
+              </div>
+
+              <div class="small text-muted mt-1">
+                PDF, JPG, JPEG, PNG
+              </div>
+
+              <div class="small text-muted">
+                Maximum 10 MB
+              </div>
+
+              <div
+                class="small fw-semibold text-success mt-2 d-none"
+                id="selectedFileName"
+              ></div>
+
+            </div>
+
+
+            <input
+              type="file"
+              class="d-none"
+              id="medicalDocumentFile"
+              name="document"
+              accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+              required
+            >
+
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary btn-sm" onclick="submitDocUpload()">Upload & Index Record</button>
-      </div>
+
+
+          <!-- PROGRESS -->
+          <div id="uploadProgressContainer" class="mb-2">
+
+            <div class="d-flex justify-content-between small mb-1">
+              <span class="text-muted">
+                Uploading document...
+              </span>
+
+              <span id="uploadProgressText">
+                0%
+              </span>
+            </div>
+
+            <div
+              class="progress"
+              style="height:7px;"
+            >
+              <div
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                id="uploadProgressBar"
+                role="progressbar"
+                style="width:0%;"
+              ></div>
+            </div>
+
+          </div>
+
+
+          <!-- STATUS -->
+          <div
+            id="uploadStatus"
+            class="small d-none"
+            role="alert"
+          ></div>
+
+
+          <!-- SECURITY NOTICE -->
+          <div class="p-3 bg-light rounded-3 border text-center mt-3">
+
+            <i class="bi bi-shield-lock text-primary fs-4 d-block mb-1"></i>
+
+            <span class="small text-muted">
+              Your document will be uploaded securely and processed
+              by MediKiosk Document Intelligence.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            data-bs-dismiss="modal"
+            id="cancelUploadBtn"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-sm"
+            id="uploadSubmitBtn"
+          >
+            <i class="bi bi-cloud-arrow-up me-1"></i>
+            Upload & Index Record
+          </button>
+
+        </div>
+
+      </form>
+
     </div>
+
   </div>
+
 </div>
+
 
 <script>
-  async function submitDocUpload() {
-    const docName = document.getElementById('docName').value.trim();
-    const docCategory = document.getElementById('docCategory').value;
-    const notes = document.getElementById('docNotes').value.trim();
+(() => {
+  'use strict';
 
-    if (!docName) {
-      alert('Please specify a document name.');
+  const form = document.getElementById('uploadDocForm');
+  const fileInput = document.getElementById('medicalDocumentFile');
+  const dropZone = document.getElementById('uploadDropZone');
+  const fileNameDisplay = document.getElementById('selectedFileName');
+
+  const submitBtn = document.getElementById('uploadSubmitBtn');
+  const cancelBtn = document.getElementById('cancelUploadBtn');
+
+  const progressContainer =
+    document.getElementById('uploadProgressContainer');
+
+  const progressBar =
+    document.getElementById('uploadProgressBar');
+
+  const progressText =
+    document.getElementById('uploadProgressText');
+
+  const statusBox =
+    document.getElementById('uploadStatus');
+
+
+  const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+  const allowedTypes = [
+    'application/pdf',
+    'image/jpeg',
+    'image/png'
+  ];
+
+
+  function showStatus(message, type = 'danger') {
+    statusBox.className =
+      `small alert alert-${type} py-2 mb-0`;
+
+    statusBox.textContent = message;
+  }
+
+
+  function clearStatus() {
+    statusBox.className = 'small d-none';
+    statusBox.textContent = '';
+  }
+
+
+  function setUploading(uploading) {
+
+    submitBtn.disabled = uploading;
+    cancelBtn.disabled = uploading;
+    fileInput.disabled = uploading;
+
+    if (uploading) {
+      submitBtn.innerHTML =
+        '<span class="spinner-border spinner-border-sm me-1"></span> Uploading...';
+
+      progressContainer.style.display = 'block';
+
+    } else {
+      submitBtn.innerHTML =
+        '<i class="bi bi-cloud-arrow-up me-1"></i> Upload & Index Record';
+    }
+  }
+
+
+  function updateFileDisplay(file) {
+
+    if (!file) {
+      fileNameDisplay.textContent = '';
+      fileNameDisplay.classList.add('d-none');
+      dropZone.classList.remove('has-file');
       return;
     }
 
-    try {
-      const res = await fetch('/api/patient/me/documents/upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ originalName: docName, docType: docCategory, notes })
-      });
-      const data = await res.json();
-      if (data.success) {
-        alert('Document uploaded successfully!');
-        window.location.reload();
-      } else {
-        alert('Upload failed: ' + (data.error || 'Server error'));
-      }
-    } catch (e) {
-      alert('Network error uploading document.');
-    }
+    fileNameDisplay.textContent =
+      `${file.name} (${formatBytes(file.size)})`;
+
+    fileNameDisplay.classList.remove('d-none');
+    dropZone.classList.add('has-file');
   }
+
+
+  function formatBytes(bytes) {
+
+    if (bytes < 1024) {
+      return `${bytes} B`;
+    }
+
+    if (bytes < 1024 * 1024) {
+      return `${(bytes / 1024).toFixed(1)} KB`;
+    }
+
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  }
+
+
+  function validateFile(file) {
+
+    if (!file) {
+      return 'Please select a medical document.';
+    }
+
+    if (!allowedTypes.includes(file.type)) {
+      return 'Invalid file type. Please upload a PDF, JPG, JPEG, or PNG document.';
+    }
+
+    if (file.size <= 0) {
+      return 'The selected file is empty.';
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      return 'File is too large. Maximum allowed size is 10 MB.';
+    }
+
+    return null;
+  }
+
+
+  function selectFile(file) {
+
+    const error = validateFile(file);
+
+    clearStatus();
+
+    if (error) {
+      fileInput.value = '';
+      updateFileDisplay(null);
+      showStatus(error, 'danger');
+      return;
+    }
+
+    /*
+     * DataTransfer lets us safely assign the dropped file
+     * to the real <input type=file>.
+     */
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+
+    fileInput.files = dataTransfer.files;
+
+    updateFileDisplay(file);
+  }
+
+
+  // Click drop-zone
+  dropZone.addEventListener('click', () => {
+    if (!fileInput.disabled) {
+      fileInput.click();
+    }
+  });
+
+
+  // Keyboard accessibility
+  dropZone.addEventListener('keydown', event => {
+
+    if (
+      event.key === 'Enter' ||
+      event.key === ' '
+    ) {
+      event.preventDefault();
+
+      if (!fileInput.disabled) {
+        fileInput.click();
+      }
+    }
+
+  });
+
+
+  // Normal file selection
+  fileInput.addEventListener('change', () => {
+
+    const file = fileInput.files[0];
+
+    if (file) {
+      selectFile(file);
+    }
+
+  });
+
+
+  // Drag over
+  dropZone.addEventListener('dragover', event => {
+
+    event.preventDefault();
+
+    if (!fileInput.disabled) {
+      dropZone.classList.add('dragover');
+    }
+
+  });
+
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+
+  // Drop file
+  dropZone.addEventListener('drop', event => {
+
+    event.preventDefault();
+
+    dropZone.classList.remove('dragover');
+
+    if (fileInput.disabled) return;
+
+    const file = event.dataTransfer.files[0];
+
+    if (file) {
+      selectFile(file);
+    }
+
+  });
+
+
+  /*
+   * IMPORTANT:
+   * We intentionally use XMLHttpRequest here instead of fetch
+   * so we can display upload progress.
+   */
+  form.addEventListener('submit', event => {
+
+    event.preventDefault();
+
+    if (submitBtn.disabled) {
+      return;
+    }
+
+    clearStatus();
+
+    const file = fileInput.files[0];
+
+    const fileError = validateFile(file);
+
+    if (fileError) {
+      showStatus(fileError, 'danger');
+      return;
+    }
+
+
+    const category =
+      document.getElementById('docCategory').value;
+
+    const notes =
+      document.getElementById('docNotes').value.trim();
+
+    let originalName =
+      document.getElementById('docName').value.trim();
+
+    /*
+     * If user doesn't enter a title, use the actual file name.
+     */
+    if (!originalName) {
+      originalName = file.name;
+    }
+
+
+    const formData = new FormData();
+
+    /*
+     * IMPORTANT:
+     * The field name "document" MUST match
+     * your multer/backend configuration.
+     */
+    formData.append('document', file);
+
+    formData.append('originalName', originalName);
+    formData.append('docType', category);
+    formData.append('notes', notes);
+
+
+    setUploading(true);
+
+    progressBar.style.width = '0%';
+    progressText.textContent = '0%';
+
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.open(
+      'POST',
+      '/api/patient/me/documents/upload',
+      true
+    );
+
+    /*
+     * Send cookies/session automatically.
+     */
+    xhr.withCredentials = true;
+
+    xhr.setRequestHeader(
+      'Accept',
+      'application/json'
+    );
+
+
+    // Upload progress
+    xhr.upload.addEventListener('progress', event => {
+
+      if (!event.lengthComputable) {
+        return;
+      }
+
+      const percent = Math.round(
+        (event.loaded / event.total) * 100
+      );
+
+      progressBar.style.width = `${percent}%`;
+      progressText.textContent = `${percent}%`;
+
+    });
+
+
+    xhr.onload = () => {
+
+      setUploading(false);
+
+      let data = null;
+
+      try {
+        data = JSON.parse(xhr.responseText);
+      } catch (_) {
+        data = null;
+      }
+
+
+      if (
+        xhr.status >= 200 &&
+        xhr.status < 300 &&
+        data &&
+        data.success
+      ) {
+
+        progressBar.style.width = '100%';
+        progressText.textContent = '100%';
+
+        showStatus(
+          'Document uploaded successfully. OCR processing has started.',
+          'success'
+        );
+
+        submitBtn.disabled = true;
+
+        /*
+         * Give the user a moment to see success,
+         * then refresh the document list.
+         */
+        setTimeout(() => {
+          window.location.reload();
+        }, 900);
+
+        return;
+      }
+
+
+      if (xhr.status === 401 || xhr.status === 403) {
+
+        showStatus(
+          'Your patient session has expired or you are not authorized. Please sign in again.',
+          'danger'
+        );
+
+        return;
+      }
+
+
+      showStatus(
+        data && data.error
+          ? data.error
+          : `Upload failed. Server returned HTTP ${xhr.status}.`,
+        'danger'
+      );
+
+    };
+
+
+    xhr.onerror = () => {
+
+      setUploading(false);
+
+      showStatus(
+        'Network error. The document could not be uploaded. Please check your connection and try again.',
+        'danger'
+      );
+
+    };
+
+
+    xhr.onabort = () => {
+
+      setUploading(false);
+
+      showStatus(
+        'Upload was cancelled.',
+        'warning'
+      );
+
+    };
+
+
+    xhr.ontimeout = () => {
+
+      setUploading(false);
+
+      showStatus(
+        'Upload timed out. Please try again with a smaller file or a better connection.',
+        'danger'
+      );
+
+    };
+
+
+    xhr.timeout = 120000;
+
+    xhr.send(formData);
+
+  });
+
+
+  /*
+   * Reset the modal after it closes.
+   */
+  const modal = document.getElementById('uploadDocModal');
+
+  if (modal) {
+
+    modal.addEventListener(
+      'hidden.bs.modal',
+      () => {
+
+        if (!submitBtn.disabled) {
+
+          form.reset();
+
+          fileInput.value = '';
+
+          updateFileDisplay(null);
+
+          clearStatus();
+
+          progressContainer.style.display = 'none';
+
+          progressBar.style.width = '0%';
+
+          progressText.textContent = '0%';
+
+        }
+
+      }
+    );
+
+  }
+
+})();
 </script>
+
 
 <%- include('footer') %>

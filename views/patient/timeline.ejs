@@ -1,80 +1,359 @@
-<%- include('header', { title: 'Medical Timeline — MediKiosk', patient, activeNav: 'timeline' }) %>
+```ejs
+<%- include('header', {
+  title: 'Medical Timeline — MediKiosk',
+  patient: patient,
+  activeNav: 'timeline'
+}) %>
+
+<%
+  /*
+   * Defensive defaults
+   * Prevents EJS from crashing when timeline or its properties are missing.
+   */
+  const safeTimeline = timeline || {};
+  const yearGroups = Array.isArray(safeTimeline.years)
+    ? safeTimeline.years
+    : [];
+
+  const totalEvents = Number(safeTimeline.totalEvents || 0);
+
+  /*
+   * Allowed Bootstrap colors.
+   * Prevents invalid classes such as bg-undefined or bg-danger-subtle
+   * when the backend sends an unexpected value.
+   */
+  const allowedColors = [
+    'primary',
+    'secondary',
+    'success',
+    'danger',
+    'warning',
+    'info',
+    'dark'
+  ];
+
+  function getColor(color) {
+    return allowedColors.includes(color) ? color : 'primary';
+  }
+
+  function formatDate(dateValue) {
+    if (!dateValue) return 'Date unavailable';
+
+    const date = new Date(dateValue);
+
+    if (isNaN(date.getTime())) {
+      return 'Date unavailable';
+    }
+
+    return date.toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+  }
+
+  function getSafeIcon(icon) {
+    if (!icon || typeof icon !== 'string') {
+      return 'bi-circle-fill';
+    }
+
+    return icon.startsWith('bi-')
+      ? icon
+      : 'bi-circle-fill';
+  }
+
+  function getSafeLink(link) {
+    if (!link || typeof link !== 'string') {
+      return '#';
+    }
+
+    return link;
+  }
+%>
 
 <div class="container py-4">
+
+  <!-- PAGE HEADER -->
   <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+
     <div>
-      <h3 class="fw-bold text-dark mb-1">Medical Timeline</h3>
-      <p class="text-muted small mb-0">Unified chronological healthcare journey synthesized by MediKiosk Document Intelligence</p>
+      <h3 class="fw-bold text-dark mb-1">
+        <i class="bi bi-clock-history text-primary me-2"></i>
+        Medical Timeline
+      </h3>
+
+      <p class="text-muted small mb-0">
+        Unified chronological healthcare journey synthesized by MediKiosk Document Intelligence
+      </p>
     </div>
-    <span class="badge bg-primary px-3 py-2 fs-6"><%= timeline.totalEvents %> Recorded Milestone(s)</span>
+
+    <span class="badge bg-primary px-3 py-2 fs-6 rounded-pill">
+      <%= totalEvents %> Recorded Milestone<%= totalEvents === 1 ? '' : 's' %>
+    </span>
+
   </div>
 
-  <% if (!timeline.years || timeline.years.length === 0) { %>
+
+  <!-- EMPTY TIMELINE -->
+  <% if (yearGroups.length === 0) { %>
+
     <div class="portal-card p-5 text-center">
-      <i class="bi bi-clock-history text-muted fs-1 mb-2"></i>
-      <h5 class="fw-bold text-dark">Timeline Initialized</h5>
-      <p class="text-muted small">Your medical timeline will automatically chronicle visits, tests, and prescriptions over time.</p>
+
+      <div class="mb-3">
+        <i class="bi bi-clock-history text-muted" style="font-size: 3.5rem;"></i>
+      </div>
+
+      <h5 class="fw-bold text-dark mb-2">
+        Timeline Initialized
+      </h5>
+
+      <p class="text-muted small mb-0">
+        Your medical timeline will automatically chronicle visits,
+        tests, prescriptions, reports, and other authorized healthcare events.
+      </p>
+
     </div>
+
   <% } else { %>
-    
+
+
+    <!-- TIMELINE -->
     <div class="row justify-content-center">
-      <div class="col-lg-10">
-        
-        <% timeline.years.forEach(function(yearGroup) { %>
-          <div class="mb-5">
-            <!-- Year Header Badge -->
-            <div class="d-flex align-items-center gap-3 mb-4">
-              <span class="badge bg-dark fs-5 px-3 py-2 shadow-sm font-monospace">
-                <i class="bi bi-calendar-event me-2 text-warning"></i><%= yearGroup.year %>
-              </span>
-              <div class="flex-grow-1" style="height: 2px; background: linear-gradient(90deg, #1e293b, transparent);"></div>
-            </div>
 
-            <!-- Vertical Tree -->
-            <div class="position-relative ps-4 ms-3" style="border-left: 3px solid #cbd5e1;">
-              <% yearGroup.events.forEach(function(evt) { %>
-                <div class="position-relative mb-4">
-                  <!-- Tree Node Dot -->
-                  <div class="position-absolute rounded-circle bg-<%= evt.badgeColor || 'primary' %> d-flex align-items-center justify-content-center shadow-xs"
-                       style="width: 28px; height: 28px; left: -39px; top: 0px; border: 3px solid #ffffff;">
-                    <i class="bi <%= evt.icon || 'bi-circle-fill' %> text-white" style="font-size: 0.75rem;"></i>
-                  </div>
+      <div class="col-12 col-lg-10">
 
-                  <!-- Event Card -->
-                  <div class="portal-card p-3 shadow-xs">
-                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center border-bottom pb-2 mb-2 gap-1">
-                      <div>
-                        <span class="badge bg-<%= evt.badgeColor || 'primary' %>-subtle text-<%= evt.badgeColor || 'primary' %> text-uppercase fw-semibold" style="font-size: 0.72rem;">
-                          <%= evt.type %>
-                        </span>
-                        <strong class="text-dark ms-2"><%= evt.title %></strong>
-                      </div>
-                      <span class="text-muted small" style="font-size: 0.75rem;">
-                        <%= new Date(evt.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }) %>
-                      </span>
-                    </div>
+        <% yearGroups.forEach(function(yearGroup) { %>
 
-                    <p class="text-secondary small mb-2"><%= evt.description %></p>
+          <%
+            const year = yearGroup && yearGroup.year
+              ? yearGroup.year
+              : 'Unknown Year';
 
-                    <div class="d-flex justify-content-end">
-                      <a href="<%= evt.recordLink %>" class="btn btn-sm btn-outline-primary py-0 px-2" style="font-size: 0.78rem;">
-                        Open Authorized Record &rarr;
-                      </a>
-                    </div>
-                  </div>
+            const events = yearGroup && Array.isArray(yearGroup.events)
+              ? yearGroup.events
+              : [];
+          %>
 
+          <% if (events.length > 0) { %>
+
+            <!-- YEAR SECTION -->
+            <div class="mb-5">
+
+              <!-- YEAR HEADER -->
+              <div class="d-flex align-items-center gap-3 mb-4">
+
+                <span class="badge bg-dark fs-5 px-3 py-2 shadow-sm font-monospace">
+
+                  <i class="bi bi-calendar-event me-2 text-warning"></i>
+
+                  <%= year %>
+
+                </span>
+
+                <div
+                  class="flex-grow-1"
+                  style="
+                    height: 2px;
+                    background: linear-gradient(
+                      90deg,
+                      #1e293b,
+                      transparent
+                    );
+                  ">
                 </div>
-              <% }); %>
+
+              </div>
+
+
+              <!-- VERTICAL TIMELINE -->
+              <div
+                class="position-relative ps-4 ms-2 ms-sm-3"
+                style="border-left: 3px solid #cbd5e1;"
+              >
+
+                <% events.forEach(function(evt) { %>
+
+                  <%
+                    evt = evt || {};
+
+                    const color = getColor(evt.badgeColor);
+                    const icon = getSafeIcon(evt.icon);
+
+                    const type = evt.type || 'Medical Event';
+                    const title = evt.title || 'Untitled Medical Record';
+                    const description =
+                      evt.description ||
+                      'No additional information is available for this event.';
+
+                    const recordLink = getSafeLink(evt.recordLink);
+
+                    const eventDate = formatDate(evt.date);
+                  %>
+
+
+                  <!-- EVENT -->
+                  <div class="position-relative mb-4">
+
+                    <!-- TIMELINE NODE -->
+                    <div
+                      class="position-absolute rounded-circle bg-<%= color %> d-flex align-items-center justify-content-center shadow-sm"
+                      style="
+                        width: 30px;
+                        height: 30px;
+                        left: -41px;
+                        top: 0;
+                        border: 3px solid #ffffff;
+                        z-index: 2;
+                      "
+                    >
+
+                      <i
+                        class="bi <%= icon %> text-white"
+                        style="font-size: 0.75rem;"
+                      ></i>
+
+                    </div>
+
+
+                    <!-- EVENT CARD -->
+                    <div class="portal-card p-3 shadow-sm">
+
+                      <!-- EVENT HEADER -->
+                      <div
+                        class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center border-bottom pb-2 mb-2 gap-2"
+                      >
+
+                        <div class="d-flex flex-wrap align-items-center gap-2">
+
+                          <span
+                            class="badge bg-<%= color %>-subtle text-<%= color %> text-uppercase fw-semibold"
+                            style="font-size: 0.72rem;"
+                          >
+                            <%= type %>
+                          </span>
+
+                          <strong class="text-dark">
+                            <%= title %>
+                          </strong>
+
+                        </div>
+
+
+                        <span
+                          class="text-muted small text-nowrap"
+                          style="font-size: 0.75rem;"
+                        >
+                          <i class="bi bi-calendar3 me-1"></i>
+                          <%= eventDate %>
+                        </span>
+
+                      </div>
+
+
+                      <!-- DESCRIPTION -->
+                      <p class="text-secondary small mb-3">
+                        <%= description %>
+                      </p>
+
+
+                      <!-- ACTION -->
+                      <div class="d-flex justify-content-end">
+
+                        <% if (recordLink && recordLink !== '#') { %>
+
+                          <a
+                            href="<%= recordLink %>"
+                            class="btn btn-sm btn-outline-primary py-1 px-3"
+                            style="font-size: 0.78rem;"
+                          >
+                            <i class="bi bi-file-earmark-medical me-1"></i>
+                            Open Authorized Record
+                            <i class="bi bi-arrow-right ms-1"></i>
+                          </a>
+
+                        <% } else { %>
+
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-secondary py-1 px-3"
+                            style="font-size: 0.78rem;"
+                            disabled
+                          >
+                            <i class="bi bi-file-earmark-lock me-1"></i>
+                            Record Unavailable
+                          </button>
+
+                        <% } %>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                <% }); %>
+
+              </div>
+
             </div>
 
-          </div>
+          <% } %>
+
         <% }); %>
 
       </div>
+
     </div>
 
   <% } %>
 
 </div>
+
+
+<!-- MOBILE TIMELINE FIX -->
+<style>
+  @media (max-width: 575.98px) {
+
+    .container.py-4 {
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+    }
+
+    .portal-card {
+      border-radius: 12px;
+    }
+
+    /*
+     * Keeps the timeline node aligned with the border
+     * on smaller screens.
+     */
+    .position-relative.ps-4 {
+      margin-left: 8px !important;
+      padding-left: 20px !important;
+    }
+
+    .position-relative.ps-4 > .position-relative > .position-absolute {
+      left: -35px !important;
+    }
+
+    /*
+     * Prevents long medical titles from overflowing.
+     */
+    .portal-card strong {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    /*
+     * Makes action buttons easier to tap on mobile.
+     */
+    .portal-card .btn {
+      width: 100%;
+      margin-top: 4px;
+    }
+
+  }
+</style>
+
 
 <%- include('footer') %>

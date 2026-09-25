@@ -561,3 +561,53 @@ body.senior-mode .mobile-nav-item i {
   margin-bottom: 12px;
 }
 
+/* ==========================================================================
+   Universal Mobile Responsiveness & Viewport Fit Guards
+   ========================================================================== */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  /* Prevent sticky bottom bar from covering page footer or submit buttons */
+  main {
+    padding-bottom: 80px !important;
+  }
+  
+  /* Touch target sizes & comfortable spacing */
+  .container, .container-fluid {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  
+  .portal-card {
+    padding: 1rem !important;
+    border-radius: 14px !important;
+  }
+
+  /* Responsive image, SVG & barcode scaling */
+  img, svg, canvas {
+    max-width: 100% !important;
+    height: auto;
+  }
+
+  /* Prevent text wrapping issues on UHID and Card pills */
+  .uhid-pill {
+    word-break: break-all;
+    font-size: 0.85rem !important;
+  }
+
+  /* Horizontal touch scrolling for tables */
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+  }
+
+  /* Touch-friendly buttons */
+  .touch-btn-lg, .btn-lg {
+    min-height: 52px !important;
+    font-size: 1rem !important;
+  }
+}
+

@@ -1,160 +1,806 @@
-<%- include('header', { title: 'AI Health Assistant — MediKiosk', patient, activeNav: 'chat' }) %>
+
+<%- include('header', {
+  title: 'AI Health Assistant — MediKiosk',
+  patient: patient,
+  activeNav: 'chat'
+}) %>
+
+<%
+  const patientName = patient && patient.fullName
+    ? patient.fullName
+    : 'Patient';
+
+  const patientUhid = patient && patient.uhid
+    ? patient.uhid
+    : 'Not available';
+
+  const chatLang = ['en', 'hi', 'bn'].includes(currentLanguage)
+    ? currentLanguage
+    : 'en';
+
+  const questions = Array.isArray(suggestedQuestions)
+    ? suggestedQuestions
+    : [];
+%>
 
 <style>
+  #chatWrapper {
+    width: 100%;
+    max-width: 1000px;
+    height: calc(100dvh - 150px);
+    min-height: 400px;
+    overflow: hidden;
+  }
+
+  #messagesContainer {
+    min-height: 0;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+  }
+
+  .chat-message {
+    max-width: 85%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .chat-bubble {
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    border-radius: 16px;
+    padding: 12px 15px;
+    overflow-wrap: anywhere;
+  }
+
+  .chat-bubble-user {
+    background: #0284c7;
+    color: #fff;
+    border: 0;
+    border-top-right-radius: 4px;
+  }
+
+  .chat-bubble-ai {
+    border-top-left-radius: 4px;
+  }
+
+  .chat-avatar {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+  }
+
+  #suggestedChips {
+    scrollbar-width: none;
+  }
+
+  #suggestedChips::-webkit-scrollbar {
+    display: none;
+  }
+
+  #chatInput {
+    min-width: 0;
+  }
+
+  #voicePulse {
+    pointer-events: none;
+  }
+
+  #voiceMicBtn.listening {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+
+  #chatForm button {
+    flex-shrink: 0;
+  }
+
+  .chat-markdown p:last-child {
+    margin-bottom: 0;
+  }
+
+  .chat-markdown ul,
+  .chat-markdown ol {
+    padding-left: 1.25rem;
+  }
+
   @media (max-width: 768px) {
     #chatWrapper {
-      height: calc(100dvh - 215px) !important;
+      height: calc(100dvh - 190px);
+      min-height: 350px;
       padding-bottom: 5px;
     }
+
+    .chat-message {
+      max-width: 92%;
+    }
+
+    #chatWrapper > .portal-card:first-child {
+      padding: 12px !important;
+    }
+
+    #chatWrapper > .portal-card:first-child .chat-header-details {
+      min-width: 0;
+    }
+
+    #chatWrapper > .portal-card:first-child h5 {
+      font-size: 1rem;
+    }
+
+    #chatLanguageSelect {
+      max-width: 105px;
+      font-size: 0.75rem;
+    }
+
+    #messagesContainer {
+      padding: 12px !important;
+    }
+
+    #chatForm {
+      gap: 6px !important;
+    }
+
+    #chatForm #voiceMicBtn {
+      width: 38px !important;
+      height: 38px !important;
+    }
+
+    #chatForm #sendBtn {
+      padding: 8px 12px !important;
+    }
+
+    .chat-safety-note {
+      font-size: 0.66rem !important;
+    }
   }
-  @media (min-width: 769px) {
-    #chatWrapper {
-      height: calc(100vh - 150px);
+
+  @media (max-width: 380px) {
+    #chatWrapper > .portal-card:first-child {
+      flex-wrap: wrap;
+    }
+
+    #chatWrapper > .portal-card:first-child .chat-header-details {
+      width: 100%;
+    }
+
+    #chatLanguageSelect {
+      max-width: 95px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #messagesContainer {
+      scroll-behavior: auto;
     }
   }
 </style>
-<div class="container py-2 py-md-3 flex-grow-1 d-flex flex-column" id="chatWrapper" style="max-width: 1000px;">
-  
-  <!-- Chat Header Bar -->
-  <div class="portal-card px-4 py-3 mb-3 d-flex align-items-center justify-content-between shadow-xs">
-    <div class="d-flex align-items-center gap-3">
-      <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-xs position-relative" style="width: 44px; height: 44px;">
+
+<div class="container py-2 py-md-3 flex-grow-1 d-flex flex-column"
+     id="chatWrapper">
+
+  <!-- Chat header -->
+  <div class="portal-card px-3 px-md-4 py-3 mb-3 d-flex align-items-center justify-content-between gap-2 shadow-sm">
+
+    <div class="d-flex align-items-center gap-3 chat-header-details">
+      <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm position-relative flex-shrink-0"
+           style="width:44px;height:44px;">
         <i class="bi bi-robot fs-4"></i>
-        <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle p-1"></span>
+        <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle"
+              style="width:11px;height:11px;"></span>
       </div>
-      <div>
-        <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+
+      <div class="min-width-0">
+        <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2 flex-wrap">
           MediKiosk AI Assistant
-          <span class="badge bg-primary-subtle text-primary border border-primary-subtle" style="font-size: 0.7rem;">Record-Aware</span>
+          <span class="badge bg-primary-subtle text-primary border border-primary-subtle"
+                style="font-size:.7rem;">Record-Aware</span>
         </h5>
-        <div class="text-muted small" style="font-size: 0.78rem;">
-          Trained on authorized clinical summaries for <strong class="text-dark"><%= patient.fullName %></strong> (UHID: <%= patient.uhid %>)
+
+        <div class="text-muted small mt-1" style="font-size:.75rem;">
+          Authorized clinical summaries for
+          <strong class="text-dark"><%= patientName %></strong>
+          <span class="d-none d-sm-inline">
+            (UHID: <%= patientUhid %>)
+          </span>
         </div>
       </div>
     </div>
 
-    <div class="d-flex align-items-center gap-2">
-      <!-- Language Picker -->
-      <select class="form-select form-select-sm" id="chatLanguageSelect" style="width: auto;" onchange="changeChatLanguage(this.value)">
-        <option value="en" <%= (typeof currentLanguage !== 'undefined' && currentLanguage === 'en') ? 'selected' : '' %>>English</option>
-        <option value="hi" <%= (typeof currentLanguage !== 'undefined' && currentLanguage === 'hi') ? 'selected' : '' %>>हिंदी (Hindi)</option>
-        <option value="bn" <%= (typeof currentLanguage !== 'undefined' && currentLanguage === 'bn') ? 'selected' : '' %>>বাংলা (Bengali)</option>
+    <div class="d-flex align-items-center gap-2 flex-shrink-0">
+      <label for="chatLanguageSelect" class="visually-hidden">
+        Chat language
+      </label>
+
+      <select class="form-select form-select-sm"
+              id="chatLanguageSelect"
+              aria-label="Choose chat language"
+              style="width:auto;">
+        <option value="en" <%= chatLang === 'en' ? 'selected' : '' %>>
+          English
+        </option>
+        <option value="hi" <%= chatLang === 'hi' ? 'selected' : '' %>>
+          हिंदी
+        </option>
+        <option value="bn" <%= chatLang === 'bn' ? 'selected' : '' %>>
+          বাংলা
+        </option>
       </select>
 
-      <button class="btn btn-outline-secondary btn-sm" onclick="clearActiveChat()" title="Start New Conversation">
-        <i class="bi bi-plus-lg"></i> <span class="d-none d-sm-inline">New Chat</span>
+      <button type="button"
+              class="btn btn-outline-secondary btn-sm"
+              id="newChatBtn"
+              title="Start new conversation">
+        <i class="bi bi-plus-lg"></i>
+        <span class="d-none d-sm-inline">New Chat</span>
       </button>
     </div>
   </div>
 
-  <!-- Emergency Banner (Hidden by default, triggered on critical detection) -->
-  <div id="emergencyBanner" class="alert alert-danger py-3 px-4 mb-3 d-none shadow-sm border-2 border-danger" role="alert">
+  <!-- Emergency banner -->
+  <div id="emergencyBanner"
+       class="alert alert-danger py-3 px-3 px-md-4 mb-3 d-none shadow-sm border border-2 border-danger"
+       role="alert"
+       aria-live="assertive">
+
     <div class="d-flex align-items-start gap-3">
       <i class="bi bi-exclamation-triangle-fill fs-2 text-danger mt-1"></i>
+
       <div class="flex-grow-1">
-        <h5 class="fw-bold text-danger mb-1" id="emergencyTitle">🚨 Immediate Medical Attention Required</h5>
+        <h5 class="fw-bold text-danger mb-1" id="emergencyTitle">
+          Immediate Medical Attention May Be Required
+        </h5>
+
         <p class="mb-2 small" id="emergencyBody">
-          Your input indicates potential red-flag medical symptoms. Please inform the hospital triage staff immediately or dial emergency helpline 108 / 112.
+          If you may be experiencing a medical emergency, alert hospital
+          staff immediately or call your local emergency number.
         </p>
-        <div class="d-flex gap-2">
-          <a href="tel:108" class="btn btn-danger btn-sm fw-bold"><i class="bi bi-telephone-fill me-1"></i> Call 108 (Ambulance)</a>
-          <button class="btn btn-outline-danger btn-sm" onclick="document.getElementById('emergencyBanner').classList.add('d-none')">Dismiss</button>
+
+        <div class="d-flex gap-2 flex-wrap">
+          <a href="tel:112" class="btn btn-danger btn-sm fw-bold">
+            <i class="bi bi-telephone-fill me-1"></i>
+            Call 112
+          </a>
+
+          <button type="button"
+                  class="btn btn-outline-danger btn-sm"
+                  id="dismissEmergencyBtn">
+            Dismiss
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Messages Scrollable Container -->
-  <div class="portal-card p-3 p-md-4 flex-grow-1 overflow-auto d-flex flex-column gap-3 mb-3" id="messagesContainer" style="background-color: #f8fafc;">
-    
-    <!-- Welcome Greeting Bubble -->
-    <div class="d-flex align-items-start gap-2 max-w-75" id="welcomeBubbleContainer">
-      <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 34px; height: 34px;">
-        <i class="bi bi-robot" style="font-size: 0.95rem;"></i>
+  <!-- Message history -->
+  <div class="portal-card p-3 p-md-4 flex-grow-1 overflow-auto d-flex flex-column gap-3 mb-3"
+       id="messagesContainer"
+       role="log"
+       aria-label="Chat messages"
+       aria-live="polite"
+       aria-relevant="additions"
+       style="background-color:#f8fafc;">
+
+    <!-- Welcome message -->
+    <div class="d-flex align-items-start gap-2" id="welcomeBubbleContainer">
+      <div class="chat-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm">
+        <i class="bi bi-robot"></i>
       </div>
-      <div>
-        <div class="p-3 rounded-4 shadow-xs" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-top-left-radius: 4px;">
+
+      <div class="chat-message">
+        <div class="chat-bubble chat-bubble-ai shadow-sm">
           <div class="d-flex justify-content-between align-items-center mb-1">
-            <span class="fw-semibold text-primary small">MediKiosk Health Assistant</span>
-            <button class="btn btn-link btn-sm p-0 text-muted" onclick="speakText(document.getElementById('welcomeText').innerText)" title="Read aloud / सुनें">
+            <span class="fw-semibold text-primary small">
+              MediKiosk Health Assistant
+            </span>
+
+            <button type="button"
+                    class="btn btn-link btn-sm p-0 text-muted speak-btn"
+                    title="Read aloud"
+                    aria-label="Read welcome message aloud">
               <i class="bi bi-volume-up-fill fs-6"></i>
             </button>
           </div>
+
           <div class="text-dark small lh-base" id="welcomeText">
-            Hello, <strong><%= patient.fullName %></strong>! I am your personal MediKiosk AI Health Assistant.<br><br>
-            I can help you review your latest blood reports, explain prescription dosages, recall doctor consultation notes, or answer general healthcare questions safely.
+            Hello, <strong><%= patientName %></strong>!
+            I am your personal MediKiosk AI Health Assistant.
+            <br><br>
+            I can help you review your latest blood reports, explain
+            prescription information, recall doctor consultation notes,
+            or answer general healthcare questions safely.
           </div>
         </div>
-        <div class="text-muted mt-1 ps-2" style="font-size: 0.68rem;">Just now &bull; Record-grounded AI</div>
+
+        <div class="text-muted mt-1 ps-2" style="font-size:.68rem;">
+          Just now · Record-grounded AI
+        </div>
       </div>
     </div>
-
   </div>
 
-  <!-- Suggested Action Chips (Section 64) -->
+  <!-- Suggested questions -->
   <div class="mb-2" id="suggestedChipsContainer">
-    <div class="d-flex overflow-auto gap-2 py-1" style="white-space: nowrap; scrollbar-width: none;">
-      <% suggestedQuestions.forEach(function(sq) { %>
-        <button class="btn btn-sm btn-white bg-white border text-primary rounded-pill px-3 py-1 shadow-xs fw-medium"
-                onclick="sendQuickQuestion('<%= sq.replace(/'/g, "\\'") %>')">
-          <i class="bi bi-chat-text text-muted me-1"></i> <%= sq %>
+    <div class="d-flex overflow-auto gap-2 py-1"
+         id="suggestedChips"
+         style="white-space:nowrap;">
+      <% questions.forEach(function(question) { %>
+        <button type="button"
+                class="btn btn-sm bg-white border text-primary rounded-pill px-3 py-1 shadow-sm fw-medium flex-shrink-0 quick-question"
+                data-question="<%= String(question) %>">
+          <i class="bi bi-chat-text text-muted me-1"></i>
+          <%= question %>
         </button>
       <% }); %>
     </div>
   </div>
 
-  <!-- Chat Input Form & Voice Controls (Section 58, 67) -->
+  <!-- Chat input -->
   <div class="portal-card p-2 shadow-sm">
-    <form id="chatForm" onsubmit="handleChatSubmit(event)" class="d-flex align-items-center gap-2">
-      
-      <!-- Voice Input Button (Section 67) -->
-      <button type="button" class="btn btn-light rounded-circle text-primary position-relative d-flex align-items-center justify-content-center"
-              id="voiceMicBtn" style="width: 42px; height: 42px;" onclick="toggleVoiceInput()" title="Speak your question">
+    <form id="chatForm"
+          class="d-flex align-items-center gap-2"
+          autocomplete="off">
+
+      <button type="button"
+              class="btn btn-light rounded-circle text-primary position-relative d-flex align-items-center justify-content-center flex-shrink-0"
+              id="voiceMicBtn"
+              style="width:42px;height:42px;"
+              title="Speak your question"
+              aria-label="Start voice input"
+              aria-pressed="false">
         <i class="bi bi-mic-fill fs-5" id="micIcon"></i>
-        <span id="voicePulse" class="position-absolute top-0 start-0 w-100 h-100 rounded-circle border border-danger border-2 d-none spinner-grow text-danger" style="opacity: 0.7;"></span>
+        <span id="voicePulse"
+              class="position-absolute top-0 start-0 w-100 h-100 rounded-circle border border-danger border-2 d-none"></span>
       </button>
 
-      <input type="text" id="chatInput" class="form-control border-0 py-2" placeholder="Ask about your reports, medicines, previous visits..." autocomplete="off" required>
+      <input type="text"
+             id="chatInput"
+             class="form-control border-0 py-2"
+             placeholder="Ask about your reports, medicines, previous visits..."
+             aria-label="Your question"
+             maxlength="4000"
+             autocomplete="off"
+             required>
 
-      <!-- Language Quick Tag -->
-      <span class="badge bg-light text-muted border text-uppercase font-monospace d-none d-sm-inline" id="activeLangTag">
-        <%= typeof currentLanguage !== 'undefined' ? currentLanguage : 'en' %>
+      <span class="badge bg-light text-muted border text-uppercase font-monospace d-none d-sm-inline"
+            id="activeLangTag">
+        <%= chatLang %>
       </span>
 
-      <!-- Send Button -->
-      <button type="submit" class="btn btn-primary rounded-3 px-3 py-2 d-flex align-items-center gap-1 shadow-xs" id="sendBtn">
+      <button type="submit"
+              class="btn btn-primary rounded-3 px-3 py-2 d-flex align-items-center gap-1 shadow-sm"
+              id="sendBtn">
         <span class="d-none d-md-inline">Send</span>
         <i class="bi bi-send-fill"></i>
       </button>
     </form>
   </div>
 
-  <!-- Safety Boundary Footer Notice (Section 62) -->
-  <div class="text-center text-muted mt-2" style="font-size: 0.72rem;">
+  <!-- Safety notice -->
+  <div class="text-center text-muted mt-2 chat-safety-note"
+       style="font-size:.72rem;">
     <i class="bi bi-shield-check text-success me-1"></i>
-    MediKiosk AI Assistant provides informational guidance based strictly on your records. It does not provide medical diagnoses or prescribe medications.
+    MediKiosk provides informational guidance based on authorized records.
+    It does not diagnose conditions or prescribe medications. In an
+    emergency, seek immediate medical assistance.
   </div>
-
 </div>
 
 <script>
+(() => {
+  'use strict';
+
+  const patientName = <%- JSON.stringify(String(patientName)).replace(/</g, '\\u003c') %>;
+
+  const elements = {
+    wrapper: document.getElementById('chatWrapper'),
+    messages: document.getElementById('messagesContainer'),
+    form: document.getElementById('chatForm'),
+    input: document.getElementById('chatInput'),
+    send: document.getElementById('sendBtn'),
+    mic: document.getElementById('voiceMicBtn'),
+    micIcon: document.getElementById('micIcon'),
+    pulse: document.getElementById('voicePulse'),
+    language: document.getElementById('chatLanguageSelect'),
+    languageTag: document.getElementById('activeLangTag'),
+    questions: document.getElementById('suggestedChips'),
+    welcome: document.getElementById('welcomeText'),
+    emergency: document.getElementById('emergencyBanner'),
+    emergencyBody: document.getElementById('emergencyBody')
+  };
+
   let activeConversationId = null;
-  let currentLang = '<%= typeof currentLanguage !== "undefined" ? currentLanguage : "en" %>';
+  let currentLang = elements.language.value || 'en';
   let isListening = false;
+  let isSending = false;
   let recognition = null;
 
-  // Initialize Speech Recognition if supported
-  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const placeholders = {
+    en: 'Ask about your reports, medicines, previous visits...',
+    hi: 'अपनी रिपोर्ट, दवाइयों या डॉक्टर की सलाह के बारे में पूछें...',
+    bn: 'আপনার রিপোর্ট, ওষুধ বা আগের ডাক্তারের পরিদর্শন সম্পর্কে জিজ্ঞাসা করুন...'
+  };
+
+  const greetings = {
+    en: 'Hello, ',
+    hi: 'नमस्ते, ',
+    bn: 'নমস্কার, '
+  };
+
+  const welcomeMessages = {
+    en: 'I am your personal MediKiosk AI Health Assistant. I can help you review your latest blood reports, explain prescription information, recall doctor consultation notes, or answer general healthcare questions safely.',
+    hi: 'मैं आपका व्यक्तिगत MediKiosk AI स्वास्थ्य सहायक हूँ। मैं आपकी हालिया रक्त रिपोर्ट, डॉक्टर की दवाइयों की जानकारी, पिछली जांच के नोट्स और सामान्य स्वास्थ्य संबंधी सवालों को समझने में मदद कर सकता हूँ।',
+    bn: 'আমি আপনার ব্যক্তিগত MediKiosk AI স্বাস্থ্য সহকারী। আমি আপনার সাম্প্রতিক রক্ত পরীক্ষার রিপোর্ট, ওষুধের তথ্য, আগের চিকিৎসকের পরামর্শ এবং সাধারণ স্বাস্থ্য সম্পর্কিত প্রশ্ন বুঝতে সাহায্য করতে পারি।'
+  };
+
+  const newChatMessages = {
+    en: 'New conversation started. How can I assist you with your health records today?',
+    hi: 'नई बातचीत शुरू हुई। आज मैं आपकी मेडिकल रिपोर्ट और स्वास्थ्य संबंधी जानकारी में कैसे मदद कर सकता हूँ?',
+    bn: 'নতুন কথোপকথন শুরু হয়েছে। আজ আমি আপনার স্বাস্থ্য সংক্রান্ত রেকর্ডে কীভাবে সাহায্য করতে পারি?'
+  };
+
+  function scrollToBottom() {
+    elements.messages.scrollTop = elements.messages.scrollHeight;
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, char => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[char]);
+  }
+
+  // Basic safe formatting. All untrusted text is escaped before
+  // limited Markdown-like formatting is applied.
+  function formatMarkdown(value) {
+    let text = escapeHtml(value);
+
+    text = text.replace(
+      /\*\*(.+?)\*\*/gs,
+      '<strong>$1</strong>'
+    );
+
+    text = text.replace(
+      /(^|[^*])\*([^*\n]+)\*/g,
+      '$1<em>$2</em>'
+    );
+
+    text = text.replace(
+      /`([^`\n]+)`/g,
+      '<code>$1</code>'
+    );
+
+    return text;
+  }
+
+  function createAvatar(icon, bg = 'bg-primary') {
+    const avatar = document.createElement('div');
+    avatar.className =
+      `chat-avatar ${bg} text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm`;
+
+    const iconEl = document.createElement('i');
+    iconEl.className = `bi ${icon}`;
+
+    avatar.appendChild(iconEl);
+    return avatar;
+  }
+
+  function addMessageText(container, text, isHtml = false) {
+    const content = document.createElement('div');
+    content.className = 'small lh-base chat-markdown';
+
+    if (isHtml) {
+      content.innerHTML = text;
+    } else {
+      content.textContent = text;
+    }
+
+    container.appendChild(content);
+    return content;
+  }
+
+  function addSpeakButton(container, text) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn btn-link btn-sm p-0 text-muted speak-btn';
+    button.title = 'Read aloud';
+    button.setAttribute('aria-label', 'Read message aloud');
+
+    const icon = document.createElement('i');
+    icon.className = 'bi bi-volume-up-fill fs-6';
+    button.appendChild(icon);
+
+    button.addEventListener('click', () => speakText(text));
+    container.appendChild(button);
+  }
+
+  function addAssistantMessage(text, references = []) {
+    const row = document.createElement('div');
+    row.className = 'd-flex align-items-start gap-2';
+
+    const content = document.createElement('div');
+    content.className = 'chat-message';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble chat-bubble-ai shadow-sm';
+
+    const header = document.createElement('div');
+    header.className =
+      'd-flex justify-content-between align-items-center mb-1';
+
+    const label = document.createElement('span');
+    label.className = 'fw-semibold text-primary small';
+    label.textContent = 'MediKiosk Health Assistant';
+
+    header.appendChild(label);
+    addSpeakButton(header, text);
+
+    bubble.appendChild(header);
+    addMessageText(bubble, formatMarkdown(text), true);
+
+    if (references.length > 0) {
+      const refContainer = document.createElement('div');
+      refContainer.className =
+        'd-flex flex-wrap gap-2 mt-2 pt-2 border-top';
+
+      references.forEach(ref => {
+        if (!ref || typeof ref !== 'object') return;
+
+        const link = safeRecordLink(ref.link);
+        if (!link) return;
+
+        const anchor = document.createElement('a');
+        anchor.href = link;
+        anchor.className =
+          'btn btn-sm btn-outline-primary py-1 px-2 d-flex align-items-center gap-1';
+        anchor.style.fontSize = '.78rem';
+        anchor.textContent = `View ${String(ref.title || 'Record')}`;
+
+        refContainer.appendChild(anchor);
+      });
+
+      if (refContainer.childElementCount > 0) {
+        bubble.appendChild(refContainer);
+      }
+    }
+
+    content.appendChild(bubble);
+
+    const meta = document.createElement('div');
+    meta.className = 'text-muted mt-1 ps-2';
+    meta.style.fontSize = '.68rem';
+    meta.textContent = 'Record-grounded response · AI informational guidance';
+
+    content.appendChild(meta);
+    row.appendChild(createAvatar('bi-robot'));
+    row.appendChild(content);
+
+    elements.messages.appendChild(row);
+    scrollToBottom();
+  }
+
+  function addUserMessage(text, source) {
+    const row = document.createElement('div');
+    row.className =
+      'd-flex align-items-start justify-content-end gap-2';
+
+    const content = document.createElement('div');
+    content.className = 'chat-message';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble chat-bubble-user shadow-sm';
+
+    const message = document.createElement('div');
+    message.className = 'small lh-base';
+    message.textContent = text;
+
+    bubble.appendChild(message);
+    content.appendChild(bubble);
+
+    const meta = document.createElement('div');
+    meta.className = 'text-muted mt-1 text-end pe-2';
+    meta.style.fontSize = '.68rem';
+    meta.textContent = `You · ${source}`;
+
+    content.appendChild(meta);
+    row.appendChild(content);
+    row.appendChild(createAvatar('bi-person-fill', 'bg-secondary'));
+
+    elements.messages.appendChild(row);
+    scrollToBottom();
+  }
+
+  function addTypingIndicator() {
+    const row = document.createElement('div');
+    row.id = 'aiTypingBubble';
+    row.className = 'd-flex align-items-start gap-2';
+
+    const content = document.createElement('div');
+    content.className = 'chat-message';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble chat-bubble-ai shadow-sm';
+
+    const status = document.createElement('div');
+    status.className = 'd-flex align-items-center gap-2 text-muted small';
+
+    const spinner = document.createElement('span');
+    spinner.className =
+      'spinner-grow spinner-grow-sm text-primary';
+    spinner.setAttribute('role', 'status');
+    spinner.setAttribute('aria-label', 'Assistant is responding');
+
+    const label = document.createElement('span');
+    label.textContent = 'MediKiosk AI is preparing a response...';
+
+    status.appendChild(spinner);
+    status.appendChild(label);
+    bubble.appendChild(status);
+    content.appendChild(bubble);
+    row.appendChild(createAvatar('bi-robot'));
+    row.appendChild(content);
+
+    elements.messages.appendChild(row);
+    scrollToBottom();
+  }
+
+  function removeTypingIndicator() {
+    const typing = document.getElementById('aiTypingBubble');
+    if (typing) typing.remove();
+  }
+
+  function safeRecordLink(value) {
+    if (typeof value !== 'string') return '';
+
+    const link = value.trim();
+
+    // Allow only same-origin relative paths.
+    if (!link.startsWith('/') || link.startsWith('//')) return '';
+
+    if (/[\r\n\\]/.test(link)) return '';
+
+    return link;
+  }
+
+  function appendErrorBubble(message) {
+    const row = document.createElement('div');
+    row.className = 'd-flex align-items-start gap-2';
+
+    const content = document.createElement('div');
+    content.className = 'chat-message';
+
+    const bubble = document.createElement('div');
+    bubble.className =
+      'chat-bubble shadow-sm border border-warning';
+
+    const heading = document.createElement('div');
+    heading.className =
+      'fw-semibold text-warning-emphasis small mb-1';
+    heading.textContent = navigator.onLine
+      ? 'Assistant unavailable'
+      : 'Offline mode';
+
+    const text = document.createElement('div');
+    text.className = 'text-dark small lh-base';
+    text.textContent = message;
+
+    bubble.appendChild(heading);
+    bubble.appendChild(text);
+
+    const actions = document.createElement('div');
+    actions.className =
+      'd-flex gap-2 mt-2 pt-2 border-top flex-wrap';
+
+    const emergencyLink = document.createElement('a');
+    emergencyLink.href = 'tel:112';
+    emergencyLink.className =
+      'btn btn-sm btn-danger py-1 px-2 fw-bold';
+    emergencyLink.textContent = 'Call 112';
+
+    const recordsLink = document.createElement('a');
+    recordsLink.href = '/patient/dashboard';
+    recordsLink.className =
+      'btn btn-sm btn-outline-secondary py-1 px-2';
+    recordsLink.textContent = 'Patient Records';
+
+    actions.appendChild(emergencyLink);
+    actions.appendChild(recordsLink);
+    bubble.appendChild(actions);
+
+    content.appendChild(bubble);
+    row.appendChild(createAvatar('bi-exclamation-circle-fill', 'bg-warning'));
+    row.appendChild(content);
+
+    elements.messages.appendChild(row);
+    scrollToBottom();
+  }
+
+  function updateWelcome() {
+    elements.welcome.replaceChildren();
+
+    const greeting = document.createTextNode(
+      greetings[currentLang] || greetings.en
+    );
+
+    const name = document.createElement('strong');
+    name.textContent = patientName;
+
+    const intro = document.createTextNode(
+      '! ' + (welcomeMessages[currentLang] || welcomeMessages.en)
+    );
+
+    elements.welcome.appendChild(greeting);
+    elements.welcome.appendChild(name);
+    elements.welcome.appendChild(document.createElement('br'));
+    elements.welcome.appendChild(document.createElement('br'));
+    elements.welcome.appendChild(intro);
+
+    elements.input.placeholder =
+      placeholders[currentLang] || placeholders.en;
+  }
+
+  function speakText(text) {
+    if (!('speechSynthesis' in window) ||
+        typeof SpeechSynthesisUtterance === 'undefined') {
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(
+      String(text || '').replace(/[*#_•`]/g, '')
+    );
+
+    utterance.lang = currentLang === 'hi'
+      ? 'hi-IN'
+      : currentLang === 'bn'
+        ? 'bn-IN'
+        : 'en-US';
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function stopVoiceListening() {
+    isListening = false;
+    elements.mic.classList.remove('listening');
+    elements.mic.setAttribute('aria-pressed', 'false');
+    elements.mic.setAttribute('aria-label', 'Start voice input');
+    elements.micIcon.className = 'bi bi-mic-fill fs-5';
+    elements.pulse.classList.add('d-none');
+    elements.input.placeholder =
+      placeholders[currentLang] || placeholders.en;
+  }
+
+  function initializeSpeechRecognition() {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      elements.mic.title =
+        'Voice input is not supported in this browser';
+      return;
+    }
+
     recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
 
     recognition.onresult = function(event) {
-      const transcript = event.results[0][0].transcript;
-      document.getElementById('chatInput').value = transcript;
+      const transcript =
+        event.results &&
+        event.results[0] &&
+        event.results[0][0]
+          ? event.results[0][0].transcript.trim()
+          : '';
+
       stopVoiceListening();
-      submitMessage(transcript, 'voice');
+
+      if (transcript) {
+        elements.input.value = transcript;
+        sendMessage(transcript, 'voice');
+      }
     };
 
     recognition.onerror = function() {
@@ -168,303 +814,322 @@
 
   function toggleVoiceInput() {
     if (!recognition) {
-      alert('Voice input is not supported in this browser. Please use Google Chrome or Microsoft Edge.');
+      alert(
+        'Voice input is not supported in this browser. Please use a compatible browser or type your question.'
+      );
       return;
     }
+
+    if (isSending) return;
+
     if (isListening) {
       recognition.stop();
       stopVoiceListening();
-    } else {
-      try {
-        recognition.lang = currentLang === 'hi' ? 'hi-IN' : currentLang === 'bn' ? 'bn-IN' : 'en-US';
-        recognition.start();
-        isListening = true;
-        document.getElementById('micIcon').className = 'bi bi-mic-mute-fill text-danger';
-        document.getElementById('voicePulse').classList.remove('d-none');
-        document.getElementById('chatInput').placeholder = 'Listening... Speak now...';
-      } catch (e) {
-        stopVoiceListening();
-      }
+      return;
     }
-  }
-
-  function stopVoiceListening() {
-    isListening = false;
-    document.getElementById('micIcon').className = 'bi bi-mic-fill text-primary';
-    document.getElementById('voicePulse').classList.add('d-none');
-    document.getElementById('chatInput').placeholder = 'Ask about your reports, medicines, previous visits...';
-  }
-
-  function changeChatLanguage(newLang) {
-    currentLang = newLang;
-    document.getElementById('activeLangTag').innerText = newLang;
-    
-    // Update input placeholder & welcome greeting based on language
-    const chatInput = document.getElementById('chatInput');
-    const welcomeEl = document.getElementById('welcomeText');
-    const patientName = "<%= patient.fullName %>";
-
-    if (newLang === 'hi') {
-      if (chatInput) chatInput.placeholder = 'अपनी रिपोर्ट, दवाइयों या डॉक्टर परामर्श के बारे में पूछें...';
-      if (welcomeEl) {
-        welcomeEl.innerHTML = `नमस्ते, <strong>${patientName}</strong>! मैं आपका मेडीकियोस्क एआई स्वास्थ्य सहायक हूँ।<br><br>मैं आपकी हालिया रक्त रिपोर्ट, डॉक्टर की दवाइयों की खुराक, पिछली जांच के नोट्स और स्वास्थ्य से जुड़े सवालों में आपकी सहायता कर सकता हूँ।`;
-      }
-    } else if (newLang === 'bn') {
-      if (chatInput) chatInput.placeholder = 'আপনার রিপোর্ট, ওষুধ বা আগের ডাক্তারের পরিদর্শন সম্পর্কে জিজ্ঞাসা করুন...';
-      if (welcomeEl) {
-        welcomeEl.innerHTML = `নমস্কার, <strong>${patientName}</strong>! আমি আপনার ব্যক্তিগত মেডিকিয়স্ক এআই স্বাস্থ্য সহকারী।<br><br>আমি আপনার সাম্প্রতিক রক্ত ​​পরীক্ষার রিপোর্ট, ওষুধের ডোজ, ডাক্তারের পরামর্শের সারাংশ এবং স্বাস্থ্য সম্পর্কিত প্রশ্নের উত্তর দিতে সাহায্য করতে পারি।`;
-      }
-    } else {
-      if (chatInput) chatInput.placeholder = 'Ask about your reports, medicines, previous visits...';
-      if (welcomeEl) {
-        welcomeEl.innerHTML = `Hello, <strong>${patientName}</strong>! I am your personal MediKiosk AI Health Assistant.<br><br>I can help you review your latest blood reports, explain prescription dosages, recall doctor consultation notes, or answer general healthcare questions safely.`;
-      }
-    }
-
-    // Refresh suggested questions
-    fetch('/patient/ai/suggested-questions?lang=' + newLang)
-      .then(res => res.json())
-      .then(data => {
-        if (data.questions && data.questions.length > 0) {
-          const container = document.getElementById('suggestedChipsContainer');
-          container.innerHTML = `
-            <div class="d-flex overflow-auto gap-2 py-1" style="white-space: nowrap; scrollbar-width: none;">
-              ${data.questions.map(q => `
-                <button class="btn btn-sm btn-white bg-white border text-primary rounded-pill px-3 py-1 shadow-xs fw-medium"
-                        onclick="sendQuickQuestion('${q.replace(/'/g, "\\'")}')">
-                  <i class="bi bi-chat-text text-muted me-1"></i> ${q}
-                </button>
-              `).join('')}
-            </div>
-          `;
-        }
-      })
-      .catch(() => {});
-  }
-
-  function clearActiveChat() {
-    activeConversationId = null;
-    const container = document.getElementById('messagesContainer');
-    const newChatMsg = currentLang === 'hi' 
-      ? 'नई बातचीत शुरू हुई। आज मैं आपकी मेडिकल रिपोर्ट्स और स्वास्थ्य में कैसे मदद कर सकता हूँ?'
-      : currentLang === 'bn'
-      ? 'নতুন কথোপকথন শুরু হয়েছে। আজ আমি আপনার স্বাস্থ্যের ব্যাপারে কীভাবে সাহায্য করতে পারি?'
-      : 'New conversation started. How can I assist you with your health records today?';
-
-    container.innerHTML = `
-      <div class="d-flex align-items-start gap-2 max-w-75">
-        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 34px; height: 34px;">
-          <i class="bi bi-robot" style="font-size: 0.95rem;"></i>
-        </div>
-        <div>
-          <div class="p-3 rounded-4 shadow-xs" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-top-left-radius: 4px;">
-            <div class="d-flex justify-content-between align-items-center mb-1">
-              <span class="fw-semibold text-primary small">MediKiosk Health Assistant</span>
-              <button class="btn btn-link btn-sm p-0 text-muted" onclick="speakText('${newChatMsg}')" title="Read aloud / सुनें">
-                <i class="bi bi-volume-up-fill fs-6"></i>
-              </button>
-            </div>
-            <div class="text-dark small lh-base">
-              ${newChatMsg}
-            </div>
-          </div>
-          <div class="text-muted mt-1 ps-2" style="font-size: 0.68rem;">Just now</div>
-        </div>
-      </div>
-    `;
-  }
-
-  function sendQuickQuestion(questionText) {
-    document.getElementById('chatInput').value = questionText;
-    submitMessage(questionText, 'quick_action');
-  }
-
-  function handleChatSubmit(e) {
-    e.preventDefault();
-    const input = document.getElementById('chatInput');
-    const msg = input.value.trim();
-    if (!msg) return;
-    input.value = '';
-    submitMessage(msg, 'text');
-  }
-
-  function speakText(text) {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text.replace(/[*#_•]/g, ''));
-      utterance.lang = currentLang === 'hi' ? 'hi-IN' : currentLang === 'bn' ? 'bn-IN' : 'en-US';
-      window.speechSynthesis.speak(utterance);
-    }
-  }
-
-  async function submitMessage(message, source = 'text') {
-    const container = document.getElementById('messagesContainer');
-
-    // Append patient bubble
-    const userBubble = document.createElement('div');
-    userBubble.className = 'd-flex align-items-start justify-content-end gap-2';
-    userBubble.innerHTML = `
-      <div>
-        <div class="p-3 rounded-4 shadow-xs text-white" style="background-color: #0284c7; border-top-right-radius: 4px;">
-          <div class="small lh-base">${escapeHtml(message)}</div>
-        </div>
-        <div class="text-muted mt-1 text-end pe-2" style="font-size: 0.68rem;">You &bull; ${source}</div>
-      </div>
-      <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 34px; height: 34px;">
-        <i class="bi bi-person-fill" style="font-size: 0.95rem;"></i>
-      </div>
-    `;
-    container.appendChild(userBubble);
-    container.scrollTop = container.scrollHeight;
-
-    // Append typing indicator
-    const typingBubble = document.createElement('div');
-    typingBubble.id = 'aiTypingBubble';
-    typingBubble.className = 'd-flex align-items-start gap-2';
-    typingBubble.innerHTML = `
-      <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 34px; height: 34px;">
-        <i class="bi bi-robot" style="font-size: 0.95rem;"></i>
-      </div>
-      <div class="p-3 rounded-4 shadow-xs bg-white border" style="border-top-left-radius: 4px;">
-        <div class="d-flex align-items-center gap-1 text-muted small">
-          <span class="spinner-grow spinner-grow-sm text-primary" role="status"></span>
-          <span>MediKiosk AI is consulting your records...</span>
-        </div>
-      </div>
-    `;
-    container.appendChild(typingBubble);
-    container.scrollTop = container.scrollHeight;
 
     try {
-      const res = await fetch('/patient/ai/chat', {
+      recognition.lang = currentLang === 'hi'
+        ? 'hi-IN'
+        : currentLang === 'bn'
+          ? 'bn-IN'
+          : 'en-US';
+
+      recognition.start();
+      isListening = true;
+
+      elements.mic.classList.add('listening');
+      elements.mic.setAttribute('aria-pressed', 'true');
+      elements.mic.setAttribute('aria-label', 'Stop voice input');
+      elements.micIcon.className =
+        'bi bi-mic-mute-fill fs-5';
+      elements.pulse.classList.remove('d-none');
+      elements.input.placeholder = 'Listening... Speak now';
+    } catch (error) {
+      stopVoiceListening();
+    }
+  }
+
+  async function sendMessage(message, source = 'text') {
+    const cleanMessage = String(message || '').trim();
+
+    if (!cleanMessage || isSending) return;
+
+    isSending = true;
+    elements.send.disabled = true;
+    elements.input.disabled = true;
+
+    if (recognition && isListening) {
+      try {
+        recognition.stop();
+      } catch (_) {}
+      stopVoiceListening();
+    }
+
+    addUserMessage(cleanMessage, source);
+    addTypingIndicator();
+
+    try {
+      const response = await fetch('/patient/ai/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify({
-          message,
+          message: cleanMessage,
           conversationId: activeConversationId,
           language: currentLang,
           source
         })
       });
 
-      const data = await res.json();
-      const typing = document.getElementById('aiTypingBubble');
-      if (typing) typing.remove();
+      let data;
 
-      if (data.success) {
-        if (data.conversationId) activeConversationId = data.conversationId;
-
-        // Emergency Detection Alert
-        if (data.isEmergency) {
-          const banner = document.getElementById('emergencyBanner');
-          banner.classList.remove('d-none');
-          document.getElementById('emergencyBody').innerText = data.reply;
-        }
-
-        // Action chips / Record References
-        let refsHtml = '';
-        if (Array.isArray(data.recordReferences) && data.recordReferences.length > 0) {
-          refsHtml = `
-            <div class="d-flex flex-wrap gap-2 mt-2 pt-2 border-top">
-              ${data.recordReferences.map(r => `
-                <a href="${r.link}" class="btn btn-sm btn-outline-primary py-1 px-2 d-flex align-items-center gap-1" style="font-size: 0.78rem;">
-                  <i class="bi bi-link-45deg"></i> [ View ${escapeHtml(r.title)} ]
-                </a>
-              `).join('')}
-            </div>
-          `;
-        }
-
-        // Append Assistant reply bubble
-        const aiBubble = document.createElement('div');
-        aiBubble.className = 'd-flex align-items-start gap-2';
-        aiBubble.innerHTML = `
-          <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 34px; height: 34px;">
-            <i class="bi bi-robot" style="font-size: 0.95rem;"></i>
-          </div>
-          <div style="max-width: 82%;">
-            <div class="p-3 rounded-4 shadow-xs" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-top-left-radius: 4px;">
-              <div class="d-flex justify-content-between align-items-center mb-1">
-                <span class="fw-semibold text-primary small">MediKiosk Health Assistant</span>
-                <button class="btn btn-link btn-sm p-0 text-muted" onclick="speakText('${escapeForAttr(data.reply)}')" title="Read aloud">
-                  <i class="bi bi-volume-up-fill fs-6"></i>
-                </button>
-              </div>
-              <div class="text-dark small lh-base" style="white-space: pre-wrap;">${formatMarkdown(data.reply)}</div>
-              ${refsHtml}
-            </div>
-            <div class="text-muted mt-1 ps-2" style="font-size: 0.68rem;">Record-grounded response &bull; AI Safety Filtered</div>
-          </div>
-        `;
-        container.appendChild(aiBubble);
-        container.scrollTop = container.scrollHeight;
-
-      } else {
-        appendErrorBubble(container, data.error || 'The AI assistant is temporarily unavailable.');
+      try {
+        data = await response.json();
+      } catch (_) {
+        throw new Error(
+          response.status === 401
+            ? 'Your session has expired. Please sign in again.'
+            : 'The server returned an invalid response. Please try again.'
+        );
       }
-    } catch (err) {
-      const typing = document.getElementById('aiTypingBubble');
-      if (typing) typing.remove();
-      appendErrorBubble(container, navigator.onLine 
-        ? 'Could not connect to AI Assistant. Please check connection and try again.' 
-        : 'You are currently in Offline Mode. Cached records and emergency calling (108) remain active.');
+
+      if (response.status === 401 || response.status === 403) {
+        throw new Error(
+          data.error ||
+          'Your session has expired or you are not authorized. Please sign in again.'
+        );
+      }
+
+      if (!response.ok || !data || data.success !== true) {
+        throw new Error(
+          data && data.error
+            ? data.error
+            : 'The AI assistant is temporarily unavailable.'
+        );
+      }
+
+      if (data.conversationId) {
+        activeConversationId = data.conversationId;
+      }
+
+      if (data.isEmergency) {
+        elements.emergency.classList.remove('d-none');
+
+        // Display the server's emergency guidance as text, not HTML.
+        elements.emergencyBody.textContent =
+          data.reply ||
+          'Please inform hospital triage staff immediately or call your local emergency number.';
+      }
+
+      addAssistantMessage(
+        data.reply || 'The assistant returned an empty response.',
+        Array.isArray(data.recordReferences)
+          ? data.recordReferences
+          : []
+      );
+
+    } catch (error) {
+      appendErrorBubble(
+        error.message ||
+        (navigator.onLine
+          ? 'Could not connect to the AI Assistant. Please check your connection and try again.'
+          : 'You appear to be offline. Please reconnect and try again.')
+      );
+    } finally {
+      removeTypingIndicator();
+      isSending = false;
+      elements.send.disabled = false;
+      elements.input.disabled = false;
+      elements.input.focus();
     }
   }
 
-  function appendErrorBubble(container, errorText) {
-    const errorBubble = document.createElement('div');
-    errorBubble.className = 'd-flex align-items-start gap-2';
-    errorBubble.innerHTML = `
-      <div class="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 34px; height: 34px;">
-        <i class="bi bi-exclamation-circle-fill text-dark" style="font-size: 0.95rem;"></i>
-      </div>
-      <div style="max-width: 85%;">
-        <div class="p-3 rounded-4 shadow-xs bg-white border border-warning">
-          <div class="fw-semibold text-warning-emphasis small mb-1 d-flex align-items-center gap-1">
-            <i class="bi bi-wifi-off"></i>
-            <span>${navigator.onLine ? 'Notice / सूचना' : 'Offline Mode Active / ऑफ़लाइन मोड'}</span>
-          </div>
-          <div class="text-dark small lh-base">${escapeHtml(errorText)}</div>
-          <div class="d-flex gap-2 mt-2 pt-2 border-top flex-wrap">
-            <a href="tel:108" class="btn btn-sm btn-danger py-1 px-2 fw-bold" style="font-size: 0.78rem;">
-              <i class="bi bi-telephone-fill me-1"></i> Call 108 (Ambulance)
-            </a>
-            <a href="/patient/dashboard" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 0.78rem;">
-              <i class="bi bi-folder2-open me-1"></i> Patient Records
-            </a>
-          </div>
-        </div>
-      </div>
-    `;
-    container.appendChild(errorBubble);
-    container.scrollTop = container.scrollHeight;
-  }
+  async function loadSuggestedQuestions(language) {
+    try {
+      const response = await fetch(
+        '/patient/ai/suggested-questions?lang=' +
+          encodeURIComponent(language),
+        {
+          credentials: 'same-origin',
+          headers: { 'Accept': 'application/json' }
+        }
+      );
 
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.innerText = text;
-    return div.innerHTML;
-  }
+      if (!response.ok) return;
 
-  function escapeForAttr(text) {
-    return text.replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, ' ');
-  }
+      const data = await response.json();
 
-  function formatMarkdown(text) {
-    return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>');
-  }
+      if (!Array.isArray(data.questions)) return;
 
-  // Pre-load query parameter if provided from another view (e.g. ?q=Explain+my+report)
-  document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const initialQuery = urlParams.get('q');
-    if (initialQuery) {
-      document.getElementById('chatInput').value = initialQuery;
-      submitMessage(initialQuery, 'quick_action');
+      const fragment = document.createDocumentFragment();
+
+      data.questions.forEach(question => {
+        if (typeof question !== 'string' || !question.trim()) return;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className =
+          'btn btn-sm bg-white border text-primary rounded-pill px-3 py-1 shadow-sm fw-medium flex-shrink-0 quick-question';
+
+        const icon = document.createElement('i');
+        icon.className = 'bi bi-chat-text text-muted me-1';
+
+        button.appendChild(icon);
+        button.appendChild(document.createTextNode(question));
+        button.dataset.question = question;
+
+        fragment.appendChild(button);
+      });
+
+      elements.questions.replaceChildren(fragment);
+
+    } catch (_) {
+      // Keep the existing suggestions if the request fails.
     }
+  }
+
+  function clearActiveChat() {
+    if (isSending) return;
+
+    activeConversationId = null;
+
+    if (recognition && isListening) {
+      try {
+        recognition.stop();
+      } catch (_) {}
+    }
+
+    stopVoiceListening();
+
+    elements.messages.replaceChildren();
+
+    const row = document.createElement('div');
+    row.className = 'd-flex align-items-start gap-2';
+
+    const content = document.createElement('div');
+    content.className = 'chat-message';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble chat-bubble-ai shadow-sm';
+
+    const header = document.createElement('div');
+    header.className =
+      'd-flex justify-content-between align-items-center mb-1';
+
+    const label = document.createElement('span');
+    label.className = 'fw-semibold text-primary small';
+    label.textContent = 'MediKiosk Health Assistant';
+
+    header.appendChild(label);
+    addSpeakButton(header, newChatMessages[currentLang]);
+
+    const message = document.createElement('div');
+    message.className = 'text-dark small lh-base';
+    message.textContent = newChatMessages[currentLang];
+
+    bubble.appendChild(header);
+    bubble.appendChild(message);
+    content.appendChild(bubble);
+
+    const meta = document.createElement('div');
+    meta.className = 'text-muted mt-1 ps-2';
+    meta.style.fontSize = '.68rem';
+    meta.textContent = 'Just now';
+
+    content.appendChild(meta);
+    row.appendChild(createAvatar('bi-robot'));
+    row.appendChild(content);
+
+    elements.messages.appendChild(row);
+    elements.emergency.classList.add('d-none');
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    elements.input.value = '';
+    elements.input.focus();
+  }
+
+  elements.form.addEventListener('submit', event => {
+    event.preventDefault();
+
+    const message = elements.input.value.trim();
+    if (!message || isSending) return;
+
+    elements.input.value = '';
+    sendMessage(message, 'text');
   });
+
+  elements.questions.addEventListener('click', event => {
+    const button = event.target.closest('.quick-question');
+    if (!button || isSending) return;
+
+    const question = button.dataset.question;
+    if (!question) return;
+
+    elements.input.value = '';
+    sendMessage(question, 'quick_action');
+  });
+
+  elements.language.addEventListener('change', event => {
+    const newLang = event.target.value;
+
+    if (!['en', 'hi', 'bn'].includes(newLang)) return;
+
+    currentLang = newLang;
+    elements.languageTag.textContent = newLang;
+
+    if (recognition && isListening) {
+      try {
+        recognition.stop();
+      } catch (_) {}
+      stopVoiceListening();
+    }
+
+    updateWelcome();
+    loadSuggestedQuestions(newLang);
+  });
+
+  elements.mic.addEventListener('click', toggleVoiceInput);
+
+  document.getElementById('newChatBtn')
+    .addEventListener('click', clearActiveChat);
+
+  document.getElementById('dismissEmergencyBtn')
+    .addEventListener('click', () => {
+      elements.emergency.classList.add('d-none');
+    });
+
+  // Event delegation for the initial welcome bubble's read-aloud button.
+  document.getElementById('welcomeBubbleContainer')
+    .querySelector('.speak-btn')
+    .addEventListener('click', () => {
+      speakText(
+        greetings[currentLang] +
+        patientName +
+        '. ' +
+        welcomeMessages[currentLang]
+      );
+    });
+
+  initializeSpeechRecognition();
+  updateWelcome();
+
+  // Support ?q=... links without injecting query text into HTML.
+  const params = new URLSearchParams(window.location.search);
+  const initialQuery = params.get('q');
+
+  if (initialQuery && initialQuery.trim()) {
+    const query = initialQuery.trim().slice(0, 4000);
+    elements.input.value = '';
+    sendMessage(query, 'quick_action');
+  }
+})();
 </script>
 
 <%- include('footer') %>

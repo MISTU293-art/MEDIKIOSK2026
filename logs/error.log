@@ -947,3 +947,516 @@ inventory is not defined
 [2026-09-24T15:21:35.798Z] [ERROR] Patient auth middleware error: Invalid namespace specified: /medikiosk.patients
 [2026-09-24T15:21:35.907Z] [ERROR] Patient auth middleware error: Invalid namespace specified: /medikiosk.patients
 [2026-09-24T15:25:44.263Z] [ERROR] Error loading intake summary: Patient.findOne(...).sort is not a function
+[2026-09-24T17:01:31.046Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T17:01:36.709Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T17:01:49.515Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T17:01:53.287Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T17:02:21.961Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T17:02:48.525Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T17:03:30.108Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T17:03:37.148Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T17:04:20.451Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T17:06:30.037Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-24T17:14:57.866Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:02:10.670Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:04:33.882Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:05:49.363Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:15:27.918Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:17:01.271Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:29:36.037Z] [ERROR] getDocuments error for patient [object Object]: Document is not defined
+[2026-09-25T05:31:00.857Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:33:47.149Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:34:16.481Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:34:56.602Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:35:29.839Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:36:24.757Z] [ERROR] Unhandled express error: TypeError: C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs:711
+    709|       <% } else { %>
+    710|         <div class="border-start border-2 border-primary ps-3 ms-2">
+ >> 711|           <% timeline.forEach(function(e) { %>
+    712|             <div class="mb-3 position-relative">
+    713|               <span class="position-absolute bg-primary rounded-circle" style="width: 10px; height: 10px; left: -21px; top: 5px;"></span>
+    714|               <div class="small fw-bold text-dark"><%= e.title %></div>
+
+timeline.forEach is not a function
+    at eval (eval at compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:345:17)
+    at dashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+    at getDashboard (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\controllers\patientPortalController.js:23:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-09-25T05:36:39.028Z] [ERROR] Unhandled express error: SyntaxError: Identifier 'dashboardTimeline' has already been declared in C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-25T05:37:00.633Z] [ERROR] Unhandled express error: SyntaxError: Identifier 'dashboardTimeline' has already been declared in C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-25T05:37:45.681Z] [ERROR] Unhandled express error: SyntaxError: Identifier 'dashboardTimeline' has already been declared in C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-25T05:37:50.144Z] [ERROR] Unhandled express error: SyntaxError: Identifier 'dashboardTimeline' has already been declared in C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-25T05:41:02.160Z] [ERROR] Unhandled express error: SyntaxError: Identifier 'dashboardTimeline' has already been declared in C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-25T05:42:10.046Z] [ERROR] Unhandled express error: SyntaxError: Identifier 'patientDashboardTimeline' has already been declared in C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\views\patient\dashboard.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:673:12)
+    at Object.compile (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:398:16)
+    at handleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:235:18)
+    at tryHandleCache (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:274:16)
+    at exports.renderFile [as engine] (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\view.js:135:8)
+    at tryRender (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:657:10)
+    at app.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\application.js:609:3)
+    at ServerResponse.render (C:\Users\Mistu\OneDrive\Desktop\New folder\MEDIKIOSK2026\node_modules\express\lib\response.js:1049:7)
+[2026-09-25T06:07:30.156Z] [ERROR] Error during database seeding: getaddrinfo ENOTFOUND ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-25T06:07:37.679Z] [ERROR] Patient auth middleware error: getaddrinfo ENOTFOUND ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-25T06:07:38.396Z] [ERROR] Patient auth middleware error: getaddrinfo ENOTFOUND ac-tijfd4v-shard-00-02.xs297yi.mongodb.net
+[2026-09-25T06:07:41.306Z] [ERROR] Patient auth middleware error: getaddrinfo ENOTFOUND ac-tijfd4v-shard-00-02.xs297yi.mongodb.net

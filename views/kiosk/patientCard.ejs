@@ -121,9 +121,12 @@
             <span class="badge badge-normal"><i class="bi bi-check-circle-fill text-success me-1"></i> Standard OPD Queue</span>
           <% } %>
         </div>
-        <div class="text-end">
-          <span class="text-muted small d-block">Digital ABDM Barcode</span>
-          <div class="d-flex align-items-center gap-2"><svg id="patientBarcode" aria-label="Private patient card barcode"></svg><canvas id="patientQr" width="96" height="96" aria-label="Private patient card QR code"></canvas></div>
+        <div class="text-sm-end text-center mt-2 mt-sm-0">
+          <span class="text-muted small d-block">Digital ABDM Barcode & QR</span>
+          <div class="d-flex flex-column flex-sm-row align-items-center justify-content-sm-end gap-2 mt-1">
+            <svg id="patientBarcode" aria-label="Private patient card barcode" style="max-width: 180px; height: 44px;"></svg>
+            <canvas id="patientQr" width="80" height="80" style="width: 80px; height: 80px;" aria-label="Private patient card QR code"></canvas>
+          </div>
         </div>
       </div>
 

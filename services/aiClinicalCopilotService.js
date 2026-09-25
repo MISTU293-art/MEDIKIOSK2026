@@ -64,6 +64,42 @@ const CLINICAL_KNOWLEDGE_BASE = [
     anupana: 'Warm water; avoid direct sun exposure, synthetic soaps, sour foods, and jaggery',
     labs: ['Absolute Eosinophil Count (AEC)', 'Serum Total IgE', 'Skin Scraping for KOH'],
     patientAdvice: 'Wear loose cotton clothes. Avoid scratching and apply pure coconut oil.'
+  },
+  {
+    keywords: ['diabetes', 'sugar', 'madhumeha', 'frequent urination', 'excessive thirst', 'polyuria', 'prameha'],
+    impression: 'Prameha / Madhumeha (Type 2 Diabetes Mellitus / Metabolic Syndrome)',
+    prescriptions: [
+      'Tab Nishamalaki (Curcuma + Amla) - 1 Tab BD before meals',
+      'Tab Chandraprabha Vati - 1 Tab BD after meals with lukewarm water',
+      'Gudmar Ghanvati (500mg) - 1 Tab BD before food'
+    ],
+    anupana: 'Warm water; strictly avoid refined sugar, sweet fruits, heavy grains, and daytime sleeping (Divasvapna)',
+    labs: ['Fasting Blood Sugar (FBS)', 'Postprandial Blood Sugar (PPBS)', 'HbA1c', 'Lipid Profile', 'Urine Microalbumin'],
+    patientAdvice: 'Engage in 30 minutes daily brisk walking (Vyayama). Adopt a low-glycemic, barley (Yava) and whole-grain diet.'
+  },
+  {
+    keywords: ['hypertension', 'high bp', 'blood pressure', 'dizziness', 'headache', 'raktachapa', 'high pressure'],
+    impression: 'Uchharaktachapa / Essential Hypertension (Pitta-Vata imbalance)',
+    prescriptions: [
+      'Tab Sarpagandha Ghanvati - 1 Tab at bedtime with warm water',
+      'Tab Brahmi Vati - 1 Tab BD with lukewarm water',
+      'Cap Ashwagandha (500mg) - 1 Cap BD after meals'
+    ],
+    anupana: 'Lukewarm water or cow\'s milk; strictly restrict table salt intake, avoid smoking, caffeine, and stress',
+    labs: ['Serial Blood Pressure Monitoring', 'Serum Electrolytes & Creatinine', 'Lipid Profile', '12-Lead ECG'],
+    patientAdvice: 'Practice daily Pranayama (Anulom-Vilom and Sheetali). Reduce sodium intake to under 2g/day and sleep 7-8 hours.'
+  },
+  {
+    keywords: ['asthma', 'wheezing', 'breathlessness', 'shortness of breath', 'shwasa', 'bronchitis', 'respiratory'],
+    impression: 'Tamaka Shwasa / Bronchial Asthma (Pranavaha Srotas Dushti)',
+    prescriptions: [
+      'Tab Shwas Kuthar Rasa - 1 Tab BD with honey or warm water',
+      'Syp Vasavaleha - 10g BD with warm water after meals',
+      'Sitopaladi Churna (3g) + Trikatu Churna (1g) with Honey - BD'
+    ],
+    anupana: 'Lukewarm water or Ginger-Tulsi decoction; strictly avoid cold beverages, dust exposure, curd, and humid air',
+    labs: ['Spirometry (PFT)', 'Chest X-Ray (PA View)', 'Absolute Eosinophil Count (AEC)'],
+    patientAdvice: 'Inhale eucalyptus steam once daily. Wear a protective mask when exposed to cold winds or dust.'
   }
 ];
 

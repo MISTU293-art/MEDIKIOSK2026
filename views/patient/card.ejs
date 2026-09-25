@@ -79,15 +79,18 @@
               <!-- Barcode SVG Safe representation -->
               <div class="mt-3 text-center text-sm-start">
                 <div class="text-muted mb-1" style="font-size: 0.7rem;">Hospital Intake Scanner Barcode:</div>
-                <img src="<%= card.barcodeData %>" alt="Barcode" class="img-fluid border p-1 rounded" style="max-height: 48px;">
-                <div class="font-monospace text-muted mt-1" style="font-size: 0.7rem;"><%= card.patientCardNumber %></div>
+                <div class="d-inline-block bg-white p-1 border rounded shadow-xs" style="max-width: 100%;">
+                  <img id="staticBarcodeImg" src="<%= card.barcodeData %>" alt="Barcode" class="img-fluid" style="max-height: 48px; max-width: 100%; object-fit: contain;">
+                  <svg id="dynamicBarcode" class="d-none img-fluid" style="max-height: 48px; max-width: 220px;"></svg>
+                </div>
+                <div class="font-monospace text-muted mt-1 small"><%= card.patientCardNumber %></div>
               </div>
             </div>
 
             <!-- Right QR Column -->
-            <div class="col-sm-5 text-center border-start ps-sm-4">
+            <div class="col-sm-5 text-center border-top border-sm-top-0 border-sm-start pt-3 pt-sm-0 ps-sm-4">
               <div class="p-2 border rounded-3 d-inline-block bg-light shadow-xs mb-2">
-                <img src="<%= card.qrCodeData %>" alt="Safe QR Code" style="width: 130px; height: 130px;">
+                <img src="<%= card.qrCodeData %>" alt="Safe QR Code" style="width: 130px; height: 130px; max-width: 100%; object-fit: contain;">
               </div>
               <div class="small fw-semibold text-dark">Secure Check-in QR</div>
               <div class="text-muted mt-1" style="font-size: 0.72rem;">
@@ -119,6 +122,28 @@
 
     </div>
   </div>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script>
+  if (window.JsBarcode) {
+    try {
+      const code = '<%= card.patientCardNumber %>';
+      JsBarcode('#dynamicBarcode', code, {
+        format: 'CODE128',
+        width: 1.5,
+        height: 38,
+        displayValue: false,
+        margin: 2
+      });
+      const dyn = document.getElementById('dynamicBarcode');
+      const stat = document.getElementById('staticBarcodeImg');
+      if (dyn && stat) {
+        dyn.classList.remove('d-none');
+        stat.classList.add('d-none');
+      }
+    } catch(err) {
+      console.warn('JsBarcode fallback active:', err);
+    }
+  }
+</script>
 
 <%- include('footer') %>

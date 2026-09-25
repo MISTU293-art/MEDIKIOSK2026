@@ -15,19 +15,19 @@
   <% if (typeof patient !== 'undefined' && patient) { %>
     <!-- Section 74: Sticky Mobile Bottom Navigation Bar -->
     <nav class="mobile-bottom-nav d-md-none" aria-label="Mobile Patient Navigation">
-      <a href="/patient/dashboard" class="mobile-nav-item <%= (typeof activeNav !== 'undefined' && activeNav === 'dashboard') ? 'active' : '' %>">
+      <a href="/patient/dashboard" onclick="if(typeof switchDashboardTab === 'function'){ switchDashboardTab('overview'); return false; }" class="mobile-nav-item <%= (typeof activeNav !== 'undefined' && activeNav === 'dashboard') ? 'active' : '' %>">
         <i class="bi <%= (typeof activeNav !== 'undefined' && activeNav === 'dashboard') ? 'bi-house-door-fill' : 'bi-house-door' %>"></i>
         <span>Home</span>
       </a>
-      <a href="/patient/card" class="mobile-nav-item <%= (typeof activeNav !== 'undefined' && activeNav === 'card') ? 'active' : '' %>">
+      <a href="/patient/dashboard#card" onclick="if(typeof switchDashboardTab === 'function'){ switchDashboardTab('card'); return false; }" class="mobile-nav-item <%= (typeof activeNav !== 'undefined' && activeNav === 'card') ? 'active' : '' %>">
         <i class="bi <%= (typeof activeNav !== 'undefined' && activeNav === 'card') ? 'bi-credit-card-2-front-fill' : 'bi-credit-card-2-front' %>"></i>
         <span>Card</span>
       </a>
-      <a href="/patient/visits" class="mobile-nav-item <%= (typeof activeNav !== 'undefined' && (activeNav === 'visits' || activeNav === 'prescriptions' || activeNav === 'medicines')) ? 'active' : '' %>">
-        <i class="bi <%= (typeof activeNav !== 'undefined' && (activeNav === 'visits' || activeNav === 'prescriptions' || activeNav === 'medicines')) ? 'bi-folder2-open' : 'bi-folder2' %>"></i>
-        <span>Records</span>
+      <a href="/patient/dashboard#medicines" onclick="if(typeof switchDashboardTab === 'function'){ switchDashboardTab('medicines'); return false; }" class="mobile-nav-item <%= (typeof activeNav !== 'undefined' && (activeNav === 'visits' || activeNav === 'prescriptions' || activeNav === 'medicines')) ? 'active' : '' %>">
+        <i class="bi <%= (typeof activeNav !== 'undefined' && (activeNav === 'visits' || activeNav === 'prescriptions' || activeNav === 'medicines')) ? 'bi-capsule' : 'bi-capsule' %>"></i>
+        <span>Medicines</span>
       </a>
-      <a href="/patient/reports" class="mobile-nav-item <%= (typeof activeNav !== 'undefined' && (activeNav === 'reports' || activeNav === 'labs')) ? 'active' : '' %>">
+      <a href="/patient/dashboard#reports" onclick="if(typeof switchDashboardTab === 'function'){ switchDashboardTab('reports'); return false; }" class="mobile-nav-item <%= (typeof activeNav !== 'undefined' && (activeNav === 'reports' || activeNav === 'labs')) ? 'active' : '' %>">
         <i class="bi <%= (typeof activeNav !== 'undefined' && (activeNav === 'reports' || activeNav === 'labs')) ? 'bi-file-earmark-medical-fill' : 'bi-file-earmark-medical' %>"></i>
         <span>Reports</span>
       </a>
